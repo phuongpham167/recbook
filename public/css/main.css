@@ -1,0 +1,123 @@
+/*------------ Header ------------*/
+
+.top_page {
+  background: #e8e8e8;
+}
+
+.top_page .welcome-text {
+  text-transform: uppercase;
+  line-height: 36px;
+  color: #000;
+}
+
+.top_page .welcome-text p {
+  margin-bottom: 0;
+}
+
+.top_page .user-action p {
+  margin-bottom: 0;
+}
+
+.top_page .user-action a {
+  color: #000;
+  display: inline-block;
+  line-height: 36px;
+  text-decoration: none;
+  margin: 0 5px;
+}
+
+.top_page .user-action a i {
+  color: #e40b00;
+  margin-right: 5px;
+}
+
+/*-------------- banner header --------------*/
+
+.banner-header .left a {
+  display: inline-block;
+  margin: 15px 0;
+}
+
+.banner-header .right a {
+  display: inline-block;
+  margin: 15px 0;
+}
+
+.banner-header .right a img {
+  height: 100px;
+}
+
+.main-menu {
+  background: #e40b00;
+  border: none;
+  border-radius: 0;
+}
+
+.main-menu .main-menu-list ul li a {
+  color: #fff;
+  font-size: 13px;
+  text-transform: uppercase;
+}
+
+.main-menu .main-menu-list ul li ul {
+  width: 260px;
+  background: #e40b00;
+  border: none;
+  border-radius: 0;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
+.main-menu .main-menu-list ul li ul li a {
+  font-size: 13px;
+  line-height: 20px;
+  padding: 9px 10px;
+  text-transform: capitalize;
+}
+
+.main-menu .main-menu-list ul li.active a,
+.main-menu .main-menu-list ul li.open a {
+  background: none !important;
+}
+
+.main-menu .main-menu-list .menu-search {
+  float: left;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.main-menu .main-menu-list .menu-search .wrap {
+  width: 100%;
+}
+
+.main-menu .main-menu-list .menu-search input {
+  border-radius: 0;
+  border: none;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  height: 30px;
+  width: 170px;
+}
+
+@media screen and (max-width: 767px) {
+  .main-menu .main-menu-list .menu-search input {
+    width: calc(100% - 30px);
+  }
+}
+
+.main-menu .main-menu-list .menu-search button {
+  border: none;
+  padding: 0;
+}
+
+.main-menu .main-menu-list .menu-search button i {
+  background: #e9e9e9;
+  color: #e40b00;
+  cursor: pointer;
+  display: block;
+  font-size: 16px;
+  line-height: 30px;
+  text-align: center;
+  width: 30px;
+}
+

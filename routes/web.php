@@ -11,4 +11,9 @@
 |
 */
 
+Route::get('/login', ['as' => 'login', 'uses' => 'AuthenticateController@getLogin']);
+Route::post('/login', ['as' => 'post.login', 'uses' => 'AuthenticateController@postLogin']);
+Route::get('/register', ['as' => 'register', 'uses' => 'AuthenticateController@getRegister']);
+Route::post('/register', ['as' => 'post.register', 'uses' => 'AuthenticateController@postRegister']);
+
 Route::get('/', 'PageController@index')->name('home');

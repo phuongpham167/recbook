@@ -8,13 +8,13 @@
     Dothigroup
 @endsection
 
-@section('style')
+@push('style')
     <link rel="stylesheet" href="{{ asset('css/home.css') }}"/>
-@endsection
+@endpush
 
 @section('content')
     @include('includes.header')
-    <div class="content-body">
+    <div class="content-body" style="height: 1000px;">
         <div class="slider">
             <div class="smart-search">
 
@@ -33,8 +33,8 @@
     @include('includes.footer')
 @endsection
 
-@section('js')
+@push('js')
     <script>
 
     </script>
-@endsection
+@endpush
