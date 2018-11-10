@@ -3,13 +3,15 @@
 namespace App;
 
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Passport\HasApiTokens;
+use App\Scopes\WebScope;
 
 class User extends Authenticatable
 {
-    use Notifiable;
-
+    use Notifiable, SoftDeletes, HasApiTokens;
+    protected $dates = ['deleted_at'];
     /**
      * The attributes that are mass assignable.
      *
@@ -27,4 +29,34 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function group()
+    {
+        return $this->belongsTo('\App\Group');
+    }
+
+    public function branch()
+    {
+        return $this->belongsTo('\App\Branch');
+    }
+
+    public function schedules()
+    {
+        return $this->hasMany('\App\Schedule');
+    }
+
+    public function jobdetails()
+    {
+        return $this->hasMany('\App\JobDetails');
+    }
+    public function receipts(){
+        return $this->hasMany(Receipt::class);
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope(new WebScope);
+    }
 }
