@@ -1,22 +1,76 @@
-<nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#">WebSiteName</a>
-        </div>
-        <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#">Page 1</a></li>
-            <li><a href="#">Page 2</a></li>
-        </ul>
-        <form class="navbar-form navbar-left" action="/action_page.php">
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="Search" name="search">
-                <div class="input-group-btn">
-                    <button class="btn btn-default" type="submit">
-                        <i class="glyphicon glyphicon-search"></i>
-                    </button>
-                </div>
+{{-- top page --}}
+<div class="top_page">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-8 welcome-text">
+                <p>chào mừng quý khách đến với đô thị group - hotline: <span>0990.080.367</span></p>
             </div>
-        </form>
+
+            <div class="col-xs-4 user-action">
+                @if (!Auth::user())
+                <p class="pull-right">
+                    <a href="{{ route('login') }}"><i class="fa fa-sign-in"></i> ĐĂNG NHẬP</a>
+                    <a href="{{ route('register') }}"><i class="fa fa-user-plus"></i> ĐĂNG KÝ</a>
+                </p>
+                @endif
+            </div>
+        </div>
+    </div>
+</div>
+{{-- end to page --}}
+{{-- banner header --}}
+<div class="banner-header">
+    <div class="container">
+        <div class="row">
+            <div class="left col-xs-12 col-sm-4">
+                <a href="{{ route('home') }}">
+                    <img src="{{ asset('images/logo.png') }}" class="img-responsive" alt=""/>
+                </a>
+            </div>
+            <div class="right col-sm-8 hidden-xs">
+                <a href="">
+                    <img src="{{ asset('images/banner/banner-header.gif') }}" class="img-responsive" alt="" />
+                </a>
+            </div>
+            {{--<div class="clearfix"></div>--}}
+        </div>
+    </div>
+</div>
+{{-- end banner header --}}
+<nav class="navbar navbar-inverse main-menu">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand visible-xs" href="{{ route('home') }}">DoThiGroup</a>
+        </div>
+        <div class="collapse navbar-collapse main-menu-list" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="{{ route('home') }}"><i class="fa fa-home fa-lg fa-fw"></i> {{ trans('header.navbar-item.home') }}</a></li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{ trans('header.navbar-item.for-sale') }} <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">{{ trans('header.navbar-item.all') }}</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{ trans('header.navbar-item.for-rent') }} <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">{{ trans('header.navbar-item.all') }}</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <form class="menu-search">
+                    <div class="pull-right wrap">
+                        <input class="form-control pull-left" type="text" placeholder="...">
+                        <button class="pull-left"><i class="fa fa-search"></i></button>
+                    </div>
+                </form>
+            </ul>
+        </div>
     </div>
 </nav>

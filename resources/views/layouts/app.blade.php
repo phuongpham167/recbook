@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
 <head>
-    <title>Bootstrap Example</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     @yield('meta-description')
     <title>@yield('title') - {{config('setting.system_sitename')}}</title>
     <link rel="stylesheet" href="{{ asset('common-css/bootstrap.min.css') }}">
-    @yield('style')
+    <link rel="stylesheet" href="{{ asset('common-css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/theme.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/main.css') }}"/>
+    @stack('style')
 </head>
 <body>
 
@@ -15,5 +17,18 @@
 
     <script src="{{ asset('js/jquery.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-    @yield('js')
+    <script>
+        $(document).ready(function() {
+            // Show or hide the sticky footer button
+            $(window).scroll(function() {
+                if ($(this).scrollTop() > 100) {
+                    $('.main-menu').css({'position': 'fixed','top': '0px', 'left': '0px', 'width': '100%', 'z-index': '9999999'});
+                } else {
+                    $('.main-menu').css({'position': 'static','top': '0px', 'left': '0px'});
+                }
+
+            });
+        });
+    </script>
+    @stack('js')
 </body>
