@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends(theme(TRUE).'.layouts.app')
 
 @section('meta-description')
     <meta name="description" content="Home page" >
@@ -13,7 +13,7 @@
 @endpush
 
 @section('content')
-    @include('includes.header')
+    @include(theme(TRUE).'.includes.header')
     <div class="content-body" style="height: 1000px;">
         <div class="slider">
             <div class="smart-search">
@@ -30,7 +30,7 @@
             </div>
         </section>
     </div>
-    @include('includes.footer')
+    @include(theme(TRUE).'.includes.footer')
 @endsection
 
 @push('js')

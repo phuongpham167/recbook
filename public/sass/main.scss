@@ -1,3 +1,4 @@
+@import 'color';
 /*------------ Header ------------*/
 .top_page{
     background: #e8e8e8;
@@ -20,7 +21,7 @@
             text-decoration: none;
             margin: 0 5px;
             i {
-                color: #e40b00;
+                color: $primaryColor;
                 margin-right: 5px;
             }
         }
@@ -45,7 +46,7 @@
     }
 }
 .main-menu {
-    background: #e40b00;
+    background: $primaryColor;
     border: none;
     border-radius: 0;
     .main-menu-list {
@@ -58,7 +59,7 @@
                 }
                 ul {
                     width: 260px;
-                    background: #e40b00;
+                    background: $primaryColor;
                     border: none;
                     border-radius: 0;
                     box-shadow: none;
@@ -100,7 +101,7 @@
                 padding: 0;
                 i {
                     background: #e9e9e9;
-                    color: #e40b00;
+                    color: $primaryColor;
                     cursor: pointer;
                     display: block;
                     font-size: 16px;
@@ -112,3 +113,39 @@
         }
     }
 }
+/*------------ End Header ------------*/
+
+/*------------ Footer ------------*/
+.menu-footer {
+    background-color: $primaryColor;
+    ul {
+        list-style: none;
+        margin: 0;
+        padding-left: 20px;
+        li {
+            display: inline-block;
+            a {
+                color: #fff;
+                display: inline-block;
+                font-size: 14px;
+                line-height: 45px;
+                padding: 0 15px;
+                text-decoration: none;
+                text-transform: uppercase;
+            }
+        }
+    }
+}
+#footer {
+    background-color: $secondaryColor;
+    .footer-info {
+        padding-top: 20px;
+        p {
+            margin-bottom: 0;
+        }
+        @media screen and (max-width: 767px){
+            //padding-left: 45px;
+        }
+    }
+}
+/*------------ Footer ------------*/

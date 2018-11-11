@@ -2,11 +2,11 @@
 <div class="top_page">
     <div class="container">
         <div class="row">
-            <div class="col-xs-8 welcome-text">
+            <div class="col-sm-8 welcome-text hidden-xs">
                 <p>chào mừng quý khách đến với đô thị group - hotline: <span>0990.080.367</span></p>
             </div>
 
-            <div class="col-xs-4 user-action">
+            <div class="col-xs-12 col-sm-4 user-action">
                 @if (!Auth::user())
                 <p class="pull-right">
                     <a href="{{ route('login') }}"><i class="fa fa-sign-in"></i> ĐĂNG NHẬP</a>
