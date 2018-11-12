@@ -1,0 +1,179 @@
+.flex-direction-nav .flex-prev {
+    left: 0px !important;
+}
+.flex-direction-nav .flex-next {
+    right: 0px !important;
+}
+.flex-control-nav {
+    bottom: 20px !important;
+}
+//smart search
+.search-wrap {
+    position: relative;
+    .search-content {
+        position: absolute;
+        bottom: 20px;
+        left: 0;
+        width: 100%;
+        z-index: 999999;
+        ul {
+            li {
+                display: block;
+                margin-bottom: 20px;
+                position: relative;
+                float: left;
+                &:hover {
+                    a {
+                        background: #0085e0;
+                        color: #fff;
+                    }
+                    span {
+                        display: block;
+                    }
+                }
+                a {
+                    display: inline-block;
+                    background: rgba(255,255,255,.9);
+                    color: #000;
+                    font-weight: 600;
+                    text-transform: uppercase;
+                    text-decoration: none;
+                    padding: 10px 20px;
+                    font-size: 15px;
+                }
+                span {
+                    position: absolute;
+                    bottom: -20px;
+                    left: 50%;
+                    margin-left: -10px;
+                    display: none;
+                    border-left: 10px solid transparent;
+                    border-right: 10px solid transparent;
+                    border-top: 10px solid #0085e0;
+                    border-bottom: 10px solid transparent;
+                }
+                form {
+                    float: left;
+                    background: #fff;
+                    > * {
+                        float: left;
+                        background: transparent;
+                        border: 0;
+                        color: #444;
+                        outline: none;
+                        font-style: italic;
+                        display: block;
+                    }
+                    > input[type=text] {
+                        text-indent: 10px;
+                        width: 250px;
+                        height: 41px;
+                    }
+                    > button {
+                        padding: 0;
+                        i {
+                            line-height: 41px;
+                            width: 40px;
+                            text-align: center;
+                            cursor: pointer;
+                            display: block;
+                            color: #e40b00;
+                            background: #e9e9e9;
+                            font-size: 18px;
+                        }
+                    }
+                }
+            }
+            li.active {
+                a {
+                    background: #0085e0;
+                    color: #fff;
+                }
+                span {
+                    display: block;
+                }
+            }
+            li+li {
+                margin-left: 5px;
+            }
+        }
+        .search-select-wrap {
+            background: rgba(0,0,0,.4);
+            padding: 30px;
+            .item {
+                padding: 5px;
+            }
+            select {
+                width: 100%;
+                height: 38px;
+                text-indent: 10px;
+                outline: none;
+                border: 1px solid #969696;
+            }
+            button {
+                border: none;
+                width: 100%;
+                height: 38px;
+                background: #e40b00;
+                color: #fff;
+                text-transform: uppercase;
+            }
+        }
+    }
+}
+// end smart search
+
+.featured-real-estate {
+    .title-featured-wrap {
+        margin: 30px 0px 25px 0px;
+    }
+    .title-featured-real-estate {
+        background: #efefef;
+        padding: 0;
+        a.active {
+            background: #e40b00;
+            color: #fff;
+            span {
+                display: inline-block;
+                position: absolute;
+                bottom: -10px;
+                left: 50%;
+                margin-left: -5px;
+                border-left: 5px solid transparent;
+                border-right: 5px solid transparent;
+                border-top: 5px solid #e40b00;
+                border-bottom: 5px solid transparent;
+            }
+        }
+        a {
+            color: #333;
+            line-height: 50px;
+            display: block;
+            float: left;
+            padding: 0 30px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            position: relative;
+            border-left: 1px solid #ddd;
+            &:hover {
+                background: #e40b00;
+                color: #fff;
+                span {
+                    display: inline-block;
+                    position: absolute;
+                    bottom: -10px;
+                    left: 50%;
+                    margin-left: -5px;
+                    border-left: 5px solid transparent;
+                    border-right: 5px solid transparent;
+                    border-top: 5px solid #e40b00;
+                    border-bottom: 5px solid transparent;
+                }
+            }
+            &:first-child {
+                border-left: 0;
+            }
+        }
+    }
+}
