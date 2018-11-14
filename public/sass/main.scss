@@ -322,7 +322,7 @@
     border: 1px solid #ddd;
     border-top: 0;
     margin: 0;
-    .good_price_item {
+    .re_item2 {
         border-bottom: 2px dotted #ddd;
         padding-bottom: 20px;
         padding-left: 0;
@@ -419,5 +419,16 @@
         background: linear-gradient(#f6e97f, #fff);
     }
 }
+p.more {
+    text-align: center;
+    a {
+        display: inline-block;
+        background: #e40b00;
+        color: #fff;
+        padding: 8px 20px;
+        text-transform: uppercase;
+    }
+}
+
 
 /*--------------- end row two columns ---------------*/

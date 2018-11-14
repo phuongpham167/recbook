@@ -172,8 +172,8 @@
                                     </form>
                                 </div>
                                 <div class="row body_top_box">
-                                    <div class="col-xs-12 col-sm-6 good_price_item-wrap">
-                                        <div class="col-xs-12 good_price_item">
+                                    <div class="col-xs-12 col-sm-6  good_price_item_wrap">
+                                        <div class="col-xs-12  re_item2 good_price_item">
                                             <div class="row _vip">
                                                 <div class="col-xs-5 lgp_item">
                                                     <a href="#">
@@ -205,8 +205,163 @@
                                         </div>
 
                                     </div>
-                                    <div class="col-xs-12 col-sm-6 good_price_item-wrap">
-                                        <div class="col-xs-12 good_price_item">
+                                    <div class="col-xs-12 col-sm-6  good_price_item_wrap">
+                                        <div class="col-xs-12  re_item2 good_price_item">
+                                            <div class="row _vip_hot">
+                                                <div class="col-xs-5 lgp_item">
+                                                    <a href="#">
+                                                        <img src="http://nhadathaiphong.vn/images/attachment/thumb/4951.jpg" alt="Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng">
+                                                    </a>											<div class="code_row">HP-36845</div>
+                                                </div>
+
+                                                <div class="col-xs-7 rgp_item">
+                                                    <h3>
+                                                        <a href="#">Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng
+                                                        </a>
+                                                        <span></span>
+                                                    </h3>
+                                                    <div>Nhà xây 4 tầng kiên cố, chắc chắn, thiết kế hiện đại, ngõ rộng 4m, sân cổng riêng
+                                                        biệt, gần trường, chợ, hướng Tây, an ninh tốt, sổ đỏ chính chủ
+                                                    </div>
+                                                    <p>
+                                                        <strong>DTMB:</strong> 57.7 m2 - <strong>Giá:</strong>
+                                                        <span>
+                                                            1.87 tỷ VND
+                                                        </span>
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                            <div class="icon_viphot">
+                                                <img src="{{ asset('images/vip2.gif') }}" alt="Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6  good_price_item_wrap">
+                                        <div class="col-xs-12  re_item2 good_price_item">
+                                            <div class="row">
+                                                <div class="col-xs-5 lgp_item">
+                                                    <a href="#">
+                                                        <img src="http://nhadathaiphong.vn/images/attachment/thumb/69375.jpg" alt="Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng">
+                                                    </a>											<div class="code_row">HP-36845</div>
+                                                </div>
+
+                                                <div class="col-xs-7 rgp_item">
+                                                    <h3><a href="#">Bán nhà số 18/5/40 Nguyễn Hữu Tuệ, Ngô Quyền, Hải Phòng</a>
+                                                        <span></span>
+                                                    </h3>
+                                                    <div>Nhà 1.5 tầng xây độc lập,  sạch sẽ về ở ngay, ngõ rộng 2,2m, khu dân cư đông đúc,
+                                                        gần trường, chợ, bệnh viện, hướng Đông Nam, sổ hồng chính chủ
+                                                    </div>
+                                                    <p>
+                                                        <strong>DTMB:</strong> 57.7 m2 - <strong>Giá:</strong>
+                                                        <span>
+                                                            1.87 tỷ VND
+                                                        </span>
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                            <div class="icon_viphot">
+                                                <img src="{{ asset('images/vip2.gif') }}" alt="Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6  good_price_item_wrap">
+                                        <div class="col-xs-12  re_item2 good_price_item">
+                                            <div class="row">
+                                                <div class="col-xs-5 lgp_item">
+                                                    <a href="#">
+                                                        <img src="http://nhadathaiphong.vn/images/attachment/thumb/40881..jpg" alt="Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng">
+                                                    </a>											<div class="code_row">HP-36845</div>
+                                                </div>
+
+                                                <div class="col-xs-7 rgp_item">
+                                                    <h3><a href="#">Cho thuê nhà số 9 Đoạn Xá, Đông Hải 1, Hải An, Hải Phòng</a>
+                                                        <span></span>
+                                                    </h3>
+                                                    <div>Nhà 1.5 tầng xây độc lập,  sạch sẽ về ở ngay, ngõ rộng 2,2m, khu dân cư đông đúc,
+                                                        gần trường, chợ, bệnh viện, hướng Đông Nam, sổ hồng chính chủ
+                                                    </div>
+                                                    <p>
+                                                        <strong>DTMB:</strong> 57.7 m2 - <strong>Giá:</strong>
+                                                        <span>
+                                                            1.87 tỷ VND
+                                                        </span>
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                            <div class="icon_viphot">
+                                                <img src="{{ asset('images/vip2.gif') }}" alt="Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6  good_price_item_wrap">
+                                        <div class="col-xs-12  re_item2 good_price_item">
+                                            <div class="row _vip">
+                                                <div class="col-xs-5 lgp_item">
+                                                    <a href="#">
+                                                        <img src="http://nhadathaiphong.vn/images/attachment/thumb/565610.jpg" alt="Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng">
+                                                    </a>
+                                                    <div class="code_row">HP-36845</div>
+                                                </div>
+
+                                                <div class="col-xs-7 rgp_item">
+                                                    <h3>
+                                                        <a href="#">Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng
+                                                        </a>
+                                                        <span></span>
+                                                    </h3>
+                                                    <div>Nhà xây 4 tầng kiên cố, chắc chắn, thiết kế hiện đại, ngõ rộng 4m, sân cổng riêng
+                                                        biệt, gần trường, chợ, hướng Tây, an ninh tốt, sổ đỏ chính chủ
+                                                    </div>
+                                                    <p>
+                                                        <strong>DTMB:</strong> 57.7 m2 - <strong>Giá:</strong>
+                                                        <span>
+                                                            1.87 tỷ VND
+                                                        </span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="icon_viphot">
+                                                <img src="{{ asset('images/vip2.gif') }}" alt="Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6  good_price_item_wrap">
+                                        <div class="col-xs-12  re_item2 good_price_item">
+                                            <div class="row">
+                                                <div class="col-xs-5 lgp_item">
+                                                    <a href="#">
+                                                        <img src="http://nhadathaiphong.vn/images/attachment/thumb/40881..jpg" alt="Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng">
+                                                    </a>											<div class="code_row">HP-36845</div>
+                                                </div>
+
+                                                <div class="col-xs-7 rgp_item">
+                                                    <h3><a href="#">Cho thuê nhà số 9 Đoạn Xá, Đông Hải 1, Hải An, Hải Phòng</a>
+                                                        <span></span>
+                                                    </h3>
+                                                    <div>Nhà 1.5 tầng xây độc lập,  sạch sẽ về ở ngay, ngõ rộng 2,2m, khu dân cư đông đúc,
+                                                        gần trường, chợ, bệnh viện, hướng Đông Nam, sổ hồng chính chủ
+                                                    </div>
+                                                    <p>
+                                                        <strong>DTMB:</strong> 57.7 m2 - <strong>Giá:</strong>
+                                                        <span>
+                                                            1.87 tỷ VND
+                                                        </span>
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                            <div class="icon_viphot">
+                                                <img src="{{ asset('images/vip2.gif') }}" alt="Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 good_price_item_wrap">
+                                        <div class="col-xs-12 re_item2 good_price_item">
                                             <div class="row _vip_hot">
                                                 <div class="col-xs-5 lgp_item">
                                                     <a href="#">
@@ -238,20 +393,22 @@
                                         </div>
                                     </div>
                                     <div class="col-xs-12 col-sm-6 good_price_item-wrap">
-                                        <div class="col-xs-12 good_price_item">
-                                            <div class="row">
+                                        <div class="col-xs-12 re_item2 good_price_item">
+                                            <div class="row _vip_hot">
                                                 <div class="col-xs-5 lgp_item">
                                                     <a href="#">
-                                                        <img src="http://nhadathaiphong.vn/images/attachment/thumb/69375.jpg" alt="Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng">
+                                                        <img src="http://nhadathaiphong.vn/images/attachment/thumb/4951.jpg" alt="Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng">
                                                     </a>											<div class="code_row">HP-36845</div>
                                                 </div>
 
                                                 <div class="col-xs-7 rgp_item">
-                                                    <h3><a href="#">Bán nhà số 18/5/40 Nguyễn Hữu Tuệ, Ngô Quyền, Hải Phòng</a>
+                                                    <h3>
+                                                        <a href="#">Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng
+                                                        </a>
                                                         <span></span>
                                                     </h3>
-                                                    <div>Nhà 1.5 tầng xây độc lập,  sạch sẽ về ở ngay, ngõ rộng 2,2m, khu dân cư đông đúc,
-                                                        gần trường, chợ, bệnh viện, hướng Đông Nam, sổ hồng chính chủ
+                                                    <div>Nhà xây 4 tầng kiên cố, chắc chắn, thiết kế hiện đại, ngõ rộng 4m, sân cổng riêng
+                                                        biệt, gần trường, chợ, hướng Tây, an ninh tốt, sổ đỏ chính chủ
                                                     </div>
                                                     <p>
                                                         <strong>DTMB:</strong> 57.7 m2 - <strong>Giá:</strong>
@@ -267,8 +424,64 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-xs-12 col-sm-6 good_price_item-wrap">
-                                        <div class="col-xs-12 good_price_item">
+                                    <div class="col-xs-12 col-sm-6  good_price_item_wrap">
+                                        <div class="col-xs-12 re_item2 good_price_item">
+                                            <div class="row _vip_hot">
+                                                <div class="col-xs-5 lgp_item">
+                                                    <a href="#">
+                                                        <img src="http://nhadathaiphong.vn/images/attachment/thumb/4951.jpg" alt="Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng">
+                                                    </a>											<div class="code_row">HP-36845</div>
+                                                </div>
+
+                                                <div class="col-xs-7 rgp_item">
+                                                    <h3>
+                                                        <a href="#">Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng
+                                                        </a>
+                                                        <span></span>
+                                                    </h3>
+                                                    <div>Nhà xây 4 tầng kiên cố, chắc chắn, thiết kế hiện đại, ngõ rộng 4m, sân cổng riêng
+                                                        biệt, gần trường, chợ, hướng Tây, an ninh tốt, sổ đỏ chính chủ
+                                                    </div>
+                                                    <p>
+                                                        <strong>DTMB:</strong> 57.7 m2 - <strong>Giá:</strong>
+                                                        <span>
+                                                            1.87 tỷ VND
+                                                        </span>
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                            <div class="icon_viphot">
+                                                <img src="{{ asset('images/vip2.gif') }}" alt="Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12" style="border-bottom: 0; margin-bottom: 0; padding-bottom: 0; margin-top: 15px;">
+                                        <p class="more"><a href="#"><i class="fa fa-angle-double-right"></i> Xem thêm</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-3 col_right">
+
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="free_price">
+            <div class="container">
+                <div class="row margin-0">
+                    <div class="col-xs-12">
+                        <div class="free_price_box">
+                            <p class="title_box1">
+                                <strong>TIN RAO VẶT CỘNG ĐỒNG MIỄN PHÍ</strong>
+                            </p>
+                            <div >
+                                <div class="row body_top_box">
+                                    @for ($i=0; $i<10; $i++)
+                                    <div class="col-xs-12 col-sm-4  free_price_item_wrap">
+                                        <div class="col-xs-12 re_item2 free_price_item">
                                             <div class="row">
                                                 <div class="col-xs-5 lgp_item">
                                                     <a href="#">
@@ -291,18 +504,90 @@
                                                     </p>
                                                 </div>
                                             </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-4  free_price_item_wrap">
+                                        <div class="col-xs-12 re_item2 free_price_item">
+                                            <div class="row">
+                                                <div class="col-xs-5 lgp_item">
+                                                    <a href="#">
+                                                        <img src="http://nhadathaiphong.vn/images/attachment/thumb/568z106.jpg" alt="Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng">
+                                                    </a>											<div class="code_row">HP-36845</div>
+                                                </div>
 
-                                            <div class="icon_viphot">
-                                                <img src="{{ asset('images/vip2.gif') }}" alt="Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng">
+                                                <div class="col-xs-7 rgp_item">
+                                                    <h3><a href="#">Cho thuê nhà số 9 Đoạn Xá, Đông Hải 1, Hải An, Hải Phòng</a>
+                                                        <span></span>
+                                                    </h3>
+                                                    <div>Nhà 1.5 tầng xây độc lập,  sạch sẽ về ở ngay, ngõ rộng 2,2m, khu dân cư đông đúc,
+                                                        gần trường, chợ, bệnh viện, hướng Đông Nam, sổ hồng chính chủ
+                                                    </div>
+                                                    <p>
+                                                        <strong>DTMB:</strong> 57.7 m2 - <strong>Giá:</strong>
+                                                        <span>
+                                                                1.87 tỷ VND
+                                                            </span>
+                                                    </p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-xs-12 col-sm-4  free_price_item_wrap">
+                                        <div class="col-xs-12 re_item2 free_price_item">
+                                            <div class="row">
+                                                <div class="col-xs-5 lgp_item">
+                                                    <a href="#">
+                                                        <img src="http://nhadathaiphong.vn/images/attachment/thumb/2960486327MHT3.jpg" alt="Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng">
+                                                    </a>											<div class="code_row">HP-36845</div>
+                                                </div>
+
+                                                <div class="col-xs-7 rgp_item">
+                                                    <h3><a href="#">Cho thuê nhà số 9 Đoạn Xá, Đông Hải 1, Hải An, Hải Phòng</a>
+                                                        <span></span>
+                                                    </h3>
+                                                    <div>Nhà 1.5 tầng xây độc lập,  sạch sẽ về ở ngay, ngõ rộng 2,2m, khu dân cư đông đúc,
+                                                        gần trường, chợ, bệnh viện, hướng Đông Nam, sổ hồng chính chủ
+                                                    </div>
+                                                    <p>
+                                                        <strong>DTMB:</strong> 57.7 m2 - <strong>Giá:</strong>
+                                                        <span>
+                                                                1.87 tỷ VND
+                                                            </span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-4  free_price_item_wrap">
+                                        <div class="col-xs-12 re_item2 free_price_item">
+                                            <div class="row">
+                                                <div class="col-xs-5 lgp_item">
+                                                    <a href="#">
+                                                        <img src="http://nhadathaiphong.vn/images/attachment/thumb/4592d597efe08641661f3f50.jpg" alt="Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng">
+                                                    </a>											<div class="code_row">HP-36845</div>
+                                                </div>
+
+                                                <div class="col-xs-7 rgp_item">
+                                                    <h3><a href="#">Cho thuê nhà số 9 Đoạn Xá, Đông Hải 1, Hải An, Hải Phòng</a>
+                                                        <span></span>
+                                                    </h3>
+                                                    <div>Nhà 1.5 tầng xây độc lập,  sạch sẽ về ở ngay, ngõ rộng 2,2m, khu dân cư đông đúc,
+                                                        gần trường, chợ, bệnh viện, hướng Đông Nam, sổ hồng chính chủ
+                                                    </div>
+                                                    <p>
+                                                        <strong>DTMB:</strong> 57.7 m2 - <strong>Giá:</strong>
+                                                        <span>
+                                                                1.87 tỷ VND
+                                                            </span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @endfor
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-xs-12 col-md-3 col_right">
-
                     </div>
                 </div>
             </div>
