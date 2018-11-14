@@ -29,11 +29,11 @@ class FormUserRequest extends FormRequest
             'email' =>   [
                 'required',
                 'email',
-                Rule::unique('users')->ignore(request('id')),
+                Rule::unique('users')->ignore(auth()->user()->id),
             ],
-            'password'  =>  'required',
-            'group_id'  =>  'required',
-            'branch_id' =>  'required'
+//            'password'  =>  'required',
+//            'group_id'  =>  'required',
+//            'branch_id' =>  'required'
         ];
     }
 }

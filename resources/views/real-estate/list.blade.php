@@ -1,101 +1,195 @@
 @extends('layouts.app')
 
+@section('meta-description')
+    <meta name="description" content="Register Page" >
+@endsection
+
 @section('title')
     {{trans('real-estate.list.pageTitle')}}
 @endsection
 
-@section('content')
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="box box-danger">
-                <div class="box-header with-border">
-                    <h3 class="box-title">{{trans('real-estate.list.tableTitle')}}</h3>
+@section('style')
+    <link rel="stylesheet" href="{{ asset('css/home.css') }}"/>
 
-                    <div class="box-tools pull-right">
-                        <a class="btn btn-danger" id="multi-delete"><i class="fa fa-trash"></i></a>
-                        {!! a('real-estate/create', '', '<i class="fa fa-plus"></i> '.trans('system.add'), ['class'=>'btn btn-sm btn-primary'],'')  !!}
+@endsection
+
+@section('content')
+    @include('includes.header')
+
+    <div class="container-vina">
+        <div class="row subpage">
+
+            <!--Begin right-->
+            @include('includes.left-menu')
+            <!--End right-->
+
+            <!--Begin left-->
+            <div class="col-xs-9 right">
+
+                <!--begin manage_page-->
+                <div class="listlandA_page">
+                    <p class="title_boxM"><strong><i class="fa fa-file-pdf-o"></i>{{trans('real-estate.manage')}}</strong></p>
+                    <div>
+
+                        <div class="_form search_listlandA_page">
+                            <form enctype="multipart/form-data" id="yw0" method="post">
+                                <div class="row">
+
+                                    <div class="col-xs-4">
+                                        <dl>
+                                            <dt>{{trans('page.datefrom')}}</dt>
+                                            <dd>
+                                                <input type="text" class="form-control input-sm datepicker" name="datefrom" id="datefrom" value="{{request('datefrom', \Carbon\Carbon::now()->startOfMonth()->format('d/m/Y'))}}">
+                                            </dd>
+                                        </dl>
+                                    </div>
+
+                                    <div class="col-xs-4">
+                                        <dl>
+                                            <dt>{{trans('page.dateto')}}</dt>
+                                            <dd>
+                                                <input type="text" class="form-control input-sm datepicker" name="dateto" id="dateto" value="{{request('dateto', \Carbon\Carbon::now()->format('d/m/Y'))}}">
+                                            </dd>
+                                        </dl>
+                                    </div>
+
+                                    <div class="col-xs-4">
+                                        <dl>
+                                            <dt>{{trans('real-estate.formCreateLabel.reCategory')}}</dt>
+                                            <dd>
+                                                <select name="re_category_id" id="re_category_id">
+                                                    <option value="">{{trans('real-estate.all')}}</option>
+                                                    @foreach(\App\ReCategory::all() as $item)
+                                                        <option value="{{$item->id}}">{{$item->name}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </dd>
+                                        </dl>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <dl>
+                                            <dt>{{trans('real-estate.formCreateLabel.reType')}}</dt>
+                                            <dd>
+                                                <select name="re_type_id" id="re_type_id">
+                                                    <option value="">{{trans('real-estate.all')}}</option>
+                                                        @foreach(\App\ReType::all() as $item)
+                                                            <option value="{{$item->id}}">{{$item->name}}</option>
+                                                        @endforeach
+                                                </select>
+                                            </dd>
+                                        </dl>
+                                    </div>
+
+                                    <div class="col-xs-4">
+                                        <dl>
+                                            <dt>{{trans('real-estate.formCreateLabel.district')}}</dt>
+                                            <dd>
+                                                <select name="district_id" id="district_id">
+                                                    <option value="">{{trans('real-estate.all')}}</option>
+                                                    @foreach(\App\District::all() as $item)
+                                                        <option value="{{$item->id}}">{{$item->name}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </dd>
+                                        </dl>
+                                    </div>
+
+                                    <div class="col-xs-4">
+                                        <dl>
+                                            <dt>{{trans('real-estate.post_type')}}</dt>
+                                            <dd>
+                                                <select name="post_type" id="post_type">
+                                                    <option value="">Tất cả</option>
+                                                    <option value="3">Tin cần bán gấp</option>
+                                                    <option value="2">Tin giá hấp dẫn</option>
+                                                    <option value="1">Tin rao cộng đồng miễn phí</option>
+                                                </select></dd>
+                                        </dl>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-xs-8">
+                                        <dl>
+                                            <dd class="list_checkbox">
+                                                &nbsp;
+                                            </dd>
+                                        </dl>
+                                    </div>
+
+                                    <div class="col-xs-4" style="text-align: right;">
+                                        <button type="submit" class="_btn bg_red" style="padding: 6px 15px;"><i class="fa fa-search fa-fw"></i> TÌM KIẾM</button>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+
+                        <div class="box-body">
+                            <div class="table-responsive">
+                            <table class="table table-bordered" id="datatable">
+                                <thead>
+                                    <tr>
+                                        <th>{{trans('real-estate.list.column.title')}}</th>
+                                        <th>{{trans('real-estate.list.column.category')}}</th>
+                                        <th>{{trans('real-estate.list.column.type')}}</th>
+                                        <th>{{trans('real-estate.list.column.district')}}</th>
+                                        <th>{{trans('real-estate.list.column.post_date')}}</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                            </div>
+                        </div>
+
+                        <div class="clearfix"></div>
                     </div>
                 </div>
-                <div class="box-body">
-                    {{--<div class="table-responsive">--}}
-                        {{--<table class="table table-bordered" id="datatable">--}}
-                            {{--<thead>--}}
-                            {{--<tr>--}}
-                                {{--<th>Id</th>--}}
-                                {{--<th>Tên</th>--}}
-                                {{--<th>Mô tả ngắn</th>--}}
-                                {{--<th>Danh mục</th>--}}
-                                {{--<th>Loại BĐS</th>--}}
-                                {{--<th>Nơi rao</th>--}}
-                                {{--<th>Ngày đăng</th>--}}
-                                {{--<th>Quản lý</th>--}}
-                            {{--</tr>--}}
-                            {{--</thead>--}}
-                        {{--</table>--}}
-                    {{--</div>--}}
-                    {!! $dataTable->table() !!}
-                </div>
+                <!--end manage_page-->
+
             </div>
+            <!--End left-->
+
         </div>
     </div>
+    <link rel="stylesheet" href="{{asset('plugins/jquery.datatables/css/jquery.dataTables.min.css')}}" />
+
+    @include('includes.footer')
 @endsection
 
-@section('js')
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.0.3/css/buttons.dataTables.min.css">
-    <script src="https://cdn.datatables.net/buttons/1.0.3/js/dataTables.buttons.min.js"></script>
-    <script src="/vendor/datatables/buttons.server-side.js"></script>
-    {!! $dataTable->scripts() !!}
+@push('js')
+    <script src="{{asset('plugins/moment-develop/moment.js')}}"></script>
+    <script src="{{asset('plugins/bootstrap-datetimepicker-master/build/js/bootstrap-datetimepicker.min.js')}}"></script>
+    <script src="{{asset('plugins/jquery.datatables/js/jquery.dataTables.js')}}"></script>
     <script>
-        {{--$(function() {--}}
-            {{--$('#datatable').DataTable({--}}
-                {{--processing: true,--}}
-                {{--serverSide: true,--}}
-                {{--ajax: '{!! asset('real-estate/data') !!}',--}}
-                {{--columns: [--}}
-                    {{--{ data: 'id', name: 'id' },--}}
-                    {{--{ data: 'title', name: 'title' },--}}
-                    {{--{ data: 'short_description', name: 'short_description' },--}}
-                    {{--{ data: 'category', name: 'reCategory.name' },--}}
-                    {{--{ data: 'type', name: 'reType.name' },--}}
-                    {{--{ data: 'province', name: 'province.name' },--}}
-                    {{--{ data: 'post_date', name: 'post_date' },--}}
-                    {{--{ data: 'manage', name: 'manage'  , sortable:false, searchable: false}--}}
-                {{--]--}}
-            {{--});--}}
-        {{--});--}}
-        $("#dataTablesCheckbox").on('click',function() { // bulk checked
-            var status = this.checked;
-            $(".deleteRow").each( function() {
-                $(this).prop("checked",status);
+        $(function() {
+            $('.datepicker').datetimepicker({format: 'DD/MM/YYYY'});
+
+            $('#datatable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    'url': urlDatatable ='{!! route('realEstateData') !!}?filter={{$filter}}',
+                    'type': 'GET',
+                    'data': function (d) {
+                        d.datefrom    =   $('#datefrom').val();
+                        d.datefrom    =   $('#dateto').val();
+                        d.re_category_id = $('#re_category_id').val();
+                        d.re_type_id = $('#re_type_id').val();
+                        d.district_id = $('#district_id').val();
+                        d.post_type = $('#post_type').val();
+                    },
+                },
+                columns: [
+                    { data: 'title', name: 'title' },
+                    { data: 're_category_id', name: 're_category_id' },
+                    { data: 're_type_id', name: 're_type_id' },
+                    { data: 'district_id', name: 'district_id' },
+                    { data: 'post_date', name: 'post_date' },
+                ]
             });
         });
-        $('#multi-delete').click(function() {
-            var dataTable = $('#dataTableBuilder').DataTable();
-            if( $('.deleteRow:checked').length > 0 ){  // at-least one checkbox checked
-                var ids = [];
-                $('.deleteRow').each(function(){
-                    if($(this).is(':checked')) {
-                        ids.push($(this).val());
-                    }
-                });
-                var ids_string = ids.toString();  // array to string conversion
-                console.log(ids_string);
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                $.ajax({
-                    type: "POST",
-                    url: "/real-estate/multi-delete",
-                    data: {ids:ids_string},
-                    success: function(result) {
-                        dataTable.draw(); // redrawing datatable
-                    },
-                    async:false
-                });
-            }
-        });
     </script>
-@endsection
+@endpush
