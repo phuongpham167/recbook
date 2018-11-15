@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends(theme(TRUE).'.layouts.app')
 
 @section('meta-description')
     <meta name="description" content="Register Page" >
@@ -14,7 +14,7 @@
 @endsection
 
 @section('content')
-    @include('includes.header')
+    @include(theme(TRUE).'.includes.header')
 
     <div class="container-vina">
         <div class="row subpage">
@@ -138,7 +138,9 @@
                                         <th>{{trans('real-estate.list.column.type')}}</th>
                                         <th>{{trans('real-estate.list.column.district')}}</th>
                                         <th>{{trans('real-estate.list.column.post_date')}}</th>
-                                        <th>{{trans('real-estate.list.column.manage')}}</th>
+                                        @if($filter != 'tin-rao-da-xoa')
+                                            <th>{{trans('real-estate.list.column.manage')}}</th>
+                                        @endif
                                     </tr>
                                 </thead>
                             </table>
@@ -157,7 +159,7 @@
     </div>
     <link rel="stylesheet" href="{{asset('plugins/jquery.datatables/css/jquery.dataTables.min.css')}}" />
 
-    @include('includes.footer')
+    @include(theme(TRUE).'.includes.footer')
 @endsection
 
 @push('js')
@@ -190,7 +192,9 @@
                     { data: 're_type_id', name: 're_type_id' },
                     { data: 'district_id', name: 'district_id' },
                     { data: 'post_date', name: 'post_date' },
-                    { data: 'manage', name: 'manage'  , sortable:false, searchable: false}
+                    @if($filter != 'tin-rao-da-xoa')
+                        { data: 'manage', name: 'manage'  , sortable:false, searchable: false}
+                    @endif
                 ]
             });
         });

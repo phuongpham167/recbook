@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends(theme(TRUE).'.layouts.app')
 
 @section('meta-description')
     <meta name="description" content="Register Page" >
@@ -14,7 +14,7 @@
 @endsection
 
 @section('content')
-    @include('includes.header')
+    @include(theme(TRUE).'.includes.header')
 
     <div class="container-vina">
         <script type="text/javascript" src="css/upload/jquery.uploadifive.min.js"></script>
@@ -756,7 +756,7 @@
         </div>
     </div>
 
-    @include('includes.footer')
+    @include(theme(TRUE).'.includes.footer')
 @endsection
 
 @section('js')

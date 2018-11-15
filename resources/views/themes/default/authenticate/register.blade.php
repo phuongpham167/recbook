@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends(theme(TRUE).'.layouts.app')
 
 @section('meta-description')
     <meta name="description" content="Register Page" >
@@ -13,7 +13,7 @@
 @endsection
 
 @section('content')
-    @include('includes.header')
+    @include(theme(TRUE).'.includes.header')
 
     <div class="col-xs-6 col-xs-offset-3">
         <div class="_form dangnhap_page bg_fdfdfd">
@@ -97,7 +97,7 @@
             </form>
         </div>
     </div>
-    @include('includes.footer')
+    @include(theme(TRUE).'.includes.footer')
 @endsection
 
 @section('js')

@@ -41,7 +41,7 @@
                                 <p class="fax-1"><strong>{{trans('contact.fax')}}:</strong> {{\Efriandika\LaravelSettings\Facades\Settings::get('fax')}}</p>
                                 <p class="email-1"><strong>{{trans('contact.email')}}:</strong> <a href="{{\Efriandika\LaravelSettings\Facades\Settings::get('email')}}">{{\Efriandika\LaravelSettings\Facades\Settings::get('email')}}</a></p>
                             </div>
-                            @include('includes.message')
+                            @include(theme(TRUE).'.includes.message')
                             <form id="contact-form" method="post">
                                 {{csrf_field()}}
                                 <ul>

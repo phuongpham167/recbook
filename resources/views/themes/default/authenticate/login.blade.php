@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends(theme(TRUE).'.layouts.app')
 
 @section('meta-description')
     <meta name="description" content="Login Page" >

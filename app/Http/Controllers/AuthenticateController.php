@@ -12,7 +12,7 @@ class AuthenticateController extends Controller
 {
     public function getLogin()
     {
-        return view('authenticate.login');
+        return v('authenticate.login');
     }
 
     public function login($username, $password, $remember=false,$api=false)
@@ -108,7 +108,7 @@ class AuthenticateController extends Controller
 
     public function getRegister()
     {
-        return view('authenticate.register');
+        return v('authenticate.register');
     }
 
     public function postRegister(Request $request)
