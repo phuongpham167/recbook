@@ -14,4 +14,9 @@ class PageController extends Controller
     {
         return v('pages.home');
     }
+
+    public function getContact()
+    {
+        return v('contact.contact');
+    }
 }
