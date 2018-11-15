@@ -12,7 +12,7 @@ function get_web_id () {
 }
 
 function a($url, $get='', $name='',$attr=[], $realurl='',$callback=''){
-    if(p($url,'get')){
+//    if(p($url,'get')){
         $attrs  =   '';
         foreach($attr as $k=>$i){
             $attrs.=    "$k='$i'";
@@ -23,7 +23,7 @@ function a($url, $get='', $name='',$attr=[], $realurl='',$callback=''){
         }
         else $get   =   '?'.$get;
         return "<a href='".asset($url)."$get' $attrs onclick=\"$callback\">".(!empty($name)?$name:$url)."</a>";
-    }
+//    }
 }
 function v($view = null, $data = [], $mergeData = [])
 {
