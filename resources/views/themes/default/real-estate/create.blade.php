@@ -35,7 +35,7 @@
         <div class="row subpage">
 
             <!--Begin right-->
-        @include('includes.left-menu')
+        @include('themes.default.includes.left-menu')
         <!--End right-->
 
             <!--Begin left-->

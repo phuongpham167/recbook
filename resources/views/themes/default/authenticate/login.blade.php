@@ -13,12 +13,12 @@
 @endsection
 
 @section('content')
-    @include('includes.header')
+    @include(theme(TRUE).'.includes.header')
 
     <div class="container-vina">
         <div class="row subpage">
             <div class="col-xs-6 col-xs-offset-3">
-                @include('includes.message')
+                @include('themes.default.includes.message')
                 <div class="_form dangnhap_page bg_fdfdfd">
                     <form class="_check_validate" id="dangnhap-form" method="post">
                         {{csrf_field()}}
@@ -54,7 +54,7 @@
             </div>
         </div>
     </div>
-    @include('includes.footer')
+    @include(theme(TRUE).'.includes.footer')
 @endsection
 
 @section('js')

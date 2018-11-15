@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends(theme(TRUE).'.layouts.app')
 
 @section('meta-description')
     <meta name="description" content="Thông tin thành viên" >
@@ -14,7 +14,7 @@
 @endsection
 
 @section('content')
-    @include('includes.header')
+    @include(theme(TRUE).'.includes.header')
 
     <div class="container-vina">
         <div class="row subpage">
@@ -122,7 +122,7 @@
             <!--End left-->
 
             <!--Begin right-->
-            @include('includes.right-menu')
+            @include('themes.default.includes.right-menu')
             <!--End right-->
 
         </div>
@@ -198,7 +198,7 @@
 
     </div>
 
-    @include('includes.footer')
+    @include(theme(TRUE).'.includes.footer')
 @endsection
 
 @section('js')

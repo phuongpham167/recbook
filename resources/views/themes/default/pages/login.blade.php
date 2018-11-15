@@ -13,7 +13,7 @@
 @endsection
 
 @section('content')
-    @include('includes.header')
+    @include(theme(TRUE).'.includes.header')
     <div class="login-box">
 
         <!-- /.login-logo -->
@@ -70,7 +70,7 @@
         </div>
         <!-- /.login-box-body -->
     </div>
-    @include('includes.footer')
+    @include(theme(TRUE).'.includes.footer')
 @endsection
 
 @section('js')

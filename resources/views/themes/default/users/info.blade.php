@@ -20,12 +20,12 @@
         <div class="row subpage">
 
             <!--Begin right-->
-        @include('includes.left-menu')
+        @include('themes.default.includes.left-menu')
         <!--End right-->
 
             <!--Begin left-->
             <div class="col-xs-9 right">
-                @include('includes.message')
+                @include('themes.default.includes.message')
                 <!--begin manage_page-->
                 <div class="changeinfoA_page member_page">
                     <p class="title_boxM"><strong><i class="fa fa-file-pdf-o"></i> THAY ĐỔI MẬT KHẨU</strong></p>
