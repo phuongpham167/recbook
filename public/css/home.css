@@ -211,3 +211,39 @@
   border-left: 15px solid #e40b00;
 }
 
+.addition_info {
+  margin-top: 20px;
+}
+
+.brokers ul {
+  list-style: none;
+  padding: 0;
+}
+
+.brokers ul .broker-item dt {
+  float: left;
+}
+
+.brokers ul .broker-item dt a {
+  display: block;
+  width: 100px;
+}
+
+.brokers ul .broker-item dd {
+  margin-left: 110px;
+}
+
+.brokers ul .broker-item dd .name {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.brokers ul .broker-item dd .name a {
+  text-decoration: none;
+}
+
+.brokers ul .broker-item dd .phone {
+  color: #e40b00;
+  font-weight: 700;
+}
+

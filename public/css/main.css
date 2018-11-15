@@ -488,5 +488,103 @@ p.more a {
   text-transform: uppercase;
 }
 
+.vip_box > div {
+  background: #f5f5f5;
+  border: 1px solid #e7e7e7;
+}
+
+.vip_box > div dl {
+  padding: 14px;
+  border-bottom: 2px dotted #ccc;
+  margin-bottom: 0;
+}
+
+.vip_box > div dl dt {
+  float: left;
+  position: relative;
+}
+
+.vip_box > div dl dt a {
+  display: block;
+  width: 80px;
+  height: 65px;
+  margin-top: 4px;
+}
+
+.vip_box > div dl dt a img {
+  width: 100%;
+  height: 100%;
+}
+
+.vip_box > div dl dt div {
+  margin-top: 4px;
+  text-align: center;
+}
+
+.vip_box > div dl dd {
+  margin-left: 90px;
+  margin-top: -20px;
+}
+
+.vip_box > div dl dd h3 {
+  margin-bottom: 5px;
+  height: 36px;
+  overflow: hidden;
+}
+
+.vip_box > div dl dd h3 a {
+  display: inline-block;
+  line-height: 18px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #04538b;
+}
+
+.vip_box > div dl dd p {
+  font-size: 12px;
+  margin-top: 2px;
+}
+
+.vip_box > div dl dd p strong {
+  font-weight: 600;
+  color: #000;
+}
+
+.vip_box > div dl dd span {
+  color: #e40b00;
+  font-weight: 600;
+}
+
+.vip_box .vip_slider {
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
 /*--------------- end row two columns ---------------*/
+
+/*--------------- row three columns ---------------*/
+
+.three_cols .three_i .title_col {
+  background: #e40b00;
+  color: #fff;
+  line-height: 45px;
+  text-indent: 15px;
+  font-size: 18px;
+  margin-bottom: 0;
+}
+
+.three_cols .three_i .title_col i {
+  margin-right: 5px;
+}
+
+.three_cols .three_i .content {
+  background: #f5f5f5;
+  height: 100%;
+  padding-top: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+/*--------------- end row three columns ---------------*/
 

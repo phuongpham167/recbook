@@ -7,6 +7,7 @@
     <title>@yield('title') - {{config('setting.system_sitename')}}</title>
     <link rel="stylesheet" href="{{ asset('common-css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('common-css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('common-css/jquery.bxslider.css') }}">
     <link rel="stylesheet" href="{{ asset('css/theme.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/main.css') }}"/>
     @stack('style')
@@ -15,8 +16,10 @@
 
     @yield('content')
 
-    <script src="{{ asset('js/jquery.min.js') }}"></script>
+    {{--<script src="{{ asset('js/jquery.min.js') }}"></script>--}}
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/jquery.bxslider.js') }}"></script>
     <script>
         $(document).ready(function() {
             // Show or hide the sticky footer button

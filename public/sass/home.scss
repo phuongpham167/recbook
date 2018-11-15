@@ -1,3 +1,5 @@
+@import 'color';
+
 .flex-direction-nav .flex-prev {
     left: 0px !important;
 }
@@ -191,6 +193,44 @@
                 font-weight: 600;
                 padding-left: 15px;
                 border-left: 15px solid #e40b00;
+            }
+        }
+    }
+}
+.addition_info {
+    margin-top: 20px;
+}
+.brokers {
+    ul {
+        list-style: none;
+        padding: 0;
+        .broker-item {
+            dt {
+                float: left;
+                a {
+                    display: block;
+                    width: 100px;
+                    .b_img {
+
+                    }
+                }
+            }
+            dd {
+                margin-left: 110px;
+                .name {
+                    font-size: 18px;
+                    font-weight: 700;
+                    a {
+                        text-decoration: none;
+                    }
+                }
+                .phone {
+                    color: $primaryColor;
+                    font-weight: 700;
+                }
+                .des {
+
+                }
             }
         }
     }
