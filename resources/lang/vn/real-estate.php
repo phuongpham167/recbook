@@ -9,6 +9,7 @@
 return [
     'pageCreateTitle' => 'Thêm tin bất động sản',
     'manage' => 'QUẢN LÝ TIN RAO',
+    'user_manage' => 'HỆ THỐNG QUẢN LÝ',
     'all' => 'Tất cả',
     'post_type' => 'Loại tin',
     'formCreateLabel' => [

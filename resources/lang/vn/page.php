@@ -7,6 +7,7 @@
  */
 return [
     'index' =>  'Trang chủ',
+    'search' =>  'TÌM KIẾM',
     'rolelist'  =>  'Danh sách quyền',
     'creategroup'   =>  'Tạo thêm quyền',
     'editgroup' =>  'Sửa thông tin',

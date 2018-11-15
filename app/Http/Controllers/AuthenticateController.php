@@ -43,7 +43,7 @@ class AuthenticateController extends Controller
     public function postLogin(LoginRequest $request)
     {
         if($this->login($request->input('id'),$request->input('password'),$request->has('remember'))){
-            return redirect()->to(asset('/'));
+            return redirect()->to(asset('/quan-ly-tin-rao'));
         } else {
             return redirect()->back()->withErrors(trans('auth.failed'));
         }
@@ -80,6 +80,11 @@ class AuthenticateController extends Controller
             set_notice(trans('users.fill_all'), 'warning');
 
         return redirect()->back();
+    }
+
+    public function getManage()
+    {
+        return v('users.manage');
     }
 
     public function getInfo()

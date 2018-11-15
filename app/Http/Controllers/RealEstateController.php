@@ -111,7 +111,9 @@ class RealEstateController extends Controller
             })
             ->addColumn('district_id', function($dt) {
                 return $dt->district->name;
-            });
+            })->addColumn('manage', function($dt) {
+                return a('bat-dong-san/xoa', 'id='.$dt->id,trans('g.delete'), ['class'=>'btn btn-xs btn-danger'],'#',"return bootbox.confirm('".trans('system.delete_confirm')."', function(result){if(result==true){window.location.replace('".asset('bat-dong-san/xoa?id='.$dt->id)."')}})").'  '.a('bat-dong-san/sua', 'id='.$dt->id,trans('g.edit'), ['class'=>'btn btn-xs btn-default']);
+            })->rawColumns(['manage']);
 
         return $result->make(true);
     }
@@ -215,7 +217,14 @@ class RealEstateController extends Controller
 
     public function delete()
     {
-
+        $data   =   RealEstate::find(request('id'));
+        if(!empty($data)){
+//            event_log('Xóa thành viên '.$data->name.' id '.$data->id);
+            $data->delete();
+            set_notice(trans('system.delete_success'), 'success');
+        }else
+            set_notice(trans('system.not_exist'), 'warning');
+        return redirect()->back();
     }
 
     public function multiDelete(Request $request)

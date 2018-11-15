@@ -121,7 +121,7 @@
                                     </div>
 
                                     <div class="col-xs-4" style="text-align: right;">
-                                        <button type="submit" class="_btn bg_red" style="padding: 6px 15px;"><i class="fa fa-search fa-fw"></i> TÌM KIẾM</button>
+                                        <button type="submit" class="_btn bg_red" style="padding: 6px 15px;"><i class="fa fa-search fa-fw"></i>{{trans('page.search')}}</button>
                                     </div>
                                 </div>
 
@@ -138,6 +138,7 @@
                                         <th>{{trans('real-estate.list.column.type')}}</th>
                                         <th>{{trans('real-estate.list.column.district')}}</th>
                                         <th>{{trans('real-estate.list.column.post_date')}}</th>
+                                        <th>{{trans('real-estate.list.column.manage')}}</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -163,6 +164,7 @@
     <script src="{{asset('plugins/moment-develop/moment.js')}}"></script>
     <script src="{{asset('plugins/bootstrap-datetimepicker-master/build/js/bootstrap-datetimepicker.min.js')}}"></script>
     <script src="{{asset('plugins/jquery.datatables/js/jquery.dataTables.js')}}"></script>
+    <script src="{{asset('plugins/bootbox.min.js')}}"></script>
     <script>
         $(function() {
             $('.datepicker').datetimepicker({format: 'DD/MM/YYYY'});
@@ -188,6 +190,7 @@
                     { data: 're_type_id', name: 're_type_id' },
                     { data: 'district_id', name: 'district_id' },
                     { data: 'post_date', name: 'post_date' },
+                    { data: 'manage', name: 'manage'  , sortable:false, searchable: false}
                 ]
             });
         });
