@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('themes.default.layouts.app')
 
 @section('meta-description')
     <meta name="description" content="Thông tin thành viên" >
