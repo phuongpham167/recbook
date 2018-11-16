@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('meta-description')
-    <meta name="description" content="Login Page" >
+    <meta name="description" content="Forgot Password Page" >
 @endsection
 
 @section('title')
