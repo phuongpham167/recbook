@@ -1,7 +1,7 @@
-@extends(theme(TRUE).'.layouts.app')
+@extends('layouts.app')
 
 @section('meta-description')
-    <meta name="description" content="Login Page" >
+    <meta name="description" content="Forgot Password Page" >
 @endsection
 
 @section('title')
@@ -13,12 +13,12 @@
 @endsection
 
 @section('content')
-    @include(theme(TRUE).'.includes.header')
+    @include('includes.header')
 
     <div class="container-vina">
         <div class="row subpage">
             <div class="col-xs-6 col-xs-offset-3">
-                @include('themes.default.includes.message')
+                @include('includes.message')
                 <div class="_form dangnhap_page bg_fdfdfd">
                     <form class="_check_validate" id="dangnhap-form" method="post">
                         {{csrf_field()}}
@@ -54,7 +54,7 @@
             </div>
         </div>
     </div>
-    @include(theme(TRUE).'.includes.footer')
+    @include('includes.footer')
 @endsection
 
 @section('js')
