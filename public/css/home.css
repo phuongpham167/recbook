@@ -215,35 +215,63 @@
   margin-top: 20px;
 }
 
-.brokers ul {
-  list-style: none;
-  padding: 0;
+.brokers .broker_slider .broker-item {
+  background: #f5f5f5;
+  border-bottom: 1px dotted #ccc;
+  padding-top: 14px;
+  width: 100% !important;
 }
 
-.brokers ul .broker-item dt {
+.brokers .broker_slider .broker-item .ct_left {
   float: left;
 }
 
-.brokers ul .broker-item dt a {
+.brokers .broker_slider .broker-item .ct_left a img {
+  height: 100px;
+}
+
+.brokers .broker_slider .broker-item .ct_right {
+  margin-left: 85px;
+}
+
+.brokers .broker_slider .broker-item .ct_right .name {
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 0;
+  text-transform: capitalize;
+}
+
+.brokers .broker_slider .broker-item .ct_right .phone {
+  color: #ea3c00;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.brokers .bx-wrapper .bx-prev {
+  right: 35px;
+}
+
+.brokers .bx-wrapper .bx-next {
+  right: 0px;
+}
+
+.brokers .broker_see_all {
+  background: #f5f5f5;
+}
+
+.brokers .broker_see_all a {
+  padding: 5px 15px;
+  color: #fff;
+  background: #228511;
   display: block;
-  width: 100px;
-}
-
-.brokers ul .broker-item dd {
-  margin-left: 110px;
-}
-
-.brokers ul .broker-item dd .name {
-  font-size: 18px;
-  font-weight: 700;
-}
-
-.brokers ul .broker-item dd .name a {
+  float: right;
+  font-style: italic;
+  margin: 10px 0;
   text-decoration: none;
+  width: 90px;
 }
 
-.brokers ul .broker-item dd .phone {
-  color: #e40b00;
-  font-weight: 700;
+.design .design_content {
+  padding-bottom: 15px;
 }
 

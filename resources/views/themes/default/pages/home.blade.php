@@ -685,44 +685,47 @@
                     <div class="col-xs-12 col-sm-4 three_i brokers">
 
                             <p class="title_col">
-                                <i class="fa fa-users"></i> NHÀ MÔI GIỚI
+                                <a href="#"><i class="fa fa-users"></i> NHÀ MÔI GIỚI</a>
                             </p>
-                            <div class="content">
-                                <ul>
-                                    <li>
-                                        <dl class="broker-item">
-                                            <dt>
-                                                <a href="#"><img class="img-responsive b_img" src="http://nhadathaiphong.vn/images/lander/49521-Ki%C3%AAn.jpg" alt=""></a>
-                                            </dt>
-                                            <dd>
-                                                <h3 class="name"><a href="#">Nguyen Van A</a></h3>
-                                                <p class="phone">0999.0880.32</p>
-                                                <p class="des">GĐ Kinh Doanh - Chuyên Viên tư vấn mua bán, cho thuê, định giá BĐS Lê Hồng Phong, Mặt Phố Chính (Xem hồ sơ và sản phẩm phụ trách)</p>
-                                            </dd>
-                                        </dl>
-                                    </li>
-                                    <li>
-                                        <dl class="broker-item">
-                                            <dt>
-                                                <a href="#"><img class="img-responsive b_img" src="http://nhadathaiphong.vn/images/lander/49521-Ki%C3%AAn.jpg" alt=""></a>
-                                            </dt>
-                                            <dd>
-                                                <h3 class="name"><a href="#">Nguyen Van A</a></h3>
-                                                <p class="phone">0999.0880.32</p>
-                                                <p>GĐ Kinh Doanh - Chuyên Viên tư vấn mua bán, cho thuê, định giá BĐS Lê Hồng Phong, Mặt Phố Chính (Xem hồ sơ và sản phẩm phụ trách)</p>
-                                            </dd>
-                                        </dl>
-                                    </li>
-                                </ul>
+                            <div class="content col-xs-12 no-padding-left no-padding-right broker_slider">
+                                @for($i=0; $i<2; $i++)
+                                <div class="col-xs-12 broker-item">
+                                    <div class="ct_left">
+                                        <a href="#">
+                                            <img class="img-responsive b_img" src="http://nhadathaiphong.vn/images/lander/49521-Ki%C3%AAn.jpg" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="ct_right">
+                                        <h3 class="name"><a href="#">Nguyen Van A</a></h3>
+                                        <p class="phone">0999.0880.32</p>
+                                        <p class="des">GĐ Kinh Doanh - Chuyên Viên tư vấn mua bán, cho thuê, định giá BĐS Lê Hồng Phong, Mặt Phố Chính (Xem hồ sơ và sản phẩm phụ trách)</p>
+                                    </div>
+                                </div>
+                                @endfor
                             </div>
-
+                            <div class="col-xs-12 broker_see_all">
+                                <a href="#">Xem tất cả</a>
+                            </div>
                     </div>
                     <div class="col-xs-12 col-sm-4 three_i statistic">
-                        <div class="col-xs-12">
+                        <p class="title_col">
+                            <a href="#">{{ trans('home.statistic_col') }}</a>
+                        </p>
+                        <div class="col-xs-12 content">
+                            <p>{{ trans('home.num_of_user') }}: 111</p>
+                            <p>{{ trans('home.num_of_real_estate') }}: 111</p>
+                            <p>{{ trans('home.num_of_success_transaction') }}: 111</p>
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-4 three_i design">
-                        <div class="col-xs-12">
+                        <p class="title_col">
+                            <a href="#"><i class="fa fa-desktop" aria-hidden="true"></i> {{ trans('home.design_col') }}</a>
+                        </p>
+                        <div class="col-xs-12 content design_content">
+                                <p>Cách xác định hướng nhà theo phong thủy tốt nhất</p>
+                                <a href="#">
+                                    <img class="img-responsive" src="http://nhadathaiphong.vn/images/partner/9998cach-xac-dinh-huong-nha-theo-phong-thuy-tot-nhat-2.jpg" alt="Cách xác định hướng nhà theo phong thủy tốt nhất">
+                                </a>
                         </div>
                     </div>
                 </div>
@@ -744,6 +747,14 @@
             });
         });
         $('.vip_slider').bxSlider({
+            mode: 'vertical',
+            auto: false,
+            minSlides: 30,
+            maxSlides: 30,
+            moveSlides: 1,
+            pager: false
+        });
+        $('.broker_slider').bxSlider({
             mode: 'vertical',
             auto: false,
             minSlides: 30,

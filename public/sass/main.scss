@@ -119,6 +119,7 @@
 /*------------ Footer ------------*/
 .menu-footer {
     background-color: $primaryColor;
+    margin-top: 15px;
     ul {
         list-style: none;
         margin: 0;
@@ -497,6 +498,12 @@ p.more {
 /*--------------- row three columns ---------------*/
 .three_cols {
     .three_i {
+        @media screen and(max-width: 767px) {
+            margin-bottom: 15px;
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
         .title_col {
             background: #e40b00;
             color: #fff;
@@ -504,6 +511,13 @@ p.more {
             text-indent: 15px;
             font-size: 18px;
             margin-bottom: 0;
+            text-transform: uppercase;
+            a {
+                color: #fff;
+                &:hover {
+                    text-decoration: none;
+                }
+            }
             i {
                 margin-right: 5px;
             }
@@ -512,9 +526,9 @@ p.more {
             background: $secondaryColor;
             height: 100%;
             //margin-top: -20px;
-            padding-top: 5px;
-            padding-left: 15px;
-            padding-right: 15px;
+            padding-top: 15px;
+            //padding-left: 15px;
+            //padding-right: 15px;
         }
     }
 }
