@@ -150,6 +150,7 @@ body {
 
 .menu-footer {
   background-color: #e40b00;
+  clear: both;
   margin-top: 15px;
 }
 

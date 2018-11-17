@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{{ asset('common-css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('common-css/font-awesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('common-css/jquery.bxslider.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/theme.css') }}" />
+    {{--<link rel="stylesheet" href="{{ asset('css/theme.css') }}" />--}}
     <link rel="stylesheet" href="{{ asset('css/main.css') }}"/>
     @stack('style')
 </head>

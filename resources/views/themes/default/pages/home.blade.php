@@ -748,7 +748,7 @@
         });
         $('.vip_slider').bxSlider({
             mode: 'vertical',
-            auto: false,
+            auto: true,
             minSlides: 30,
             maxSlides: 30,
             moveSlides: 1,
