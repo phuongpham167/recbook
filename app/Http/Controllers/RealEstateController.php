@@ -19,6 +19,7 @@ use App\Services\ReTypeService;
 use App\Services\StreetService;
 use App\Services\UnitService;
 use App\Services\WardService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Services\RealEstateService;
 use \DataTables;
@@ -76,31 +77,42 @@ class RealEstateController extends Controller
         $this->reSourceService = $reSourceService;
     }
 
-    public function list(RealEstatesDataTable $dataTable)
+    public function list($filter = null)
     {
-
-        return $dataTable->render('real-estate.list');
-//        return v('real-estate.list');
+        return v('real-estate.list', compact('filter'));
     }
 
     public function data()
     {
-        $data = $this->service->getList();
+        $data = new RealEstate();
+
+        if(!empty(\request('filter'))) {
+            if(\request('filter') == 'tin-rao-het-han')
+                $data = $data->where('expire_date','<',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')));
+
+            if(\request('filter') == 'tin-rao-cho-duyet')
+                $data = $data->where('approved','0');
+
+            if(\request('filter') == 'tin-rao-nhap')
+                $data = $data->where('draft','1');
+
+            if(\request('filter') == 'tin-rao-da-xoa')
+                $data = $data->onlyTrashed()->get();
+        }
+        else
+            $data = $data->query();
 
         $result = Datatables::of($data)
-            ->addColumn('category', function($dt) {
-                return $dt->reCategory->name;
+            ->addColumn('re_category_id', function($dt) {
+                return $dt->reCategory ? $dt->reCategory->name : '';
             })
-            ->addColumn('type', function($dt) {
+            ->addColumn('re_type_id', function($dt) {
                 return $dt->reType ? $dt->reType->name : '';
             })
-            ->addColumn('province', function($dt) {
-                return $dt->province->name;
-            })
-            ->addColumn('manage', function($dt) {
-                return a('real-estate/delete', 'id='.$dt->id,trans('g.delete'), ['class'=>'btn btn-xs btn-danger'],'#',
-                        "return bootbox.confirm('".trans('system.delete_confirm')."', function(result){if(result==true){window.location.replace('".asset('real-estate/delete?id='.$dt->id)."')}})").'  '.a('real-estate/edit',
-                        'id='.$dt->id,trans('g.edit'), ['class'=>'btn btn-xs btn-default']);
+            ->addColumn('district_id', function($dt) {
+                return $dt->district->name;
+            })->addColumn('manage', function($dt) {
+                return a('bat-dong-san/xoa', 'id='.$dt->id,trans('g.delete'), ['class'=>'btn btn-xs btn-danger'],'#',"return bootbox.confirm('".trans('system.delete_confirm')."', function(result){if(result==true){window.location.replace('".asset('bat-dong-san/xoa?id='.$dt->id)."')}})").'  '.a('bat-dong-san/sua', 'id='.$dt->id,trans('g.edit'), ['class'=>'btn btn-xs btn-default']);
             })->rawColumns(['manage']);
 
         return $result->make(true);
@@ -205,7 +217,14 @@ class RealEstateController extends Controller
 
     public function delete()
     {
-
+        $data   =   RealEstate::find(request('id'));
+        if(!empty($data)){
+//            event_log('Xóa thành viên '.$data->name.' id '.$data->id);
+            $data->delete();
+            set_notice(trans('system.delete_success'), 'success');
+        }else
+            set_notice(trans('system.not_exist'), 'warning');
+        return redirect()->back();
     }
 
     public function multiDelete(Request $request)
