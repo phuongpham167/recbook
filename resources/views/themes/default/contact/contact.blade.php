@@ -14,7 +14,7 @@
 @endpush
 
 @section('content')
-    @include('includes.header')
+    @include(theme(TRUE).'.includes.header')
 
     <div class="container-vina">
         <div class="row subpage">
@@ -41,7 +41,7 @@
                                 <p class="fax-1"><strong>{{trans('contact.fax')}}:</strong> {{\Efriandika\LaravelSettings\Facades\Settings::get('fax')}}</p>
                                 <p class="email-1"><strong>{{trans('contact.email')}}:</strong> <a href="{{\Efriandika\LaravelSettings\Facades\Settings::get('email')}}">{{\Efriandika\LaravelSettings\Facades\Settings::get('email')}}</a></p>
                             </div>
-                            @include('includes.message')
+                            @include(theme(TRUE).'.includes.message')
                             <form id="contact-form" method="post">
                                 {{csrf_field()}}
                                 <ul>
@@ -84,83 +84,13 @@
             <!--End left-->
 
             <!--Begin right-->
-            @include('includes.right-menu')
+            @include(theme(TRUE).'.includes.right-menu')
             <!--End right-->
 
         </div>
-
-
-        <!--Begin three_cols-->
-        <div class="row three_cols">
-
-            <div class="col-xs-4 three_i lander_home">
-                <p><i class="fa fa-users"></i> NHÀ MÔI GIỚI</p>
-                <div>
-                    <div class="nbs-flexisel-container"><div class="nbs-flexisel-inner"><ul class="lander_slide nbs-flexisel-ul" style="left: -332px;">
-                                <li class="nbs-flexisel-item" style="width: 332px;">							            <dl>
-                                        <dt><a href="/nha-moi-gioi/pham-van-kien-m18.htm"><img src="images/lander/49521-Kiên.jpg" alt="Phạm Văn Kiên"></a></dt>
-                                        <dd>
-                                            <h3><a href="/nha-moi-gioi/pham-van-kien-m18.htm">Phạm Văn Kiên</a></h3>
-                                            <span>09.1111.5222</span>
-                                            <p>GĐ Kinh Doanh - Chuyên Viên tư vấn mua bán, cho thuê, định giá BĐS Lê Hồng Phong, Mặt Phố Chính (Xem hồ sơ và sản phẩm phụ trách)
-                                            </p>
-                                        </dd>
-                                    </dl>
-                                    <dl>
-                                        <dt><a href="/nha-moi-gioi/nguyen-tri-chung-m26.htm"><img src="images/lander/395810-chung.jpg" alt="Nguyễn Trí Chung"></a></dt>
-                                        <dd>
-                                            <h3><a href="/nha-moi-gioi/nguyen-tri-chung-m26.htm">Nguyễn Trí Chung</a></h3>
-                                            <span>0969.186.179</span>
-                                            <p>GĐ Kinh Doanh - Chuyên viên tư vấn mua/bán, thuê/cho thuê&nbsp;BĐS&nbsp;quận&nbsp;Hồng Bàng, Thủy Nguyên&nbsp;(Xem hồ sơ và sản phẩm phụ trách)
-                                            </p>
-                                        </dd>
-                                    </dl>
-                                </li><li class="nbs-flexisel-item" style="width: 332px;">							            <dl>
-                                        <dt><a href="/nha-moi-gioi/pham-van-kien-m18.htm"><img src="images/lander/49521-Kiên.jpg" alt="Phạm Văn Kiên"></a></dt>
-                                        <dd>
-                                            <h3><a href="/nha-moi-gioi/pham-van-kien-m18.htm">Phạm Văn Kiên</a></h3>
-                                            <span>09.1111.5222</span>
-                                            <p>GĐ Kinh Doanh - Chuyên Viên tư vấn mua bán, cho thuê, định giá BĐS Lê Hồng Phong, Mặt Phố Chính (Xem hồ sơ và sản phẩm phụ trách)
-                                            </p>
-                                        </dd>
-                                    </dl>
-                                    <dl>
-                                        <dt><a href="/nha-moi-gioi/nguyen-tri-chung-m26.htm"><img src="images/lander/395810-chung.jpg" alt="Nguyễn Trí Chung"></a></dt>
-                                        <dd>
-                                            <h3><a href="/nha-moi-gioi/nguyen-tri-chung-m26.htm">Nguyễn Trí Chung</a></h3>
-                                            <span>0969.186.179</span>
-                                            <p>GĐ Kinh Doanh - Chuyên viên tư vấn mua/bán, thuê/cho thuê&nbsp;BĐS&nbsp;quận&nbsp;Hồng Bàng, Thủy Nguyên&nbsp;(Xem hồ sơ và sản phẩm phụ trách)
-                                            </p>
-                                        </dd>
-                                    </dl>
-                                </li>							</ul></div><div class="nbs-flexisel-nav-left" style="visibility: visible; top: 147px;"></div><div class="nbs-flexisel-nav-right" style="visibility: visible; top: 147px;"></div></div>
-                    <div class="clearfix"></div>
-                    <p><a href="/nha-moi-gioi.htm">Xem tất cả</a></p>
-                </div>
-            </div>
-
-            <div class="col-xs-4 three_i">
-                <p><i class="fa fa-facebook-square"></i> FANPAGE FACEBOOK</p>
-                <div>
-                    <div class="fb-page fb_iframe_widget" data-href="https://www.facebook.com/nhadathaiphong.com.vn/" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true" data-show-posts="false" fb-xfbml-state="rendered" fb-iframe-plugin-query="adapt_container_width=true&amp;app_id=&amp;container_width=332&amp;hide_cover=false&amp;href=https%3A%2F%2Fwww.facebook.com%2Fnhadathaiphong.com.vn%2F&amp;locale=en_US&amp;sdk=joey&amp;show_facepile=true&amp;show_posts=false&amp;small_header=false"><span style="vertical-align: bottom; width: 332px; height: 180px;"><iframe name="f22f1a644417518" width="1000px" height="1000px" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" allow="encrypted-media" title="fb:page Facebook Social Plugin" src="https://www.facebook.com/v2.4/plugins/page.php?adapt_container_width=true&amp;app_id=&amp;channel=https%3A%2F%2Fstaticxx.facebook.com%2Fconnect%2Fxd_arbiter%2Fr%2F__Bz3h5RzMx.js%3Fversion%3D42%23cb%3Df302440201a3f68%26domain%3Dnhadathaiphong.vn%26origin%3Dhttp%253A%252F%252Fnhadathaiphong.vn%252Ff1f1730b655a94c%26relation%3Dparent.parent&amp;container_width=332&amp;hide_cover=false&amp;href=https%3A%2F%2Fwww.facebook.com%2Fnhadathaiphong.com.vn%2F&amp;locale=en_US&amp;sdk=joey&amp;show_facepile=true&amp;show_posts=false&amp;small_header=false" style="border: none; visibility: visible; width: 332px; height: 180px;" class=""></iframe></span></div>
-                </div>
-            </div>
-
-            <div class="col-xs-4 three_i view_direction">
-                <p><i class="fa fa-compass"></i> XEM HƯỚNG NHÀ</p>
-                <div>
-                    <p>Cách xác định hướng nhà theo phong thủy tốt nhất</p>
-                    <a href="http://nhadathaiphong.vn/kinh-nghiem-mua-ban-nha-dat/cach-xac-dinh-huong-nha-theo-phong-thuy-tot-nhat-n168.htm"><img src="images/partner/9998cach-xac-dinh-huong-nha-theo-phong-thuy-tot-nhat-2.jpg" alt="Cách xác định hướng nhà theo phong thủy tốt nhất"></a>
-                </div>
-            </div>
-
-        </div>
-        <!--End three_cols-->
-
-
     </div>
 
-    @include('includes.footer')
+    @include(theme(TRUE).'.includes.footer')
 @endsection
 
 @section('js')

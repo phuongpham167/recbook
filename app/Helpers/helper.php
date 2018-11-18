@@ -27,7 +27,7 @@ function a($url, $get='', $name='',$attr=[], $realurl='',$callback=''){
 }
 function v($view = null, $data = [], $mergeData = [])
 {
-    return view($view, $data, $mergeData);
+    return view('themes.'.theme().'.'.$view, $data, $mergeData);
 }
 
 function theme($type=FALSE){

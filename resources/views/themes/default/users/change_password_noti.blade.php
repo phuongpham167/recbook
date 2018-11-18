@@ -8,13 +8,13 @@
     Dothigroup
 @endsection
 
-@push('style')
+@section('style')
     <link rel="stylesheet" href="{{ asset('css/home.css') }}"/>
-@endpush
+@endsection
 
 @section('content')
     @include(theme(TRUE).'.includes.header')
-    <div class="content-body" style="height: 1000px;">
+    <div class="content-body">
         <div class="slider">
             <div class="smart-search">
 
@@ -24,7 +24,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-xs-12">
-                        Bat dong san noi bat
+                        Đường dẫn đặt lại mật khẩu hết hạn!
                     </div>
                 </div>
             </div>
@@ -33,8 +33,8 @@
     @include(theme(TRUE).'.includes.footer')
 @endsection
 
-@push('js')
+@section('js')
     <script>
 
     </script>
-@endpush
+@endsection

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends(theme(TRUE).'.layouts.app')
 
 @section('meta-description')
     <meta name="description" content="Register Page" >
@@ -14,13 +14,13 @@
 @endsection
 
 @section('content')
-    @include('includes.header')
+    @include(theme(TRUE).'.includes.header')
 
     <div class="container-vina">
         <div class="row subpage">
 
             <!--Begin right-->
-            @include('includes.left-menu')
+            @include(theme(TRUE).'.includes.left-menu')
             <!--End right-->
 
             <!--Begin left-->
@@ -157,7 +157,7 @@
     </div>
     <link rel="stylesheet" href="{{asset('plugins/jquery.datatables/css/jquery.dataTables.min.css')}}" />
 
-    @include('includes.footer')
+    @include(theme(TRUE).'.includes.footer')
 @endsection
 
 @push('js')

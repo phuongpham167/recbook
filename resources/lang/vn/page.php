@@ -58,5 +58,8 @@ return [
     'historystatus'  =>  'Theo dõi công việc',
     'reportjobdetails'  =>  'Báo cáo công việc',
     'report'  =>  'Theo dõi chi tiết',
-    'menupermission'  =>  'Cần kiểm tra quyền menu'
+    'send_success'  =>  'Gửi email thành công, hãy kiểm tra hộp thư của bạn!',
+    'expired_code'  =>  'Đường link của bạn đã hết hạn!',
+    'dont_exits'  =>  'Email chưa được đăng ký. Vui lòng kiểm tra lại địa chỉ email!',
+    'forgot_password'  =>  'Quên mật khẩu'
 ];

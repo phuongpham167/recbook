@@ -3,9 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class EditUserRequest extends FormRequest
+class ResetPasswordRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,16 +23,16 @@ class EditUserRequest extends FormRequest
      */
     public function rules()
     {
-        $rules =  [
-            'name'  =>  'required',
-            'email' =>   [
-                'required',
-                'email',
-                Rule::unique('users')->ignore(auth()->user()->id),
-            ],
-//            'group_id'  =>  'required',
-//            'branch_id' =>  'required'
+        return [
+            'password'  =>  ['confirmed','required']
         ];
-        return $rules;
+    }
+
+    public function messages()
+    {
+        return [
+            'password.confirmed'    =>  'Xác nhận mật khẩu chưa chính xác!',
+            'password.required'     =>  'Vui lòng điền mật khẩu mới'
+        ];
     }
 }

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends(theme(TRUE).'.layouts.app')
 
 @section('meta-description')
     <meta name="description" content="Login Page" >
@@ -13,12 +13,12 @@
 @endsection
 
 @section('content')
-    @include('includes.header')
+    @include(theme(TRUE).'.includes.header')
 
     <div class="container-vina">
         <div class="row subpage">
             <div class="col-xs-6 col-xs-offset-3">
-                @include('includes.message')
+                @include(theme(TRUE).'.includes.message')
                 <div class="_form dangnhap_page bg_fdfdfd">
                     <form class="_check_validate" id="dangnhap-form" method="post">
                         {{csrf_field()}}
@@ -28,7 +28,7 @@
                         <dl>
                             <dt>Tên đăng nhập <span class="required">*</span></dt>
                             <dd>
-                                <input type="text" name="id" class="form-control" required placeholder="ID" />
+                                <input type="text" name="id" class="form-control" placeholder="ID" />
                             </dd>
                         </dl>
 
@@ -54,7 +54,7 @@
             </div>
         </div>
     </div>
-    @include('includes.footer')
+    @include(theme(TRUE).'.includes.footer')
 @endsection
 
 @section('js')

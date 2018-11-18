@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends(theme(TRUE).'.layouts.app')
 
 @section('meta-description')
     <meta name="description" content="Đổi mật khẩu" >
@@ -14,7 +14,7 @@
 @endsection
 
 @section('content')
-    @include('includes.header')
+    @include(theme(TRUE).'.includes.header')
     <div class="container-vina">
         <div class="row subpage">
 
@@ -24,7 +24,7 @@
 
             <!--Begin left-->
             <div class="col-xs-9 right">
-                @include('includes.message')
+                @include(theme(TRUE).'.includes.message')
                 <!--begin manage_page-->
                 <div class="changepwA_page member_page">
                     <p class="title_boxM"><strong><i class="fa fa-file-pdf-o"></i> THAY ĐỔI MẬT KHẨU</strong></p>
@@ -84,7 +84,7 @@
         </div>
     </div>
 
-    @include('includes.footer')
+    @include(theme(TRUE).'.includes.footer')
 @endsection
 
 @section('js')
