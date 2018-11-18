@@ -5,6 +5,7 @@
 @endsection
 
 @section('style')
+    <link rel="stylesheet" href="{{ asset('css/theme.css') }}" />
     <link rel="stylesheet" href="{{asset('themes/default/css/real-estate.css')}}" />
 @endsection
 
