@@ -10,7 +10,9 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get( '/gui-mail', function(){
 
+});
 Route::get('/', 'PageController@index')->name('home');
 Route::get('/lien-he', ['as' => 'contact', 'uses' => 'ContactController@getContact']);
 Route::post('/lien-he', ['as' => 'post.contact', 'uses' => 'ContactController@postContact']);
@@ -20,6 +22,10 @@ Route::post('/dang-nhap', ['as' => 'post.login', 'uses' => 'AuthenticateControll
 Route::get('/dang-xuat', ['as' => 'logout', 'uses' => 'AuthenticateController@getLogout']);
 Route::get('/dang-ky', ['as' => 'register', 'uses' => 'AuthenticateController@getRegister']);
 Route::post('/dang-ky', ['as' => 'post.register', 'uses' => 'AuthenticateController@postRegister']);
+Route::get('/quen-mat-khau', ['as' => 'forgot_password', 'uses' => 'AuthenticateController@getForgotPassword']);
+Route::post('/quen-mat-khau', ['as' => 'post.forgot_password', 'uses' => 'AuthenticateController@postForgotPassword']);
+Route::get('/dat-lai-mat-khau', ['as' => 'getPassword', 'uses' => 'AuthenticateController@getPassword']);
+Route::post('/dat-lai-mat-khau', ['as' => 'postPassword', 'uses' => 'AuthenticateController@postPassword']);
 
 Route::group(['middleware'=>'auth'], function(){
     Route::get('/quan-ly-tin-rao', ['as' => 'manage', 'uses' => 'AuthenticateController@getManage']);

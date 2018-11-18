@@ -10,7 +10,6 @@
 
 @section('style')
     <link rel="stylesheet" href="{{ asset('css/theme.css') }}" />
-    {{--<link rel="stylesheet" href="{{ asset('css/home.css') }}"/>--}}
 
 @endsection
 
@@ -21,7 +20,7 @@
         <div class="row subpage">
 
             <!--Begin right-->
-            @include('themes.default.includes.left-menu')
+            @include(theme(TRUE).'.includes.left-menu')
             <!--End right-->
 
             <!--Begin left-->
@@ -139,9 +138,7 @@
                                         <th>{{trans('real-estate.list.column.type')}}</th>
                                         <th>{{trans('real-estate.list.column.district')}}</th>
                                         <th>{{trans('real-estate.list.column.post_date')}}</th>
-                                        @if($filter != 'tin-rao-da-xoa')
-                                            <th>{{trans('real-estate.list.column.manage')}}</th>
-                                        @endif
+                                        <th>{{trans('real-estate.list.column.manage')}}</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -193,9 +190,7 @@
                     { data: 're_type_id', name: 're_type_id' },
                     { data: 'district_id', name: 'district_id' },
                     { data: 'post_date', name: 'post_date' },
-                    @if($filter != 'tin-rao-da-xoa')
-                        { data: 'manage', name: 'manage'  , sortable:false, searchable: false}
-                    @endif
+                    { data: 'manage', name: 'manage'  , sortable:false, searchable: false}
                 ]
             });
         });

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends(theme(TRUE).'.layouts.app')
 
 @section('meta-description')
     <meta name="description" content="Đổi mật khẩu" >
@@ -10,7 +10,6 @@
 
 @section('style')
     <link rel="stylesheet" href="{{ asset('css/theme.css') }}" />
-    {{--<link rel="stylesheet" href="{{ asset('css/home.css') }}"/>--}}
 
 @endsection
 
@@ -20,7 +19,7 @@
         <div class="row subpage">
 
             <!--Begin right-->
-        @include('themes.default.includes.left-menu')
+        @include('includes.left-menu')
         <!--End right-->
 
             <!--Begin left-->

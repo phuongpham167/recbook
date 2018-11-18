@@ -23,8 +23,10 @@ return [
     'info' =>  'Thông tin thành viên',
     'change_pass' =>  'Đổi mật khẩu',
     'change_pass_success' =>  'Đổi mật khẩu thành công!',
+    'account_change_pass_success' =>  'Tài khoản có email <b>:email</b> đổi mật khẩu thành công!',
     'confirm_password_not_correct' =>  'Xác nhận mật khẩu chưa trùng khớp!',
     'password_not_correct' =>  'Mật khẩu cũ chưa trùng khớp!',
     'fill_all' =>  'Chưa điền đủ thông tin!',
+    'dont_allow' =>  'Bạn không có quyền đăng ký nhóm thành viên này!',
     'created_at' =>  'Thời gian'
 ];

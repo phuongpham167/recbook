@@ -10,7 +10,6 @@
 
 @section('style')
     <link rel="stylesheet" href="{{ asset('css/theme.css') }}" />
-    {{--<link rel="stylesheet" href="{{ asset('css/home.css') }}"/>--}}
 @endsection
 
 @section('content')
@@ -18,71 +17,84 @@
 
     <div class="col-xs-6 col-xs-offset-3">
         <div class="_form dangnhap_page bg_fdfdfd">
-
-            <form class="_check_validate" id="register-form" action="/site/register" method="post">
+            @include(theme(TRUE).'.includes.message')
+            <form class="_check_validate" id="register-form" method="post">
+                {{csrf_field()}}
                 <h3 class="title_form"><i class="fa fa-user-plus"></i> ĐĂNG KÝ THÀNH VIÊN</h3>
 
-                <div id="register-form_es_" class="errorSummary" style="display:none"><p>Xin hãy sửa lại những lỗi nhập liệu sau:</p>
-                    <ul><li>dummy</li></ul></div>
                 <dl>
                     <dt>Tên đăng nhập <span class="required">*</span></dt>
                     <dd>
-                        <input class="_required" name="Account[username]" id="Account_username" type="text" maxlength="200">							<div class="errorMessage" id="Account_username_em_" style="display:none"></div>						</dd>
+                        <input class="_required" name="name" id="name" type="text" value="{{old('name')}}" maxlength="200">
+                    </dd>
                 </dl>
 
                 <dl>
                     <dt>Mật khẩu <span class="required">*</span></dt>
                     <dd>
-                        <input class="_required" name="Account[password]" id="Account_password" type="password" maxlength="50">							<div class="errorMessage" id="Account_password_em_" style="display:none"></div>						</dd>
+                        <input class="_required" name="password" id="password" type="password" maxlength="50">
+                    </dd>
                 </dl>
 
                 <dl>
                     <dt>Nhập lại mật khẩu <span class="required">*</span></dt>
                     <dd>
-                        <input class="_required" name="Account[repassword]" id="Account_repassword" type="password" maxlength="50">							<div class="errorMessage" id="Account_repassword_em_" style="display:none"></div>						</dd>
+                        <input class="_required" name="repassword" id="repassword" type="password" maxlength="50">
+                    </dd>
                 </dl>
 
                 <dl>
                     <dt>Họ tên/Tên công ty <span class="required">*</span></dt>
                     <dd>
-                        <input class="_required" name="Account[name]" id="Account_name" type="text" maxlength="200">							<div class="errorMessage" id="Account_name_em_" style="display:none"></div>						</dd>
+                        <input class="_required" name="company_name" id="company_name" value="{{old('company_name')}}" type="text" maxlength="200">
+                    </dd>
                 </dl>
 
                 <dl>
                     <dt>Số CMT/Mã số thuế <span class="required">*</span></dt>
                     <dd>
-                        <input class="_required" name="Account[tax_code]" id="Account_tax_code" type="text" maxlength="50">							<div class="errorMessage" id="Account_tax_code_em_" style="display:none"></div>						</dd>
+                        <input class="_required" name="taxcode" id="taxcode" value="{{old('taxcode')}}" type="text" maxlength="50">
+                    </dd>
                 </dl>
 
                 <dl>
                     <dt>Email <span class="required">*</span></dt>
                     <dd>
-                        <input class="_required" name="Account[email]" id="Account_email" type="text" maxlength="200">							<div class="errorMessage" id="Account_email_em_" style="display:none"></div>						</dd>
+                        <input class="_required" name="email" id="email" value="{{old('email')}}" type="text" maxlength="200">
+                    </dd>
                 </dl>
 
                 <dl>
                     <dt>Điện thoại <span class="required">*</span></dt>
                     <dd>
-                        <input class="_required" name="Account[mobile]" id="Account_mobile" type="text" maxlength="50">							<div class="errorMessage" id="Account_mobile_em_" style="display:none"></div>						</dd>
+                        <input class="_required" name="phone" id="phone" value="{{old('phone')}}" type="text" maxlength="50">
+                    </dd>
                 </dl>
 
                 <dl>
                     <dt>Địa chỉ <span class="required">*</span></dt>
                     <dd>
-                        <input class="_required" name="Account[address]" id="Account_address" type="text" maxlength="200">							<div class="errorMessage" id="Account_address_em_" style="display:none"></div>						</dd>
+                        <input class="_required" name="address" id="address" value="{{old('address')}}" type="text" maxlength="200">
+                    </dd>
+                </dl>
+
+                <dl>
+                    <dt>Nhóm </dt>
+                    <dd>
+                        <select class="form-control" name="group_id" id="group_id">
+                            <option value="">--Chọn nhóm--</option>
+                            @foreach(\App\Group::where('register_permission','1')->get() as $item)
+                                <option value="{{$item->id}}">{{$item->name}}</option>
+                            @endforeach
+                        </select>
+                    </dd>
                 </dl>
 
                 <dl>
                     <dt>Website</dt>
                     <dd>
-                        <input name="Account[website]" id="Account_website" type="text" maxlength="200">							<div class="errorMessage" id="Account_website_em_" style="display:none"></div>						</dd>
-                </dl>
-
-                <dl class="verifyCode">
-                    <dt>Mã xác nhận <span class="required">*</span></dt>
-                    <dd>
-                        <input class="_required" style="width: 50%;" name="Account[verifyCode]" id="Account_verifyCode" type="text">							<p class="box_verify"><img id="yw0" src="/site/captcha?v=5be6a48b0d550" alt=""><a id="yw0_button" href="/site/captcha?refresh=1">Lấy code mới</a></p>
-                        <div class="errorMessage" id="Account_verifyCode_em_" style="display:none"></div>						</dd>
+                        <input name="website" id="website" type="text" value="{{old('website')}}" maxlength="200">
+                    </dd>
                 </dl>
 
                 <dl>
@@ -90,7 +102,7 @@
                     <dd>
                         <button type="submit" class="_btn bg_red"><i class="fa fa-pencil-square-o fa-lg fa-fw"></i> ĐĂNG KÝ</button>
                         <button type="reset" class="_btn bg_gray"><i class="fa fa-refresh fa-lg fa-fw"></i> LÀM LẠI</button>
-                        <p><a href="/dang-nhap.htm">Đăng nhập nếu bạn đã có tài khoản!</a></p>
+                        <p><a href="/dang-nhap">Đăng nhập nếu bạn đã có tài khoản!</a></p>
                     </dd>
                 </dl>
 

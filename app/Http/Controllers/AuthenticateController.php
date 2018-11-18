@@ -2,11 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Branch;
+use App\Group;
 use App\Http\Requests\FormUserRequest;
 use App\Http\Requests\LoginRequest;
+use App\Http\Requests\ResetPasswordRequest;
+use App\PasswordReset;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 
 class AuthenticateController extends Controller
 {
@@ -111,8 +118,96 @@ class AuthenticateController extends Controller
         return v('authenticate.register');
     }
 
-    public function postRegister(Request $request)
+    public function postRegister(FormUserRequest $request)
     {
-        dd($request);
+        $data   =   new User();
+        $data->name   =   $request->name;
+        $data->email    =   $request->email;
+        if($request->password == $request->repassword)
+            $data->password =   Hash::make($request->password);
+        else {
+            set_notice(trans('users.confirm_password_not_correct'), 'warning');
+            return redirect()->back();
+        }
+        $data->taxcode    =   $request->taxcode;
+        $data->company_name =   $request->company_name;
+        $data->phone =   $request->phone;
+        $data->address =   $request->address;
+        $data->website =   $request->website;
+        if(!empty(Group::find($request->group_id)) && Group::find($request->group_id)->first()->register_permission == 1)
+            $data->group_id =   $request->group_id;
+        else {
+            set_notice(trans('users.dont_allow'), 'warning');
+            return redirect()->back();
+        }
+        $data->branch_id =   Branch::where('is_head','1')->first()->id;
+        $data->web_id   =   get_web_id();
+        $data->created_at   =   Carbon::now();
+        $data->save();
+
+//        event_log('Tạo thành viên mới '.$data->name.' id '.$data->id);
+        set_notice(trans('users.add_success'), 'success');
+        return redirect()->back();
+    }
+
+    public function getForgotPassword()
+    {
+        return v('authenticate.forgot_password');
+    }
+
+    public function postForgotPassword()
+    {
+        $code = str_random(10);
+
+        $data = new PasswordReset();
+        $data->code = md5($code);
+        if(!empty(User::where('email',request('email'))))
+            $data->email    =   request('email');
+        else {
+            set_notice(trans('page.dont_exits'), 'warning');
+            return redirect()->back();
+        }
+        $data->expire_at = Carbon::now()->addHours(24);
+        $data->save();
+
+        Mail::send('mail.mail_password', ['name'=>\request('email'),'code'=>$code], function($message){
+            $message->to( \request('email'), 'Visitor')->subject('Đặt lại mật khẩu tài khoản DoThiGroup');
+        });
+
+        set_notice(trans('page.send_success'), 'success');
+        return redirect()->back();
+    }
+
+    public function getPassword()
+    {
+        $data = PasswordReset::where('code',md5(\request('code')))->where('expire_at','>=',Carbon::now())->first();
+
+        if(empty($data)) {
+            set_notice(trans('page.expired_code'), 'warning');
+
+            return v('users.change_password_noti');
+        }
+
+        return v('users.reset-password');
+    }
+
+    public function postPassword(ResetPasswordRequest $request)
+    {
+        $email  =   PasswordReset::where('code',md5(\request('code')))->first()->email;
+
+        $user   =   User::where('email',$email)->first();
+
+//        echo '<pre>';
+//        print_r($user);
+//        echo '</pre>';
+//        exit();
+
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        PasswordReset::where('email',$email)->update(['expire_at'=>Carbon::now()]);
+
+        set_notice(trans('users.account_change_pass_success', ['email'  =>  $user->email]), 'success');
+        return redirect()->to(asset('/dang-nhap'));
     }
 }

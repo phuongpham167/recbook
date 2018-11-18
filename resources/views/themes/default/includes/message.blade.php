@@ -1,6 +1,6 @@
 @if (!empty(session('message')))
     <div class="alert alert-{{session('message.type')}}">
-        {{session('message.message')}}
+        {!!session('message.message')!!}
     </div>
 @endif
 @if (!empty($errors) && count($errors) > 0)
