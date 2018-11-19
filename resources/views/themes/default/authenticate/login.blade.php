@@ -9,7 +9,8 @@
 @endsection
 
 @section('style')
-    <link rel="stylesheet" href="{{ asset('css/home.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('css/theme.css') }}" />
+    {{--<link rel="stylesheet" href="{{ asset('css/home.css') }}"/>--}}
 @endsection
 
 @section('content')
@@ -18,7 +19,7 @@
     <div class="container-vina">
         <div class="row subpage">
             <div class="col-xs-6 col-xs-offset-3">
-                @include(theme(TRUE).'.includes.message')
+                @include('themes.default.includes.message')
                 <div class="_form dangnhap_page bg_fdfdfd">
                     <form class="_check_validate" id="dangnhap-form" method="post">
                         {{csrf_field()}}
@@ -28,7 +29,7 @@
                         <dl>
                             <dt>Tên đăng nhập <span class="required">*</span></dt>
                             <dd>
-                                <input type="text" name="id" class="form-control" placeholder="ID" />
+                                <input type="text" name="id" class="form-control" required placeholder="ID" />
                             </dd>
                         </dl>
 

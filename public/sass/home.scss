@@ -1,0 +1,265 @@
+@import 'color';
+
+.flex-direction-nav .flex-prev {
+    left: 0px !important;
+}
+.flex-direction-nav .flex-next {
+    right: 0px !important;
+}
+.flex-control-nav {
+    bottom: 20px !important;
+}
+//smart search
+.search-wrap {
+    position: relative;
+    .search-content {
+        position: absolute;
+        bottom: 20px;
+        left: 0;
+        width: 100%;
+        z-index: 999999;
+        ul {
+            li {
+                display: block;
+                margin-bottom: 20px;
+                position: relative;
+                float: left;
+                &:hover {
+                    a {
+                        background: #0085e0;
+                        color: #fff;
+                    }
+                    span {
+                        display: block;
+                    }
+                }
+                a {
+                    display: inline-block;
+                    background: rgba(255,255,255,.9);
+                    color: #000;
+                    font-weight: 600;
+                    text-transform: uppercase;
+                    text-decoration: none;
+                    padding: 10px 20px;
+                    font-size: 15px;
+                }
+                span {
+                    position: absolute;
+                    bottom: -20px;
+                    left: 50%;
+                    margin-left: -10px;
+                    display: none;
+                    border-left: 10px solid transparent;
+                    border-right: 10px solid transparent;
+                    border-top: 10px solid #0085e0;
+                    border-bottom: 10px solid transparent;
+                }
+                form {
+                    float: left;
+                    background: #fff;
+                    > * {
+                        float: left;
+                        background: transparent;
+                        border: 0;
+                        color: #444;
+                        outline: none;
+                        font-style: italic;
+                        display: block;
+                    }
+                    > input[type=text] {
+                        text-indent: 10px;
+                        width: 250px;
+                        height: 41px;
+                    }
+                    > button {
+                        padding: 0;
+                        i {
+                            line-height: 41px;
+                            width: 40px;
+                            text-align: center;
+                            cursor: pointer;
+                            display: block;
+                            color: #e40b00;
+                            background: #e9e9e9;
+                            font-size: 18px;
+                        }
+                    }
+                }
+            }
+            li.active {
+                a {
+                    background: #0085e0;
+                    color: #fff;
+                }
+                span {
+                    display: block;
+                }
+            }
+            li+li {
+                margin-left: 5px;
+            }
+        }
+        .search-select-wrap {
+            background: rgba(0,0,0,.4);
+            padding: 30px;
+            .item {
+                padding: 5px;
+            }
+            select {
+                width: 100%;
+                height: 38px;
+                text-indent: 10px;
+                outline: none;
+                border: 1px solid #969696;
+            }
+            button {
+                border: none;
+                width: 100%;
+                height: 38px;
+                background: #e40b00;
+                color: #fff;
+                text-transform: uppercase;
+            }
+        }
+    }
+}
+// end smart search
+
+.hot-real-estate {
+    .title-hot-wrap {
+        margin: 30px 15px 25px 15px;
+    }
+    .title-hot-real-estate {
+        background: #efefef;
+        padding: 0;
+        a.active {
+            background: #e40b00;
+            color: #fff;
+            span {
+                display: inline-block;
+                position: absolute;
+                bottom: -10px;
+                left: 50%;
+                margin-left: -5px;
+                border-left: 5px solid transparent;
+                border-right: 5px solid transparent;
+                border-top: 5px solid #e40b00;
+                border-bottom: 5px solid transparent;
+            }
+        }
+        a {
+            color: #333;
+            line-height: 50px;
+            display: block;
+            float: left;
+            padding: 0 30px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            position: relative;
+            border-left: 1px solid #ddd;
+            &:hover {
+                background: #e40b00;
+                color: #fff;
+                span {
+                    display: inline-block;
+                    position: absolute;
+                    bottom: -10px;
+                    left: 50%;
+                    margin-left: -5px;
+                    border-left: 5px solid transparent;
+                    border-right: 5px solid transparent;
+                    border-top: 5px solid #e40b00;
+                    border-bottom: 5px solid transparent;
+                }
+            }
+            &:first-child {
+                border-left: 0;
+            }
+        }
+    }
+}
+
+.free_price {
+    .free_price_box {
+        .title_box1 {
+            background: #efefef;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 0;
+            strong {
+                display: inline-block;
+                font-size: 16px;
+                line-height: 50px;
+                font-weight: 600;
+                padding-left: 15px;
+                border-left: 15px solid #e40b00;
+            }
+        }
+    }
+}
+.addition_info {
+    margin-top: 20px;
+}
+.brokers {
+    .broker_slider {
+        .broker-item {
+            background: $secondaryColor;;
+            border-bottom: 1px dotted #ccc;
+            padding-top: 14px;
+            width: 100% !important;
+            .ct_left {
+                float: left;
+                //width: 31%;
+                a {
+                    img {
+                        height: 100px;
+                    }
+                }
+            }
+            .ct_right {
+                margin-left: 85px;
+                .name {
+                    font-size: 14px;
+                    font-weight: 600;
+                    margin-top: 0;
+                    text-transform: capitalize;
+                }
+                .phone {
+                    color: #ea3c00;
+                    font-size: 12px;
+                    font-weight: 600;
+                }
+                .des {
+
+                }
+            }
+        }
+    }
+    .bx-wrapper {
+        .bx-prev {
+            right: 35px;
+        }
+        .bx-next {
+            right: 0px;
+        }
+    }
+    .broker_see_all {
+        background: $secondaryColor;
+        a {
+            padding: 5px 15px;
+            color: #fff;
+            background: #228511;
+            display: block;
+            float: right;
+            font-style: italic;
+            margin: 10px 0;
+            text-decoration: none;
+            width: 90px;
+        }
+    }
+}
+.design {
+    .design_content {
+        padding-bottom: 15px;
+    }
+}
