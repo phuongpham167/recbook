@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\MappingMenuFE;
 use App\Menu;
 use App\RealEstate;
+use App\ReCategory;
+use App\ReType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -43,6 +45,16 @@ class PageController extends Controller
 //                    $query->where('');
 //                }
                 $results = $query->get();
+
+                $category = null;
+                if ($mappingMenuFEByTag->re_category_id) {
+                    $category = ReCategory::find($mappingMenuFEByTag->re_category_id);
+                }
+
+                $type = null;
+                if ($mappingMenuFEByTag->re_type_id) {
+                    $type = ReType::find($mappingMenuFEByTag->re_type_id);
+                }
                 dd($results);
             }
         } catch (\Exception $exception) {
