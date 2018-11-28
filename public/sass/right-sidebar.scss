@@ -1,0 +1,53 @@
+@import 'color';
+
+.right-sidebar-wrap {
+    .right-sidebar {
+        .block {
+            margin-bottom: 15px;
+        }
+        .title-block {
+            background: #f0f0f0;
+            font-size: 16px;
+            line-height: 48px;
+            padding-top: 2px;
+            font-weight: 600;
+            padding-left: 15px;
+            border-left: 5px solid #e40b00;
+            color: #e40b00;
+            margin-bottom: 0;
+        }
+        .right-search-form-wrap {
+            border: 1px solid #ddd;
+            border-top: 0;
+            padding: 10px;
+            .right-search-form {
+                .search-area-label, .search-area-label-second {
+                    display: inline-block;
+                    float: left;
+                    padding-left: 15px;
+                    padding-top: 10px;
+                }
+                .search-area-label-second {
+                    padding-left: 5px;
+                    padding-right: 5px;
+                    @media screen and (min-width: 992px) and (max-width: 1199px) {
+                        padding-left: 1px;
+                        padding-right: 1px;
+                    }
+                }
+                .search-area-to-wrap {
+                    padding-right: 10px;
+                    @media screen and (min-width: 992px) and (max-width: 1199px) {
+                        padding-right: 15px;
+                    }
+                }
+                .search-btn-submit {
+                    background: $primaryColor;
+                    padding: 9px 15px;
+                    color: #fff;
+                    font-weight: 600;
+                }
+            }
+        }
+    }
+}

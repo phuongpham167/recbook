@@ -23,8 +23,7 @@ class PageController extends Controller
 
     public function index()
     {
-        $menuData = $this->menuFE;
-        return v('pages.home', compact('menuData'));
+        return v('pages.home', ['menuData' => $this->menuFE]);
     }
 
     public function getDanhmuc($tag)
@@ -60,5 +59,10 @@ class PageController extends Controller
         } catch (\Exception $exception) {
 
         }
+    }
+
+    public function detailRealEstate()
+    {
+        return v('pages.detail-real-estate', ['menuData' => $this->menuFE]);
     }
 }

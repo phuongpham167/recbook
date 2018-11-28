@@ -12,12 +12,40 @@ body {
   padding: 0;
 }
 
+.padding-top-30 {
+  padding-top: 30px;
+}
+
+.padding-right-10 {
+  padding-right: 10px;
+}
+
+.padding-bottom-30 {
+  padding-bottom: 30px;
+}
+
+.padding-left-10 {
+  padding-left: 10px;
+}
+
 .no-padding-left {
   padding-left: 0;
 }
 
 .no-padding-right {
   padding-right: 0;
+}
+
+/*
+    modify css of bootstrap
+*/
+
+.form-control {
+  border-radius: 0;
+}
+
+button {
+  border: none;
 }
 
 /*------------ Header ------------*/
@@ -147,6 +175,74 @@ body {
 /*------------ End Header ------------*/
 
 /*------------ Footer ------------*/
+
+/*
+    3 cols footer
+*/
+
+.addition_info {
+  margin-top: 20px;
+}
+
+.brokers .broker_slider .broker-item {
+  background: #f5f5f5;
+  border-bottom: 1px dotted #ccc;
+  padding-top: 14px;
+  width: 100% !important;
+}
+
+.brokers .broker_slider .broker-item .ct_left {
+  float: left;
+}
+
+.brokers .broker_slider .broker-item .ct_left a img {
+  height: 100px;
+}
+
+.brokers .broker_slider .broker-item .ct_right {
+  margin-left: 85px;
+}
+
+.brokers .broker_slider .broker-item .ct_right .name {
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 0;
+  text-transform: capitalize;
+}
+
+.brokers .broker_slider .broker-item .ct_right .phone {
+  color: #ea3c00;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.brokers .bx-wrapper .bx-prev {
+  right: 35px;
+}
+
+.brokers .bx-wrapper .bx-next {
+  right: 0px;
+}
+
+.brokers .broker_see_all {
+  background: #f5f5f5;
+}
+
+.brokers .broker_see_all a {
+  padding: 5px 15px;
+  color: #fff;
+  background: #228511;
+  display: block;
+  float: right;
+  font-style: italic;
+  margin: 10px 0;
+  text-decoration: none;
+  width: 90px;
+}
+
+.design .design_content {
+  padding-bottom: 15px;
+}
 
 .menu-footer {
   background-color: #e40b00;

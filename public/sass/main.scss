@@ -12,11 +12,34 @@ body {
 .padding-0 {
     padding: 0;
 }
+.padding-top-30 {
+    padding-top: 30px;
+}
+.padding-right-10 {
+    padding-right: 10px;
+}
+
+.padding-bottom-30 {
+    padding-bottom: 30px;
+}
+.padding-left-10 {
+    padding-left: 10px;
+}
 .no-padding-left {
     padding-left: 0;
 }
 .no-padding-right {
     padding-right: 0;
+}
+
+/*
+    modify css of bootstrap
+*/
+.form-control {
+    border-radius: 0;
+}
+button {
+    border: none;
 }
 
 
@@ -138,6 +161,76 @@ body {
 /*------------ End Header ------------*/
 
 /*------------ Footer ------------*/
+/*
+    3 cols footer
+*/
+.addition_info {
+    margin-top: 20px;
+}
+.brokers {
+    .broker_slider {
+        .broker-item {
+            background: $secondaryColor;;
+            border-bottom: 1px dotted #ccc;
+            padding-top: 14px;
+            width: 100% !important;
+            .ct_left {
+                float: left;
+                //width: 31%;
+                a {
+                    img {
+                        height: 100px;
+                    }
+                }
+            }
+            .ct_right {
+                margin-left: 85px;
+                .name {
+                    font-size: 14px;
+                    font-weight: 600;
+                    margin-top: 0;
+                    text-transform: capitalize;
+                }
+                .phone {
+                    color: #ea3c00;
+                    font-size: 12px;
+                    font-weight: 600;
+                }
+                .des {
+
+                }
+            }
+        }
+    }
+    .bx-wrapper {
+        .bx-prev {
+            right: 35px;
+        }
+        .bx-next {
+            right: 0px;
+        }
+    }
+    .broker_see_all {
+        background: $secondaryColor;
+        a {
+            padding: 5px 15px;
+            color: #fff;
+            background: #228511;
+            display: block;
+            float: right;
+            font-style: italic;
+            margin: 10px 0;
+            text-decoration: none;
+            width: 90px;
+        }
+    }
+}
+.design {
+    .design_content {
+        padding-bottom: 15px;
+    }
+}
+
 .menu-footer {
     background-color: $primaryColor;
     clear: both;

@@ -1,0 +1,13 @@
+.detail-content-wrap {
+    .detail-content {
+        border: 1px solid #ddd;
+        padding: 15px;
+        .title, .title-second {
+            color: #e40b00;
+            font-size: 20px;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+    }
+}

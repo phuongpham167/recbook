@@ -16,6 +16,8 @@ Route::get( '/gui-mail', function(){
 Route::get('/', 'PageController@index')->name('home');
 Route::get('/danh-muc/{tag}', ['as' => 'danh-muc', 'uses' => 'PageController@getDanhmuc']);
 
+Route::get('/tin', ['as' => 'detail-real-estate', 'uses' => 'PageController@detailRealEstate']);
+
 Route::get('/lien-he', ['as' => 'contact', 'uses' => 'ContactController@getContact']);
 Route::post('/lien-he', ['as' => 'post.contact', 'uses' => 'ContactController@postContact']);
 

@@ -464,94 +464,95 @@
                         </div>
                     </div>
                     <div class="col-xs-12 col-md-3 col_right">
-                        <div class="right_box vip_box">
-                            <p class="title_box">
-                                <a href="#">
-                                    <strong>TIN VIP</strong>
-                                </a>
-                            </p>
-                            <div>
+                        @include(theme(TRUE).'.includes.vip-slide')
+                        {{--<div class="right_box vip_box">--}}
+                            {{--<p class="title_box">--}}
+                                {{--<a href="#">--}}
+                                    {{--<strong>TIN VIP</strong>--}}
+                                {{--</a>--}}
+                            {{--</p>--}}
+                            {{--<div>--}}
 
-                                <ul class="vip_slider">
-                                    <li>
-                                        <dl class=" _hot">
-                                            <dt>
-                                                <a href="#"><img src="http://nhadathaiphong.vn/images/attachment/thumb/183011.jpg" alt="Bán nhà mặt đường Tô Hiệu (6x20) Lê Chân Hải Phòng"></a>
-                                                <div class="icon_viphot">
-                                                    <img src="{{ asset('images/vip2.gif') }}" alt="Bán nhà mặt đường Tô Hiệu (6x20) Lê Chân Hải Phòng">								</div>
-                                            </dt>
-                                            <dd>
-                                                <h3><a href="#">Bán nhà mặt đường Tô Hiệu (6x20) Lê Chân Hải Phòng</a></h3>
-                                                <p><strong>Diện tích:</strong> 120 m2</p>
-                                                <p><strong>Giá:</strong> <span>Thỏa thuận</span></p>
-                                                <p><strong>Hướng:</strong> Liên hệ</p>
-                                            </dd>
-                                        </dl>
-                                    </li>
-                                    <li>
-                                        <dl class=" _hot">
-                                            <dt>
-                                                <a href="#"><img src="http://nhadathaiphong.vn/images/attachment/thumb/183011.jpg" alt="Bán nhà mặt đường Tô Hiệu (6x20) Lê Chân Hải Phòng"></a>
-                                                <div class="icon_viphot">
-                                                    <img src="{{ asset('images/vip2.gif') }}" alt="Bán nhà mặt đường Tô Hiệu (6x20) Lê Chân Hải Phòng">								</div>
-                                            </dt>
-                                            <dd>
-                                                <h3><a href="#">Bán nhà mặt đường Tô Hiệu (6x20) Lê Chân Hải Phòng</a></h3>
-                                                <p><strong>Diện tích:</strong> 120 m2</p>
-                                                <p><strong>Giá:</strong> <span>Thỏa thuận</span></p>
-                                                <p><strong>Hướng:</strong> Liên hệ</p>
-                                            </dd>
-                                        </dl>
-                                    </li>
-                                    <li>
-                                        <dl class=" _hot">
-                                            <dt>
-                                                <a href="#"><img src="http://nhadathaiphong.vn/images/attachment/thumb/183011.jpg" alt="Bán nhà mặt đường Tô Hiệu (6x20) Lê Chân Hải Phòng"></a>
-                                                <div class="icon_viphot">
-                                                    <img src="{{ asset('images/vip2.gif') }}" alt="Bán nhà mặt đường Tô Hiệu (6x20) Lê Chân Hải Phòng">								</div>
-                                            </dt>
-                                            <dd>
-                                                <h3><a href="#">Bán nhà mặt đường Tô Hiệu (6x20) Lê Chân Hải Phòng</a></h3>
-                                                <p><strong>Diện tích:</strong> 120 m2</p>
-                                                <p><strong>Giá:</strong> <span>Thỏa thuận</span></p>
-                                                <p><strong>Hướng:</strong> Liên hệ</p>
-                                            </dd>
-                                        </dl>
-                                    </li>
-                                    <li>
-                                        <dl class=" _hot">
-                                            <dt>
-                                                <a href="#"><img src="http://nhadathaiphong.vn/images/attachment/thumb/183011.jpg" alt="Bán nhà mặt đường Tô Hiệu (6x20) Lê Chân Hải Phòng"></a>
-                                                <div class="icon_viphot">
-                                                    <img src="{{ asset('images/vip2.gif') }}" alt="Bán nhà mặt đường Tô Hiệu (6x20) Lê Chân Hải Phòng">								</div>
-                                            </dt>
-                                            <dd>
-                                                <h3><a href="#">Bán nhà mặt đường Tô Hiệu (6x20) Lê Chân Hải Phòng</a></h3>
-                                                <p><strong>Diện tích:</strong> 120 m2</p>
-                                                <p><strong>Giá:</strong> <span>Thỏa thuận</span></p>
-                                                <p><strong>Hướng:</strong> Liên hệ</p>
-                                            </dd>
-                                        </dl>
-                                    </li>
-                                    <li>
-                                        <dl class=" _hot">
-                                            <dt>
-                                                <a href="#"><img src="http://nhadathaiphong.vn/images/attachment/thumb/183011.jpg" alt="Bán nhà mặt đường Tô Hiệu (6x20) Lê Chân Hải Phòng"></a>
-                                                <div class="icon_viphot">
-                                                    <img src="{{ asset('images/vip2.gif') }}" alt="Bán nhà mặt đường Tô Hiệu (6x20) Lê Chân Hải Phòng">								</div>
-                                            </dt>
-                                            <dd>
-                                                <h3><a href="#">Bán nhà mặt đường Tô Hiệu (6x20) Lê Chân Hải Phòng</a></h3>
-                                                <p><strong>Diện tích:</strong> 120 m2</p>
-                                                <p><strong>Giá:</strong> <span>Thỏa thuận</span></p>
-                                                <p><strong>Hướng:</strong> Liên hệ</p>
-                                            </dd>
-                                        </dl>
-                                    </li>
-                                </ul>
+                                {{--<ul class="vip_slider">--}}
+                                    {{--<li>--}}
+                                        {{--<dl class=" _hot">--}}
+                                            {{--<dt>--}}
+                                                {{--<a href="#"><img src="http://nhadathaiphong.vn/images/attachment/thumb/183011.jpg" alt="Bán nhà mặt đường Tô Hiệu (6x20) Lê Chân Hải Phòng"></a>--}}
+                                                {{--<div class="icon_viphot">--}}
+                                                    {{--<img src="{{ asset('images/vip2.gif') }}" alt="Bán nhà mặt đường Tô Hiệu (6x20) Lê Chân Hải Phòng">								</div>--}}
+                                            {{--</dt>--}}
+                                            {{--<dd>--}}
+                                                {{--<h3><a href="#">Bán nhà mặt đường Tô Hiệu (6x20) Lê Chân Hải Phòng</a></h3>--}}
+                                                {{--<p><strong>Diện tích:</strong> 120 m2</p>--}}
+                                                {{--<p><strong>Giá:</strong> <span>Thỏa thuận</span></p>--}}
+                                                {{--<p><strong>Hướng:</strong> Liên hệ</p>--}}
+                                            {{--</dd>--}}
+                                        {{--</dl>--}}
+                                    {{--</li>--}}
+                                    {{--<li>--}}
+                                        {{--<dl class=" _hot">--}}
+                                            {{--<dt>--}}
+                                                {{--<a href="#"><img src="http://nhadathaiphong.vn/images/attachment/thumb/183011.jpg" alt="Bán nhà mặt đường Tô Hiệu (6x20) Lê Chân Hải Phòng"></a>--}}
+                                                {{--<div class="icon_viphot">--}}
+                                                    {{--<img src="{{ asset('images/vip2.gif') }}" alt="Bán nhà mặt đường Tô Hiệu (6x20) Lê Chân Hải Phòng">								</div>--}}
+                                            {{--</dt>--}}
+                                            {{--<dd>--}}
+                                                {{--<h3><a href="#">Bán nhà mặt đường Tô Hiệu (6x20) Lê Chân Hải Phòng</a></h3>--}}
+                                                {{--<p><strong>Diện tích:</strong> 120 m2</p>--}}
+                                                {{--<p><strong>Giá:</strong> <span>Thỏa thuận</span></p>--}}
+                                                {{--<p><strong>Hướng:</strong> Liên hệ</p>--}}
+                                            {{--</dd>--}}
+                                        {{--</dl>--}}
+                                    {{--</li>--}}
+                                    {{--<li>--}}
+                                        {{--<dl class=" _hot">--}}
+                                            {{--<dt>--}}
+                                                {{--<a href="#"><img src="http://nhadathaiphong.vn/images/attachment/thumb/183011.jpg" alt="Bán nhà mặt đường Tô Hiệu (6x20) Lê Chân Hải Phòng"></a>--}}
+                                                {{--<div class="icon_viphot">--}}
+                                                    {{--<img src="{{ asset('images/vip2.gif') }}" alt="Bán nhà mặt đường Tô Hiệu (6x20) Lê Chân Hải Phòng">								</div>--}}
+                                            {{--</dt>--}}
+                                            {{--<dd>--}}
+                                                {{--<h3><a href="#">Bán nhà mặt đường Tô Hiệu (6x20) Lê Chân Hải Phòng</a></h3>--}}
+                                                {{--<p><strong>Diện tích:</strong> 120 m2</p>--}}
+                                                {{--<p><strong>Giá:</strong> <span>Thỏa thuận</span></p>--}}
+                                                {{--<p><strong>Hướng:</strong> Liên hệ</p>--}}
+                                            {{--</dd>--}}
+                                        {{--</dl>--}}
+                                    {{--</li>--}}
+                                    {{--<li>--}}
+                                        {{--<dl class=" _hot">--}}
+                                            {{--<dt>--}}
+                                                {{--<a href="#"><img src="http://nhadathaiphong.vn/images/attachment/thumb/183011.jpg" alt="Bán nhà mặt đường Tô Hiệu (6x20) Lê Chân Hải Phòng"></a>--}}
+                                                {{--<div class="icon_viphot">--}}
+                                                    {{--<img src="{{ asset('images/vip2.gif') }}" alt="Bán nhà mặt đường Tô Hiệu (6x20) Lê Chân Hải Phòng">								</div>--}}
+                                            {{--</dt>--}}
+                                            {{--<dd>--}}
+                                                {{--<h3><a href="#">Bán nhà mặt đường Tô Hiệu (6x20) Lê Chân Hải Phòng</a></h3>--}}
+                                                {{--<p><strong>Diện tích:</strong> 120 m2</p>--}}
+                                                {{--<p><strong>Giá:</strong> <span>Thỏa thuận</span></p>--}}
+                                                {{--<p><strong>Hướng:</strong> Liên hệ</p>--}}
+                                            {{--</dd>--}}
+                                        {{--</dl>--}}
+                                    {{--</li>--}}
+                                    {{--<li>--}}
+                                        {{--<dl class=" _hot">--}}
+                                            {{--<dt>--}}
+                                                {{--<a href="#"><img src="http://nhadathaiphong.vn/images/attachment/thumb/183011.jpg" alt="Bán nhà mặt đường Tô Hiệu (6x20) Lê Chân Hải Phòng"></a>--}}
+                                                {{--<div class="icon_viphot">--}}
+                                                    {{--<img src="{{ asset('images/vip2.gif') }}" alt="Bán nhà mặt đường Tô Hiệu (6x20) Lê Chân Hải Phòng">								</div>--}}
+                                            {{--</dt>--}}
+                                            {{--<dd>--}}
+                                                {{--<h3><a href="#">Bán nhà mặt đường Tô Hiệu (6x20) Lê Chân Hải Phòng</a></h3>--}}
+                                                {{--<p><strong>Diện tích:</strong> 120 m2</p>--}}
+                                                {{--<p><strong>Giá:</strong> <span>Thỏa thuận</span></p>--}}
+                                                {{--<p><strong>Hướng:</strong> Liên hệ</p>--}}
+                                            {{--</dd>--}}
+                                        {{--</dl>--}}
+                                    {{--</li>--}}
+                                {{--</ul>--}}
 
-                            </div>
-                        </div>
+                            {{--</div>--}}
+                        {{--</div>--}}
                     </div>
                 </div>
             </div>
@@ -679,58 +680,58 @@
                 </div>
             </div>
         </section>
-        <section class="addition_info">
-            <div class="container">
-                <div class="row margin-0 three_cols">
-                    <div class="col-xs-12 col-sm-4 three_i brokers">
+        {{--<section class="addition_info">--}}
+            {{--<div class="container">--}}
+                {{--<div class="row margin-0 three_cols">--}}
+                    {{--<div class="col-xs-12 col-sm-4 three_i brokers">--}}
 
-                            <p class="title_col">
-                                <a href="#"><i class="fa fa-users"></i> NHÀ MÔI GIỚI</a>
-                            </p>
-                            <div class="content col-xs-12 no-padding-left no-padding-right broker_slider">
-                                @for($i=0; $i<2; $i++)
-                                <div class="col-xs-12 broker-item">
-                                    <div class="ct_left">
-                                        <a href="#">
-                                            <img class="img-responsive b_img" src="http://nhadathaiphong.vn/images/lander/49521-Ki%C3%AAn.jpg" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="ct_right">
-                                        <h3 class="name"><a href="#">Nguyen Van A</a></h3>
-                                        <p class="phone">0999.0880.32</p>
-                                        <p class="des">GĐ Kinh Doanh - Chuyên Viên tư vấn mua bán, cho thuê, định giá BĐS Lê Hồng Phong, Mặt Phố Chính (Xem hồ sơ và sản phẩm phụ trách)</p>
-                                    </div>
-                                </div>
-                                @endfor
-                            </div>
-                            <div class="col-xs-12 broker_see_all">
-                                <a href="#">Xem tất cả</a>
-                            </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-4 three_i statistic">
-                        <p class="title_col">
-                            <a href="#">{{ trans('home.statistic_col') }}</a>
-                        </p>
-                        <div class="col-xs-12 content">
-                            <p>{{ trans('home.num_of_user') }}: 111</p>
-                            <p>{{ trans('home.num_of_real_estate') }}: 111</p>
-                            <p>{{ trans('home.num_of_success_transaction') }}: 111</p>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-4 three_i design">
-                        <p class="title_col">
-                            <a href="#"><i class="fa fa-desktop" aria-hidden="true"></i> {{ trans('home.design_col') }}</a>
-                        </p>
-                        <div class="col-xs-12 content design_content">
-                                <p>Cách xác định hướng nhà theo phong thủy tốt nhất</p>
-                                <a href="#">
-                                    <img class="img-responsive" src="http://nhadathaiphong.vn/images/partner/9998cach-xac-dinh-huong-nha-theo-phong-thuy-tot-nhat-2.jpg" alt="Cách xác định hướng nhà theo phong thủy tốt nhất">
-                                </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+                            {{--<p class="title_col">--}}
+                                {{--<a href="#"><i class="fa fa-users"></i> NHÀ MÔI GIỚI</a>--}}
+                            {{--</p>--}}
+                            {{--<div class="content col-xs-12 no-padding-left no-padding-right broker_slider">--}}
+                                {{--@for($i=0; $i<2; $i++)--}}
+                                {{--<div class="col-xs-12 broker-item">--}}
+                                    {{--<div class="ct_left">--}}
+                                        {{--<a href="#">--}}
+                                            {{--<img class="img-responsive b_img" src="http://nhadathaiphong.vn/images/lander/49521-Ki%C3%AAn.jpg" alt="">--}}
+                                        {{--</a>--}}
+                                    {{--</div>--}}
+                                    {{--<div class="ct_right">--}}
+                                        {{--<h3 class="name"><a href="#">Nguyen Van A</a></h3>--}}
+                                        {{--<p class="phone">0999.0880.32</p>--}}
+                                        {{--<p class="des">GĐ Kinh Doanh - Chuyên Viên tư vấn mua bán, cho thuê, định giá BĐS Lê Hồng Phong, Mặt Phố Chính (Xem hồ sơ và sản phẩm phụ trách)</p>--}}
+                                    {{--</div>--}}
+                                {{--</div>--}}
+                                {{--@endfor--}}
+                            {{--</div>--}}
+                            {{--<div class="col-xs-12 broker_see_all">--}}
+                                {{--<a href="#">Xem tất cả</a>--}}
+                            {{--</div>--}}
+                    {{--</div>--}}
+                    {{--<div class="col-xs-12 col-sm-4 three_i statistic">--}}
+                        {{--<p class="title_col">--}}
+                            {{--<a href="#">{{ trans('home.statistic_col') }}</a>--}}
+                        {{--</p>--}}
+                        {{--<div class="col-xs-12 content">--}}
+                            {{--<p>{{ trans('home.num_of_user') }}: 111</p>--}}
+                            {{--<p>{{ trans('home.num_of_real_estate') }}: 111</p>--}}
+                            {{--<p>{{ trans('home.num_of_success_transaction') }}: 111</p>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                    {{--<div class="col-xs-12 col-sm-4 three_i design">--}}
+                        {{--<p class="title_col">--}}
+                            {{--<a href="#"><i class="fa fa-desktop" aria-hidden="true"></i> {{ trans('home.design_col') }}</a>--}}
+                        {{--</p>--}}
+                        {{--<div class="col-xs-12 content design_content">--}}
+                                {{--<p>Cách xác định hướng nhà theo phong thủy tốt nhất</p>--}}
+                                {{--<a href="#">--}}
+                                    {{--<img class="img-responsive" src="http://nhadathaiphong.vn/images/partner/9998cach-xac-dinh-huong-nha-theo-phong-thuy-tot-nhat-2.jpg" alt="Cách xác định hướng nhà theo phong thủy tốt nhất">--}}
+                                {{--</a>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
+            {{--</div>--}}
+        {{--</section>--}}
     </div>
     @include(theme(TRUE).'.includes.footer')
 @endsection
@@ -754,13 +755,6 @@
             moveSlides: 1,
             pager: false
         });
-        $('.broker_slider').bxSlider({
-            mode: 'vertical',
-            auto: false,
-            minSlides: 30,
-            maxSlides: 30,
-            moveSlides: 1,
-            pager: false
-        });
+
     </script>
 @endpush
