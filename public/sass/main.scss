@@ -648,3 +648,41 @@ p.more {
     }
 }
 /*--------------- end row three columns ---------------*/
+
+
+/*
+*---------------------- CSS for detail real estate page --------------------------
+*/
+.title-short-section {
+    background: #f8f8f8;
+    color: #e40b00;
+    font-size: 17px;
+    font-weight: 600;
+    padding: 10px;
+    margin: 15px 0 5px 0;
+}
+.strike-title {
+    border-bottom: 1px solid #ddd;
+    margin: 10px 0 20px 0;
+    strong {
+        background: #fff;
+        display: inline-block;
+        position: relative;
+        bottom: -10px;
+        font-weight: 600;
+        line-height: 20px;
+        font-size: 16px;
+    }
+}
+.adv-content {
+    a {
+        display: inline-block;
+        width: 49.6%;
+        &:last-child {
+            width: 100%;
+        }
+    }
+}
+/*
+*---------------------- END CSS for detail real estate page --------------------------
+*/
