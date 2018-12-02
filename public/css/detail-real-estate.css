@@ -1,3 +1,7 @@
+ul li {
+  list-style: none;
+}
+
 .detail-content-wrap .detail-content {
   border: 1px solid #ddd;
   padding: 15px;
@@ -56,6 +60,10 @@
   margin: 8px 0;
 }
 
+.detail-content-wrap .detail-content .description__body strong {
+  width: 100%;
+}
+
 .detail-content-wrap .detail-content .post-by-info__avatar {
   border: 1px solid #ddd;
   padding: 4px;
@@ -80,5 +88,22 @@
 .short-section {
   border-top: 1px solid #e0e0e0;
   border-right: 1px solid #e0e0e0;
+}
+
+.slide-images {
+  margin: 15px 0;
+  height: 400px;
+  overflow: hidden;
+}
+
+.slide-images__left {
+  background: #f0f0f0;
+}
+
+.slide-images__right #land_slider_pager {
+  border: 1px solid #ddd;
+  background: #f9f9f9;
+  max-height: 400px;
+  overflow-y: scroll;
 }
 

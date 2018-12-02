@@ -33,7 +33,7 @@ class PageController extends Controller
             $mappingMenuFEByTag = MappingMenuFE::where('path', $tag)->first();
 //            dd($mappingMenuFEByTag);
             if ($mappingMenuFEByTag) {
-                $query = DB::table('real_estates')->whereNull('deleted_at')->where('web_id', $web_id);
+                $query = RealEstate::whereNull('deleted_at')->where('web_id', $web_id);
                 if ($mappingMenuFEByTag->re_category_id) {
                     $query->where('re_category_id', $mappingMenuFEByTag->re_category_id);
                 }
@@ -43,6 +43,7 @@ class PageController extends Controller
 //                if ($mappingMenuFEByTag->suggest) {
 //                    $query->where('');
 //                }
+                $countAll = $query->count();
                 $results = $query->get();
 
                 $category = null;
@@ -54,15 +55,33 @@ class PageController extends Controller
                 if ($mappingMenuFEByTag->re_type_id) {
                     $type = ReType::find($mappingMenuFEByTag->re_type_id);
                 }
-                dd($results);
+//                dd($results);
+
+                return v('pages.list-real-estate', [
+                    'data' => $results,
+                    'category' => $category,
+                    'type' =>$type,
+                    'count' => $countAll,
+                    'menuData' => $this->menuFE
+                ]);
+
             }
         } catch (\Exception $exception) {
 
         }
     }
 
-    public function detailRealEstate()
+    public function detailRealEstate($slug)
     {
-        return v('pages.detail-real-estate', ['menuData' => $this->menuFE]);
+        $explodeSlug = explode('-', $slug);
+        $id = $explodeSlug[count($explodeSlug)-1];
+        $realEstate = RealEstate::find($id);
+
+        /*
+         * TODO: -get list same search option
+         * TODO: - get list related real estate
+         * */
+
+        return v('pages.detail-real-estate', ['data' => $realEstate, 'menuData' => $this->menuFE]);
     }
 }
