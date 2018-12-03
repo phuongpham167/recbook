@@ -27,7 +27,7 @@
                         @foreach($data as $item)
                             <div class="col-xs-12 col-sm-6 col-md-4">
                                 <div class="col-xs-12 re-item hot">
-                                    <a href="#">
+                                    <a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">
                                         <img src="http://nhadathaiphong.vn/images/attachment/thumb/892010.jpg" alt="Bán nhà số 23/11 Hàng Kênh, Lê Chân, Hải Phòng">
                                     </a>
                                     <div class="icon_viphot">
@@ -37,7 +37,7 @@
                                     <div class="code_row">HP-44133</div>
 
                                     <h3>
-                                        <a href="#">{{$item->title}}</a>
+                                        <a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">{{$item->title}}</a>
                                     </h3>
 
                                     <p>{{$item->short_description}}
@@ -47,10 +47,10 @@
                                         <div class="col-xs-6 rarea">DTSD: {{$item->area_of_use ? $item->area_of_use : '0m2'}}</div>
                                     </div>
                                     <div class="row price">
-                                        <div class="col-xs-5 lprice">
+                                        <div class="col-xs-12 lprice">
                                             <i class="fa fa-map-marker"></i> {{$item->district->name}}
                                         </div>
-                                        <div class="col-xs-7 rprice">
+                                        <div class="col-xs-12 rprice">
                                             {{$item->price}} {{$item->unit->name}}
                                         </div>
                                     </div>
