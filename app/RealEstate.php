@@ -36,7 +36,7 @@ class RealEstate extends Model
         'area_of_premises',
         'area_of_use',
         'floor',
-        'price' ,
+        'price',
         'unit_id',
         'range_price_id',
         'is_deal',
@@ -52,6 +52,11 @@ class RealEstate extends Model
         'updated_by'
     ];
 
+    public function direction()
+    {
+        return $this->belongsTo('App\Direction');
+    }
+
     public function reCategory()
     {
         return $this->belongsTo('App\ReCategory');
@@ -62,6 +67,11 @@ class RealEstate extends Model
         return $this->belongsTo('App\ReType');
     }
 
+    public function project()
+    {
+        return $this->belongsTo('App\Project');
+    }
+
     public function province()
     {
         return $this->belongsTo('App\Province');
@@ -69,6 +79,10 @@ class RealEstate extends Model
     public function district()
     {
         return $this->belongsTo('App\District');
+    }
+    public function unit()
+    {
+        return $this->belongsTo('App\Unit');
     }
     public function user()
     {

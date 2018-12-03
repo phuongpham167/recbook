@@ -19,7 +19,7 @@
   bottom: 20px;
   left: 0;
   width: 100%;
-  z-index: 999999;
+  z-index: 10;
 }
 
 .search-wrap .search-content ul li {
@@ -194,84 +194,5 @@
 
 .hot-real-estate .title-hot-real-estate a:first-child {
   border-left: 0;
-}
-
-.free_price .free_price_box .title_box1 {
-  background: #efefef;
-  border-bottom: 1px solid #ddd;
-  margin-bottom: 0;
-}
-
-.free_price .free_price_box .title_box1 strong {
-  display: inline-block;
-  font-size: 16px;
-  line-height: 50px;
-  font-weight: 600;
-  padding-left: 15px;
-  border-left: 15px solid #e40b00;
-}
-
-.addition_info {
-  margin-top: 20px;
-}
-
-.brokers .broker_slider .broker-item {
-  background: #f5f5f5;
-  border-bottom: 1px dotted #ccc;
-  padding-top: 14px;
-  width: 100% !important;
-}
-
-.brokers .broker_slider .broker-item .ct_left {
-  float: left;
-}
-
-.brokers .broker_slider .broker-item .ct_left a img {
-  height: 100px;
-}
-
-.brokers .broker_slider .broker-item .ct_right {
-  margin-left: 85px;
-}
-
-.brokers .broker_slider .broker-item .ct_right .name {
-  font-size: 14px;
-  font-weight: 600;
-  margin-top: 0;
-  text-transform: capitalize;
-}
-
-.brokers .broker_slider .broker-item .ct_right .phone {
-  color: #ea3c00;
-  font-size: 12px;
-  font-weight: 600;
-}
-
-.brokers .bx-wrapper .bx-prev {
-  right: 35px;
-}
-
-.brokers .bx-wrapper .bx-next {
-  right: 0px;
-}
-
-.brokers .broker_see_all {
-  background: #f5f5f5;
-}
-
-.brokers .broker_see_all a {
-  padding: 5px 15px;
-  color: #fff;
-  background: #228511;
-  display: block;
-  float: right;
-  font-style: italic;
-  margin: 10px 0;
-  text-decoration: none;
-  width: 90px;
-}
-
-.design .design_content {
-  padding-bottom: 15px;
 }
 

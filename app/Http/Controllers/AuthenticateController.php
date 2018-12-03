@@ -7,6 +7,7 @@ use App\Group;
 use App\Http\Requests\FormUserRequest;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\ResetPasswordRequest;
+use App\Menu;
 use App\PasswordReset;
 use App\User;
 use Carbon\Carbon;
@@ -17,9 +18,18 @@ use Illuminate\Support\Facades\Session;
 
 class AuthenticateController extends Controller
 {
+    protected $menuFE;
+
+    public function __construct()
+    {
+        $web_id = get_web_id();
+        $mmfe = config('menu.mainMenuFE');
+        $this->menuFE = Menu::where('web_id', $web_id)->where('menu_type', $mmfe)->first();
+    }
+
     public function getLogin()
     {
-        return v('authenticate.login');
+        return v('authenticate.login', ['menuData' => $this->menuFE]);
     }
 
     public function login($username, $password, $remember=false,$api=false)
@@ -91,12 +101,12 @@ class AuthenticateController extends Controller
 
     public function getManage()
     {
-        return v('users.manage');
+        return v('users.manage', ['menuData' => $this->menuFE]);
     }
 
     public function getInfo()
     {
-        return v('users.info');
+        return v('users.info', ['menuData' => $this->menuFE]);
     }
 
     public function postInfo(FormUserRequest $request)
@@ -115,7 +125,7 @@ class AuthenticateController extends Controller
 
     public function getRegister()
     {
-        return v('authenticate.register');
+        return v('authenticate.register', ['menuData' => $this->menuFE]);
     }
 
     public function postRegister(FormUserRequest $request)
@@ -152,7 +162,7 @@ class AuthenticateController extends Controller
 
     public function getForgotPassword()
     {
-        return v('authenticate.forgot_password');
+        return v('authenticate.forgot_password', ['menuData' => $this->menuFE]);
     }
 
     public function postForgotPassword()
@@ -185,10 +195,10 @@ class AuthenticateController extends Controller
         if(empty($data)) {
             set_notice(trans('page.expired_code'), 'warning');
 
-            return v('users.change_password_noti');
+            return v('users.change_password_noti', ['menuData' => $this->menuFE]);
         }
 
-        return v('users.reset-password');
+        return v('users.reset-password', ['menuData' => $this->menuFE]);
     }
 
     public function postPassword(ResetPasswordRequest $request)
