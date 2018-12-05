@@ -49,7 +49,17 @@ class RealEstate extends Model
         'source',
         'is_private',
         'posted_by',
-        'updated_by'
+        'updated_by',
+        'code',
+        'views',
+        'is_vip',
+        'vip_expire_at',
+        'is_hot',
+        'hot_expire_at',
+        'link_video',
+        'customer_id',
+        'slug',
+        'web_id'
     ];
 
     public function direction()
