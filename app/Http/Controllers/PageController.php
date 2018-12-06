@@ -31,21 +31,36 @@ class PageController extends Controller
     public function index()
     {
         $hotRealEstates = RealEstate::select('id', 'title', 'slug', 'short_description', 'code',
-            'area_of_premises', 'area_of_use', 'district_id', 'price', 'unit_id', 'is_vip', 'is_hot')
+            'area_of_premises', 'area_of_use', 'district_id', 'price', 'unit_id', 'is_vip', 'is_hot',
+            'post_date', 'images')
             ->where('is_hot', 1)
-            ->where('hot_expire_at', '<=', Carbon::now())
+            ->where('is_vip', '<>', 1)
+            ->where('post_date', '<=', Carbon::now())
+//            ->where('hot_expire_at', '<=', Carbon::now())
+            ->limit(16)
             ->get();
+//        dd($hotRealEstates);
 
+        /*
+         * TODO: need more info to filter good price items
+         * */
         $goodPriceRealEstate = RealEstate::select('id', 'title', 'short_description', 'slug', 'code',
             'area_of_premises', 'price', 'unit_id', 'is_vip', 'is_hot')
+            ->where('is_vip', 1)
+            ->limit(200)
             ->get();
 
         $freeRealEstates = RealEstate::select('id', 'title', 'short_description', 'slug', 'code',
             'area_of_premises', 'price', 'unit_id', 'is_vip', 'is_hot')
             ->where('is_hot', '<>', 1)
+            ->where('is_vip', '<>', 1)
+            ->limit(40)
             ->get();
 
-        return v('pages.home', ['menuData' => $this->menuFE]);
+        return v('pages.home', [
+            'hotRealEstates' => $hotRealEstates,
+            'menuData' => $this->menuFE
+        ]);
     }
 
     public function getDanhmuc($tag)
