@@ -114,40 +114,44 @@
                     </div>
                 </div>
                 <div class="row list-re-item list-hot">
-                    @for ($i=0; $i<7; $i++)
+                    @foreach($hotRealEstates as $item)
                         <div class="col-xs-12 col-sm-6 col-md-3">
                             <div class="col-xs-12 re-item hot">
-                                <a href="#">
-                                    <img src="http://nhadathaiphong.vn/images/attachment/thumb/892010.jpg" alt="Bán nhà số 23/11 Hàng Kênh, Lê Chân, Hải Phòng">
+                                <a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">
+                                    @php
+                                        $images = $item->images ? json_decode($item->images) : [];
+                                        $imgThumbnail = $images ? $images[0]->link : '/images/default_real_estate_image.jpg';
+                                        $imgAlt = $images ? $images[0]->alt : $item->title;
+                                    @endphp
+                                    <img src="{{asset($imgThumbnail)}}" alt="{{ $imgAlt }}">
                                 </a>
                                 <div class="icon_viphot">
                                     <img src="{{ asset('images/vip1.gif') }}" alt="Bán nhà số 23/11 Hàng Kênh, Lê Chân, Hải Phòng">
                                 </div>
 
-                                <div class="code_row">HP-44133</div>
+                                <div class="code_row">{{ $item->code }}</div>
 
                                 <h3>
-                                    <a href="#">Bán nhà số 23/11 Hàng Kênh, Lê Chân, Hải Phòng</a>
+                                    <a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">{{ $item->title }}</a>
                                 </h3>
 
-                                <p>Nhà xây 4 tầng độc lập, khung cột kiên cố, thiết kế hiện đại, 2 mặt thoáng, gần trường, chợ,
-                                    bệnh viện, hướng Tây Nam, sổ đỏ chính chủ
+                                <p>{{ $item->short_description }}
                                 </p>
                                 <div class="row area">
-                                    <div class="col-xs-6 larea">DTMB: 40 m2</div>
-                                    <div class="col-xs-6 rarea">DTSD: 160 m2</div>
+                                    <div class="col-xs-6 larea">DTMB: {{$item->area_of_premises ? $item->area_of_premises : '0m2'}}</div>
+                                    <div class="col-xs-6 rarea">DTSD: {{$item->area_of_use ? $item->area_of_use : '0m2'}}</div>
                                 </div>
                                 <div class="row price">
-                                    <div class="col-xs-5 lprice">
-                                        <i class="fa fa-map-marker"></i> Lê Chân
+                                    <div class="col-xs-12 lprice">
+                                        <i class="fa fa-map-marker"></i> {{$item->district->name}}
                                     </div>
-                                    <div class="col-xs-7 rprice">
-                                        2.65 tỷ VND
+                                    <div class="col-xs-12 rprice">
+                                        {{$item->price}} {{$item->unit->name}}
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    @endfor
+                    @endforeach
                 </div>
             </div>
         </section>
