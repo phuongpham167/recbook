@@ -122,7 +122,7 @@
                             <div class="col-xs-12 col-sm-8 brief_detail__left">
                                 <div class="row">
                                     <div class="col-xs-12 col-sm-6">
-                                        <p><strong>- Mã số tin:</strong> HP-9047</p>
+                                        <p><strong>- Mã số tin:</strong> {{ $data->code }}</p>
                                     </div>
                                     <div class="col-xs-12 col-sm-6">
                                         <p><strong>- Ngày cập nhật:</strong> {{ \Carbon\Carbon::parse($data->updated_at)->format('d/m/Y')}}</p>
