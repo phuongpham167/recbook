@@ -45,13 +45,15 @@ class PageController extends Controller
          * TODO: need more info to filter good price items
          * */
         $goodPriceRealEstate = RealEstate::select('id', 'title', 'short_description', 'slug', 'code',
-            'area_of_premises', 'price', 'unit_id', 'is_vip', 'is_hot')
+            'area_of_premises', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date')
             ->where('is_vip', 1)
+            ->where('post_date', '<=', Carbon::now())
+            ->orderBy('post_date', 'desc')
             ->limit(200)
             ->get();
 
         $freeRealEstates = RealEstate::select('id', 'title', 'short_description', 'slug', 'code',
-            'area_of_premises', 'price', 'unit_id', 'is_vip', 'is_hot')
+            'area_of_premises', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date')
             ->where('is_hot', '<>', 1)
             ->where('is_vip', '<>', 1)
             ->limit(40)
@@ -59,6 +61,8 @@ class PageController extends Controller
 
         return v('pages.home', [
             'hotRealEstates' => $hotRealEstates,
+            'goodPriceRealEstate' => $goodPriceRealEstate,
+            'freeRealEstates' => $freeRealEstates,
             'menuData' => $this->menuFE
         ]);
     }
