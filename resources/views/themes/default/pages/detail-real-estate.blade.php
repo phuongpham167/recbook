@@ -28,31 +28,58 @@
                         <div class="imgs_land_box slide-images row">
                             <div class="col-xs-10 slide-images__left">
                                 <ul class="land_slider">
-                                    <li>
-                                        <div>
-                                            <img src="http://nhadathaiphong.vn/images/attachment/46321.jpg"/>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div>
-                                            <img src="http://nhadathaiphong.vn/images/attachment/315510.jpg"/>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div>
-                                            <img src="http://nhadathaiphong.vn/images/attachment/17755.jpg"/>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div>
-                                            <img src="http://nhadathaiphong.vn/images/attachment/25294.jpg"/>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div>
-                                            <img src="http://nhadathaiphong.vn/images/attachment/98623.jpg"/>
-                                        </div>
-                                    </li>
+                                    @php
+                                        $imgDf = [
+                                            'link' => '/images/default_real_estate_image.jpg',
+                                            'alt' => $data->title
+                                        ];
+                                        $thumbDf = [
+                                            'link' => '/images/default_thumb.jpg'
+                                        ];
+                                        $images = $data->images ? json_decode($data->images) : [];
+                                        $thumbs = [];
+                                        if ($images) {
+                                            foreach ($images as $img) {
+                                                $thumbs[] = [
+                                                    'link' => str_replace('uploads', 'thumbs', $img->link)
+                                                ];
+                                            }
+                                        }
+                                        $images = $images ? $images : [(object)$imgDf];
+                                        $thumbs = $thumbs ? $thumbs : [$thumbDf];
+                                    @endphp
+                                    @foreach($images as $image)
+                                        <li>
+                                            <div>
+                                                <img src="{{asset($image->link)}}" alt="{{$image->alt ? $image->alt : $data->title}}"/>
+                                            </div>
+                                        </li>
+                                    @endforeach
+                                    {{--<li>--}}
+                                        {{--<div>--}}
+                                            {{--<img src="http://nhadathaiphong.vn/images/attachment/46321.jpg"/>--}}
+                                        {{--</div>--}}
+                                    {{--</li>--}}
+                                    {{--<li>--}}
+                                        {{--<div>--}}
+                                            {{--<img src="http://nhadathaiphong.vn/images/attachment/315510.jpg"/>--}}
+                                        {{--</div>--}}
+                                    {{--</li>--}}
+                                    {{--<li>--}}
+                                        {{--<div>--}}
+                                            {{--<img src="http://nhadathaiphong.vn/images/attachment/17755.jpg"/>--}}
+                                        {{--</div>--}}
+                                    {{--</li>--}}
+                                    {{--<li>--}}
+                                        {{--<div>--}}
+                                            {{--<img src="http://nhadathaiphong.vn/images/attachment/25294.jpg"/>--}}
+                                        {{--</div>--}}
+                                    {{--</li>--}}
+                                    {{--<li>--}}
+                                        {{--<div>--}}
+                                            {{--<img src="http://nhadathaiphong.vn/images/attachment/98623.jpg"/>--}}
+                                        {{--</div>--}}
+                                    {{--</li>--}}
                                 </ul>
                             </div>
                             <div class="col-xs-2 slide-images__right no-padding-right">
@@ -64,31 +91,38 @@
                                            </em>
                                        </span>
                                     </a>
-                                    <a data-slide-index="1" href="" class="">
-                                       <span>
-                                           <img src="http://nhadathaiphong.vn/images/attachment/thumb/315510.jpg">
-                                       </span>
-                                    </a>
-                                    <a data-slide-index="2" href="" class="">
-                                       <span>
-                                           <img src="http://nhadathaiphong.vn/images/attachment/thumb/39599.jpg">
-                                       </span>
-                                    </a>
-                                    <a data-slide-index="3" href="" class="">
-                                        <span>
-                                            <img src="http://nhadathaiphong.vn/images/attachment/thumb/31498.jpg">
-                                        </span>
-                                    </a>
-                                    <a data-slide-index="4" href="" class="">
-                                        <span>
-                                            <img src="http://nhadathaiphong.vn/images/attachment/thumb/11767.jpg">
-                                        </span>
-                                    </a>
-                                    <a data-slide-index="5" href="" class="">
-                                        <span>
-                                            <img src="http://nhadathaiphong.vn/images/attachment/thumb/35676.jpg">
-                                        </span>
-                                    </a>
+                                    @foreach($thumbs as $key => $thumb)
+                                        <a data-slide-index="{{$key + 1}}" href="" class="">
+                                           <span>
+                                               <img src="{{ $thumb['link'] }}">
+                                           </span>
+                                        </a>
+                                    @endforeach
+                                    {{--<a data-slide-index="1" href="" class="">--}}
+                                       {{--<span>--}}
+                                           {{--<img src="http://nhadathaiphong.vn/images/attachment/thumb/315510.jpg">--}}
+                                       {{--</span>--}}
+                                    {{--</a>--}}
+                                    {{--<a data-slide-index="2" href="" class="">--}}
+                                       {{--<span>--}}
+                                           {{--<img src="http://nhadathaiphong.vn/images/attachment/thumb/39599.jpg">--}}
+                                       {{--</span>--}}
+                                    {{--</a>--}}
+                                    {{--<a data-slide-index="3" href="" class="">--}}
+                                        {{--<span>--}}
+                                            {{--<img src="http://nhadathaiphong.vn/images/attachment/thumb/31498.jpg">--}}
+                                        {{--</span>--}}
+                                    {{--</a>--}}
+                                    {{--<a data-slide-index="4" href="" class="">--}}
+                                        {{--<span>--}}
+                                            {{--<img src="http://nhadathaiphong.vn/images/attachment/thumb/11767.jpg">--}}
+                                        {{--</span>--}}
+                                    {{--</a>--}}
+                                    {{--<a data-slide-index="5" href="" class="">--}}
+                                        {{--<span>--}}
+                                            {{--<img src="http://nhadathaiphong.vn/images/attachment/thumb/35676.jpg">--}}
+                                        {{--</span>--}}
+                                    {{--</a>--}}
                                     {{--<a data-slide-index="6" href="" class="">--}}
                                     {{--<span>--}}
                                     {{--<img src="images/attachment/thumb/41785.jpg">--}}
@@ -122,7 +156,7 @@
                             <div class="col-xs-12 col-sm-8 brief_detail__left">
                                 <div class="row">
                                     <div class="col-xs-12 col-sm-6">
-                                        <p><strong>- Mã số tin:</strong> HP-9047</p>
+                                        <p><strong>- Mã số tin:</strong> {{ $data->code }}</p>
                                     </div>
                                     <div class="col-xs-12 col-sm-6">
                                         <p><strong>- Ngày cập nhật:</strong> {{ \Carbon\Carbon::parse($data->updated_at)->format('d/m/Y')}}</p>
@@ -155,7 +189,7 @@
                                 <div class="row">
                                     <div class="col-xs-12">
                                         <p class="price"><strong>{{ trans('detail-real-estate.briefDetail.price') }}
-                                                :</strong> {{ $data->price }} {{ $data->unit->name }}</p>
+                                                :</strong> {{ $data->price }} {{$data->unit ? $data->unit->name : 'VND'}}</p>
                                         <p class="is_deal">{{ $data->is_deal ? '(Có thỏa thuận)' : '' }}</p>
                                     </div>
                                 </div>
@@ -216,17 +250,17 @@
                         <div class="adv-content">
                             <div class="row">
                                 <div class="col-xs-12">
-                                    <a href="http://nhadathaiphong.vn/tin-tuc-l2.htm" target="_blank">
+                                    <a href="{{route('home')}}" target="_blank">
                                         <img class="img-responsive"
                                              src="http://nhadathaiphong.vn/images/partner/448tin-chi-tiet-phai-425x150.jpg"
                                              alt="TRANG CHI TIẾT - TRÁI">
                                     </a>
-                                    <a href="http://nhadathaiphong.vn/tin-tuc-l2.htm" target="_blank">
-                                        <img class="img-responsive"
-                                             src="http://nhadathaiphong.vn/images/partner/6586tin-chi-tiet-phai-425x150.jpg"
-                                             alt="TRANG CHI TIẾT - PHẢI">
-                                    </a>
-                                    <a href="http://nhadathaiphong.vn/tim-kiem.htm?txtkeyword=cho+thu%C3%AA"
+                                    {{--<a href="{{route('home')}}" target="_blank">--}}
+                                        {{--<img class="img-responsive"--}}
+                                             {{--src="http://nhadathaiphong.vn/images/partner/6586tin-chi-tiet-phai-425x150.jpg"--}}
+                                             {{--alt="TRANG CHI TIẾT - PHẢI">--}}
+                                    {{--</a>--}}
+                                    <a href="{{route('home')}}"
                                        target="_blank">
                                         <img class="img-responsive"
                                              src="http://nhadathaiphong.vn/images/partner/3638cho-thue-nha-mat-pho-tin-chi-tiet-900x150.jpg"

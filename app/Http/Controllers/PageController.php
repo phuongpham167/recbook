@@ -7,6 +7,7 @@ use App\Menu;
 use App\RealEstate;
 use App\ReCategory;
 use App\ReType;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -19,11 +20,51 @@ class PageController extends Controller
         $web_id = get_web_id();
         $mmfe = config('menu.mainMenuFE');
         $this->menuFE = Menu::where('web_id', $web_id)->where('menu_type', $mmfe)->first();
+
+        $vipRealEstates = RealEstate::select('id', 'title', 'slug', 'direction_id',
+            'area_of_premises', 'price', 'unit_id', 'is_vip', 'is_hot')
+            ->where('is_vip',  1)
+            ->where('vip_expire_at',  '<=', Carbon::now())
+            ->get();
     }
 
     public function index()
     {
-        return v('pages.home', ['menuData' => $this->menuFE]);
+        $hotRealEstates = RealEstate::select('id', 'title', 'slug', 'short_description', 'code',
+            'area_of_premises', 'area_of_use', 'district_id', 'price', 'unit_id', 'is_vip', 'is_hot',
+            'post_date', 'images')
+            ->where('is_hot', 1)
+            ->where('is_vip', '<>', 1)
+            ->where('post_date', '<=', Carbon::now())
+//            ->where('hot_expire_at', '<=', Carbon::now())
+            ->limit(16)
+            ->get();
+//        dd($hotRealEstates);
+
+        /*
+         * TODO: need more info to filter good price items
+         * */
+        $goodPriceRealEstate = RealEstate::select('id', 'title', 'short_description', 'slug', 'code',
+            'area_of_premises', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date')
+            ->where('is_vip', 1)
+            ->where('post_date', '<=', Carbon::now())
+            ->orderBy('post_date', 'desc')
+            ->limit(200)
+            ->get();
+
+        $freeRealEstates = RealEstate::select('id', 'title', 'short_description', 'slug', 'code',
+            'area_of_premises', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date')
+            ->where('is_hot', '<>', 1)
+            ->where('is_vip', '<>', 1)
+            ->limit(40)
+            ->get();
+
+        return v('pages.home', [
+            'hotRealEstates' => $hotRealEstates,
+            'goodPriceRealEstate' => $goodPriceRealEstate,
+            'freeRealEstates' => $freeRealEstates,
+            'menuData' => $this->menuFE
+        ]);
     }
 
     public function getDanhmuc($tag)

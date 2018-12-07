@@ -28,13 +28,18 @@
                             <div class="col-xs-12 col-sm-6 col-md-4">
                                 <div class="col-xs-12 re-item hot">
                                     <a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">
-                                        <img src="http://nhadathaiphong.vn/images/attachment/thumb/892010.jpg" alt="Bán nhà số 23/11 Hàng Kênh, Lê Chân, Hải Phòng">
+                                        @php
+                                            $images = $item->images ? json_decode($item->images) : [];
+                                            $imgThumbnail = $images ? $images[0]->link : '/images/default_real_estate_image.jpg';
+                                            $imgAlt = $images ? $images[0]->alt : $item->title;
+                                        @endphp
+                                        <img src="{{asset($imgThumbnail)}}" alt="{{ $imgAlt }}">
                                     </a>
                                     <div class="icon_viphot">
                                         <img src="{{ asset('images/vip1.gif') }}" alt="Bán nhà số 23/11 Hàng Kênh, Lê Chân, Hải Phòng">
                                     </div>
 
-                                    <div class="code_row">HP-44133</div>
+                                    <div class="code_row">{{ $item->code }}</div>
 
                                     <h3>
                                         <a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">{{$item->title}}</a>
@@ -51,7 +56,7 @@
                                             <i class="fa fa-map-marker"></i> {{$item->district->name}}
                                         </div>
                                         <div class="col-xs-12 rprice">
-                                            {{$item->price}} {{$item->unit->name}}
+                                            {{$item->price}} {{$item->unit ? $item->unit->name : 'VND'}}
                                         </div>
                                     </div>
                                 </div>
