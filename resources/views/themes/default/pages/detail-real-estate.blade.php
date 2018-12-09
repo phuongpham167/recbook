@@ -299,131 +299,79 @@
                         </p>
                         <div>
                             <div class="row body_top_box">
-                                @for ($i=0; $i<10; $i++)
+                                @foreach($relatedItems as $item)
                                     <div class="col-xs-12 col-sm-6  free_price_item_wrap">
                                         <div class="col-xs-12 re_item2 free_price_item">
-                                            <div class="row">
+                                            @php
+                                                $itemClass = '';
+                                                if($item->is_hot && $item->is_vip) {
+                                                    $itemClass = '_vip_hot';
+                                                }
+                                                if($item->is_vip && !$item->is_hot) {
+                                                    $itemClass = '_vip';
+                                                }
+
+                                                $images = $item->images ? json_decode($item->images) : [];
+                                                $imgThumbnail = $images ? $images[0]->link : '/images/default_real_estate_image.jpg';
+                                                $imgAlt = $images ? $images[0]->alt : $item->title;
+                                            @endphp
+                                            <div class="row {{$itemClass}}">
                                                 <div class="col-xs-5 lgp_item">
-                                                    <a href="#">
-                                                        <img
-                                                            src="http://nhadathaiphong.vn/images/attachment/thumb/28489.jpg"
-                                                            alt="Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng">
+                                                    <a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">
+                                                        <img src="{{ asset($imgThumbnail) }}" alt="{{ $imgAlt }}">
                                                     </a>
-                                                    <div class="code_row">HP-36845</div>
+                                                    <div class="code_row">{{$item->code}}</div>
                                                 </div>
 
                                                 <div class="col-xs-7 rgp_item">
-                                                    <h3><a href="#">Cho thuê nhà số 9 Đoạn Xá, Đông Hải 1, Hải An, Hải
-                                                            Phòng</a>
+                                                    <h3><a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">{{ $item->title }}</a>
                                                         <span></span>
                                                     </h3>
-                                                    <div>Nhà 1.5 tầng xây độc lập, sạch sẽ về ở ngay, ngõ rộng 2,2m, khu
-                                                        dân cư đông đúc,
-                                                        gần trường, chợ, bệnh viện, hướng Đông Nam, sổ hồng chính chủ
+                                                    <div>{{$item->short_description ? $item->short_description : ''}}
                                                     </div>
                                                     <p>
-                                                        <strong>DTMB:</strong> 57.7 m2 - <strong>Giá:</strong>
+                                                        <strong>DTMB:</strong> {{$item->area_of_premises ? $item->area_of_premises : '0m2'}} - <strong>Giá:</strong>
                                                         <span>
-                                                            1.87 tỷ VND
+                                                        {{$item->price}} {{$item->unit ? $item->unit->name : 'VND'}}
                                                         </span>
                                                     </p>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-xs-12 col-sm-6  free_price_item_wrap">
-                                        <div class="col-xs-12 re_item2 free_price_item">
-                                            <div class="row">
-                                                <div class="col-xs-5 lgp_item">
-                                                    <a href="#">
-                                                        <img
-                                                            src="http://nhadathaiphong.vn/images/attachment/thumb/568z106.jpg"
-                                                            alt="Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng">
-                                                    </a>
-                                                    <div class="code_row">HP-36845</div>
-                                                </div>
+                                @endforeach
+                                @for ($i=0; $i<10; $i++)
+                                    {{--<div class="col-xs-12 col-sm-6  free_price_item_wrap">--}}
+                                        {{--<div class="col-xs-12 re_item2 free_price_item">--}}
+                                            {{--<div class="row">--}}
+                                                {{--<div class="col-xs-5 lgp_item">--}}
+                                                    {{--<a href="#">--}}
+                                                        {{--<img--}}
+                                                            {{--src="http://nhadathaiphong.vn/images/attachment/thumb/4592d597efe08641661f3f50.jpg"--}}
+                                                            {{--alt="Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng">--}}
+                                                    {{--</a>--}}
+                                                    {{--<div class="code_row">HP-36845</div>--}}
+                                                {{--</div>--}}
 
-                                                <div class="col-xs-7 rgp_item">
-                                                    <h3><a href="#">Cho thuê nhà số 9 Đoạn Xá, Đông Hải 1, Hải An, Hải
-                                                            Phòng</a>
-                                                        <span></span>
-                                                    </h3>
-                                                    <div>Nhà 1.5 tầng xây độc lập, sạch sẽ về ở ngay, ngõ rộng 2,2m, khu
-                                                        dân cư đông đúc,
-                                                        gần trường, chợ, bệnh viện, hướng Đông Nam, sổ hồng chính chủ
-                                                    </div>
-                                                    <p>
-                                                        <strong>DTMB:</strong> 57.7 m2 - <strong>Giá:</strong>
-                                                        <span>
-                                                                1.87 tỷ VND
-                                                            </span>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6  free_price_item_wrap">
-                                        <div class="col-xs-12 re_item2 free_price_item">
-                                            <div class="row">
-                                                <div class="col-xs-5 lgp_item">
-                                                    <a href="#">
-                                                        <img
-                                                            src="http://nhadathaiphong.vn/images/attachment/thumb/2960486327MHT3.jpg"
-                                                            alt="Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng">
-                                                    </a>
-                                                    <div class="code_row">HP-36845</div>
-                                                </div>
-
-                                                <div class="col-xs-7 rgp_item">
-                                                    <h3><a href="#">Cho thuê nhà số 9 Đoạn Xá, Đông Hải 1, Hải An, Hải
-                                                            Phòng</a>
-                                                        <span></span>
-                                                    </h3>
-                                                    <div>Nhà 1.5 tầng xây độc lập, sạch sẽ về ở ngay, ngõ rộng 2,2m, khu
-                                                        dân cư đông đúc,
-                                                        gần trường, chợ, bệnh viện, hướng Đông Nam, sổ hồng chính chủ
-                                                    </div>
-                                                    <p>
-                                                        <strong>DTMB:</strong> 57.7 m2 - <strong>Giá:</strong>
-                                                        <span>
-                                                                1.87 tỷ VND
-                                                            </span>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6  free_price_item_wrap">
-                                        <div class="col-xs-12 re_item2 free_price_item">
-                                            <div class="row">
-                                                <div class="col-xs-5 lgp_item">
-                                                    <a href="#">
-                                                        <img
-                                                            src="http://nhadathaiphong.vn/images/attachment/thumb/4592d597efe08641661f3f50.jpg"
-                                                            alt="Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng">
-                                                    </a>
-                                                    <div class="code_row">HP-36845</div>
-                                                </div>
-
-                                                <div class="col-xs-7 rgp_item">
-                                                    <h3><a href="#">Cho thuê nhà số 9 Đoạn Xá, Đông Hải 1, Hải An, Hải
-                                                            Phòng</a>
-                                                        <span></span>
-                                                    </h3>
-                                                    <div>Nhà 1.5 tầng xây độc lập, sạch sẽ về ở ngay, ngõ rộng 2,2m, khu
-                                                        dân cư đông đúc,
-                                                        gần trường, chợ, bệnh viện, hướng Đông Nam, sổ hồng chính chủ
-                                                    </div>
-                                                    <p>
-                                                        <strong>DTMB:</strong> 57.7 m2 - <strong>Giá:</strong>
-                                                        <span>
-                                                                1.87 tỷ VND
-                                                            </span>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                                {{--<div class="col-xs-7 rgp_item">--}}
+                                                    {{--<h3><a href="#">Cho thuê nhà số 9 Đoạn Xá, Đông Hải 1, Hải An, Hải--}}
+                                                            {{--Phòng</a>--}}
+                                                        {{--<span></span>--}}
+                                                    {{--</h3>--}}
+                                                    {{--<div>Nhà 1.5 tầng xây độc lập, sạch sẽ về ở ngay, ngõ rộng 2,2m, khu--}}
+                                                        {{--dân cư đông đúc,--}}
+                                                        {{--gần trường, chợ, bệnh viện, hướng Đông Nam, sổ hồng chính chủ--}}
+                                                    {{--</div>--}}
+                                                    {{--<p>--}}
+                                                        {{--<strong>DTMB:</strong> 57.7 m2 - <strong>Giá:</strong>--}}
+                                                        {{--<span>--}}
+                                                                {{--1.87 tỷ VND--}}
+                                                            {{--</span>--}}
+                                                    {{--</p>--}}
+                                                {{--</div>--}}
+                                            {{--</div>--}}
+                                        {{--</div>--}}
+                                    {{--</div>--}}
                                 @endfor
                             </div>
                         </div>
@@ -434,131 +382,79 @@
                         </p>
                         <div>
                             <div class="row body_top_box">
-                                @for ($i=0; $i<10; $i++)
+                                @foreach($relatedItems as $item)
                                     <div class="col-xs-12 col-sm-6  free_price_item_wrap">
                                         <div class="col-xs-12 re_item2 free_price_item">
-                                            <div class="row">
+                                            @php
+                                                $itemClass = '';
+                                                if($item->is_hot && $item->is_vip) {
+                                                    $itemClass = '_vip_hot';
+                                                }
+                                                if($item->is_vip && !$item->is_hot) {
+                                                    $itemClass = '_vip';
+                                                }
+
+                                                $images = $item->images ? json_decode($item->images) : [];
+                                                $imgThumbnail = $images ? $images[0]->link : '/images/default_real_estate_image.jpg';
+                                                $imgAlt = $images ? $images[0]->alt : $item->title;
+                                            @endphp
+                                            <div class="row {{$itemClass}}">
                                                 <div class="col-xs-5 lgp_item">
-                                                    <a href="#">
-                                                        <img
-                                                            src="http://nhadathaiphong.vn/images/attachment/thumb/28489.jpg"
-                                                            alt="Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng">
+                                                    <a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">
+                                                        <img src="{{ asset($imgThumbnail) }}" alt="{{ $imgAlt }}">
                                                     </a>
-                                                    <div class="code_row">HP-36845</div>
+                                                    <div class="code_row">{{$item->code}}</div>
                                                 </div>
 
                                                 <div class="col-xs-7 rgp_item">
-                                                    <h3><a href="#">Cho thuê nhà số 9 Đoạn Xá, Đông Hải 1, Hải An, Hải
-                                                            Phòng</a>
+                                                    <h3><a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">{{ $item->title }}</a>
                                                         <span></span>
                                                     </h3>
-                                                    <div>Nhà 1.5 tầng xây độc lập, sạch sẽ về ở ngay, ngõ rộng 2,2m, khu
-                                                        dân cư đông đúc,
-                                                        gần trường, chợ, bệnh viện, hướng Đông Nam, sổ hồng chính chủ
+                                                    <div>{{$item->short_description ? $item->short_description : ''}}
                                                     </div>
                                                     <p>
-                                                        <strong>DTMB:</strong> 57.7 m2 - <strong>Giá:</strong>
+                                                        <strong>DTMB:</strong> {{$item->area_of_premises ? $item->area_of_premises : '0m2'}} - <strong>Giá:</strong>
                                                         <span>
-                                                            1.87 tỷ VND
+                                                        {{$item->price}} {{$item->unit ? $item->unit->name : 'VND'}}
                                                         </span>
                                                     </p>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-xs-12 col-sm-6  free_price_item_wrap">
-                                        <div class="col-xs-12 re_item2 free_price_item">
-                                            <div class="row">
-                                                <div class="col-xs-5 lgp_item">
-                                                    <a href="#">
-                                                        <img
-                                                            src="http://nhadathaiphong.vn/images/attachment/thumb/568z106.jpg"
-                                                            alt="Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng">
-                                                    </a>
-                                                    <div class="code_row">HP-36845</div>
-                                                </div>
+                                @endforeach
+                                @for ($i=0; $i<10; $i++)
+                                    {{--<div class="col-xs-12 col-sm-6  free_price_item_wrap">--}}
+                                        {{--<div class="col-xs-12 re_item2 free_price_item">--}}
+                                            {{--<div class="row">--}}
+                                                {{--<div class="col-xs-5 lgp_item">--}}
+                                                    {{--<a href="#">--}}
+                                                        {{--<img--}}
+                                                            {{--src="http://nhadathaiphong.vn/images/attachment/thumb/4592d597efe08641661f3f50.jpg"--}}
+                                                            {{--alt="Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng">--}}
+                                                    {{--</a>--}}
+                                                    {{--<div class="code_row">HP-36845</div>--}}
+                                                {{--</div>--}}
 
-                                                <div class="col-xs-7 rgp_item">
-                                                    <h3><a href="#">Cho thuê nhà số 9 Đoạn Xá, Đông Hải 1, Hải An, Hải
-                                                            Phòng</a>
-                                                        <span></span>
-                                                    </h3>
-                                                    <div>Nhà 1.5 tầng xây độc lập, sạch sẽ về ở ngay, ngõ rộng 2,2m, khu
-                                                        dân cư đông đúc,
-                                                        gần trường, chợ, bệnh viện, hướng Đông Nam, sổ hồng chính chủ
-                                                    </div>
-                                                    <p>
-                                                        <strong>DTMB:</strong> 57.7 m2 - <strong>Giá:</strong>
-                                                        <span>
-                                                                1.87 tỷ VND
-                                                            </span>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6  free_price_item_wrap">
-                                        <div class="col-xs-12 re_item2 free_price_item">
-                                            <div class="row">
-                                                <div class="col-xs-5 lgp_item">
-                                                    <a href="#">
-                                                        <img
-                                                            src="http://nhadathaiphong.vn/images/attachment/thumb/2960486327MHT3.jpg"
-                                                            alt="Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng">
-                                                    </a>
-                                                    <div class="code_row">HP-36845</div>
-                                                </div>
-
-                                                <div class="col-xs-7 rgp_item">
-                                                    <h3><a href="#">Cho thuê nhà số 9 Đoạn Xá, Đông Hải 1, Hải An, Hải
-                                                            Phòng</a>
-                                                        <span></span>
-                                                    </h3>
-                                                    <div>Nhà 1.5 tầng xây độc lập, sạch sẽ về ở ngay, ngõ rộng 2,2m, khu
-                                                        dân cư đông đúc,
-                                                        gần trường, chợ, bệnh viện, hướng Đông Nam, sổ hồng chính chủ
-                                                    </div>
-                                                    <p>
-                                                        <strong>DTMB:</strong> 57.7 m2 - <strong>Giá:</strong>
-                                                        <span>
-                                                                1.87 tỷ VND
-                                                            </span>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6  free_price_item_wrap">
-                                        <div class="col-xs-12 re_item2 free_price_item">
-                                            <div class="row">
-                                                <div class="col-xs-5 lgp_item">
-                                                    <a href="#">
-                                                        <img
-                                                            src="http://nhadathaiphong.vn/images/attachment/thumb/4592d597efe08641661f3f50.jpg"
-                                                            alt="Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng">
-                                                    </a>
-                                                    <div class="code_row">HP-36845</div>
-                                                </div>
-
-                                                <div class="col-xs-7 rgp_item">
-                                                    <h3><a href="#">Cho thuê nhà số 9 Đoạn Xá, Đông Hải 1, Hải An, Hải
-                                                            Phòng</a>
-                                                        <span></span>
-                                                    </h3>
-                                                    <div>Nhà 1.5 tầng xây độc lập, sạch sẽ về ở ngay, ngõ rộng 2,2m, khu
-                                                        dân cư đông đúc,
-                                                        gần trường, chợ, bệnh viện, hướng Đông Nam, sổ hồng chính chủ
-                                                    </div>
-                                                    <p>
-                                                        <strong>DTMB:</strong> 57.7 m2 - <strong>Giá:</strong>
-                                                        <span>
-                                                                1.87 tỷ VND
-                                                            </span>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                                {{--<div class="col-xs-7 rgp_item">--}}
+                                                    {{--<h3><a href="#">Cho thuê nhà số 9 Đoạn Xá, Đông Hải 1, Hải An, Hải--}}
+                                                            {{--Phòng</a>--}}
+                                                        {{--<span></span>--}}
+                                                    {{--</h3>--}}
+                                                    {{--<div>Nhà 1.5 tầng xây độc lập, sạch sẽ về ở ngay, ngõ rộng 2,2m, khu--}}
+                                                        {{--dân cư đông đúc,--}}
+                                                        {{--gần trường, chợ, bệnh viện, hướng Đông Nam, sổ hồng chính chủ--}}
+                                                    {{--</div>--}}
+                                                    {{--<p>--}}
+                                                        {{--<strong>DTMB:</strong> 57.7 m2 - <strong>Giá:</strong>--}}
+                                                        {{--<span>--}}
+                                                                {{--1.87 tỷ VND--}}
+                                                            {{--</span>--}}
+                                                    {{--</p>--}}
+                                                {{--</div>--}}
+                                            {{--</div>--}}
+                                        {{--</div>--}}
+                                    {{--</div>--}}
                                 @endfor
                             </div>
                         </div>

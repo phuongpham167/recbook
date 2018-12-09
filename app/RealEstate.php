@@ -10,6 +10,8 @@ class RealEstate extends Model
     use SoftDeletes;
     protected $dates = ['deleted_at'];
 
+    const same_search = 'SSO', related_item = 'RI';
+
     protected $table = 'real_estates';
 
     protected $fillable = [

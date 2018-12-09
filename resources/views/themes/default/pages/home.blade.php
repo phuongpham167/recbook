@@ -109,8 +109,8 @@
                 <div class="row title-hot-wrap">
                     <div class="col-xs-12 title-hot-real-estate">
                             <a href="/tin-noi-bat.htm" class="active">BẤT ĐỘNG SẢN NỔI BẬT <span></span></a>
-                            <a href="/tin-dang-moi-nhat.htm">TIN MỚI NHẤT <span></span></a>
-                            <a href="/tin-rao-cong-dong-mien-phi.htm">TIN RAO VẶT CỘNG ĐỒNG MIỄN PHÍ <span></span></a>
+                            <a href="{{route('newest-real-estate')}}">TIN MỚI NHẤT <span></span></a>
+                            <a href="{{route('free-real-estate')}}">TIN RAO VẶT CỘNG ĐỒNG MIỄN PHÍ <span></span></a>
                     </div>
                 </div>
                 <div class="row list-re-item list-hot">
@@ -158,7 +158,7 @@
         <section class="good_price">
             <div class="container">
                 <div class="row two_cols">
-                    <div class="col-xs-12 col-md-9 col_left">
+                    <div class="col-xs-12 col-md-12 col_left">
                         <div class="left_box">
                             <p class="title_box">
                                 <strong>TIN GIÁ HẤP DẪN</strong>
@@ -169,7 +169,7 @@
                                     <a href="#">Cho thuê</a>
                                     <a href="#">Cần mua</a>
                                     <a href="#">Cần thuê</a>
-                                    <a href="#">Tin VIP</a>
+                                    <a href="{{route('tin-vip')}}">Tin VIP</a>
                                     <form action="" method="GET">
                                         <input placeholder="Từ khóa, mã số tin, số điện thoại" autocomplete="off" type="text" value="" name="txtkeyword" id="txtkeyword">
                                         <button type="submit"><i class="fa fa-search"></i></button>
@@ -177,7 +177,7 @@
                                 </div>
                                 <div class="row body_top_box">
                                     @foreach($goodPriceRealEstate as $item)
-                                        <div class="col-xs-12 col-sm-6  good_price_item_wrap">
+                                        <div class="col-xs-12 col-sm-6 col-md-4  good_price_item_wrap">
                                             <div class="col-xs-12  re_item2 good_price_item">
                                             @php
                                                 $itemClass = '';
@@ -328,9 +328,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xs-12 col-md-3 col_right">
-                        @include(theme(TRUE).'.includes.vip-slide')
-                    </div>
+                    {{--<div class="col-xs-12 col-md-3 col_right">--}}
+                        {{--@include(theme(TRUE).'.includes.vip-slide')--}}
+                    {{--</div>--}}
                 </div>
             </div>
         </section>

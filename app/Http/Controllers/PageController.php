@@ -7,6 +7,7 @@ use App\Menu;
 use App\RealEstate;
 use App\ReCategory;
 use App\ReType;
+use App\Services\PageService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -15,11 +16,17 @@ class PageController extends Controller
 {
     protected $menuFE;
 
-    public function __construct()
+    protected $service;
+
+    public function __construct(
+        PageService $pageService
+    )
     {
         $web_id = get_web_id();
         $mmfe = config('menu.mainMenuFE');
         $this->menuFE = Menu::where('web_id', $web_id)->where('menu_type', $mmfe)->first();
+
+        $this->service = $pageService;
 
         $vipRealEstates = RealEstate::select('id', 'title', 'slug', 'direction_id',
             'area_of_premises', 'price', 'unit_id', 'is_vip', 'is_hot')
@@ -43,6 +50,7 @@ class PageController extends Controller
 
         /*
          * TODO: need more info to filter good price items
+         * Now: get vip only
          * */
         $goodPriceRealEstate = RealEstate::select('id', 'title', 'short_description', 'slug', 'code',
             'area_of_premises', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date')
@@ -112,6 +120,24 @@ class PageController extends Controller
         }
     }
 
+    public function homeTinVip()
+    {
+        $web_id = get_web_id();
+        $query = RealEstate::select('id', 'title', 'short_description', 'slug', 'code', 'district_id',
+            'area_of_premises', 'area_of_use', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date')
+            ->where('is_vip', 1)
+            ->where('is_hot', '<>', 1)
+            ->where('post_date', '<=', Carbon::now())
+            ->where('web_id', $web_id)
+            ->orderBy('post_date', 'desc');
+        $results = $query->get();
+
+        return v('pages.tin-vip', [
+            'data' => $results,
+            'menuData' => $this->menuFE
+        ]);
+    }
+
     public function detailRealEstate($slug)
     {
         $explodeSlug = explode('-', $slug);
@@ -123,6 +149,18 @@ class PageController extends Controller
          * TODO: - get list related real estate
          * */
 
-        return v('pages.detail-real-estate', ['data' => $realEstate, 'menuData' => $this->menuFE]);
+        /*
+         * get list same search option
+         * */
+        $sameSearchOptions = $this->service->getListBelowDetailPage(RealEstate::same_search, [], $realEstate);
+
+        $relatedItems = $this->service->getListBelowDetailPage(RealEstate::related_item, [], $realEstate);
+
+        return v('pages.detail-real-estate', [
+            'data' => $realEstate,
+            'sameSearchOptions' => $sameSearchOptions,
+            'relatedItems' => $relatedItems,
+            'menuData' => $this->menuFE
+        ]);
     }
 }
