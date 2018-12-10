@@ -55,8 +55,8 @@ Route::group(['middleware'=>'auth'], function(){
         Route::get('/data',['as' => 'realEstateData', 'uses' => 'RealEstateController@data']);
         Route::get('/sua', 'RealEstateController@edit');
         Route::post('/sua', 'RealEstateController@update');
-        Route::get('/tao-moi', 'RealEstateController@create');
-        Route::post('tao-moi', 'RealEstateController@store');
+        Route::get('/tao-moi', ['as' => 'get.create-real-estate',  'uses' => 'RealEstateController@create']);
+        Route::post('tao-moi', ['as' => 'post.create-real-estate', 'uses' => 'RealEstateController@store']);
         Route::get('/xoa', 'RealEstateController@delete');
         Route::post('/multi-delete', 'RealEstateController@multiDelete');
 

@@ -99,12 +99,14 @@ button {
     border-radius: 0;
     margin-bottom: 0;
     .main-menu-list {
+        padding-left: 0;
         ul {
             li {
                 a {
                     color: #fff;
                     font-size: 13px;
                     text-transform: uppercase;
+                    padding-left: 0;
                 }
                 ul {
                     width: 260px;

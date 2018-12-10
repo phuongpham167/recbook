@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\DataTables\RealEstatesDataTable;
 use App\Http\Requests\RealEstateRequest;
+use App\Menu;
 use App\RealEstate;
 use App\Services\BlockService;
 use App\Services\ConstructionTypeService;
@@ -42,6 +43,8 @@ class RealEstateController extends Controller
     protected $rangePriceService;
     protected $reSourceService;
 
+    protected $menuFE;
+
     public function __construct(
         RealEstateService $realEstateService,
         ReCategoryService $reCategoryService,
@@ -75,6 +78,10 @@ class RealEstateController extends Controller
         $this->unitService = $unitService;
         $this->rangePriceService = $rangePriceService;
         $this->reSourceService = $reSourceService;
+
+        $web_id = get_web_id();
+        $mmfe = config('menu.mainMenuFE');
+        $this->menuFE = Menu::where('web_id', $web_id)->where('menu_type', $mmfe)->first();
     }
 
     public function list($filter = null)
@@ -154,9 +161,12 @@ class RealEstateController extends Controller
         $units = $this->unitService->getListDropDown();
         $reSources = $this->reSourceService->getListDropDown();
 
+        $menuData = $this->menuFE;
 
-        return v('real-estate.create', compact(['reCategories', 'provinces', 'streets', 'directions',
-            'exhibits', 'blocks', 'constructionTypes', 'units', 'reSources']));
+        return v('real-estate.create', compact([
+            'reCategories', 'provinces', 'streets', 'directions',
+            'exhibits', 'blocks', 'constructionTypes', 'units', 'reSources', 'menuData'
+        ]));
     }
 
     public function store(RealEstateRequest $request)

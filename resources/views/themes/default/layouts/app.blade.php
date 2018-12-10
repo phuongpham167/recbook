@@ -18,8 +18,10 @@
 
     {{--<script src="{{ asset('js/jquery.min.js') }}"></script>--}}
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+    <script type="text/javascript" src='http://maps.googleapis.com/maps/api/js?sensor=false&key=AIzaSyAxgnRkMsWPSqlxOz_kLga0hJ4eG2l0Vmo'></script>
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/jquery.bxslider.js') }}"></script>
+    <script src="{{asset('plugins/jquery-locationpicker-plugin-master/dist/locationpicker.jquery.min.js')}}"></script>
     <script>
         $(document).ready(function() {
             // Show or hide the sticky footer button
