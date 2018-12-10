@@ -21,12 +21,25 @@
         <div class="container padding-top-30 padding-bottom-30">
             <div class="row">
                 <div class="col-xs-12 col-md-9 list-content-wrap">
-                    <p class="title_box"><strong>{{ $category->name }} <i class="fa fa-angle-right"></i> {{ $type->name }} ({{$count}})</strong>
+                    <p class="title_box">
+                        <strong>
+                            @if(isset($pageTitle) && $pageTitle)
+                                {{ $pageTitle }}
+                            @else
+                                {{ $category->name }} @if($type)<i class="fa fa-angle-right"></i> {{ $type->name }} @endif {{"(" . $count . ")"}}
+                            @endif
+                        </strong>
                     </p>
                     <div class="row list-re-item" style="margin-left: -15px; margin-right: -15px;">
                         @foreach($data as $item)
                             <div class="col-xs-12 col-sm-6 col-md-4">
-                                <div class="col-xs-12 re-item hot">
+                                @php
+                                    $itemClass = '';
+                                    if($item->is_hot) {
+                                        $itemClass = 'hot';
+                                    }
+                                @endphp
+                                <div class="col-xs-12 re-item {{$itemClass}}">
                                     <a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">
                                         @php
                                             $images = $item->images ? json_decode($item->images) : [];
@@ -36,7 +49,12 @@
                                         <img src="{{asset($imgThumbnail)}}" alt="{{ $imgAlt }}">
                                     </a>
                                     <div class="icon_viphot">
-                                        <img src="{{ asset('images/vip1.gif') }}" alt="Bán nhà số 23/11 Hàng Kênh, Lê Chân, Hải Phòng">
+                                        @if($item->is_hot)
+                                            <img src="{{ asset('images/vip1.gif') }}" alt="{{ $item->title }}">
+                                        @endif
+                                        @if($item->is_vip)
+                                            <img src="{{ asset('images/vip2.gif') }}" alt="{{ $item->title }}">
+                                        @endif
                                     </div>
 
                                     <div class="code_row">{{ $item->code }}</div>

@@ -37,6 +37,8 @@ class PageController extends Controller
 
     public function index()
     {
+        $web_id = get_web_id();
+
         $hotRealEstates = RealEstate::select('id', 'title', 'slug', 'short_description', 'code',
             'area_of_premises', 'area_of_use', 'district_id', 'price', 'unit_id', 'is_vip', 'is_hot',
             'post_date', 'images')
@@ -44,6 +46,7 @@ class PageController extends Controller
             ->where('is_vip', '<>', 1)
             ->where('post_date', '<=', Carbon::now())
 //            ->where('hot_expire_at', '<=', Carbon::now())
+            ->where('web_id', $web_id)
             ->limit(16)
             ->get();
 //        dd($hotRealEstates);
@@ -56,6 +59,7 @@ class PageController extends Controller
             'area_of_premises', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date')
             ->where('is_vip', 1)
             ->where('post_date', '<=', Carbon::now())
+            ->where('web_id', $web_id)
             ->orderBy('post_date', 'desc')
             ->limit(200)
             ->get();
@@ -64,13 +68,22 @@ class PageController extends Controller
             'area_of_premises', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date')
             ->where('is_hot', '<>', 1)
             ->where('is_vip', '<>', 1)
+            ->where('web_id', $web_id)
             ->limit(40)
+            ->get();
+
+        /*
+         * get lít category
+         * */
+        $categories = ReCategory::select('id', 'name', 'slug')
+//            ->where('web_id', $web_id)
             ->get();
 
         return v('pages.home', [
             'hotRealEstates' => $hotRealEstates,
             'goodPriceRealEstate' => $goodPriceRealEstate,
             'freeRealEstates' => $freeRealEstates,
+            'categories' => $categories,
             'menuData' => $this->menuFE
         ]);
     }
@@ -117,6 +130,99 @@ class PageController extends Controller
             }
         } catch (\Exception $exception) {
 
+        }
+    }
+
+    public function featuredRealEstate()
+    {
+        $web_id = get_web_id();
+        $query = RealEstate::select('id', 'title', 'short_description', 'slug', 'code', 'district_id',
+            'area_of_premises', 'area_of_use', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date')
+            ->where('is_hot', 1)
+            ->where('is_vip', '<>', 1)
+            ->where('post_date', '<=', Carbon::now())
+            ->where('web_id', $web_id)
+            ->orderBy('post_date', 'desc');
+        $results = $query->get();
+
+        return v('pages.list-real-estate', [
+            'data' => $results,
+            'category' => null,
+            'type' => null,
+            'count' => null,
+            'pageTitle' => trans('page.featured_real_estate'),
+            'menuData' => $this->menuFE
+        ]);
+    }
+
+    public function newestRealEstate()
+    {
+        $web_id = get_web_id();
+        $query = RealEstate::select('id', 'title', 'short_description', 'slug', 'code', 'district_id',
+            'area_of_premises', 'area_of_use', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date')
+            ->where('post_date', '<=', Carbon::now())
+            ->where('web_id', $web_id)
+            ->orderBy('post_date', 'desc');
+        $results = $query->get();
+
+        return v('pages.list-real-estate', [
+            'data' => $results,
+            'category' => null,
+            'type' => null,
+            'count' => null,
+            'pageTitle' => trans('page.newest_real_estate'),
+            'menuData' => $this->menuFE
+        ]);
+    }
+
+    public function freeRealEstate()
+    {
+        $web_id = get_web_id();
+        $query = RealEstate::select('id', 'title', 'short_description', 'slug', 'code', 'district_id',
+            'area_of_premises', 'area_of_use', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date')
+            ->where('is_hot', '<>', 1)
+            ->where('is_vip', '<>', 1)
+            ->where('post_date', '<=', Carbon::now())
+            ->where('web_id', $web_id)
+            ->orderBy('post_date', 'desc');
+        $results = $query->get();
+
+        return v('pages.list-real-estate', [
+            'data' => $results,
+            'category' => null,
+            'type' => null,
+            'count' => null,
+            'pageTitle' => trans('page.free_real_estate'),
+            'menuData' => $this->menuFE
+        ]);
+    }
+
+    public function getRealEstateByCat($tag)
+    {
+        $explodeSlug = explode('-', $tag);
+        $last = $explodeSlug[count($explodeSlug)-1];
+        $catId = substr($last, 1);
+
+        $category = ReCategory::find($catId);
+        if ($category) {
+            $web_id = get_web_id();
+            $query = RealEstate::select('id', 'title', 'short_description', 'slug', 'code', 'district_id',
+                'area_of_premises', 'area_of_use', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date')
+                ->where('re_category_id', $catId)
+                ->where('post_date', '<=', Carbon::now())
+                ->where('web_id', $web_id)
+                ->orderBy('post_date', 'desc');
+
+            $countAll = $query->count();
+            $results = $query->get();
+
+            return v('pages.list-real-estate', [
+                'data' => $results,
+                'category' => $category,
+                'type' => null,
+                'count' => $countAll,
+                'menuData' => $this->menuFE
+            ]);
         }
     }
 

@@ -108,7 +108,7 @@
             <div class="container ">
                 <div class="row title-hot-wrap">
                     <div class="col-xs-12 title-hot-real-estate">
-                            <a href="/tin-noi-bat.htm" class="active">BẤT ĐỘNG SẢN NỔI BẬT <span></span></a>
+                            <a href="{{ route('tin-noi-bat') }}" class="active">BẤT ĐỘNG SẢN NỔI BẬT <span></span></a>
                             <a href="{{route('newest-real-estate')}}">TIN MỚI NHẤT <span></span></a>
                             <a href="{{route('free-real-estate')}}">TIN RAO VẶT CỘNG ĐỒNG MIỄN PHÍ <span></span></a>
                     </div>
@@ -165,10 +165,9 @@
                             </p>
                             <div>
                                 <div class="cat_top_box">
-                                    <a href="#">Cần bán</a>
-                                    <a href="#">Cho thuê</a>
-                                    <a href="#">Cần mua</a>
-                                    <a href="#">Cần thuê</a>
+                                    @foreach($categories as $category)
+                                        <a href="{{'/danh-muc-bds/' . $category->slug . '-c' . $category->id}}">{{$category->name}}</a>
+                                    @endforeach
                                     <a href="{{route('tin-vip')}}">Tin VIP</a>
                                     <form action="" method="GET">
                                         <input placeholder="Từ khóa, mã số tin, số điện thoại" autocomplete="off" type="text" value="" name="txtkeyword" id="txtkeyword">
