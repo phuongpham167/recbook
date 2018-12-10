@@ -61,5 +61,8 @@ return [
     'send_success'  =>  'Gửi email thành công, hãy kiểm tra hộp thư của bạn!',
     'expired_code'  =>  'Đường link của bạn đã hết hạn!',
     'dont_exits'  =>  'Email chưa được đăng ký. Vui lòng kiểm tra lại địa chỉ email!',
-    'forgot_password'  =>  'Quên mật khẩu'
+    'forgot_password'  =>  'Quên mật khẩu',
+    'featured_real_estate' => 'Tin nổi bật',
+    'newest_real_estate' => 'Tin đăng mới nhất',
+    'free_real_estate' => 'Tin rao vặt cộng đồng miễn phí'
 ];
