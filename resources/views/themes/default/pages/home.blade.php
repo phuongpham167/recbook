@@ -321,7 +321,10 @@
                                         {{--</div>--}}
                                     {{--</div>--}}
                                     <div class="col-xs-12" style="border-bottom: 0; margin-bottom: 0; padding-bottom: 0; margin-top: 15px;">
-                                        <p class="more"><a href="#"><i class="fa fa-angle-double-right"></i> Xem thêm</a></p>
+                                        @php
+                                            $cat = $categories[0];
+                                        @endphp
+                                        <p class="more"><a href="{{'/danh-muc-bds/' . $cat->slug . '-c' . $cat->id}}"><i class="fa fa-angle-double-right"></i> Xem thêm</a></p>
                                     </div>
                                 </div>
                             </div>
