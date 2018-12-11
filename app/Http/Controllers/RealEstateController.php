@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\DataTables\RealEstatesDataTable;
 use App\Http\Requests\RealEstateRequest;
+use App\Menu;
 use App\RealEstate;
 use App\Services\BlockService;
 use App\Services\ConstructionTypeService;
 use App\Services\DirectionService;
 use App\Services\DistrictService;
 use App\Services\ExhibitService;
+use App\Services\PageService;
 use App\Services\ProjectService;
 use App\Services\ProvinceService;
 use App\Services\RangePriceService;
@@ -41,6 +43,7 @@ class RealEstateController extends Controller
     protected $unitService;
     protected $rangePriceService;
     protected $reSourceService;
+    protected $menuFE;
 
     public function __construct(
         RealEstateService $realEstateService,
@@ -57,7 +60,8 @@ class RealEstateController extends Controller
         ConstructionTypeService $constructionTypeService,
         UnitService $unitService,
         RangePriceService $rangePriceService,
-        ReSourceService $reSourceService
+        ReSourceService $reSourceService,
+        PageService $pageService
     )
     {
         $this->service = $realEstateService;
@@ -75,11 +79,22 @@ class RealEstateController extends Controller
         $this->unitService = $unitService;
         $this->rangePriceService = $rangePriceService;
         $this->reSourceService = $reSourceService;
+        $web_id = get_web_id();
+        $mmfe = config('menu.mainMenuFE');
+        $this->menuFE = Menu::where('web_id', $web_id)->where('menu_type', $mmfe)->first();
+
+        $this->service = $pageService;
+
+        $vipRealEstates = RealEstate::select('id', 'title', 'slug', 'direction_id',
+            'area_of_premises', 'price', 'unit_id', 'is_vip', 'is_hot')
+            ->where('is_vip',  1)
+            ->where('vip_expire_at',  '<=', Carbon::now())
+            ->get();
     }
 
     public function list($filter = null)
     {
-        return v('real-estate.list', compact('filter'));
+        return v('real-estate.list',['menuData' => $this->menuFE], compact('filter'));
     }
 
     public function data()
@@ -162,7 +177,7 @@ class RealEstateController extends Controller
         $reSources = $this->reSourceService->getListDropDown();
 
 
-        return v('real-estate.create', compact(['reCategories', 'provinces', 'streets', 'directions',
+        return v('real-estate.create',['menuData' => $this->menuFE], compact(['reCategories', 'provinces', 'streets', 'directions',
             'exhibits', 'blocks', 'constructionTypes', 'units', 'reSources']));
     }
 
