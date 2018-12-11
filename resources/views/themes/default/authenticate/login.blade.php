@@ -11,6 +11,7 @@
 @push('style')
     <link rel="stylesheet" href="{{ asset('css/theme.css') }}" />
 {{--    <link rel="stylesheet" href="{{ asset('css/user.css') }}"/>--}}
+
 @endpush
 
 @section('content')
