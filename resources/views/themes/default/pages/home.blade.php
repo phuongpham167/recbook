@@ -42,16 +42,16 @@
                 <div class="search-content">
                     <ul>
                         <li class="active">
-                            <a href="1">Cần bán</a><span></span>
+                            <a href="#">Cần bán</a><span></span>
                         </li>
                         <li>
-                            <a href="5">Cho thuê</a><span></span>
+                            <a href="#">Cho thuê</a><span></span>
                         </li>
                         <li>
-                            <a href="4">Cần mua</a><span></span>
+                            <a href="#">Cần mua</a><span></span>
                         </li>
                         <li>
-                            <a href="2">Cần thuê</a><span></span>
+                            <a href="#">Cần thuê</a><span></span>
                         </li>
                         <li>
                             <form action="/tim-kiem.htm" method="GET">
