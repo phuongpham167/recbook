@@ -8,10 +8,9 @@
     {{trans('users.change_pass')}}
 @endsection
 
-@section('style')
-    <link rel="stylesheet" href="{{ asset('css/home.css') }}"/>
-
-@endsection
+@push('style')
+    <link rel="stylesheet" href="{{ asset('css/theme.css') }}"/>
+@endpush
 
 @section('content')
     @include(theme(TRUE).'.includes.header')

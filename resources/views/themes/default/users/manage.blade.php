@@ -10,7 +10,6 @@
 
 @push('style')
     <link rel="stylesheet" href="{{ asset('css/theme.css') }}" />
-
 @endpush
 
 @section('content')
@@ -32,7 +31,7 @@
 
                         <ul>
                             <li class="add_bds"><a href="/bat-dong-san/tao-moi"><i class="fa fa-file-pdf-o fa-lg"></i>  Thêm mới nhà đất</a></li>
-                            <li class="manage_bds"><a href="/bat-dong-san"><i class="fa fa-list fa-lg"></i>  Danh sách tin rao (0)</a></li>
+                            <li class="manage_bds"><a href="/bat-dong-san"><i class="fa fa-list fa-lg"></i>  Danh sách tin rao</a></li>
                             <li class="change_pw_bds"><a href="/doi-mat-khau"><i class="fa fa-unlock-alt fa-lg"></i>  Thay đổi mật khẩu</a></li>
                             <li class="change_info_bds"><a href="/thong-tin-thanh-vien"><i class="fa fa-user fa-lg"></i>  Thay đổi thông tin</a></li>
                         </ul>

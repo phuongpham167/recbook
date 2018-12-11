@@ -1,0 +1,48 @@
+.row>div {
+    padding: 0;
+}
+.dangnhap_page {
+    border: 1px solid #ddd;
+    padding: 25px;
+    margin: 20px 0;
+    box-shadow: 0 0 10px 2px rgba(150,150,150,.1);
+    -webkit-box-shadow: 0 0 10px 2px rgba(150,150,150,.1);
+    -moz-box-shadow: 0 0 10px 2px rgba(150,150,150,.1);
+}
+._form {
+    margin: 0 auto;
+}
+.bg_fdfdfd {
+    background: #fdfdfd;
+}
+body {
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 12px;
+    min-width: 1200px;
+    color: #000;
+}
+._form .title_form {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #333;
+}
+._form dl {
+    padding: 5px 0;
+}
+._form dl dt {
+    float: left;
+    width: 150px;
+    line-height: 30px;
+    font-weight: 600;
+    color: #333;
+}
+._form dl dd {
+    margin-left: 160px;
+}
+._form dl dd input[type="text"], ._form dl dd input[type="password"], ._form dl dd select, ._form dl dd textarea {
+    height: 30px;
+    width: 100%;
+    border: 1px solid #ddd;
+    text-indent: 5px;
+}

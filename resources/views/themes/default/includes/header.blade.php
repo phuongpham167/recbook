@@ -7,10 +7,15 @@
             </div>
 
             <div class="col-xs-12 col-sm-4 user-action">
-                @if (!Auth::user())
+                @if (!auth()->check())
                     <p class="pull-right">
                         <a href="{{ route('login') }}"><i class="fa fa-sign-in"></i> ĐĂNG NHẬP</a>
                         <a href="{{ route('register') }}"><i class="fa fa-user-plus"></i> ĐĂNG KÝ</a>
+                    </p>
+                @else
+                    <p class="pull-right">
+                        <a href="{{ route('info') }}"><i class="fa fa-user"></i> <strong>{{auth()->user()->name}}</strong></a>
+                        <a href="{{ route('logout') }}"><i class="fa fa-sign-out"></i> ĐĂNG XUẤT</a>
                     </p>
                 @endif
             </div>

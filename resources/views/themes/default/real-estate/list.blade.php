@@ -8,10 +8,10 @@
     {{trans('real-estate.list.pageTitle')}}
 @endsection
 
-@section('style')
+@push('style')
     <link rel="stylesheet" href="{{ asset('css/theme.css') }}" />
 
-@endsection
+@endpush
 
 @section('content')
     @include(theme(TRUE).'.includes.header')
@@ -25,7 +25,7 @@
 
             <!--Begin left-->
             <div class="col-xs-9 right">
-
+                @include('themes.default.includes.message')
                 <!--begin manage_page-->
                 <div class="listlandA_page">
                     <p class="title_boxM"><strong><i class="fa fa-file-pdf-o"></i>{{trans('real-estate.manage')}}</strong></p>
