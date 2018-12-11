@@ -168,15 +168,19 @@ class AuthenticateController extends Controller
     public function postForgotPassword()
     {
         $code = str_random(10);
+        $email  =   request('email');
 
         $data = new PasswordReset();
         $data->code = md5($code);
-        if(!empty(User::where('email',request('email'))))
+
+        $user = User::where('email',$email)->first();
+        if(!empty($user))
             $data->email    =   request('email');
         else {
             set_notice(trans('page.dont_exits'), 'warning');
             return redirect()->back();
         }
+
         $data->expire_at = Carbon::now()->addHours(24);
         $data->save();
 
@@ -194,7 +198,6 @@ class AuthenticateController extends Controller
 
         if(empty($data)) {
             set_notice(trans('page.expired_code'), 'warning');
-
             return v('users.change_password_noti', ['menuData' => $this->menuFE]);
         }
 
