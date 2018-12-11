@@ -7,6 +7,7 @@
  */
 
 namespace App\Services;
+use App\Customer;
 use App\RealEstate;
 use Illuminate\Support\Facades\DB;
 
@@ -21,7 +22,14 @@ class RealEstateService
 
     public function store($input)
     {
-        dd($input);
+        $slug = to_slug($input['title']);
+
+        $phone = $input['contact_phone_number'];
+        $contactPerson = $input['contact_person'];
+        $contactAddress = $input['contact_address'];
+
+        $customer = $this->checkCustomer($phone, $contactPerson, $contactAddress);
+
         $imagesVal = [];
         if (isset($input['images'])) {
             $images = $input['images'];
@@ -42,12 +50,15 @@ class RealEstateService
             $lat = $maps[0];
             $long = $maps[1] ? $maps[1] : '';
         }
+        $web_id = get_web_id();
+
         $realEstate = new RealEstate([
             'title' => $input['title'],
+            'slug' => $slug,
             'short_description' => $input['short_description'],
-            'contact_person' => $input['contact_person'],
-            'contact_phone_number' => $input['contact_phone_number'],
-            'contact_address' => $input['contact_address'],
+            'contact_person' => $customer->name,
+            'contact_phone_number' => $customer->phone,
+            'contact_address' => $customer->address,
             're_category_id' => $input['re_category_id'],
             're_type_id' => $input['re_type_id'],
             'province_id' => $input['province_id'],
@@ -76,13 +87,16 @@ class RealEstateService
             'lat' => $lat,
             'long' => $long,
             'detail' => $input['detail'],
-            'source' => $input['source'],
-            'is_private' => isset($input['is_private']) ? 1 : 0,
             'posted_by' => \Auth::user()->id,
-            'updated_by' => \Auth::user()->id
+            'updated_by' => \Auth::user()->id,
+            'customer_id' => $customer->id,
+            'web_id' => $web_id,
+            'draft' => isset($input['add_draft']) ? 1 : 0,
         ]);
 
         if($realEstate->save()) {
+            $realEstate->code = config('real-estate.codePrefix') . '-' . $realEstate->id;
+            $realEstate->save();
             return $realEstate;
         } else {
             return false;
@@ -91,6 +105,14 @@ class RealEstateService
 
     public function update($input)
     {
+        $slug = to_slug($input['title']);
+
+        $phone = $input['contact_phone_number'];
+        $contactPerson = $input['contact_person'];
+        $contactAddress = $input['contact_address'];
+
+        $customer = $this->checkCustomer($phone, $contactPerson, $contactAddress);
+
         $imagesVal = [];
         if (isset($input['images'])) {
             $images = $input['images'];
@@ -110,13 +132,18 @@ class RealEstateService
             $lat = $maps[0];
             $long = $maps[1] ? $maps[1] : '';
         }
+        $web_id = get_web_id();
         $realEstate = RealEstate::find($input['id']);
         if ($realEstate) {
+            if (!$realEstate->code) {
+                $realEstate->code = config('real-estate.codePrefix') . '-' . $realEstate->id;
+            }
             $realEstate->title = $input['title'];
+            $realEstate->slug = $slug;
             $realEstate->short_description = $input['short_description'];
-            $realEstate->contact_person = $input['contact_person'];
-            $realEstate->contact_phone_number = $input['contact_phone_number'];
-            $realEstate->contact_address = $input['contact_address'];
+            $realEstate->contact_person = $customer->name;
+            $realEstate->contact_phone_number = $customer->phone;
+            $realEstate->contact_address = $customer->address;
             $realEstate->re_category_id = $input['re_category_id'];
             $realEstate->re_type_id = $input['re_type_id'];
             $realEstate->province_id = $input['province_id'];
@@ -145,9 +172,15 @@ class RealEstateService
             $realEstate->lat = $lat;
             $realEstate->long = $long;
             $realEstate->detail = $input['detail'];
-            $realEstate->source = $input['source'];
-            $realEstate->is_private = isset($input['is_private']) ? 1 : 0;
             $realEstate->updated_by = \Auth::user()->id;
+            $realEstate->customer_id = $customer->id;
+            $realEstate->web_id = $web_id;
+            if (isset($input['add_draft'])) {
+                $realEstate->approved = 0;
+                $realEstate->draft = 1;
+            } else {
+                $realEstate->draft = 0;
+            }
 
             if($realEstate->save()) {
                 return $realEstate;

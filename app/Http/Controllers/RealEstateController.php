@@ -60,8 +60,7 @@ class RealEstateController extends Controller
         ConstructionTypeService $constructionTypeService,
         UnitService $unitService,
         RangePriceService $rangePriceService,
-        ReSourceService $reSourceService,
-        PageService $pageService
+        ReSourceService $reSourceService
     )
     {
         $this->service = $realEstateService;
@@ -83,8 +82,6 @@ class RealEstateController extends Controller
         $web_id = get_web_id();
         $mmfe = config('menu.mainMenuFE');
         $this->menuFE = Menu::where('web_id', $web_id)->where('menu_type', $mmfe)->first();
-
-        $this->service = $pageService;
 
         $vipRealEstates = RealEstate::select('id', 'title', 'slug', 'direction_id',
             'area_of_premises', 'price', 'unit_id', 'is_vip', 'is_hot')

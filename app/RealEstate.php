@@ -52,6 +52,8 @@ class RealEstate extends Model
         'is_private',
         'posted_by',
         'updated_by',
+        'approved',
+        'draft',
         'code',
         'views',
         'is_vip',
