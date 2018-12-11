@@ -54,7 +54,7 @@
                             <a href="#">Cần thuê</a><span></span>
                         </li>
                         <li>
-                            <form action="/tim-kiem.htm" method="GET">
+                            <form action="#" method="GET">
                                 <input placeholder="Từ khóa, mã số tin, số điện thoại" autocomplete="off" type="text" value="" name="txtkeyword" id="txtkeyword">							            <button type="submit"><i class="fa fa-search"></i></button>
                             </form>
                         </li>
