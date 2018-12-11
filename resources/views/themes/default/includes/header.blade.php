@@ -14,8 +14,8 @@
                     </p>
                 @else
                     <p class="pull-right">
-                        <a href="{{ route('info') }}"><i class="fa fa-sign-in"></i> <strong>{{auth()->user()->name}}</strong></a>
-                        <a href="{{ route('logout') }}"><i class="fa fa-sign-in"></i> ĐĂNG XUẤT</a>
+                        <a href="{{ route('info') }}"><i class="fa fa-user"></i> <strong>{{auth()->user()->name}}</strong></a>
+                        <a href="{{ route('logout') }}"><i class="fa fa-sign-out"></i> ĐĂNG XUẤT</a>
                     </p>
                 @endif
             </div>
