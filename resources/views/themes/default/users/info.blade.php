@@ -8,10 +8,10 @@
     {{trans('users.info')}}
 @endsection
 
-@section('style')
+@push('style')
     <link rel="stylesheet" href="{{ asset('css/theme.css') }}" />
 
-@endsection
+@endpush
 
 @section('content')
     @include(theme(TRUE).'.includes.header')

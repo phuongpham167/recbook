@@ -58,6 +58,7 @@ Route::group(['middleware'=>'auth'], function(){
         Route::get('/tao-moi', 'RealEstateController@create');
         Route::post('tao-moi', 'RealEstateController@store');
         Route::get('/xoa', 'RealEstateController@delete');
+        Route::get('/dang-bai', 'RealEstateController@publish');
         Route::post('/multi-delete', 'RealEstateController@multiDelete');
 
     });
