@@ -62,4 +62,12 @@ Route::group(['middleware'=>'auth'], function(){
         Route::post('/multi-delete', 'RealEstateController@multiDelete');
 
     });
+
+    Route::get('/district-by-province/{provinceId}', ['as' => 'districtByProvince', 'uses' => 'RealEstateController@districtByProvince']);
+    Route::get('/ward-by-district/{districtId}', ['as' => 'wardByDistrict', 'uses' => 'RealEstateController@wardByDistrict']);
+    Route::get('/street-by-ward/{wardId}', ['as' => 'streetByWard', 'uses' => 'RealEstateController@streetByWard']);
+    Route::get('/project-by-province/{provinceId}', ['as' => 'projectByProvince', 'uses' => 'RealEstateController@projectByProvince']);
+    Route::get('/range-price/list-dropdown/{catId}', ['as' => 'rangePriceByCat', 'uses' => 'RangePriceController@getListDropDown']);
+    Route::get('/re-type/list-dropdown/{catId}', ['as' => 'reTypeByCat', 'uses' => 'ReTypeController@getListDropDown']);
+    Route::get('/customer-by-phone/{phone}', ['as' => 'customer-by-phone', 'uses' => 'RealEstateController@customerByPhone']);
 });

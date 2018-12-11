@@ -285,4 +285,10 @@ class RealEstateController extends Controller
 
         return redirect()->back();
     }
+
+    public function customerByPhone($phone)
+    {
+        $result = $this->service->customerByPhone($phone);
+        return response()->json($result);
+    }
 }

@@ -8,9 +8,15 @@
     {{trans('real-estate.pageCreateTitle')}}
 @endsection
 
-@section('style')
+@push('style')
     <link rel="stylesheet" href="{{ asset('css/theme.css') }}" />
-@endsection
+    <link rel="stylesheet" href="{{asset('plugins/bootstrap-datetimepicker-master/build/css/bootstrap-datetimepicker.min.css')}}">
+    <style>
+        .text-red {
+            color: red;
+        }
+    </style>
+@endpush
 
 <?php
     $user = \Auth::user();
@@ -38,6 +44,20 @@
 
             <!--Begin left-->
             <div class="col-xs-9 right">
+                @if (!empty(session('message')))
+                    <div class="alert alert-{{session('message.type')}} text-center">
+                        {{session('message.message')}}
+                    </div>
+                @endif
+                @if (!empty($errors) && count($errors) > 0)
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
 
                 <form class="form-horizontal" method="post">
                     {{csrf_field()}}
@@ -297,33 +317,12 @@
                                 </textarea>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.source')}}</label>
-
-                        <div class="col-sm-2">
-                            <select class="form-control" id="range-price" name="source" value="{{ old('source') }}">
-                                <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
-                                @foreach($reSources as $reSource)
-                                    <option value="{{$reSource->id}}">{{$reSource->name}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.isPrivate')}}</label>
-
-                        <div class="col-sm-2">
-                            <select class="form-control" id="is-private" name="is_private" value="{{ old('is_private') }}">
-                                <option value="1">{{ trans('real-estate.isPrivateSelectText.public') }}</option>
-                                <option value="2">{{ trans('real-estate.isPrivateSelectText.private') }}</option>
-                                <option value="3">{{ trans('real-estate.isPrivateSelectText.privateInOwnWebsite') }}</option>
-                            </select>
-                        </div>
-                    </div>
                     <!-- /.box-body -->
-                    <div class="box-footer">
-                        <button type="reset" class="btn btn-default">{{trans('system.cancel')}}</button>
-                        <button type="submit" class="btn btn-info pull-right">{{trans('system.submit')}}</button>
+                    <div class="form-group">
+                        <div class="col-sm-10 col-sm-offset-2">
+                            <button type="submit" name="add_new" class="_btn bg_red"><i class="fa fa-plus"></i> &nbsp;&nbsp;ĐĂNG TIN</button>
+                            <button type="submit" name="add_draft" value="1" class="_btn bg_black"><i class="fa fa-plus"></i> &nbsp;&nbsp;LƯU TIN</button>
+                        </div>
                     </div>
                     <!-- /.box-footer -->
                 </form>
@@ -351,7 +350,8 @@
     @include(theme(TRUE).'.includes.footer')
 @endsection
 
-@section('js')
+@push('js')
+    <script src="{{asset('plugins/bootstrap-datetimepicker-master/build/js/bootstrap-datetimepicker.min.js')}}"></script>
     <script src="{{asset('plugins/ckeditor-4/ckeditor.js')}}"></script>
     <script>
         $(function() {
@@ -630,4 +630,4 @@
         }
 
     </script>
-@endsection
+@endpush

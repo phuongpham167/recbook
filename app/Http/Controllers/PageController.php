@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\DB;
 
 class PageController extends Controller
 {
-    protected $menuFE;
+    protected $menuFE, $vipRealEstates;
 
     protected $service;
 
@@ -28,10 +28,10 @@ class PageController extends Controller
 
         $this->service = $pageService;
 
-        $vipRealEstates = RealEstate::select('id', 'title', 'slug', 'direction_id',
+        $this->vipRealEstates = RealEstate::select('id', 'title', 'slug', 'direction_id',
             'area_of_premises', 'price', 'unit_id', 'is_vip', 'is_hot')
             ->where('is_vip',  1)
-            ->where('vip_expire_at',  '<=', Carbon::now())
+//            ->where('vip_expire_at',  '<=', Carbon::now())
             ->get();
     }
 
@@ -266,6 +266,7 @@ class PageController extends Controller
             'data' => $realEstate,
             'sameSearchOptions' => $sameSearchOptions,
             'relatedItems' => $relatedItems,
+            'vipRealEstates' => $this->vipRealEstates,
             'menuData' => $this->menuFE
         ]);
     }
