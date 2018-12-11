@@ -10,6 +10,8 @@ class RealEstate extends Model
     use SoftDeletes;
     protected $dates = ['deleted_at'];
 
+    const same_search = 'SSO', related_item = 'RI';
+
     protected $table = 'real_estates';
 
     protected $fillable = [
@@ -36,7 +38,7 @@ class RealEstate extends Model
         'area_of_premises',
         'area_of_use',
         'floor',
-        'price' ,
+        'price',
         'unit_id',
         'range_price_id',
         'is_deal',
@@ -49,8 +51,23 @@ class RealEstate extends Model
         'source',
         'is_private',
         'posted_by',
-        'updated_by'
+        'updated_by',
+        'code',
+        'views',
+        'is_vip',
+        'vip_expire_at',
+        'is_hot',
+        'hot_expire_at',
+        'link_video',
+        'customer_id',
+        'slug',
+        'web_id'
     ];
+
+    public function direction()
+    {
+        return $this->belongsTo('App\Direction');
+    }
 
     public function reCategory()
     {
@@ -62,6 +79,11 @@ class RealEstate extends Model
         return $this->belongsTo('App\ReType');
     }
 
+    public function project()
+    {
+        return $this->belongsTo('App\Project');
+    }
+
     public function province()
     {
         return $this->belongsTo('App\Province');
@@ -69,6 +91,10 @@ class RealEstate extends Model
     public function district()
     {
         return $this->belongsTo('App\District');
+    }
+    public function unit()
+    {
+        return $this->belongsTo('App\Unit');
     }
     public function user()
     {

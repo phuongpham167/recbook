@@ -8,8 +8,28 @@ body {
   margin: 0;
 }
 
+.margin-top-20 {
+  margin-top: 20px;
+}
+
 .padding-0 {
   padding: 0;
+}
+
+.padding-top-30 {
+  padding-top: 30px;
+}
+
+.padding-right-10 {
+  padding-right: 10px;
+}
+
+.padding-bottom-30 {
+  padding-bottom: 30px;
+}
+
+.padding-left-10 {
+  padding-left: 10px;
 }
 
 .no-padding-left {
@@ -18,6 +38,18 @@ body {
 
 .no-padding-right {
   padding-right: 0;
+}
+
+/*
+    modify css of bootstrap
+*/
+
+.form-control {
+  border-radius: 0;
+}
+
+button {
+  border: none;
 }
 
 /*------------ Header ------------*/
@@ -148,6 +180,74 @@ body {
 
 /*------------ Footer ------------*/
 
+/*
+    3 cols footer
+*/
+
+.addition_info {
+  margin-top: 20px;
+}
+
+.brokers .broker_slider .broker-item {
+  background: #f5f5f5;
+  border-bottom: 1px dotted #ccc;
+  padding-top: 14px;
+  width: 100% !important;
+}
+
+.brokers .broker_slider .broker-item .ct_left {
+  float: left;
+}
+
+.brokers .broker_slider .broker-item .ct_left a img {
+  height: 100px;
+}
+
+.brokers .broker_slider .broker-item .ct_right {
+  margin-left: 85px;
+}
+
+.brokers .broker_slider .broker-item .ct_right .name {
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 0;
+  text-transform: capitalize;
+}
+
+.brokers .broker_slider .broker-item .ct_right .phone {
+  color: #ea3c00;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.brokers .bx-wrapper .bx-prev {
+  right: 35px;
+}
+
+.brokers .bx-wrapper .bx-next {
+  right: 0px;
+}
+
+.brokers .broker_see_all {
+  background: #f5f5f5;
+}
+
+.brokers .broker_see_all a {
+  padding: 5px 15px;
+  color: #fff;
+  background: #228511;
+  display: block;
+  float: right;
+  font-style: italic;
+  margin: 10px 0;
+  text-decoration: none;
+  width: 90px;
+}
+
+.design .design_content {
+  padding-bottom: 15px;
+}
+
 .menu-footer {
   background-color: #e40b00;
   clear: both;
@@ -199,6 +299,12 @@ body {
   position: relative;
   border: 2px solid #eee;
   padding: 5px;
+}
+
+.list-re-item .re-item:hover {
+  box-shadow: 0 0 3px 2px rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: 0 0 3px 2px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0 0 3px 2px rgba(0, 0, 0, 0.2);
 }
 
 .list-re-item .re-item > a {
@@ -284,11 +390,11 @@ body {
 }
 
 .list-re-item .hot a {
-  color: #e40b00;
+  color: #e40b00 !important;
 }
 
 .list-re-item .vip a {
-  color: #e40b00;
+  color: #e40b00 !important;
 }
 
 .code_row {
@@ -628,4 +734,60 @@ p.more a {
 }
 
 /*--------------- end row three columns ---------------*/
+
+.title_box1 {
+  background: #efefef;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 0;
+}
+
+.title_box1 strong {
+  display: inline-block;
+  font-size: 16px;
+  line-height: 50px;
+  font-weight: 600;
+  padding-left: 15px;
+  border-left: 15px solid #e40b00;
+}
+
+/*
+*---------------------- CSS for detail real estate page --------------------------
+*/
+
+.title-short-section {
+  background: #f8f8f8;
+  color: #e40b00;
+  font-size: 17px;
+  font-weight: 600;
+  padding: 10px;
+  margin: 15px 0 5px 0;
+}
+
+.strike-title {
+  border-bottom: 1px solid #ddd;
+  margin: 10px 0 20px 0;
+}
+
+.strike-title strong {
+  background: #fff;
+  display: inline-block;
+  position: relative;
+  bottom: -10px;
+  font-weight: 600;
+  line-height: 20px;
+  font-size: 16px;
+}
+
+.adv-content a {
+  display: inline-block;
+  width: 49.6%;
+}
+
+.adv-content a:last-child {
+  width: 100%;
+}
+
+/*
+*---------------------- END CSS for detail real estate page --------------------------
+*/
 

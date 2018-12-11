@@ -8,10 +8,10 @@
 
             <div class="col-xs-12 col-sm-4 user-action">
                 @if (!Auth::user())
-                <p class="pull-right">
-                    <a href="{{ route('login') }}"><i class="fa fa-sign-in"></i> ĐĂNG NHẬP</a>
-                    <a href="{{ route('register') }}"><i class="fa fa-user-plus"></i> ĐĂNG KÝ</a>
-                </p>
+                    <p class="pull-right">
+                        <a href="{{ route('login') }}"><i class="fa fa-sign-in"></i> ĐĂNG NHẬP</a>
+                        <a href="{{ route('register') }}"><i class="fa fa-user-plus"></i> ĐĂNG KÝ</a>
+                    </p>
                 @endif
             </div>
         </div>
@@ -50,18 +50,23 @@
         <div class="collapse navbar-collapse main-menu-list" id="myNavbar">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="{{ route('home') }}"><i class="fa fa-home fa-lg fa-fw"></i> {{ trans('header.navbar-item.home') }}</a></li>
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{ trans('header.navbar-item.for-sale') }} <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">{{ trans('header.navbar-item.all') }}</a></li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{ trans('header.navbar-item.for-rent') }} <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">{{ trans('header.navbar-item.all') }}</a></li>
-                    </ul>
-                </li>
+                @php
+                    $menuData = json_decode($menuData->data);
+                @endphp
+                @foreach($menuData as $md)
+                    @if (isset($md->children) && $children = $md->children)
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{ $md->name }} <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                @foreach($children as $child)
+                                <li><a href="{{ route('danh-muc', ['tag' => $child->path]) }}">{{ $child->name }}</a></li>
+                                @endforeach
+                            </ul>
+                        </li>
+                    @else
+                        <li class=""><a href="{{ route('danh-muc', ['tag' => $md->path]) }}"> {{ $md->name }}</a></li>
+                    @endif
+                @endforeach
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <form class="menu-search">
