@@ -76,7 +76,7 @@ class AuthenticateController extends Controller
     public function getChangepassword()
     {
 //        event_log('Truy cập trang ['.trans('page.editpassword').']');
-        return v('users.change-password');
+        return v('users.change-password',['menuData' => $this->menuFE]);
     }
     public function postChangepassword()
     {
