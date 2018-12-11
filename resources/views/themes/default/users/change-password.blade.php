@@ -8,10 +8,9 @@
     {{trans('users.change_pass')}}
 @endsection
 
-@section('style')
+@push('style')
     <link rel="stylesheet" href="{{ asset('css/theme.css') }}" />
-
-@endsection
+@endpush
 
 @section('content')
     @include(theme(TRUE).'.includes.header')
@@ -19,7 +18,7 @@
         <div class="row subpage">
 
             <!--Begin right-->
-        @include('includes.left-menu')
+        @include(theme(TRUE).'.includes.left-menu')
         <!--End right-->
 
             <!--Begin left-->

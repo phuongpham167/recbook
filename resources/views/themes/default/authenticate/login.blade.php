@@ -8,10 +8,10 @@
 {{trans('auth.login')}}
 @endsection
 
-@section('style')
+@push('style')
     <link rel="stylesheet" href="{{ asset('css/theme.css') }}" />
-    {{--<link rel="stylesheet" href="{{ asset('css/home.css') }}"/>--}}
-@endsection
+{{--    <link rel="stylesheet" href="{{ asset('css/user.css') }}"/>--}}
+@endpush
 
 @section('content')
     @include(theme(TRUE).'.includes.header')

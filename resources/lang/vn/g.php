@@ -8,6 +8,7 @@
 return [
   'search'  =>  'Tìm kiếm',
     'edit'  =>  'Sửa',
+    'post'  =>  'Đăng',
     'delete'    =>  'Xóa',
     'report'    =>  'Báo cáo',
     'report-list'    =>  'Xem Báo cáo',
