@@ -79,6 +79,7 @@ class RealEstateController extends Controller
         $this->unitService = $unitService;
         $this->rangePriceService = $rangePriceService;
         $this->reSourceService = $reSourceService;
+
         $web_id = get_web_id();
         $mmfe = config('menu.mainMenuFE');
         $this->menuFE = Menu::where('web_id', $web_id)->where('menu_type', $mmfe)->first();
@@ -176,9 +177,12 @@ class RealEstateController extends Controller
         $units = $this->unitService->getListDropDown();
         $reSources = $this->reSourceService->getListDropDown();
 
+        $menuData = $this->menuFE;
 
-        return v('real-estate.create',['menuData' => $this->menuFE], compact(['reCategories', 'provinces', 'streets', 'directions',
-            'exhibits', 'blocks', 'constructionTypes', 'units', 'reSources']));
+        return v('real-estate.create', compact([
+            'reCategories', 'provinces', 'streets', 'directions',
+            'exhibits', 'blocks', 'constructionTypes', 'units', 'reSources', 'menuData'
+        ]));
     }
 
     public function store(RealEstateRequest $request)
@@ -280,5 +284,11 @@ class RealEstateController extends Controller
             set_notice(trans('system.not_exist'), 'warning');
 
         return redirect()->back();
+    }
+
+    public function customerByPhone($phone)
+    {
+        $result = $this->service->customerByPhone($phone);
+        return response()->json($result);
     }
 }

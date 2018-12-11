@@ -12,5 +12,7 @@ return [
     'nameplacehold' =>  'tên Menu',
     'data'  =>  'Data menu',
     'manage' =>  'Quản lý',
-    'created_at' =>  'Tạo lúc'
+    'created_at' =>  'Tạo lúc',
+    'contact' => 'Liên hệ - gửi yêu cầu',
+    'create_real_estate' => 'đăng tin rao'
 ];

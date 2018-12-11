@@ -55,11 +55,19 @@ Route::group(['middleware'=>'auth'], function(){
         Route::get('/data',['as' => 'realEstateData', 'uses' => 'RealEstateController@data']);
         Route::get('/sua', 'RealEstateController@edit');
         Route::post('/sua', 'RealEstateController@update');
-        Route::get('/tao-moi', 'RealEstateController@create');
-        Route::post('tao-moi', 'RealEstateController@store');
+        Route::get('/tao-moi', ['as' => 'get.create-real-estate',  'uses' => 'RealEstateController@create']);
+        Route::post('tao-moi', ['as' => 'post.create-real-estate', 'uses' => 'RealEstateController@store']);
         Route::get('/xoa', 'RealEstateController@delete');
         Route::get('/dang-bai', 'RealEstateController@publish');
         Route::post('/multi-delete', 'RealEstateController@multiDelete');
 
     });
+
+    Route::get('/district-by-province/{provinceId}', ['as' => 'districtByProvince', 'uses' => 'RealEstateController@districtByProvince']);
+    Route::get('/ward-by-district/{districtId}', ['as' => 'wardByDistrict', 'uses' => 'RealEstateController@wardByDistrict']);
+    Route::get('/street-by-ward/{wardId}', ['as' => 'streetByWard', 'uses' => 'RealEstateController@streetByWard']);
+    Route::get('/project-by-province/{provinceId}', ['as' => 'projectByProvince', 'uses' => 'RealEstateController@projectByProvince']);
+    Route::get('/range-price/list-dropdown/{catId}', ['as' => 'rangePriceByCat', 'uses' => 'RangePriceController@getListDropDown']);
+    Route::get('/re-type/list-dropdown/{catId}', ['as' => 'reTypeByCat', 'uses' => 'ReTypeController@getListDropDown']);
+    Route::get('/customer-by-phone/{phone}', ['as' => 'customer-by-phone', 'uses' => 'RealEstateController@customerByPhone']);
 });

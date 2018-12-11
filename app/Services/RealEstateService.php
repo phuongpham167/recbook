@@ -21,6 +21,7 @@ class RealEstateService
 
     public function store($input)
     {
+        dd($input);
         $imagesVal = [];
         if (isset($input['images'])) {
             $images = $input['images'];
@@ -170,5 +171,25 @@ class RealEstateService
             \Log::info($e->getMessage());
             return false;
         }
+    }
+
+    public function customerByPhone($phone)
+    {
+        $data = Customer::where('phone', $phone)->select('id', 'name', 'address')->first();
+        return $data;
+    }
+
+    private function checkCustomer($phone, $contactPerson, $contactAddress)
+    {
+        $customer = Customer::where('phone', $phone)->first();
+        if (!$customer) {
+            $customer = new Customer([
+                'name' => $contactPerson,
+                'phone' => $phone,
+                'address' => $contactAddress
+            ]);
+            $customer->save();
+        }
+        return $customer;
     }
 }

@@ -108,10 +108,15 @@ button {
   margin-bottom: 0;
 }
 
+.main-menu .main-menu-list {
+  padding-left: 0;
+}
+
 .main-menu .main-menu-list ul li a {
   color: #fff;
   font-size: 13px;
   text-transform: uppercase;
+  padding-left: 0;
 }
 
 .main-menu .main-menu-list ul li ul {
