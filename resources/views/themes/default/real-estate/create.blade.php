@@ -1,7 +1,7 @@
 @extends(theme(TRUE).'.layouts.app')
 
 @section('meta-description')
-    <meta name="description" content="Register Page" >
+    <meta name="description" content="Thêm mới tin bát động sản" >
 @endsection
 
 @section('title')
@@ -10,6 +10,7 @@
 
 @push('style')
     <link rel="stylesheet" href="{{ asset('css/theme.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/manage-real-estate.css') }}" />
     <link rel="stylesheet" href="{{asset('plugins/bootstrap-datetimepicker-master/build/css/bootstrap-datetimepicker.min.css')}}">
     <style>
         .text-red {
@@ -315,6 +316,17 @@
                         <div class="col-sm-10">
                                 <textarea name="detail" class="form-control" id="editor">{!! old('detail') !!}
                                 </textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.isPrivate')}}</label>
+
+                        <div class="col-sm-2">
+                            <select class="form-control" id="is-private" name="is_private" value="{{ old('is_private') }}">
+                                <option value="1">{{ trans('real-estate.isPrivateSelectText.public') }}</option>
+                                <option value="2">{{ trans('real-estate.isPrivateSelectText.private') }}</option>
+                                <option value="3">{{ trans('real-estate.isPrivateSelectText.privateInOwnWebsite') }}</option>
+                            </select>
                         </div>
                     </div>
                     <!-- /.box-body -->

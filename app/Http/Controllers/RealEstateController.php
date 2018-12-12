@@ -113,7 +113,7 @@ class RealEstateController extends Controller
                 $data = $data->onlyTrashed()->get();
         }
         else
-            $data = $data->query();
+            $data = $data->where('approved', 1);
 
         $result = Datatables::of($data)
             ->addColumn('re_category_id', function($dt) {
@@ -127,7 +127,10 @@ class RealEstateController extends Controller
             })->addColumn('manage', function($dt) {
                 $manage = null;
 
-                $manage =   a('bat-dong-san/xoa', 'id='.$dt->id,trans('g.delete'), ['class'=>'btn btn-xs btn-danger'],'#',"return bootbox.confirm('".trans('system.delete_confirm')."', function(result){if(result==true){window.location.replace('".asset('bat-dong-san/xoa?id='.$dt->id)."')}})").'  '.a('bat-dong-san/sua', 'id='.$dt->id,trans('g.edit'), ['class'=>'btn btn-xs btn-default']);
+                $manage =   a('bat-dong-san/xoa', 'id='.$dt->id,trans('g.delete'), ['class'=>'btn btn-xs btn-danger'],'#',"return bootbox.confirm('".trans('system.delete_confirm')."', function(result){if(result==true){window.location.replace('".asset('bat-dong-san/xoa?id='.$dt->id)."')}})");
+                if(!$dt->approved) {
+                    $manage .= '  ' . a('bat-dong-san/sua', 'id=' . $dt->id, trans('g.edit'), ['class' => 'btn btn-xs btn-default']);
+                }
 
                 if(\request('filter') == 'tin-rao-nhap')
                     $manage .=   '  '.a('bat-dong-san/dang-bai', 'id='.$dt->id,trans('g.post'), ['class'=>'btn btn-xs btn-info']);
@@ -213,9 +216,11 @@ class RealEstateController extends Controller
             $rangePrices = $this->rangePriceService->getRangePriceByCat($realEstate->re_category_id);
             $reSources = $this->reSourceService->getListDropDown();
 
+            $menuData = $this->menuFE;
+
             return v('real-estate.edit', compact(['realEstate', 'reCategories', 'reTypes', 'provinces',
-                'districts', 'wards', 'streets', 'streets', 'directions', 'exhibits', 'projects', 'blocks',
-                'constructionTypes', 'units', 'rangePrices', 'reSources']));
+                'districts', 'wards', 'streets', 'directions', 'exhibits', 'projects', 'blocks',
+                'constructionTypes', 'units', 'rangePrices', 'reSources', 'menuData']));
         }
         set_notice(trans('real-estate.message.error'), 'error');
         return redirect()->back();

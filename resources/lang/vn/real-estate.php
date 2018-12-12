@@ -58,9 +58,9 @@ return [
     ],
     'selectFirstOpt' => 'Vui lòng chọn',
     'message' => [
-        'createSuccess' => 'Create successfully',
-        'updateSuccess' => 'Update successfully',
-        'deleteSuccess' => 'Delete successfully',
+        'createSuccess' => 'Thêm tin mới thành công',
+        'updateSuccess' => 'Cập nhật thành công',
+        'deleteSuccess' => 'Xóa thành công',
         'error' => 'Error'
     ],
     'list' => [

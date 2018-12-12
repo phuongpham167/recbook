@@ -1,0 +1,37 @@
+.text-bold {
+  font-weight: bold;
+}
+
+.text-orange {
+  color: orange;
+}
+
+#choose-image {
+  border-radius: 0px;
+}
+
+.img-preview {
+  margin-top: 10px;
+}
+
+.img-preview .item-img-preview {
+  position: relative;
+}
+
+.img-preview .item-img-preview img {
+  height: 150px;
+  margin: 0 auto;
+}
+
+.img-preview .item-img-preview label {
+  padding-top: 5px;
+}
+
+.img-preview .item-img-preview .img-preview-btn-remove {
+  color: red;
+  cursor: pointer;
+  position: absolute;
+  top: 5px;
+  right: 20px;
+}
+

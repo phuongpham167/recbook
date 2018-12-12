@@ -87,6 +87,7 @@ class RealEstateService
             'lat' => $lat,
             'long' => $long,
             'detail' => $input['detail'],
+            'is_private' => $input['is_private'],
             'posted_by' => \Auth::user()->id,
             'updated_by' => \Auth::user()->id,
             'customer_id' => $customer->id,
@@ -172,6 +173,7 @@ class RealEstateService
             $realEstate->lat = $lat;
             $realEstate->long = $long;
             $realEstate->detail = $input['detail'];
+            $realEstate->is_private = $input['is_private'];
             $realEstate->updated_by = \Auth::user()->id;
             $realEstate->customer_id = $customer->id;
             $realEstate->web_id = $web_id;
