@@ -279,8 +279,9 @@ class RealEstateController extends Controller
         $data   =   RealEstate::find(request('id'));
         if(!empty($data)){
 //            event_log('Xóa thành viên '.$data->name.' id '.$data->id);
-            $data->draft = 0;
-            $data->save();
+            $this->service->publish($data);
+//            $data->draft = 0;
+//            $data->save();
             set_notice(trans('system.publish_success'), 'success');
         }else
             set_notice(trans('system.not_exist'), 'warning');

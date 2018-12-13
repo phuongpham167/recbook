@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\DB;
 
 class PageController extends Controller
 {
-    protected $menuFE, $vipRealEstates;
+    protected $menuFE, $vipRealEstates, $web_id;
 
     protected $service;
 
@@ -22,9 +22,9 @@ class PageController extends Controller
         PageService $pageService
     )
     {
-        $web_id = get_web_id();
+        $this->web_id = get_web_id();
         $mmfe = config('menu.mainMenuFE');
-        $this->menuFE = Menu::where('web_id', $web_id)->where('menu_type', $mmfe)->first();
+        $this->menuFE = Menu::where('web_id', $this->web_id)->where('menu_type', $mmfe)->first();
 
         $this->service = $pageService;
 
@@ -37,8 +37,6 @@ class PageController extends Controller
 
     public function index()
     {
-        $web_id = get_web_id();
-
         $hotRealEstates = RealEstate::select('id', 'title', 'slug', 'short_description', 'code',
             'area_of_premises', 'area_of_use', 'district_id', 'price', 'unit_id', 'is_vip', 'is_hot',
             'post_date', 'images')
@@ -46,7 +44,7 @@ class PageController extends Controller
             ->where('is_vip', '<>', 1)
             ->where('post_date', '<=', Carbon::now())
 //            ->where('hot_expire_at', '<=', Carbon::now())
-            ->where('web_id', $web_id)
+            ->where('web_id', $this->web_id)
             ->limit(16)
             ->get();
 //        dd($hotRealEstates);
@@ -59,7 +57,7 @@ class PageController extends Controller
             'area_of_premises', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date')
             ->where('is_vip', 1)
             ->where('post_date', '<=', Carbon::now())
-            ->where('web_id', $web_id)
+            ->where('web_id', $this->web_id)
             ->orderBy('post_date', 'desc')
             ->limit(200)
             ->get();
@@ -68,7 +66,7 @@ class PageController extends Controller
             'area_of_premises', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date')
             ->where('is_hot', '<>', 1)
             ->where('is_vip', '<>', 1)
-            ->where('web_id', $web_id)
+            ->where('web_id', $this->web_id)
             ->limit(40)
             ->get();
 
@@ -91,11 +89,10 @@ class PageController extends Controller
     public function getDanhmuc($tag)
     {
         try {
-            $web_id = get_web_id();
             $mappingMenuFEByTag = MappingMenuFE::where('path', $tag)->first();
 //            dd($mappingMenuFEByTag);
             if ($mappingMenuFEByTag) {
-                $query = RealEstate::whereNull('deleted_at')->where('web_id', $web_id);
+                $query = RealEstate::whereNull('deleted_at')->where('web_id', $this->web_id);
                 if ($mappingMenuFEByTag->re_category_id) {
                     $query->where('re_category_id', $mappingMenuFEByTag->re_category_id);
                 }
@@ -135,13 +132,12 @@ class PageController extends Controller
 
     public function featuredRealEstate()
     {
-        $web_id = get_web_id();
         $query = RealEstate::select('id', 'title', 'short_description', 'slug', 'code', 'district_id',
             'area_of_premises', 'area_of_use', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date')
             ->where('is_hot', 1)
             ->where('is_vip', '<>', 1)
             ->where('post_date', '<=', Carbon::now())
-            ->where('web_id', $web_id)
+            ->where('web_id', $this->web_id)
             ->orderBy('post_date', 'desc');
         $results = $query->get();
 
@@ -157,11 +153,10 @@ class PageController extends Controller
 
     public function newestRealEstate()
     {
-        $web_id = get_web_id();
         $query = RealEstate::select('id', 'title', 'short_description', 'slug', 'code', 'district_id',
             'area_of_premises', 'area_of_use', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date')
             ->where('post_date', '<=', Carbon::now())
-            ->where('web_id', $web_id)
+            ->where('web_id', $this->web_id)
             ->orderBy('post_date', 'desc');
         $results = $query->get();
 
@@ -177,13 +172,12 @@ class PageController extends Controller
 
     public function freeRealEstate()
     {
-        $web_id = get_web_id();
         $query = RealEstate::select('id', 'title', 'short_description', 'slug', 'code', 'district_id',
             'area_of_premises', 'area_of_use', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date')
             ->where('is_hot', '<>', 1)
             ->where('is_vip', '<>', 1)
             ->where('post_date', '<=', Carbon::now())
-            ->where('web_id', $web_id)
+            ->where('web_id', $this->web_id)
             ->orderBy('post_date', 'desc');
         $results = $query->get();
 
@@ -205,12 +199,11 @@ class PageController extends Controller
 
         $category = ReCategory::find($catId);
         if ($category) {
-            $web_id = get_web_id();
             $query = RealEstate::select('id', 'title', 'short_description', 'slug', 'code', 'district_id',
                 'area_of_premises', 'area_of_use', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date')
                 ->where('re_category_id', $catId)
                 ->where('post_date', '<=', Carbon::now())
-                ->where('web_id', $web_id)
+                ->where('web_id', $this->web_id)
                 ->orderBy('post_date', 'desc');
 
             $countAll = $query->count();
@@ -228,13 +221,12 @@ class PageController extends Controller
 
     public function homeTinVip()
     {
-        $web_id = get_web_id();
         $query = RealEstate::select('id', 'title', 'short_description', 'slug', 'code', 'district_id',
             'area_of_premises', 'area_of_use', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date')
             ->where('is_vip', 1)
             ->where('is_hot', '<>', 1)
             ->where('post_date', '<=', Carbon::now())
-            ->where('web_id', $web_id)
+            ->where('web_id', $this->web_id)
             ->orderBy('post_date', 'desc');
         $results = $query->get();
 
@@ -267,6 +259,35 @@ class PageController extends Controller
             'sameSearchOptions' => $sameSearchOptions,
             'relatedItems' => $relatedItems,
             'vipRealEstates' => $this->vipRealEstates,
+            'menuData' => $this->menuFE
+        ]);
+    }
+    
+    public function search()
+    {
+        $searchText = \request('txtkeyword');
+        if(!$searchText) {
+            return redirect()->route('home');
+        }
+        $query = RealEstate::select('id', 'title', 'short_description', 'slug', 'code', 'district_id',
+            'area_of_premises', 'area_of_use', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date');
+
+        $query->where('title', 'like', '%' . $searchText . '%');
+        $query->orWhere('code', 'like', '%' . $searchText . '%');
+        $query->orWhere('contact_phone_number', 'like', '%' . $searchText . '%');
+        $query->where('web_id', $this->web_id);
+        $query->where('post_date', '<=', Carbon::now());
+        $query->orderBy('post_date', 'desc');
+
+        $results = $query->get();
+
+        return v('pages.list-real-estate', [
+            'data' => $results,
+            'category' => null,
+            'type' => null,
+            'count' => null,
+            'pageTitle' => trans('page.search_box_title'),
+            'isSearch' => true,
             'menuData' => $this->menuFE
         ]);
     }

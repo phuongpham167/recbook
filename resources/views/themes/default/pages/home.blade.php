@@ -54,8 +54,9 @@
                             <a href="#">Cần thuê</a><span></span>
                         </li>
                         <li>
-                            <form action="#" method="GET">
-                                <input placeholder="Từ khóa, mã số tin, số điện thoại" autocomplete="off" type="text" value="" name="txtkeyword" id="txtkeyword">							            <button type="submit"><i class="fa fa-search"></i></button>
+                            <form action="{{route('search')}}" method="GET">
+                                <input placeholder="{{trans('system.searchPlaceholder')}}" autocomplete="off" type="text" value="" name="txtkeyword" id="txtkeyword">
+                                <button type="submit"><i class="fa fa-search"></i></button>
                             </form>
                         </li>
                     </ul>
@@ -169,8 +170,8 @@
                                         <a href="{{'/danh-muc-bds/' . $category->slug . '-c' . $category->id}}">{{$category->name}}</a>
                                     @endforeach
                                     <a href="{{route('tin-vip')}}">Tin VIP</a>
-                                    <form action="" method="GET">
-                                        <input placeholder="Từ khóa, mã số tin, số điện thoại" autocomplete="off" type="text" value="" name="txtkeyword" id="txtkeyword">
+                                    <form action="{{route('search')}}" method="GET">
+                                        <input placeholder="{{trans('system.searchPlaceholder')}}" autocomplete="off" type="text" value="" name="txtkeyword" id="txtkeyword">
                                         <button type="submit"><i class="fa fa-search"></i></button>
                                     </form>
                                 </div>

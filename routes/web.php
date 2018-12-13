@@ -15,7 +15,7 @@ Route::get( '/gui-mail', function(){
 });
 Route::get('/', 'PageController@index')->name('home');
 Route::get('/danh-muc/{tag}', ['as' => 'danh-muc', 'uses' => 'PageController@getDanhmuc']);
-
+Route::get('/tim-kiem', ['as' => 'search' , 'uses' => 'PageController@search']);
 /*
  * hard route
  * */
