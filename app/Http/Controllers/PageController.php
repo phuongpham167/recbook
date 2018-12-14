@@ -29,9 +29,13 @@ class PageController extends Controller
         $this->service = $pageService;
 
         $this->vipRealEstates = RealEstate::select('id', 'title', 'slug', 'direction_id',
-            'area_of_premises', 'price', 'unit_id', 'is_vip', 'is_hot')
+            'area_of_premises', 'price', 'unit_id', 'is_vip', 'is_hot', 'post_date', 'images')
             ->where('is_vip',  1)
+            ->where('is_hot', '<>', 1)
+            ->where('post_date', '<=', Carbon::now())
+            ->where('web_id', $this->web_id)
 //            ->where('vip_expire_at',  '<=', Carbon::now())
+            ->limit(30)
             ->get();
     }
 
