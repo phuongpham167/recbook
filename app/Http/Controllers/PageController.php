@@ -125,6 +125,7 @@ class PageController extends Controller
                     'category' => $category,
                     'type' =>$type,
                     'count' => $countAll,
+                    'vipRealEstates' => $this->vipRealEstates,
                     'menuData' => $this->menuFE
                 ]);
 
@@ -151,6 +152,7 @@ class PageController extends Controller
             'type' => null,
             'count' => null,
             'pageTitle' => trans('page.featured_real_estate'),
+            'vipRealEstates' => $this->vipRealEstates,
             'menuData' => $this->menuFE
         ]);
     }
@@ -170,6 +172,7 @@ class PageController extends Controller
             'type' => null,
             'count' => null,
             'pageTitle' => trans('page.newest_real_estate'),
+            'vipRealEstates' => $this->vipRealEstates,
             'menuData' => $this->menuFE
         ]);
     }
@@ -191,6 +194,7 @@ class PageController extends Controller
             'type' => null,
             'count' => null,
             'pageTitle' => trans('page.free_real_estate'),
+            'vipRealEstates' => $this->vipRealEstates,
             'menuData' => $this->menuFE
         ]);
     }
@@ -218,6 +222,7 @@ class PageController extends Controller
                 'category' => $category,
                 'type' => null,
                 'count' => $countAll,
+                'vipRealEstates' => $this->vipRealEstates,
                 'menuData' => $this->menuFE
             ]);
         }
@@ -236,6 +241,7 @@ class PageController extends Controller
 
         return v('pages.tin-vip', [
             'data' => $results,
+            'vipRealEstates' => $this->vipRealEstates,
             'menuData' => $this->menuFE
         ]);
     }
@@ -291,8 +297,14 @@ class PageController extends Controller
             'type' => null,
             'count' => null,
             'pageTitle' => trans('page.search_box_title'),
+            'vipRealEstates' => $this->vipRealEstates,
             'isSearch' => true,
             'menuData' => $this->menuFE
         ]);
+    }
+
+    public function smartSearch()
+    {
+
     }
 }
