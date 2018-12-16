@@ -66,4 +66,5 @@ return [
     'newest_real_estate' => 'Tin đăng mới nhất',
     'free_real_estate' => 'Tin rao vặt cộng đồng miễn phí',
     'search_box_title' => 'Tìm kiếm theo từ khóa hoặc mã số tin',
+    'smart_search_title' => 'Tìm kiếm nhà đất',
 ];

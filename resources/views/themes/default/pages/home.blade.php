@@ -39,20 +39,25 @@
         </section>
         <div class="smart-search hidden-xs">
             <div class="container search-wrap">
-                <div class="search-content">
+                <div class="search-content search_slide">
                     <ul>
-                        <li class="active">
-                            <a href="#">Cần bán</a><span></span>
-                        </li>
-                        <li>
-                            <a href="#">Cho thuê</a><span></span>
-                        </li>
-                        <li>
-                            <a href="#">Cần mua</a><span></span>
-                        </li>
-                        <li>
-                            <a href="#">Cần thuê</a><span></span>
-                        </li>
+                        @foreach($categories as $key => $category)
+                            <li @if($key == 0) class="active" @endif>
+                                <a href="{{ $category->id }}">{{$category->name}}</a><span></span>
+                            </li>
+                        @endforeach
+                        {{--<li class="active">--}}
+                            {{--<a href="#">Cần bán</a><span></span>--}}
+                        {{--</li>--}}
+                        {{--<li>--}}
+                            {{--<a href="#">Cho thuê</a><span></span>--}}
+                        {{--</li>--}}
+                        {{--<li>--}}
+                            {{--<a href="#">Cần mua</a><span></span>--}}
+                        {{--</li>--}}
+                        {{--<li>--}}
+                            {{--<a href="#">Cần thuê</a><span></span>--}}
+                        {{--</li>--}}
                         <li>
                             <form action="{{route('search')}}" method="GET">
                                 <input placeholder="{{trans('system.searchPlaceholder')}}" autocomplete="off" type="text" value="" name="txtkeyword" id="txtkeyword">
@@ -61,39 +66,48 @@
                         </li>
                     </ul>
                     <div class="clearfix"></div>
-                    <form action="" method="GET">
-                        <input name="Search[kind_id]" id="Search_kind_id" type="hidden" value="1">
+                    <form action="{{route('smart-search')}}" method="GET">
+                        @php
+                            if($categories) {
+                                $firstCat = $categories[0];
+                            }
+                        @endphp
+                        <input name="Search[cat_id]" id="Search_kind_id" type="hidden" value="{{ $firstCat ? $firstCat->id : 1 }}">
                         <div class="row search-select-wrap">
                             <div class="col-xs-2 item">
-                                <select id="search_cat_id" name="Search[cat_id]">
-                                    <option value="">Tất cả các nhóm</option>
-                                    <option value="72">Condotel - Căn hộ Khách sạn</option>
+                                <select id="re-type" name="Search[type_id]">
+                                    @foreach($reTypes as $reType)
+                                        <option value="{{$reType->id}}">{{$reType->name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="col-xs-2 item">
-                                <input value="1" name="Search[province_id]" id="Search_province_id" type="hidden"><select name="Search[district_id]" id="Search_district_id">
-                                    <option value="">Tất cả quận huyện</option>
-                                    <option value="66">Lê Chân</option>
+                                <input value="1" name="Search[province_id]" id="Search_province_id" type="hidden">
+                                <select name="Search[district_id]" id="Search_district_id">
+                                    @foreach($districts as $district)
+                                        <option value="{{$district->id}}">{{$district->name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="col-xs-2 item">
                                 <select name="Search[street_id]" id="Search_street_id">
-                                    <option value="">Tất cả các đường phố</option>
-                                    <option value="264">An Dương</option>
+                                    @foreach($streets as $street)
+                                        <option value="{{$street->id}}">{{$street->name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="col-xs-2 item">
                                 <select name="Search[direction_id]" id="Search_direction_id">
-                                    <option value="">Tất cả các hướng</option>
-                                    <option value="15,17,1,2,3,4,11,10,9,13,19,20,21,22,27">Đông tứ trạch (Đông nam, Nam, Bắc, Đông)</option>
-                                    <option value="16,18,5,8,7,6,23,24,25,26,28">Tây tứ trạch (Tây, Tây bắc, Tây nam, Đông bắc)</option>
-                                    <option value="16">Tây Tây Bắc</option>
+                                    @foreach($directions as $direction)
+                                        <option value="{{$direction->id}}">{{$direction->name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="col-xs-2 item">
-                                <select id="search_price_id" name="Search[price_id]">
-                                    <option value="">Tất cả các giá</option>
-                                    <option value="36">Dưới 500 triệu</option>
+                                <select id="range-price" name="Search[range_price_id]">
+                                    @foreach($rangePrices as $rangePrice)
+                                        <option value="{{$rangePrice->id}}">{{$rangePrice->name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="col-xs-2 item">
@@ -500,6 +514,54 @@
 @push('js')
     <script src="{{ asset('js/jquery.flexslider.js') }}"></script>
     <script>
+        $('.search_slide ul li a').click(function() {
+            $('.search_slide ul li').removeClass('active');
+            $(this).parent().addClass('active');
+            $('.search_slide>form>input[type="hidden"]').val($(this).attr('href'));
+            // getCatPrice('.search_slide>form>input[type="hidden"]', '#search_cat_id', '#search_price_id', '/site/LoadCat');
+            changeReCategory($(this).attr('href'));
+            return false;
+        });
+
+        function changeReCategory(cat) {
+            console.log(cat);
+            let catId = cat;
+
+            $.ajax({
+                url: "/re-type/list-dropdown/" + catId,
+                method: 'GET',
+                success: function (result) {
+                    console.log('success');
+                    console.log(result);
+                    let html = '';
+                    if (result) {
+                        for (let r of result) {
+                            html += '<option value="'+ r.id +'">' + r.name + '</option>';
+                        }
+                    }
+                    if (html) {
+                        $('#re-type').html(html);
+                    }
+                }
+            });
+
+            $.ajax({
+                url: '/range-price/list-dropdown/' + catId,
+                method: 'GET',
+                success: function (result) {
+                    console.log('success');
+                    console.log(result);
+                    let html = '';
+                    if (result) {
+                        for (let r of result) {
+                            html += '<option value="'+ r.id +'">' + r.name + '</option>';
+                        }
+                    }
+                    $('#range-price').html(html);
+                }
+            });
+        }
+
         $(window).on('load', function(){
             $('.flexslider').flexslider({
                 animation: "slide",

@@ -19,10 +19,10 @@ class ContactController extends Controller
         $this->menuFE = Menu::where('web_id', $web_id)->where('menu_type', $mmfe)->first();
     }
 
-    public function getContact()
-    {
-        return v('contact.contact', ['menuData' => $this->menuFE]);
-    }
+//    public function getContact()
+//    {
+//        return v('contact.contact', ['menuData' => $this->menuFE]);
+//    }
 
     public function postContact(CreateContactRequest $request)
     {
