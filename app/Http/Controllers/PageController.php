@@ -335,6 +335,9 @@ class PageController extends Controller
 
         $relatedItems = $this->service->getListBelowDetailPage(RealEstate::related_item, [], $realEstate);
 
+        $realEstate->views += 1;
+        $realEstate->save();
+
         return v('pages.detail-real-estate', [
             'data' => $realEstate,
             'sameSearchOptions' => $sameSearchOptions,
@@ -418,10 +421,10 @@ class PageController extends Controller
                 $query->where('contact_phone_number', 'like', '%'.$filter['Search']['phone'].'%');
             }
             if (isset($filter['Search']['dtmb_from']) && $filter['Search']['dtmb_from']) {
-                $query->where('area_of_premises', '>', $filter['Search']['dtmb_from']);
+                $query->where('area_of_premises', '>=', floatval($filter['Search']['dtmb_from']));
             }
             if (isset($filter['Search']['dtmb_to']) && $filter['Search']['dtmb_to']) {
-                $query->where('area_of_premises', '<', $filter['Search']['dtmb_to']);
+                $query->where('area_of_premises', '<=', floatval($filter['Search']['dtmb_to']));
             }
 
             $results = $query->get();
