@@ -162,16 +162,16 @@
                                         <p><strong>- Ngày cập nhật:</strong> {{ \Carbon\Carbon::parse($data->updated_at)->format('d/m/Y')}}</p>
                                     </div>
                                     <div class="col-xs-12 col-sm-6">
-                                        <p><strong>- Lượt xem:</strong> 7909</p>
+                                        <p><strong>- Lượt xem:</strong> {{$data->views}}</p>
                                     </div>
                                     <div class="col-xs-12 col-sm-6">
                                         <p><strong>- Ngày hết hạn:</strong> {{ \Carbon\Carbon::parse($data->expire_date)->format('d/m/Y')}}</p>
                                     </div>
                                     <div class="col-xs-12 col-sm-6">
-                                        <p><strong>- DTMB:</strong> {{ $data->area_of_premises }}</p>
+                                        <p><strong>- DTMB:</strong> {{ $data->area_of_premises ? $data->area_of_premises . 'm2' : '0m2' }}</p>
                                     </div>
                                     <div class="col-xs-12 col-sm-6">
-                                        <p><strong>- DTSD:</strong> {{ $data->area_of_use }}</p>
+                                        <p><strong>- DTSD:</strong> {{ $data->area_of_use ? $data->area_of_use . 'm2' : '0m2' }}</p>
                                     </div>
                                     <div class="col-xs-12 col-sm-6">
                                         <p><strong>- Danh mục:</strong> {{ $data->reCategory->name }}</p>
@@ -205,9 +205,9 @@
                                 </div>
                             </div>
                             <div class="row margin-0">
-                                <div class="col-xs-12 col-sm-4 description__item"><strong>Diện tích MB:</strong> {{ $data->area_of_premises ? $data->area_of_premises : '0m2' }}
+                                <div class="col-xs-12 col-sm-4 description__item"><strong>Diện tích MB:</strong> {{ $data->area_of_premises ? $data->area_of_premises . 'm2' : '0m2' }}
                                 </div>
-                                <div class="col-xs-12 col-sm-4 description__item"><strong>Diện tích SD:</strong> {{ $data->area_of_use ? $data->area_of_use : '0m2' }}
+                                <div class="col-xs-12 col-sm-4 description__item"><strong>Diện tích SD:</strong> {{ $data->area_of_use ? $data->area_of_use . 'm2' : '0m2' }}
                                 </div>
                                 <div class="col-xs-12 col-sm-4 description__item"><strong>Hướng:</strong> {{ $data->direction->name }}</div>
                             </div>
@@ -280,13 +280,14 @@
                                              class="img-responsive post-by-info__avatar"/>
                                     </div>
                                     <div class="col-xs-12 col-sm-9 post-by-info__right">
-                                        <p><strong>Công ty/cá nhân</strong>: Nhà Đất Hải Phòng</p>
-                                        <p><strong>Địa chỉ email</strong>: dothigroup.vn@gmail.com</p>
-                                        <p><strong>Số điện thoại</strong>: 02253.68.67.68 - 02253.68.67.69 -
-                                            0986.186.179</p>
-                                        <p><strong>Địa chỉ liên lạc</strong>: Trụ sở: Số 50 lô 16 MR, Lê Hồng Phong, Hải
-                                            An, Hải Phòng</p>
-                                        <p><strong>Website</strong>: <a href="www.nhadathaiphong.vn" target="_blank">www.nhadathaiphong.vn</a>
+                                        @php
+                                            $userInfo = $data->user->userinfo;
+                                        @endphp
+                                        <p><strong>Công ty/cá nhân</strong>: {{$userInfo && $userInfo->company ? $userInfo->company : 'Nhà Đất Hải Phòng'}}</p>
+                                        <p><strong>Địa chỉ email</strong>: {{$data->user && $data->user->email ? $data->user->email : 'dothigroup.vn@gmail.com'}}</p>
+                                        <p><strong>Số điện thoại</strong>: {{$userInfo && $userInfo->phone ? $userInfo->phone : ''}}</p>
+                                        <p><strong>Địa chỉ liên lạc</strong>: {{$userInfo && $userInfo->address ? $userInfo->address : ''}}</p>
+                                        <p><strong>Website</strong>: <a href="{{$userInfo && $userInfo->website ? $userInfo->website : route('home')}}" target="_blank">{{$userInfo && $userInfo->website ? $userInfo->website : ''}}</a>
                                         </p>
                                     </div>
                                 </div>
@@ -330,7 +331,7 @@
                                                     <div>{{$item->short_description ? $item->short_description : ''}}
                                                     </div>
                                                     <p>
-                                                        <strong>DTMB:</strong> {{$item->area_of_premises ? $item->area_of_premises : '0m2'}} - <strong>Giá:</strong>
+                                                        <strong>DTMB:</strong> {{$item->area_of_premises ? $item->area_of_premises . 'm2' : '0m2'}} - <strong>Giá:</strong>
                                                         <span>
                                                         {{$item->price}} {{$item->unit ? $item->unit->name : 'VND'}}
                                                         </span>
@@ -413,7 +414,7 @@
                                                     <div>{{$item->short_description ? $item->short_description : ''}}
                                                     </div>
                                                     <p>
-                                                        <strong>DTMB:</strong> {{$item->area_of_premises ? $item->area_of_premises : '0m2'}} - <strong>Giá:</strong>
+                                                        <strong>DTMB:</strong> {{$item->area_of_premises ? $item->area_of_premises . 'm2' : '0m2'}} - <strong>Giá:</strong>
                                                         <span>
                                                         {{$item->price}} {{$item->unit ? $item->unit->name : 'VND'}}
                                                         </span>

@@ -26,7 +26,7 @@
                         </dt>
                         <dd>
                             <h3><a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">{{$item->title}}</a></h3>
-                            <p><strong>Diện tích:</strong> {{$item->area_of_premises ? $item->area_of_premises : '0m2'}}</p>
+                            <p><strong>Diện tích:</strong> {{$item->area_of_premises ? $item->area_of_premises . 'm2' : '0m2'}}</p>
                             <p><strong>Giá:</strong> <span>{{$item->price}}</span></p>
                             <p><strong>Hướng:</strong> {{ $item->direction->name }}</p>
                         </dd>
