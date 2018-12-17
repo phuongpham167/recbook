@@ -5,11 +5,11 @@
         <div>
             <ul>
                 <li><a href="/bat-dong-san/tao-moi"><i class="fa fa-angle-double-right"></i> Đăng mới tin rao</a></li>
-                <li><a href="/bat-dong-san/"><i class="fa fa-angle-double-right"></i> Danh sách tin rao</a> <span>({{\App\RealEstate::where('draft','0')->count()}})</span></li>
-                <li><a href="/bat-dong-san/tin-rao-het-han"><i class="fa fa-angle-double-right"></i> Tin rao hết hạn</a> <span>({{\App\RealEstate::where('expire_date','<',\Carbon\Carbon::createFromFormat('m/d/Y H:i A', \Carbon\Carbon::now()->format('m/d/Y H:i A')))->count()}})</span></li>
-                <li><a href="/bat-dong-san/tin-rao-cho-duyet"><i class="fa fa-angle-double-right"></i> Tin rao chờ duyệt</a> <span>({{\App\RealEstate::where('approved','0')->count()}})</span></li>
-                <li><a href="/bat-dong-san/tin-rao-nhap"><i class="fa fa-angle-double-right"></i> Tin rao nháp</a> <span>({{\App\RealEstate::where('draft','1')->count()}})</span></li>
-                <li><a href="/bat-dong-san/tin-rao-da-xoa"><i class="fa fa-angle-double-right"></i> Tin rao đã xóa</a> <span>({{\App\RealEstate::onlyTrashed()->count()}})</span></li>
+                <li><a href="/bat-dong-san/"><i class="fa fa-angle-double-right"></i> Danh sách tin rao</a> <span>({{\App\RealEstate::where('approved', 1)->where('draft','0')->where('posted_by', \Auth::user()->id)->count()}})</span></li>
+                <li><a href="/bat-dong-san/tin-rao-het-han"><i class="fa fa-angle-double-right"></i> Tin rao hết hạn</a> <span>({{\App\RealEstate::where('expire_date','<',\Carbon\Carbon::createFromFormat('m/d/Y H:i A', \Carbon\Carbon::now()->format('m/d/Y H:i A')))->where('posted_by', \Auth::user()->id)->count()}})</span></li>
+                <li><a href="/bat-dong-san/tin-rao-cho-duyet"><i class="fa fa-angle-double-right"></i> Tin rao chờ duyệt</a> <span>({{\App\RealEstate::where('approved','0')->where('draft', 0)->where('posted_by', \Auth::user()->id)->count()}})</span></li>
+                <li><a href="/bat-dong-san/tin-rao-nhap"><i class="fa fa-angle-double-right"></i> Tin rao nháp</a> <span>({{\App\RealEstate::where('draft','1')->where('posted_by', \Auth::user()->id)->count()}})</span></li>
+                <li><a href="/bat-dong-san/tin-rao-da-xoa"><i class="fa fa-angle-double-right"></i> Tin rao đã xóa</a> <span>({{\App\RealEstate::onlyTrashed()->where('posted_by', \Auth::user()->id)->count()}})</span></li>
             </ul>
         </div>
     </div>

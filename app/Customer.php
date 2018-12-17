@@ -27,6 +27,11 @@ class Customer extends Model
      *
      * @var array
      */
+    protected $fillable = [
+        'name',
+        'phone',
+        'address'
+    ];
 
     /**
      * The attributes that should be hidden for arrays.

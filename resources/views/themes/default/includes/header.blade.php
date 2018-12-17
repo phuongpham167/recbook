@@ -76,10 +76,10 @@
                 <li class=""><a href="{{ route('get.create-real-estate') }}">{{ trans('menu.create_real_estate') }}</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <form class="menu-search">
+                <form class="menu-search" action="{{route('search')}}" method="get">
                     <div class="pull-right wrap">
-                        <input class="form-control pull-left" type="text" placeholder="...">
-                        <button class="pull-left"><i class="fa fa-search"></i></button>
+                        <input name="txtkeyword" class="form-control pull-left" type="text" placeholder="{{trans('system.searchPlaceholder')}}">
+                        <button type="submit" class="pull-left"><i class="fa fa-search"></i></button>
                     </div>
                 </form>
             </ul>

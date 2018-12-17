@@ -57,10 +57,18 @@ return [
         'privateInOwnWebsite' => 'Riêng tư trong trang con'
     ],
     'selectFirstOpt' => 'Vui lòng chọn',
+    'ssSelectFirstCat' => 'Loại hình bất động sản',
+    'ssSelectFirstType' => 'Nhóm bất động sản',
+    'ssSelectFirstDistrict' =>'Tất cả quận huyện',
+    'ssSelectFirstStreet' => 'Tất cả đường phố',
+    'ssSelectFirstDirection' => 'Tất cả các hướng',
+    'ssSelectFirstPrice' => 'Tất cả các giá',
+    'ssSelectFirstProject' => 'Tất cả các dự án, tên đường',
+    'ssSelectFirstBlock' => 'Tất cả các lô/dãy',
     'message' => [
-        'createSuccess' => 'Create successfully',
-        'updateSuccess' => 'Update successfully',
-        'deleteSuccess' => 'Delete successfully',
+        'createSuccess' => 'Thêm tin mới thành công',
+        'updateSuccess' => 'Cập nhật thành công',
+        'deleteSuccess' => 'Xóa thành công',
         'error' => 'Error'
     ],
     'list' => [

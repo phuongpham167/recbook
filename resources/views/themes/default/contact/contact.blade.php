@@ -20,7 +20,7 @@
         <div class="row subpage">
 
             <!--Begin left-->
-            <div class="col-xs-9 left catland_page">
+            <div class="col-xs-12 col-md-9 left catland_page">
 
                 <!--Begin land_box-->
                 <div class="_box">
@@ -84,7 +84,10 @@
             <!--End left-->
 
             <!--Begin right-->
-            @include(theme(TRUE).'.includes.right-menu')
+            <div class="col-xs-12 col-md-3">
+                @include(theme(TRUE).'.includes.right-sidebar')
+                @include(theme(TRUE).'.includes.vip-slide')
+            </div>
             <!--End right-->
 
         </div>

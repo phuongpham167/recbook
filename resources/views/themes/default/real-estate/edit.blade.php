@@ -1,13 +1,19 @@
-@extends(theme(TRUE).'.layout')
+@extends(theme(TRUE).'.layouts.app')
 
 @section('title')
     {{trans('real-estate.edit.pageTitle')}}
 @endsection
 
-@section('style')
+@push('style')
     <link rel="stylesheet" href="{{ asset('css/theme.css') }}" />
-    <link rel="stylesheet" href="{{asset('themes/default/css/real-estate.css')}}" />
-@endsection
+    <link rel="stylesheet" href="{{ asset('css/manage-real-estate.css') }}" />
+    <link rel="stylesheet" href="{{asset('plugins/bootstrap-datetimepicker-master/build/css/bootstrap-datetimepicker.min.css')}}">
+    <style>
+        .text-red {
+            color: red;
+        }
+    </style>
+@endpush
 
 <?php
 $user = \Auth::user();
@@ -24,359 +30,381 @@ if ($user->group_id != $adminGroup) {
 ?>
 
 @section('content')
-    <div class="row">
-        <div class="col-md-12">
-            <div class="box box-danger">
-                <div class="box-header with-border">
-                    <h3 class="box-title">{{trans('real-estate.edit.formTitle')}}</h3>
+    @include(theme(TRUE).'.includes.header')
 
-                    <div class="box-tools pull-right">
-                        {!! a('real-estate', '', '<i class="fa fa-arrow-left"></i> '.trans('system.back'), ['class'=>'btn btn-sm btn-success'],'')  !!}
+    <div class="container">
+        <div class="row subpage">
+            @include(theme(TRUE).'.includes.left-menu')
+            <div class="col-xs-9 right">
+                @if (!empty(session('message')))
+                    <div class="alert alert-{{session('message.type')}} text-center">
+                        {{session('message.message')}}
                     </div>
-                </div>
-                <div class="box-body">
-                    <form class="form-horizontal" method="post">
-                        {{csrf_field()}}
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.title')}} <span class="text-red">*</span></label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" name="title" value="{{ $realEstate->title }}"/>
-                            </div>
+                @endif
+                @if (!empty($errors) && count($errors) > 0)
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+                <form class="form-horizontal" method="post">
+                    {{csrf_field()}}
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.title')}} <span class="text-red">*</span></label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="title" value="{{ $realEstate->title }}"/>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.shortDescription')}} <span class="text-red">*</span></label>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.shortDescription')}} <span class="text-red">*</span></label>
 
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="short-description" name="short_description" maxlength="150" value="{{ $realEstate->short_description }}"/>
-                                <span class="help-block"><span id="count-short-des">{{ 150 - mb_strlen($realEstate->short_description) }}</span>{{trans('real-estate.formCreateLabel.shortDescriptionHelpBlock')}}</span>
-                            </div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="short-description" name="short_description" maxlength="150" value="{{ $realEstate->short_description }}"/>
+                            <span class="help-block"><span id="count-short-des">{{ 150 - mb_strlen($realEstate->short_description) }}</span>{{trans('real-estate.formCreateLabel.shortDescriptionHelpBlock')}}</span>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.contactPerson')}} <span class="text-red">*</span></label>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.contactPhone')}} <span class="text-red">*</span></label>
 
-                            <div class="col-sm-4">
-                                <input type="text" class="form-control" name="contact_person" value="{{ $realEstate->contact_person }}"/>
-                            </div>
-                            <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.contactPhone')}} <span class="text-red">*</span></label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="contact_phone_number" name="contact_phone_number" value="{{ $realEstate->contact_phone_number }}"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.contactPerson')}} <span class="text-red">*</span></label>
 
-                            <div class="col-sm-4">
-                                <input type="text" class="form-control" name="contact_phone_number" value="{{ $realEstate->contact_phone_number }}"/>
-                            </div>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="contact_person" name="contact_person" value="{{ $realEstate->contact_person }}" readonly />
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.contactAddress')}} <span class="text-red">*</span></label>
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.contactAddress')}} <span class="text-red">*</span></label>
 
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" name="contact_address" value="{{ $realEstate->contact_address }}"/>
-                            </div>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="contact_address" name="contact_address" value="{{ $realEstate->contact_address }}" readonly />
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.reCategory')}} <span class="text-red">*</span></label>
-                            <div class="col-sm-2">
-                                <select class="form-control" id="re-category" name="re_category_id" onchange="changeReCategory(this)" value="{{ $realEstate->re_category_id }}">
-                                    <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
-                                    @foreach($reCategories as $reCategory)
-                                        <option value="{{$reCategory->id}}" {{ $reCategory->id === $realEstate->re_category_id ? 'selected' : '' }}>{{$reCategory->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.reType')}} <span class="text-red">*</span></label>
-                            <div class="col-sm-2">
-                                <select class="form-control" id="re-type" name="re_type_id" value="{{ $realEstate->re_type_id }}">
-                                    <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
-                                    @foreach($reTypes as $reType)
-                                        <option value="{{$reType->id}}" {{$reType->id === $realEstate->re_type_id ? 'selected' : ''}}>{{$reType->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.province')}} <span class="text-red">*</span></label>
-                            <div class="col-sm-2">
-                                <select class="form-control" id="province" name="province_id" onchange="changeProvince(this)" value="{{ $realEstate->province_id }}">
-                                    <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
-                                    @foreach($provinces as $province)
-                                        <option value="{{$province->id}}" {{$province->id === $realEstate->province_id ? 'selected' : ''}}>{{$province->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.reCategory')}} <span class="text-red">*</span></label>
+                        <div class="col-sm-2">
+                            <select class="form-control" id="re-category" name="re_category_id" onchange="changeReCategory(this)" value="{{ $realEstate->re_category_id }}">
+                                <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
+                                @foreach($reCategories as $reCategory)
+                                    <option value="{{$reCategory->id}}" {{ $reCategory->id == $realEstate->re_category_id ? 'selected' : '' }}>{{$reCategory->name}}</option>
+                                @endforeach
+                            </select>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.district')}} <span class="text-red">*</span></label>
-                            <div class="col-sm-2">
-                                <select class="form-control" id="district" name="district_id" onchange="changeDistrict(this)" value="{{ $realEstate->district_id }}">
-                                    <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
-                                    @foreach($districts as $district)
-                                        <option value="{{$district->id}}" {{$district->id === $realEstate->district_id ? 'selected' : ''}}>{{$district->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.ward')}} <span class="text-red">*</span></label>
-                            <div class="col-sm-2">
-                                <select class="form-control" id="ward" name="ward_id" value="{{ $realEstate->ward_id }}">
-                                    <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
-                                    @foreach($wards as $ward)
-                                        <option value="{{$ward->id}}" {{$ward->id === $realEstate->ward_id ? 'selected' : ''}}>{{$ward->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.reType')}} <span class="text-red">*</span></label>
+                        <div class="col-sm-2">
+                            <select class="form-control" id="re-type" name="re_type_id" value="{{ $realEstate->re_type_id }}">
+                                <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
+                                @foreach($reTypes as $reType)
+                                    <option value="{{$reType->id}}" {{$reType->id == $realEstate->re_type_id ? 'selected' : ''}}>{{$reType->name}}</option>
+                                @endforeach
+                            </select>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.address')}} <span class="text-red">*</span></label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" name="address" value="{{ $realEstate->address }}"/>
-                            </div>
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.province')}} <span class="text-red">*</span></label>
+                        <div class="col-sm-2">
+                            <select class="form-control" id="province" name="province_id" onchange="changeProvince(this)" value="{{ $realEstate->province_id }}">
+                                <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
+                                @foreach($provinces as $province)
+                                    <option value="{{$province->id}}" {{$province->id == $realEstate->province_id ? 'selected' : ''}}>{{$province->name}}</option>
+                                @endforeach
+                            </select>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.street')}} <span class="text-red">*</span></label>
-                            <div class="col-sm-2">
-                                <select class="form-control" id="street" name="street_id" value="{{ $realEstate->street_id }}">
-                                    <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
-                                    @foreach($streets as $street)
-                                        <option value="{{$street->id}}" {{$street->id === $realEstate->street_id ? 'selected' : ''}}>{{$street->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.direction')}} <span class="text-red">*</span></label>
-                            <div class="col-sm-2">
-                                <select class="form-control" id="direction" name="direction_id" value="{{ $realEstate->direction_id }}">
-                                    <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
-                                    @foreach($directions as $direction)
-                                        <option value="{{$direction->id}}" {{$direction->id === $realEstate->direction_id ? 'selected' : ''}}>{{$direction->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.exhibit')}} <span class="text-red">*</span></label>
-                            <div class="col-sm-2">
-                                <select class="form-control" id="exhibit" name="exhibit_id" value="{{ $realEstate->exhibit_id }}">
-                                    <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
-                                    @foreach($exhibits as $exhibit)
-                                        <option value="{{$exhibit->id}}" {{$exhibit->id === $realEstate->exhibit_id ? 'selected' : ''}}>{{$exhibit->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.district')}} <span class="text-red">*</span></label>
+                        <div class="col-sm-2">
+                            <select class="form-control" id="district" name="district_id" onchange="changeDistrict(this)" value="{{ $realEstate->district_id }}">
+                                <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
+                                @foreach($districts as $district)
+                                    <option value="{{$district->id}}" {{$district->id == $realEstate->district_id ? 'selected' : ''}}>{{$district->name}}</option>
+                                @endforeach
+                            </select>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.project')}} <span class="text-red">*</span></label>
-                            <div class="col-sm-2">
-                                <select class="form-control" id="project" name="project_id" value="{{ $realEstate->project_id }}">
-                                    <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
-                                    @foreach($projects as $project)
-                                        <option value="{{$project->id}}" {{$project->id === $realEstate->project_id ? 'selected' : ''}}>{{$project->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.block')}}</label>
-                            <div class="col-sm-2">
-                                <select class="form-control" id="block" name="block_id" value="{{ $realEstate->block_id }}">
-                                    <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
-                                    @foreach($blocks as $block)
-                                        <option value="{{$block->id}}" {{$block->id === $realEstate->block_id ? 'selected' : ''}}>{{$block->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.constructionType')}}</label>
-                            <div class="col-sm-2">
-                                <select class="form-control" id="construction-type" name="construction_type_id" value="{{ $realEstate->construction_type_id }}">
-                                    <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
-                                    @foreach($constructionTypes as $constructionType)
-                                        <option value="{{$constructionType->id}}" {{$constructionType->id === $realEstate->construction_type_id ? 'selected' : ''}}>{{$constructionType->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.ward')}} <span class="text-red">*</span></label>
+                        <div class="col-sm-2">
+                            <select class="form-control" id="ward" name="ward_id" value="{{ $realEstate->ward_id }}" onchange="changeWard(this)">
+                                <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
+                                @foreach($wards as $ward)
+                                    <option value="{{$ward->id}}" {{$ward->id == $realEstate->ward_id ? 'selected' : ''}}>{{$ward->name}}</option>
+                                @endforeach
+                            </select>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.width')}}</label>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.address')}} <span class="text-red">*</span></label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="address" value="{{ $realEstate->address }}"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.street')}} <span class="text-red">*</span></label>
+                        <div class="col-sm-2">
+                            <select class="form-control" id="street" name="street_id" value="{{ $realEstate->street_id }}">
+                                <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
+                                @foreach($streets as $street)
+                                    <option value="{{$street->id}}" {{$street->id == $realEstate->street_id ? 'selected' : ''}}>{{$street->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.direction')}} <span class="text-red">*</span></label>
+                        <div class="col-sm-2">
+                            <select class="form-control" id="direction" name="direction_id" value="{{ $realEstate->direction_id }}">
+                                <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
+                                @foreach($directions as $direction)
+                                    <option value="{{$direction->id}}" {{$direction->id === $realEstate->direction_id ? 'selected' : ''}}>{{$direction->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.exhibit')}} <span class="text-red">*</span></label>
+                        <div class="col-sm-2">
+                            <select class="form-control" id="exhibit" name="exhibit_id" value="{{ $realEstate->exhibit_id }}">
+                                <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
+                                @foreach($exhibits as $exhibit)
+                                    <option value="{{$exhibit->id}}" {{$exhibit->id === $realEstate->exhibit_id ? 'selected' : ''}}>{{$exhibit->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.project')}} <span class="text-red">*</span></label>
+                        <div class="col-sm-2">
+                            <select class="form-control" id="project" name="project_id" value="{{ $realEstate->project_id }}">
+                                <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
+                                @foreach($projects as $project)
+                                    <option value="{{$project->id}}" {{$project->id === $realEstate->project_id ? 'selected' : ''}}>{{$project->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.block')}}</label>
+                        <div class="col-sm-2">
+                            <select class="form-control" id="block" name="block_id" value="{{ $realEstate->block_id }}">
+                                <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
+                                @foreach($blocks as $block)
+                                    <option value="{{$block->id}}" {{$block->id === $realEstate->block_id ? 'selected' : ''}}>{{$block->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.constructionType')}}</label>
+                        <div class="col-sm-2">
+                            <select class="form-control" id="construction-type" name="construction_type_id" value="{{ $realEstate->construction_type_id }}">
+                                <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
+                                @foreach($constructionTypes as $constructionType)
+                                    <option value="{{$constructionType->id}}" {{$constructionType->id === $realEstate->construction_type_id ? 'selected' : ''}}>{{$constructionType->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.width')}}</label>
 
-                            <div class="col-sm-2">
-                                <input type="text" class="form-control" name="width" value="{{ $realEstate->width }}"/>
-                            </div>
-                            <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.length')}}</label>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control" name="width" value="{{ $realEstate->width }}"/>
+                        </div>
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.length')}}</label>
 
-                            <div class="col-sm-2">
-                                <input type="text" class="form-control" name="length" value="{{ $realEstate->length }}"/>
-                            </div>
-                            <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.bedroom')}}</label>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control" name="length" value="{{ $realEstate->length }}"/>
+                        </div>
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.bedroom')}}</label>
 
-                            <div class="col-sm-2">
-                                <input type="text" class="form-control" name="bedroom" value="{{ $realEstate->bedroom }}"/>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control" name="bedroom" value="{{ $realEstate->bedroom }}"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.areaOfPremises')}} <span class="text-red">*</span></label>
+
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control" name="area_of_premises" value="{{ $realEstate->area_of_premises }}"/>
+                        </div>
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.areaOfUse')}}</label>
+
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control" name="area_of_use" value="{{ $realEstate->area_of_use }}"/>
+                        </div>
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.floor')}}</label>
+
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control" name="floor" value="{{ $realEstate->floor }}"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.price')}}</label>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control" name="price" value="{{ $realEstate->price }}"/>
+                        </div>
+
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.unit')}}</label>
+                        <div class="col-sm-2">
+                            <select class="form-control" id="unit" name="unit_id" value="{{ $realEstate->unit_id }}">
+                                <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
+                                @foreach($units as $unit)
+                                    <option value="{{$unit->id}}" {{$unit->id === $realEstate->unit_id ? 'selected' : ''}}>{{$unit->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.rangePrice')}}</label>
+                        <div class="col-sm-2">
+                            <select class="form-control" id="range-price" name="range_price_id" value="{{ $realEstate->range_price_id }}">
+                                <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
+                                @foreach($rangePrices as $rangePrice)
+                                    <option value="{{$rangePrice->id}}" {{$rangePrice->id === $realEstate->range_price_id ? 'selected' : ''}}>{{$rangePrice->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-10 col-sm-offset-2">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="is_deal" {{ $realEstate->is_deal === 1 ? 'checked' : '' }}>
+                                    {{trans('real-estate.formCreateLabel.isDeal')}}
+                                </label>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.areaOfPremises')}} <span class="text-red">*</span></label>
-
-                            <div class="col-sm-2">
-                                <input type="text" class="form-control" name="area_of_premises" value="{{ $realEstate->area_of_premises }}"/>
-                            </div>
-                            <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.areaOfUse')}}</label>
-
-                            <div class="col-sm-2">
-                                <input type="text" class="form-control" name="area_of_use" value="{{ $realEstate->area_of_use }}"/>
-                            </div>
-                            <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.floor')}}</label>
-
-                            <div class="col-sm-2">
-                                <input type="text" class="form-control" name="floor" value="{{ $realEstate->floor }}"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.postDate')}} <span class="text-red">*</span></label>
+                        <div class="col-sm-4">
+                            <div class='input-group date' id='post-date'>
+                                <input type='text' class="form-control" name="post_date" value="{{ $realEstate->post_date }}" {{ $realEstate->approved ? 'disabled' : ''}}/>
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.price')}}</label>
-                            <div class="col-sm-2">
-                                <input type="text" class="form-control" name="price" value="{{ $realEstate->price }}"/>
-                            </div>
-
-                            <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.unit')}}</label>
-                            <div class="col-sm-2">
-                                <select class="form-control" id="unit" name="unit_id" value="{{ $realEstate->unit_id }}">
-                                    <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
-                                    @foreach($units as $unit)
-                                        <option value="{{$unit->id}}" {{$unit->id === $realEstate->unit_id ? 'selected' : ''}}>{{$unit->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.rangePrice')}}</label>
-                            <div class="col-sm-2">
-                                <select class="form-control" id="range-price" name="range_price_id" value="{{ $realEstate->range_price_id }}">
-                                    <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
-                                    @foreach($rangePrices as $rangePrice)
-                                        <option value="{{$rangePrice->id}}" {{$rangePrice->id === $realEstate->range_price_id ? 'selected' : ''}}>{{$rangePrice->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-10 col-sm-offset-2">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="is_deal" {{ $realEstate->is_deal === 1 ? 'checked' : '' }}>
-                                        {{trans('real-estate.formCreateLabel.isDeal')}}
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.postDate')}} <span class="text-red">*</span></label>
-                            <div class="col-sm-4">
-                                <div class='input-group date' id='post-date'>
-                                    <input type='text' class="form-control" name="post_date" value="{{ $realEstate->post_date }}"/>
-                                    <span class="input-group-addon">
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.expireDate')}}</label>
+                        <div class="col-sm-4">
+                            <div class='input-group date' id='expire-date'>
+                                <input type='text' class="form-control" name="expire_date" value="{{ $realEstate->expire_date }}" {{ $realEstate->approved ? 'disabled' : ''}}/>
+                                <span class="input-group-addon">
                                         <span class="glyphicon glyphicon-calendar"></span>
                                     </span>
-                                </div>
-                            </div>
-                            <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.expireDate')}}</label>
-                            <div class="col-sm-4">
-                                <div class='input-group date' id='expire-date'>
-                                    <input type='text' class="form-control" name="expire_date" value="{{ $realEstate->expire_date }}"/>
-                                    <span class="input-group-addon">
-                                            <span class="glyphicon glyphicon-calendar"></span>
-                                        </span>
-                                </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.image')}}</label>
-                            <div class="col-sm-10">
-                                <div class="input-group">
-                                    <span class="input-group-btn">
-                                        <a data-toggle="modal" href="javascript:;" data-target="#myModal" class="btn btn-primary" type="button" id="choose-image">
-                                            <i class="fa fa-picture-o"></i> Choose
-                                        </a>
-                                    </span>
-                                    <input id="images" class="form-control" name="imagesList" type="hidden" value="" readonly>
-                                </div>
-                            </div>
-                            <div class="col-sm-10 col-sm-offset-2 img-preview">
-                                @php
-                                    $images = json_decode($realEstate->images);
-                                @endphp
-                                @foreach($images as $image)
-                                    <div class="col-xs-3 item-img-preview">
-                                        <img src="{{$image->link}}" class="img-responsive"/>
-                                        <div class=""><input type="hidden" name="images[]" value="{{$image->link}}" class="form-control" />
-                                            <label>{{ trans("real-estate.formCreateLabel.alt-text") }}</label>
-                                            <input type="text" name="alt[]" class="form-control" value="{{$image->alt}}" />
-                                        </div>
-                                        <a class="img-preview-btn-remove" onclick="removeImgPreview(this)"><i class="fa fa-trash" aria-hidden="true"></i></a>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.map')}}</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" name="map" id="map" value="{{ $realEstate->lat . ', ' . $realEstate->long }}"/>
-                                <span class="help-block"><i>{{trans('real-estate.formCreateLabel.mapHelpBlock')}}</i></span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-10 col-sm-offset-2">
-                                <div id="map-view" style="width: 100%; height: 250px;"></div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.detail')}} <span class="text-red">*</span> </label>
-                            <div class="col-sm-10">
-                                <textarea name="detail" class="form-control" id="editor">{!! $realEstate->detail !!}
-                                </textarea>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.source')}}</label>
-
-                            <div class="col-sm-2">
-                                <select class="form-control" id="range-price" name="source" value="{{ $realEstate->source }}">
-                                    <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
-                                    @foreach($reSources as $reSource)
-                                        <option value="{{$reSource->id}}" {{$realEstate->source == $reSource->id ? 'selected' : ''}}>{{$reSource->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.isPrivate')}}</label>
-
-                            <div class="col-sm-2">
-                                <select class="form-control" id="is-private" name="is_private" value="{{$realEstate->is_private}}">
-                                    <option value="1" {{$realEstate->is_private == 1 ? 'selected' : ''}}>{{ trans('real-estate.isPrivateSelectText.public') }}</option>
-                                    <option value="2" {{$realEstate->is_private == 2 ? 'selected' : ''}}>{{ trans('real-estate.isPrivateSelectText.private') }}</option>
-                                    <option value="3" {{$realEstate->is_private == 3 ? 'selected' : ''}}>{{ trans('real-estate.isPrivateSelectText.privateInOwnWebsite') }}</option>
-                                </select>
-                            </div>
-                        </div>
-                        <!-- /.box-body -->
-                        <div class="box-footer">
-                            <button type="reset" class="btn btn-default">{{trans('system.cancel')}}</button>
-                            <button type="submit" class="btn btn-info pull-right">{{trans('system.submit')}}</button>
-                        </div>
-                        <!-- /.box-footer -->
-                    </form>
-                    {{-- modal select image --}}
-                    <div class="modal fade" id="myModal" style="opacity: 1; overflow: visible; display: none;" aria-hidden="true">
-                        <div class="modal-dialog" style="width: 860px">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                    <h4 class="modal-title">Chọn ảnh</h4>
-                                </div>
-                                <div class="modal-body" style="padding:0px; margin:0px; width: 100%;">
-                                    <iframe width="100%" height="400" src="/plugins/filemanager/dialog.php?type=2&amp;field_id=images'&amp;fldr=" frameborder="0" style="overflow: scroll; overflow-x: hidden; overflow-y: scroll; "></iframe>
-                                </div>
-                            </div><!-- /.modal-content -->
-                        </div><!-- /.modal-dialog -->
                     </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.image')}}</label>
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-btn">
+                                    <a data-toggle="modal" href="javascript:;" data-target="#myModal" class="btn btn-primary" type="button" id="choose-image">
+                                        <i class="fa fa-picture-o"></i> Choose
+                                    </a>
+                                </span>
+                                <input id="images" class="form-control" name="imagesList" type="hidden" value="" readonly>
+                            </div>
+                        </div>
+                        <div class="col-sm-10 col-sm-offset-2 img-preview">
+                            @php
+                                $images = json_decode($realEstate->images);
+                            @endphp
+                            @foreach($images as $image)
+                                <div class="col-xs-3 item-img-preview">
+                                    <img src="{{$image->link}}" class="img-responsive"/>
+                                    <div class=""><input type="hidden" name="images[]" value="{{$image->link}}" class="form-control" />
+                                        <label>{{ trans("real-estate.formCreateLabel.alt-text") }}</label>
+                                        <input type="text" name="alt[]" class="form-control" value="{{$image->alt}}" />
+                                    </div>
+                                    <a class="img-preview-btn-remove" onclick="removeImgPreview(this)"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.map')}}</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="map" id="map" value="{{ ($realEstate->lat && $realEstate->long) ? $realEstate->lat . ', ' . $realEstate->long : '' }}"/>
+                            <span class="help-block"><i>{{trans('real-estate.formCreateLabel.mapHelpBlock')}}</i></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-10 col-sm-offset-2">
+                            <div id="map-view" style="width: 100%; height: 250px;"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.detail')}} <span class="text-red">*</span> </label>
+                        <div class="col-sm-10">
+                            <textarea name="detail" class="form-control" id="editor">{!! $realEstate->detail !!}
+                            </textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.isPrivate')}}</label>
+
+                        <div class="col-sm-2">
+                            <select class="form-control" id="is-private" name="is_private" value="{{$realEstate->is_private}}">
+                                <option value="1" {{$realEstate->is_private == 1 ? 'selected' : ''}}>{{ trans('real-estate.isPrivateSelectText.public') }}</option>
+                                <option value="2" {{$realEstate->is_private == 2 ? 'selected' : ''}}>{{ trans('real-estate.isPrivateSelectText.private') }}</option>
+                                <option value="3" {{$realEstate->is_private == 3 ? 'selected' : ''}}>{{ trans('real-estate.isPrivateSelectText.privateInOwnWebsite') }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="box-footer">
+                        <button type="reset" class="btn btn-default">{{trans('system.cancel')}}</button>
+                        <button type="submit" class="btn btn-info pull-right">{{trans('system.submit')}}</button>
+                    </div>
+                    <!-- /.box-footer -->
+                </form>
+                {{-- modal select image --}}
+                <div class="modal fade" id="myModal" style="opacity: 1; overflow: visible; display: none;" aria-hidden="true">
+                    <div class="modal-dialog" style="width: 860px">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <h4 class="modal-title">Chọn ảnh</h4>
+                            </div>
+                            <div class="modal-body" style="padding:0px; margin:0px; width: 100%;">
+                                <iframe width="100%" height="400" src="/plugins/filemanager/dialog.php?type=2&amp;field_id=images'&amp;fldr=" frameborder="0" style="overflow: scroll; overflow-x: hidden; overflow-y: scroll; "></iframe>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
                 </div>
             </div>
         </div>
     </div>
 @endsection
 
-@section('js')
+@push('js')
+    <script src="{{asset('plugins/bootstrap-datetimepicker-master/build/js/bootstrap-datetimepicker.min.js')}}"></script>
     <script src="{{asset('plugins/ckeditor-4/ckeditor.js')}}"></script>
     <script>
         $(function() {
+            $('#contact_phone_number').keyup(function() {
+                emptyContactInfo();
+
+                let phone = $(this).val();
+                if (phone.length > 9) {
+                    $.ajax({
+                        url: "/customer-by-phone/" + phone,
+                        method: 'GET',
+                        success: function (result) {
+                            console.log('success');
+                            console.log(result);
+                            if (!jQuery.isEmptyObject(result)) {
+                                $('#contact_person').val(result.name).prop('readonly', true);
+                                $('#contact_address').val(result.address).prop('readonly', true);
+                            } else {
+                                emptyContactInfo();
+                            }
+                        }
+                    });
+                }
+            });
+
             // init datetime picker
-            $('#post-date').datetimepicker();
+            $('#post-date').datetimepicker({
+                format: 'YYYY-MM-DD HH:mm:ss'
+            });
             $('#expire-date').datetimepicker({
+                format: 'YYYY-MM-DD',
                 useCurrent: false
             });
             $("#post-date").on("dp.change", function (e) {
@@ -456,7 +484,7 @@ if ($user->group_id != $adminGroup) {
             let provinceId = $(e).val();
 
             $.ajax({
-                url: '/real-estate/district-by-province/' + provinceId,
+                url: '/district-by-province/' + provinceId,
                 method: 'GET',
                 success: function (result) {
                     console.log('success');
@@ -474,7 +502,7 @@ if ($user->group_id != $adminGroup) {
             });
 
             $.ajax({
-                url: '/real-estate/project-by-province/' + provinceId,
+                url: '/project-by-province/' + provinceId,
                 method: 'GET',
                 success: function (result) {
                     console.log('success');
@@ -497,7 +525,7 @@ if ($user->group_id != $adminGroup) {
             let districtId = $(e).val();
 
             $.ajax({
-                url: '/real-estate/ward-by-district/' + districtId,
+                url: '/ward-by-district/' + districtId,
                 method: 'GET',
                 success: function (result) {
                     console.log('success');
@@ -519,7 +547,7 @@ if ($user->group_id != $adminGroup) {
             let wardId = $(e).val();
 
             $.ajax({
-                url: '/real-estate/street-by-ward/' + wardId,
+                url: '/street-by-ward/' + wardId,
                 method: 'GET',
                 success: function (result) {
                     console.log('success');
@@ -576,12 +604,18 @@ if ($user->group_id != $adminGroup) {
 
             // handle show preview img and input alt text
             let arrImgLinks = resultImages.split(',');
+            var root = location.protocol + '//' + location.host;
+            /*
+            * 12-07-2018
+            * change here - save image with absolute path
+            * */
+            console.log('arr img');
             console.log(arrImgLinks);
             // empty html before append new image
             $('.img-preview').html('');
             for (let imgLink of arrImgLinks) {
-                let htmlMarkup = '<div class="col-xs-3 item-img-preview"><img src="' + imgLink + '" class="img-responsive"/>'
-                    + '<div class=""><input type="hidden" name="images[]" value="' + imgLink +'" class="form-control" />'
+                let htmlMarkup = '<div class="col-xs-3 item-img-preview"><img src="' + root + imgLink + '" class="img-responsive"/>'
+                    + '<div class=""><input type="hidden" name="images[]" value="' + root + imgLink +'" class="form-control" />'
                     +'<label>{{ trans("real-estate.formCreateLabel.alt-text") }}</label>'
                     +'<input type="text" name="alt[]" class="form-control" /></div>'
                     +'<a class="img-preview-btn-remove" onclick="removeImgPreview(this)"><i class="fa fa-trash" aria-hidden="true"></i></a>'
@@ -601,5 +635,14 @@ if ($user->group_id != $adminGroup) {
             console.log(e);
             $(e).closest('.item-img-preview').remove();
         }
+
+        function emptyContactInfo() {
+            if ($('#contact_person').prop('readonly')) {
+                $('#contact_person').val('').prop('readonly', false);
+            }
+            if ($('#contact_address').prop('readonly')) {
+                $('#contact_address').val('').prop('readonly', false);
+            }
+        }
     </script>
-@endsection
+@endpush

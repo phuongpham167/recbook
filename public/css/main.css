@@ -52,6 +52,10 @@ button {
   border: none;
 }
 
+.text-red {
+  color: red;
+}
+
 /*------------ Header ------------*/
 
 .top_page {
@@ -155,6 +159,7 @@ button {
   border: none;
   -webkit-box-shadow: none;
           box-shadow: none;
+  font-style: italic;
   height: 30px;
   width: 170px;
 }
