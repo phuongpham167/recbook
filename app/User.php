@@ -53,6 +53,11 @@ class User extends Authenticatable
         return $this->hasMany(Receipt::class);
     }
 
+    public function userinfo()
+    {
+        return $this->hasOne(UserInfo::class);
+    }
+
     protected static function boot()
     {
         parent::boot();

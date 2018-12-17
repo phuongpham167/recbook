@@ -74,7 +74,8 @@ $filter = request()->all();
                             <div class="form-group">
                                 <input class="form-control"
                                        placeholder="{{ trans('right-sidebar.searchForm.phonePlaceHolder') }}"
-                                       name="Search[phone]" id="search-phone" type="text" maxlength="50">
+                                       name="Search[phone]" id="search-phone" type="text" maxlength="50"
+                                        value="{{($filter && isset($filter['Search']['phone'])) ? $filter['Search']['phone'] : ''}}">
                             </div>
                         </div>
                         <div class="col-xs-12 item">
@@ -82,12 +83,14 @@ $filter = request()->all();
                                 <span class="search-area-label">{{ trans('right-sidebar.searchForm.dtmdLabel') }}</span>
                                 <div class="col-xs-4 no-padding-right padding-left-10">
                                     <input class="form-control" size="4" maxlength="10" placeholder="vd: 40.5"
-                                           name="Search[dtmb_from]" id="search-dtmb-from" type="text">
+                                           name="Search[dtmb_from]" id="search-dtmb-from" type="text"
+                                           value="{{($filter && isset($filter['Search']['dtmb_from'])) ? $filter['Search']['dtmb_from'] : ''}}">
                                 </div>
                                 <span class="search-area-label-second">~</span>
                                 <div class="col-xs-4 no-padding-left search-area-to-wrap">
                                     <input class="form-control" size="4" maxlength="10" placeholder="vd: 70.5"
-                                           name="Search[dtmb_to]" id="search-dtmb-to" type="text">
+                                           name="Search[dtmb_to]" id="search-dtmb-to" type="text"
+                                           value="{{($filter && isset($filter['Search']['dtmb_to'])) ? $filter['Search']['dtmb_to'] : ''}}">
                                 </div>
                             </div>
                         </div>
