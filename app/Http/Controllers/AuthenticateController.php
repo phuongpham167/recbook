@@ -10,6 +10,7 @@ use App\Http\Requests\ResetPasswordRequest;
 use App\Menu;
 use App\PasswordReset;
 use App\User;
+use App\UserInfo;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -139,12 +140,7 @@ class AuthenticateController extends Controller
             set_notice(trans('users.confirm_password_not_correct'), 'warning');
             return redirect()->back();
         }
-        $data->taxcode    =   $request->taxcode;
-        $data->company_name =   $request->company_name;
-        $data->phone =   $request->phone;
-        $data->address =   $request->address;
-        $data->website =   $request->website;
-        if(!empty(Group::find($request->group_id)) && Group::find($request->group_id)->first()->register_permission == 1)
+        if(!empty(Group::find($request->group_id)) && Group::find($request->group_id)->register_permission == 1)
             $data->group_id =   $request->group_id;
         else {
             set_notice(trans('users.dont_allow'), 'warning');
@@ -154,6 +150,16 @@ class AuthenticateController extends Controller
         $data->web_id   =   get_web_id();
         $data->created_at   =   Carbon::now();
         $data->save();
+
+        $user_info = new UserInfo();
+        $user_info->user_id = $data->id;
+        $user_info->company = $request->company_name;
+        $user_info->identification = $request->taxcode;
+        $user_info->phone = $request->phone;
+        $user_info->address = $request->address;
+        $user_info->website = $request->website;
+
+        $user_info->save();
 
 //        event_log('Tạo thành viên mới '.$data->name.' id '.$data->id);
         set_notice(trans('users.add_success'), 'success');
