@@ -14,9 +14,11 @@ use App\Services\ProjectService;
 use App\Services\RangePriceService;
 use App\Services\ReTypeService;
 use App\Services\StreetService;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Auth;
 
 class PageController extends Controller
 {
@@ -450,6 +452,27 @@ class PageController extends Controller
     public function getContact()
     {
         return v('contact.contact', [
+            'vipRealEstates' => $this->vipRealEstates,
+            'categories' => $this->categories,
+            'districts' => $this->districts,
+            'streets' => $this->streets,
+            'directions' => $this->directions,
+            'projects' => $this->projects,
+            'menuData' => $this->menuFE
+        ]);
+    }
+
+    /*
+     * Chat function
+     * */
+    public function getChat()
+    {
+        $users = User::where('id','!=',Auth::user()->id)->get();
+        $conversations = Auth::user()->conversations();
+
+        return v('conversation.list', [
+            'users' => $users,
+            'conversations' => $conversations,
             'vipRealEstates' => $this->vipRealEstates,
             'categories' => $this->categories,
             'districts' => $this->districts,

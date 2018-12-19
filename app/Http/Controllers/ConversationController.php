@@ -25,7 +25,9 @@ class ConversationController extends Controller
     public function show($id){
         $conversation = Conversation::findOrFail($id);
         if($conversation->user1 == Auth::user()->id || $conversation->user2 == Auth::user()->id)
-            return view('conversation.show',compact('conversation'));
+            return v('conversation.show',[
+                'conversation' => $conversation
+            ]);
 
         return redirect()->back();
     }

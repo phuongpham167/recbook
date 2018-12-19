@@ -1,5 +1,16 @@
-@extends('layouts.app')
-@section('additional_css')
+@extends(theme(TRUE).'.layouts.app')
+
+@section('meta-description')
+    <meta name="description" content="Show conversation" >
+@endsection
+
+@section('title')
+    Show conversation
+@endsection
+
+@push('style')
+    {{-- Link css for page here --}}
+    <link rel="stylesheet" href="{{ asset('css/list-real-estate.css') }}"/>
     <style>
         .panel-body{
             height: 50vh;
@@ -19,7 +30,7 @@
             float:left;
         }
     </style>
-@endsection
+@endpush
 @section('content')
     <div class="container">
         <div class="col-md-offset-2 col-md-8">

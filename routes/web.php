@@ -80,5 +80,6 @@ Route::get('/customer-by-phone/{phone}', ['as' => 'customer-by-phone', 'uses' =>
 /*
  * route for chat
  * */
+Route::get('/chat', ['as' => 'chat', 'uses' => 'PageController@getChat']);
 Route::resource('conversation','ConversationController');
 Route::resource('message','MessageController');
