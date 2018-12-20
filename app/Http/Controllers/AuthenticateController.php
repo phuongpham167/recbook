@@ -163,7 +163,7 @@ class AuthenticateController extends Controller
 
 //        event_log('Tạo thành viên mới '.$data->name.' id '.$data->id);
         set_notice(trans('users.add_success'), 'success');
-        return redirect()->back();
+        return redirect()->route('login');
     }
 
     public function getForgotPassword()
