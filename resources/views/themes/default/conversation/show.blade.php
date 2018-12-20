@@ -67,25 +67,43 @@
     </div>
 @endsection
 
-@section('additional_js')
-    <script src="https://cdn.socket.io/socket.io-1.3.4.js"></script>
+@push('js')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
     <script>
-        var socket = io.connect('http://127.0.0.1:8890');
+        var socket = io('http://localhost:8890');
         socket.emit('add user', {'client':{{Auth::user()->id}},'conversation':{{$conversation->id}}});
 
         socket.on('message', function (data) {
             $('#panel-body').append(
-                    '<div class="row">'+
-                    '<div class="message not_owner">'+
-                    data.msg+'<br/>'+
-                    '<b>now</b>'+
-                    '</div>'+
-                    '</div>');
+                '<div class="row">'+
+                '<div class="message not_owner">'+
+                data.msg+'<br/>'+
+                '<b>now</b>'+
+                '</div>'+
+                '</div>');
 
             scrollToEnd();
 
-         });
+        });
     </script>
+    {{--<script src="https://cdn.socket.io/socket.io-1.3.4.js"></script>--}}
+    {{--<script>--}}
+        {{--var socket = io.connect('http://127.0.0.1:8890');--}}
+        {{--socket.emit('add user', {'client':{{Auth::user()->id}},'conversation':{{$conversation->id}}});--}}
+
+        {{--socket.on('message', function (data) {--}}
+            {{--$('#panel-body').append(--}}
+                    {{--'<div class="row">'+--}}
+                    {{--'<div class="message not_owner">'+--}}
+                    {{--data.msg+'<br/>'+--}}
+                    {{--'<b>now</b>'+--}}
+                    {{--'</div>'+--}}
+                    {{--'</div>');--}}
+
+            {{--scrollToEnd();--}}
+
+         {{--});--}}
+    {{--</script>--}}
     <script>
         $(document).ready(function(){
             scrollToEnd();
@@ -141,4 +159,4 @@
         }
 
     </script>
-@endsection
+@endpush
