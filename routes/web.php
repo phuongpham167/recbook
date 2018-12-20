@@ -64,6 +64,12 @@ Route::group(['middleware'=>'auth'], function(){
         Route::post('/multi-delete', 'RealEstateController@multiDelete');
 
     });
+    /*
+     * route for chat
+     * */
+    Route::get('/tin-nhan', ['as' => 'chat', 'uses' => 'PageController@getChat']);
+    Route::resource('conversation','ConversationController');
+    Route::resource('message','MessageController');
 });
 
 /*
@@ -77,9 +83,4 @@ Route::get('/range-price/list-dropdown/{catId}', ['as' => 'rangePriceByCat', 'us
 Route::get('/re-type/list-dropdown/{catId}', ['as' => 'reTypeByCat', 'uses' => 'ReTypeController@getListDropDown']);
 Route::get('/customer-by-phone/{phone}', ['as' => 'customer-by-phone', 'uses' => 'RealEstateController@customerByPhone']);
 
-/*
- * route for chat
- * */
-Route::get('/chat', ['as' => 'chat', 'uses' => 'PageController@getChat']);
-Route::resource('conversation','ConversationController');
-Route::resource('message','MessageController');
+

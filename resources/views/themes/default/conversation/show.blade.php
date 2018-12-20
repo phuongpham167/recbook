@@ -32,39 +32,52 @@
     </style>
 @endpush
 @section('content')
-    <div class="container">
-        <div class="col-md-offset-2 col-md-8">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-md-8">
-                            {{($conversation->user1()->first()->id==Auth::user()->id)?$conversation->user2()->first()->name:$conversation->user1()->first()->name}}
+    {{-- Include Header --}}
+    @include(theme(TRUE).'.includes.header')
+    {{--Page html content --}}
+    <div class="content-body">
+        <div class="container padding-top-30 padding-bottom-30">
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    {{($conversation->user1()->first()->id==Auth::user()->id)?$conversation->user2()->first()->name:$conversation->user1()->first()->name}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body" id="panel-body">
+                            @foreach($conversation->messages as $message)
+                                <div class="row">
+                                    <div class="message {{ ($message->user_id!=Auth::user()->id)?'not_owner':'owner'}}">
+                                        {{$message->text}}<br/>
+                                        <b>{{$message->created_at->diffForHumans()}}</b>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                        <div class="panel-footer">
+                            <textarea id="msg" class="form-control" placeholder="Write your message"></textarea>
+                            <input type="hidden" id="csrf_token_input" value="{{csrf_token()}}"/>
+                            <br/>
+                            <div class="row">
+                                <div class="col-md-offset-4 col-md-4">
+                                    <button class="btn btn-primary btn-block" onclick="button_send_msg()">Send</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="panel-body" id="panel-body">
-                    @foreach($conversation->messages as $message)
-                        <div class="row">
-                            <div class="message {{ ($message->user_id!=Auth::user()->id)?'not_owner':'owner'}}">
-                                {{$message->text}}<br/>
-                                <b>{{$message->created_at->diffForHumans()}}</b>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-                <div class="panel-footer">
-                        <textarea id="msg" class="form-control" placeholder="Write your message"></textarea>
-                        <input type="hidden" id="csrf_token_input" value="{{csrf_token()}}"/>
-                        <br/>
-                        <div class="row">
-                            <div class="col-md-offset-4 col-md-4">
-                                <button class="btn btn-primary btn-block" onclick="button_send_msg()">Send</button>
-                            </div>
-                        </div>
+                <div class="col-xs-12 col-md-3">
+                    @include(theme(TRUE).'.includes.right-sidebar')
+                    @include(theme(TRUE).'.includes.vip-slide')
                 </div>
             </div>
         </div>
     </div>
+    {{-- Include footer --}}
+    @include(theme(TRUE).'.includes.footer')
 @endsection
 
 @push('js')
@@ -110,6 +123,7 @@
 
             $(document).keypress(function(e) {
                 if(e.which == 13) {
+                    e.preventDefault();
                     var msg = $('#msg').val();
                     $('#msg').val('');//reset
                     send_msg(msg);
