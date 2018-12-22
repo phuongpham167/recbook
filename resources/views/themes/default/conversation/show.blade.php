@@ -37,7 +37,7 @@
                                 <div class="row">
                                     <div class="message {{ ($message->user_id!=Auth::user()->id)?'not_owner':'owner'}}">
                                         <p class="mes">{{$message->text}}</p>
-                                        <p>{{$message->created_at->diffForHumans()}}</p>
+                                        <p class="time">{{$message->created_at->diffForHumans()}}</p>
                                     </div>
                                 </div>
                             @endforeach
@@ -76,7 +76,7 @@
                 '<div class="row">'+
                 '<div class="message not_owner">'+
                 '<p class="mes">' + data.msg + '</p>'+
-                '<p>bây giờ</p>'+
+                '<p class="time">bây giờ</p>'+
                 '</div>'+
                 '</div>');
 
@@ -142,7 +142,7 @@
                                 '<div class="row">'+
                                 '<div class="message owner">'+
                                 '<p class="mes">' + msg + '</p>'+
-                                '<p>bây giờ</p>'+
+                                '<p class="time">bây giờ</p>'+
                                 '</div>'+
                                 '</div>');
 

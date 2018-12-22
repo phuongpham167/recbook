@@ -22,6 +22,11 @@
   margin-bottom: 0;
 }
 
+.message .time {
+  color: #999999;
+  font-style: italic;
+}
+
 .owner {
   background-color: #0084ff;
   float: right;
