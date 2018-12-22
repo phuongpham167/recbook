@@ -1,0 +1,43 @@
+.panel {
+  border-radius: 0;
+}
+
+.panel .panel-heading {
+  background-color: white;
+  text-align: center;
+}
+
+.panel-body {
+  height: 50vh;
+  overflow-y: scroll;
+}
+
+.message {
+  padding: 10pt;
+  border-radius: 5pt;
+  margin: 5pt;
+}
+
+.message p {
+  margin-bottom: 0;
+}
+
+.owner {
+  background-color: #0084ff;
+  float: right;
+}
+
+.owner p {
+  color: white;
+}
+
+.not_owner {
+  background-color: #eaeff2;
+  float: left;
+}
+
+.btn-send-message {
+  background: #e40b00;
+  border-color: #e40b00;
+}
+

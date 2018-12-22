@@ -1,34 +1,19 @@
 @extends(theme(TRUE).'.layouts.app')
 
 @section('meta-description')
-    <meta name="description" content="Show conversation" >
+    <meta name="description" content="{{ trans('detail-conversation.meta_description') }}" >
 @endsection
 
 @section('title')
-    Show conversation
+    {{ trans('detail-conversation.page_title') }}
 @endsection
 
 @push('style')
     {{-- Link css for page here --}}
     <link rel="stylesheet" href="{{ asset('css/list-real-estate.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('css/detail-conversation.css') }}"/>
     <style>
-        .panel-body{
-            height: 50vh;
-            overflow-y: scroll;
-        }
-        .message{
-            padding: 10pt;
-            border-radius: 5pt;
-            margin: 5pt;
-        }
-        .owner{
-            background-color: #ccd7e0;
-            float: right;
-        }
-        .not_owner{
-            background-color: #eaeff2;
-            float:left;
-        }
+
     </style>
 @endpush
 @section('content')
@@ -42,7 +27,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <div class="row">
-                                <div class="col-md-8">
+                                <div class="col-md-12">
                                     {{($conversation->user1()->first()->id==Auth::user()->id)?$conversation->user2()->first()->name:$conversation->user1()->first()->name}}
                                 </div>
                             </div>
@@ -51,19 +36,19 @@
                             @foreach($conversation->messages as $message)
                                 <div class="row">
                                     <div class="message {{ ($message->user_id!=Auth::user()->id)?'not_owner':'owner'}}">
-                                        {{$message->text}}<br/>
-                                        <b>{{$message->created_at->diffForHumans()}}</b>
+                                        <p class="mes">{{$message->text}}</p>
+                                        <p>{{$message->created_at->diffForHumans()}}</p>
                                     </div>
                                 </div>
                             @endforeach
                         </div>
                         <div class="panel-footer">
-                            <textarea id="msg" class="form-control" placeholder="Write your message"></textarea>
+                            <textarea id="msg" class="form-control" placeholder="{{ trans('detail-conversation.input_message_placeholder') }}"></textarea>
                             <input type="hidden" id="csrf_token_input" value="{{csrf_token()}}"/>
                             <br/>
                             <div class="row">
                                 <div class="col-md-offset-4 col-md-4">
-                                    <button class="btn btn-primary btn-block" onclick="button_send_msg()">Send</button>
+                                    <button class="btn btn-primary btn-block btn-send-message" onclick="button_send_msg()">{{ trans('detail-conversation.btn_send') }}</button>
                                 </div>
                             </div>
                         </div>
@@ -90,12 +75,15 @@
             $('#panel-body').append(
                 '<div class="row">'+
                 '<div class="message not_owner">'+
-                data.msg+'<br/>'+
-                '<b>now</b>'+
+                '<p class="mes">' + data.msg + '</p>'+
+                '<p>bây giờ</p>'+
                 '</div>'+
                 '</div>');
 
             scrollToEnd();
+
+            var audio = new Audio('/audio/ding.mp3');
+            audio.play();
 
         });
     </script>
@@ -153,8 +141,8 @@
                         $('#panel-body').append(
                                 '<div class="row">'+
                                 '<div class="message owner">'+
-                                msg+'<br/>'+
-                                '<b>ora</b>'+
+                                '<p class="mes">' + msg + '</p>'+
+                                '<p>bây giờ</p>'+
                                 '</div>'+
                                 '</div>');
 
