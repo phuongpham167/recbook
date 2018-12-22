@@ -68,7 +68,7 @@
 @push('js')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
     <script>
-        var socket = io('http://localhost:8890');
+        var socket = io('{{env('CHAT_SERVER')}}');
         socket.emit('add user', {'client':{{Auth::user()->id}},'conversation':{{$conversation->id}}});
 
         socket.on('message', function (data) {
