@@ -84,7 +84,7 @@
                                         <dl>
                                             <dt class="txt_right">Website</dt>
                                             <dd>
-                                                <input name="web_id" id="web_id" type="text" maxlength="200" value="{{\App\Web::find(auth()->user()->web_id)->name}}">
+                                                <input name="web_id" id="web_id" type="text" maxlength="200" value="{{ auth()->user()->website }}">
                                             </dd>
                                         </dl>
                                     </div>

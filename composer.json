@@ -11,6 +11,7 @@
         "laravel/framework": "5.7.*",
         "laravel/passport": "^7.0",
         "laravel/tinker": "^1.0",
+        "predis/predis": "^1.1",
         "yajra/laravel-datatables": "^1.2",
         "yajra/laravel-datatables-oracle": "^8.9"
     },

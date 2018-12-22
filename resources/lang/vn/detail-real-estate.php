@@ -8,5 +8,6 @@
 return [
     'briefDetail' => [
         'price' => 'Giá'
-    ]
+    ],
+    'chat' => 'Chat ngay'
 ];

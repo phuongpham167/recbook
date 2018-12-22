@@ -58,6 +58,15 @@ class User extends Authenticatable
         return $this->hasOne(UserInfo::class);
     }
 
+    public function conversations()
+    {
+        return \App\Conversation::where('user1',$this->id)->orWhere('user2',$this->id)->get();
+    }
+    public function messages()
+    {
+        return $this->hasMany('App\Message');
+    }
+
     protected static function boot()
     {
         parent::boot();
