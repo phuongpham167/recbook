@@ -3,9 +3,9 @@ var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var redis = require('redis');
 
-app.get('/', function(req, res){
-    res.send('<h1>Hello world</h1>');
-});
+// app.get('/', function(req, res){
+//     res.send('<h1>Hello world</h1>');
+// });
 
 server.listen(8890);
 users = {};
