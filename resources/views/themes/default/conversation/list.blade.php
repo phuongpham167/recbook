@@ -33,6 +33,7 @@
 
                                 <div class="panel-body">
                                     @foreach($users as $user)
+                                        @if($user->group->chat_permission)
                                         <div class="row">
                                             <div class="col-md-6">
                                                 {{$user->name}}
@@ -44,6 +45,7 @@
                                                 {{Form::close()}}
                                             </div>
                                         </div>
+                                        @endif
                                     @endforeach
                                 </div>
                             </div>

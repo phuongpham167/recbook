@@ -467,6 +467,9 @@ class PageController extends Controller
      * */
     public function getChat()
     {
+        if (!Auth::user()->group->chat_permission) {
+            return redirect()->route('home');
+        }
         $users = User::where('id','!=',Auth::user()->id)->get();
         $conversations = Auth::user()->conversations();
 

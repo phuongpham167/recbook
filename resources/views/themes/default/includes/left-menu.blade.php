@@ -20,7 +20,9 @@
         <p><i class="fa fa-cog"></i> Quản lý tài khoản</p>
         <div>
             <ul>
+                @if (\Auth::user()->group->chat_permission)
                 <li><a href="{{ route('chat') }}"><i class="fa fa-angle-double-right"></i> Tin nhắn</a></li>
+                @endif
                 <li><a href="/doi-mat-khau"><i class="fa fa-angle-double-right"></i> Thay đổi mật khẩu</a></li>
                 <li><a href="/thong-tin-thanh-vien"><i class="fa fa-angle-double-right"></i> Thông tin thành viên</a></li>
                 <li><a href="/dang-xuat"><i class="fa fa-angle-double-right"></i> Thoát khỏi hệ thống</a></li>
