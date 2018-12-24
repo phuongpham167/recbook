@@ -31,9 +31,12 @@
                     <a href="#">{{ trans('home.statistic_col') }}</a>
                 </p>
                 <div class="col-xs-12 content">
-                    <p>{{ trans('home.num_of_user') }}: 111</p>
-                    <p>{{ trans('home.num_of_real_estate') }}: 111</p>
-                    <p>{{ trans('home.num_of_success_transaction') }}: 111</p>
+                    @php
+                    $web_id = get_web_id();
+                    @endphp
+                    <p>{{ trans('home.num_of_user') }}: {{ \App\User::where('web_id', $web_id)->count() }}</p>
+                    <p>{{ trans('home.num_of_real_estate') }}: {{\App\RealEstate::where('web_id', $web_id)->count()}}</p>
+                    <p>{{ trans('home.num_of_success_transaction') }}: 0</p>
                 </div>
             </div>
             <div class="col-xs-12 col-sm-4 three_i design">
