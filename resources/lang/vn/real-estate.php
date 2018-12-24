@@ -59,6 +59,7 @@ return [
     'selectFirstOpt' => 'Vui lòng chọn',
     'ssSelectFirstCat' => 'Loại hình bất động sản',
     'ssSelectFirstType' => 'Nhóm bất động sản',
+    'ssSelectFirstProvince' =>'Tất cả tỉnh/thành',
     'ssSelectFirstDistrict' =>'Tất cả quận huyện',
     'ssSelectFirstStreet' => 'Tất cả đường phố',
     'ssSelectFirstDirection' => 'Tất cả các hướng',

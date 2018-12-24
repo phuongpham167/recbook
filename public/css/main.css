@@ -154,6 +154,10 @@ button {
   width: 100%;
 }
 
+.main-menu .main-menu-list .menu-search #ip-kw {
+  font-size: 12px;
+}
+
 .main-menu .main-menu-list .menu-search input {
   border-radius: 0;
   border: none;
@@ -586,6 +590,8 @@ button {
   font-size: 11.5px;
   font-weight: 600;
   margin-bottom: 0;
+  max-height: 16px;
+  overflow: hidden;
 }
 
 .body_top_box .re_item2 .rgp_item p strong {
