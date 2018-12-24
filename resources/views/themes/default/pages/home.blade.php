@@ -82,7 +82,13 @@
                                 </select>
                             </div>
                             <div class="col-xs-2 item">
-                                <input value="1" name="Search[province_id]" id="Search_province_id" type="hidden">
+                                <select name="Search[province_id]" id="Search_province_id">
+                                    @foreach($provinces as $province)
+                                        <option value="{{$province->id}}">{{$province->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-xs-2 item">
                                 <select name="Search[district_id]" id="Search_district_id">
                                     @foreach($districts as $district)
                                         <option value="{{$district->id}}">{{$district->name}}</option>
@@ -96,13 +102,13 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="col-xs-2 item">
-                                <select name="Search[direction_id]" id="Search_direction_id">
-                                    @foreach($directions as $direction)
-                                        <option value="{{$direction->id}}">{{$direction->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
+                            {{--<div class="col-xs-2 item">--}}
+                                {{--<select name="Search[direction_id]" id="Search_direction_id">--}}
+                                    {{--@foreach($directions as $direction)--}}
+                                        {{--<option value="{{$direction->id}}">{{$direction->name}}</option>--}}
+                                    {{--@endforeach--}}
+                                {{--</select>--}}
+                            {{--</div>--}}
                             <div class="col-xs-2 item">
                                 <select id="range-price" name="Search[range_price_id]">
                                     @foreach($rangePrices as $rangePrice)
@@ -335,12 +341,14 @@
                                             {{--</div>--}}
                                         {{--</div>--}}
                                     {{--</div>--}}
+                                    @if(count($goodPriceRealEstate))
                                     <div class="col-xs-12" style="border-bottom: 0; margin-bottom: 0; padding-bottom: 0; margin-top: 15px;">
                                         @php
                                             $cat = $categories[0];
                                         @endphp
                                         <p class="more"><a href="{{'/danh-muc-bds/' . $cat->slug . '-c' . $cat->id}}"><i class="fa fa-angle-double-right"></i> Xem thêm</a></p>
                                     </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>

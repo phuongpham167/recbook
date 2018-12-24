@@ -75,5 +75,5 @@ return [
     'district'   =>  'Quận/Huyện/TP',
     'ward'   =>  'Phường/Xã',
     'street'   =>  'Đường phố',
-    'searchPlaceholder' => 'Từ khóa, mã số tin, số điện thoại',
+    'searchPlaceholder' => 'Từ khóa, mã số tin, số đt',
 ];
