@@ -146,9 +146,16 @@ class PageController extends Controller
                 if ($mappingMenuFEByTag->re_category_id && $mappingMenuFEByTag->re_type_id) {
                     $query->where('re_type_id', $mappingMenuFEByTag->re_type_id);
                 }
-//                if ($mappingMenuFEByTag->suggest) {
-//                    $query->where('');
-//                }
+                if ($mappingMenuFEByTag->suggest) {
+                    if ($mappingMenuFEByTag->suggest == MappingMenuFE::SG_HOT) {
+                        $query->where('is_hot', 1);
+                        $query->orderBy('post_date', 'desc');
+                    }
+                    if ($mappingMenuFEByTag->suggest == MappingMenuFE::SG_VIP) {
+                        $query->where('is_vip', 1);
+                        $query->where('is_hot', '<>', 1);
+                    }
+                }
                 $countAll = $query->count();
                 $results = $query->get();
 
@@ -163,11 +170,24 @@ class PageController extends Controller
                 }
 //                dd($results);
 
+                $pageTitle = '';
+                if (!$mappingMenuFEByTag->re_category_id
+                    && !$mappingMenuFEByTag->re_type_id
+                    && $mappingMenuFEByTag->suggest) {
+                    if ($mappingMenuFEByTag->suggest == MappingMenuFE::SG_HOT) {
+                        $pageTitle = trans('page.tin_hot_box_title');
+                    }
+                    if ($mappingMenuFEByTag->suggest == MappingMenuFE::SG_VIP) {
+                        $pageTitle = trans('page.tin_vip_box_title');
+                    }
+                }
+
                 return v('pages.list-real-estate', [
                     'data' => $results,
                     'category' => $category,
                     'type' =>$type,
                     'count' => $countAll,
+                    'pageTitle' => $pageTitle,
                     'vipRealEstates' => $this->vipRealEstates,
                     'categories' => $this->categories,
                     'districts' => $this->districts,

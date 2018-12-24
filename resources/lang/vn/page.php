@@ -67,4 +67,6 @@ return [
     'free_real_estate' => 'Tin rao vặt cộng đồng miễn phí',
     'search_box_title' => 'Tìm kiếm theo từ khóa hoặc mã số tin',
     'smart_search_title' => 'Tìm kiếm nhà đất',
+    'tin_hot_box_title' => 'Tin nổi bật',
+    'tin_vip_box_title' => 'TIN NHÀ ĐẤT VIP',
 ];
