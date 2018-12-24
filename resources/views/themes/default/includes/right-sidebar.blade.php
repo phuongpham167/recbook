@@ -32,7 +32,17 @@ $filter = request()->all();
                         </div>
                         <div class="col-xs-12 item">
                             <div class="form-group">
-                                <input value="1" name="Search[province_id]" id="Search_province_id" type="hidden">
+                                <select class="form-control"
+                                        name="Search[province_id]" id="Search_province_id">
+                                    <option value="">{{trans('real-estate.ssSelectFirstProvince')}}</option>
+                                    @foreach($provinces as $province)
+                                        <option value="{{$province->id}}" {{ ($filter && isset($filter['Search']['province_id']) && $filter['Search']['province_id'] == $province->id ) ?  'selected' : '' }}>{{$province->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 item">
+                            <div class="form-group">
                                 <select class="form-control"
                                         name="Search[district_id]" id="Search_district_id">
                                     <option value="">{{trans('real-estate.ssSelectFirstDistrict')}}</option>
