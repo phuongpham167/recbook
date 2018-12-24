@@ -289,14 +289,18 @@
                                         <p><strong>Địa chỉ liên lạc</strong>: {{$userInfo && $userInfo->address ? $userInfo->address : ''}}</p>
                                         <p><strong>Website</strong>: <a href="{{$userInfo && $userInfo->website ? $userInfo->website : route('home')}}" target="_blank">{{$userInfo && $userInfo->website ? $userInfo->website : ''}}</a>
                                         </p>
-                                        @if(\Auth::user()->id !== $userInfo->id)
-                                            @if (\Auth::user()->group->chat_permission && $data->user->group->chat_permission)
-                                            <form role="form" action="{{ route('conversation.store') }}" method="post" accept-charset="UTF-8">
-                                                @csrf
-                                                <input name="user_id" type="hidden" value="{{ $userInfo->id }}" />
-                                                <button type="submit" class="btn btn-success"><i class="fa fa-commenting-o"></i> {{trans('detail-real-estate.chat')}}</button>
-                                            </form>
+                                        @if(\Auth::user())
+                                            @if(\Auth::user()->id !== $userInfo->id)
+                                                @if (\Auth::user()->group->chat_permission && $data->user->group->chat_permission)
+                                                <form role="form" action="{{ route('conversation.store') }}" method="post" accept-charset="UTF-8">
+                                                    @csrf
+                                                    <input name="user_id" type="hidden" value="{{ $userInfo->id }}" />
+                                                    <button type="submit" class="btn btn-success"><i class="fa fa-commenting-o"></i> {{trans('detail-real-estate.chat')}}</button>
+                                                </form>
+                                                @endif
                                             @endif
+                                        @else
+                                            <p><a href="{{ route('login') }}">Đăng nhập để chat ngay</a></p>
                                         @endif
                                     </div>
                                 </div>
