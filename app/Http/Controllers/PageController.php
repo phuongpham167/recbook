@@ -82,7 +82,7 @@ class PageController extends Controller
 //            ->where('hot_expire_at', '<=', Carbon::now())
             ->where('web_id', $this->web_id);
 
-        $hotRealEstates = $this->checkRegisterDate($hotRealEstates);
+//        $hotRealEstates = $this->checkRegisterDate($hotRealEstates);
         $hotRealEstates->limit(16);
         $hotRealEstates = $hotRealEstates->get();
 //        dd($hotRealEstates);
@@ -98,7 +98,7 @@ class PageController extends Controller
             ->where('web_id', $this->web_id)
             ->orderBy('post_date', 'desc');
 
-        $goodPriceRealEstate = $this->checkRegisterDate($goodPriceRealEstate);
+//        $goodPriceRealEstate = $this->checkRegisterDate($goodPriceRealEstate);
         $goodPriceRealEstate->limit(200);
         $goodPriceRealEstate = $goodPriceRealEstate->get();
 
@@ -108,7 +108,7 @@ class PageController extends Controller
             ->where('is_vip', '<>', 1)
             ->where('web_id', $this->web_id);
 
-        $freeRealEstates = $this->checkRegisterDate($freeRealEstates);
+//        $freeRealEstates = $this->checkRegisterDate($freeRealEstates);
         $freeRealEstates->limit(40);
         $freeRealEstates = $freeRealEstates->get();
 
@@ -159,7 +159,7 @@ class PageController extends Controller
                         $query->where('is_hot', '<>', 1);
                     }
                 }
-                $query = $this->checkRegisterDate($query);
+//                $query = $this->checkRegisterDate($query);
                 $countAll = $query->count();
                 $results = $query->get();
 
@@ -219,7 +219,7 @@ class PageController extends Controller
             ->where('post_date', '<=', Carbon::now())
             ->where('web_id', $this->web_id)
             ->orderBy('post_date', 'desc');
-        $query = $this->checkRegisterDate($query);
+//        $query = $this->checkRegisterDate($query);
         $results = $query->get();
 
         $this->vipRealEstates = $this->getVipRealEstates();
@@ -248,7 +248,7 @@ class PageController extends Controller
             ->where('post_date', '<=', Carbon::now())
             ->where('web_id', $this->web_id)
             ->orderBy('post_date', 'desc');
-        $query = $this->checkRegisterDate($query);
+//        $query = $this->checkRegisterDate($query);
         $results = $query->get();
 
         $this->vipRealEstates = $this->getVipRealEstates();
@@ -279,7 +279,7 @@ class PageController extends Controller
             ->where('post_date', '<=', Carbon::now())
             ->where('web_id', $this->web_id)
             ->orderBy('post_date', 'desc');
-        $query = $this->checkRegisterDate($query);
+//        $query = $this->checkRegisterDate($query);
         $results = $query->get();
 
         $this->vipRealEstates = $this->getVipRealEstates();
@@ -315,7 +315,7 @@ class PageController extends Controller
                 ->where('post_date', '<=', Carbon::now())
                 ->where('web_id', $this->web_id)
                 ->orderBy('post_date', 'desc');
-            $query = $this->checkRegisterDate($query);
+//            $query = $this->checkRegisterDate($query);
             $countAll = $query->count();
             $results = $query->get();
 
@@ -347,7 +347,7 @@ class PageController extends Controller
             ->where('post_date', '<=', Carbon::now())
             ->where('web_id', $this->web_id)
             ->orderBy('post_date', 'desc');
-        $query = $this->checkRegisterDate($query);
+//        $query = $this->checkRegisterDate($query);
         $results = $query->get();
 
         $this->vipRealEstates = $this->getVipRealEstates();
@@ -370,7 +370,7 @@ class PageController extends Controller
         $explodeSlug = explode('-', $slug);
         $id = $explodeSlug[count($explodeSlug)-1];
         $realEstate = RealEstate::where('id', $id);
-        $realEstate = $this->checkRegisterDate($realEstate);
+//        $realEstate = $this->checkRegisterDate($realEstate);
         $realEstate = $realEstate->first();
 
         /*
@@ -420,7 +420,7 @@ class PageController extends Controller
         $query->where('web_id', $this->web_id);
         $query->where('post_date', '<=', Carbon::now());
         $query->orderBy('post_date', 'desc');
-        $query = $this->checkRegisterDate($query);
+//        $query = $this->checkRegisterDate($query);
 
         $results = $query->get();
 
@@ -486,7 +486,7 @@ class PageController extends Controller
             if (isset($filter['Search']['dtmb_to']) && $filter['Search']['dtmb_to']) {
                 $query->where('area_of_premises', '<=', floatval($filter['Search']['dtmb_to']));
             }
-            $query = $this->checkRegisterDate($query);
+//            $query = $this->checkRegisterDate($query);
 
             $results = $query->get();
 
@@ -565,7 +565,7 @@ class PageController extends Controller
             ->where('web_id', $this->web_id);
 
 //            ->where('vip_expire_at',  '<=', Carbon::now())
-        $query = $this->checkRegisterDate($query);
+//        $query = $this->checkRegisterDate($query);
         $query->limit(30);
         $results = $query->get();
 //        dd($results);
