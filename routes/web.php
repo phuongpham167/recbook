@@ -35,6 +35,11 @@ Route::get('/tin/{slug}', ['as' => 'detail-real-estate', 'uses' => 'PageControll
 Route::get('/lien-he', ['as' => 'contact', 'uses' => 'PageController@getContact']);
 Route::post('/lien-he', ['as' => 'post.contact', 'uses' => 'ContactController@postContact']);
 
+/*
+ * route thong tin thanh vien
+ * */
+Route::get('/thong-tin-thanh-vien/{id}', ['as' => 'user.info', 'uses' => 'PageController@getUserInfo']);
+
 Route::get('/dang-nhap', ['as' => 'login', 'uses' => 'AuthenticateController@getLogin']);
 Route::post('/dang-nhap', ['as' => 'post.login', 'uses' => 'AuthenticateController@postLogin']);
 Route::get('/dang-xuat', ['as' => 'logout', 'uses' => 'AuthenticateController@getLogout']);

@@ -1,0 +1,17 @@
+.user-info .name {
+  font-size: 20px;
+  font-weight: 600;
+  margin-top: 0;
+}
+
+.user-info .description-label,
+.user-info .rate-label,
+.user-info .posted-real-estate-label {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.user-info .social {
+  text-align: right;
+}
+

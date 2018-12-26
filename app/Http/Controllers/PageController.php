@@ -555,6 +555,28 @@ class PageController extends Controller
         ]);
     }
 
+    public function getUserInfo($id)
+    {
+        try {
+            $user = User::find($id);
+            if ($user) {
+                return v('users.user-info', [
+                    'data' => $user,
+                    'vipRealEstates' => $this->vipRealEstates,
+                    'categories' => $this->categories,
+                    'provinces' => $this->provinces,
+                    'districts' => $this->districts,
+                    'streets' => $this->streets,
+                    'directions' => $this->directions,
+                    'projects' => $this->projects,
+                    'menuData' => $this->menuFE
+                ]);
+            }
+        } catch (\Exception $exception) {
+            \Log::info($exception->getMessage());
+        }
+    }
+
     private function getVipRealEstates()
     {
         $query = RealEstate::select('id', 'title', 'slug', 'direction_id',
