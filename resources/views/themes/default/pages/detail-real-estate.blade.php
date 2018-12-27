@@ -283,6 +283,7 @@
                                         @php
                                             $userInfo = $data->user->userinfo;
                                         @endphp
+                                        <p><strong>Họ và tên</strong>: <a href="{{ route('user.info', [$data->user->id])}} ">{{$userInfo->full_name}}</a></p>
                                         <p><strong>Công ty/cá nhân</strong>: {{$userInfo && $userInfo->company ? $userInfo->company : 'Nhà Đất Hải Phòng'}}</p>
                                         <p><strong>Địa chỉ email</strong>: {{$data->user && $data->user->email ? $data->user->email : 'dothigroup.vn@gmail.com'}}</p>
                                         <p><strong>Số điện thoại</strong>: {{$userInfo && $userInfo->phone ? $userInfo->phone : ''}}</p>
