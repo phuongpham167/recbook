@@ -9,6 +9,7 @@ use App\Http\Requests\LoginRequest;
 use App\Http\Requests\ResetPasswordRequest;
 use App\Menu;
 use App\PasswordReset;
+use App\TransactionLog;
 use App\User;
 use App\UserInfo;
 use Carbon\Carbon;
@@ -16,6 +17,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
+use \DataTables;
+
 
 class AuthenticateController extends Controller
 {
@@ -228,5 +231,35 @@ class AuthenticateController extends Controller
 
         set_notice(trans('users.account_change_pass_success', ['email'  =>  $user->email]), 'success');
         return redirect()->to(asset('/dang-nhap'));
+    }
+
+    public function transactionList() {
+        return v('users.tran-list', ['menuData' => $this->menuFE]);
+    }
+    public function dataTran() {
+        $data   =   TransactionLog::query();
+
+        if(!empty(\request('type_tran')))
+            $data   =   $data->where('type_tran',\request('type_tran'));
+
+        if(!empty(\request('type_tran')))
+            $data   =   $data->where('type_tran',\request('type_tran'));
+
+        $result = Datatables::of($data)
+            ->addColumn('type', function($transaction) {
+                if($transaction->type==0)
+                    return '-';
+                if($transaction->type==1)
+                    return '+';
+                return '';
+            });
+
+        if(get_web_id() == 1) {
+            $result = $result->addColumn('web_id', function(Branch $branch) {
+                return Web::find($branch->web_id)->name;
+            });
+        }
+
+        return $result->make(true);
     }
 }

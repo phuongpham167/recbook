@@ -10,6 +10,7 @@
                 <li><a href="/bat-dong-san/tin-rao-cho-duyet"><i class="fa fa-angle-double-right"></i> Tin rao chờ duyệt</a> <span>({{\App\RealEstate::where('approved','0')->where('draft', 0)->where('posted_by', \Auth::user()->id)->count()}})</span></li>
                 <li><a href="/bat-dong-san/tin-rao-nhap"><i class="fa fa-angle-double-right"></i> Tin rao nháp</a> <span>({{\App\RealEstate::where('draft','1')->where('posted_by', \Auth::user()->id)->count()}})</span></li>
                 <li><a href="/bat-dong-san/tin-rao-da-xoa"><i class="fa fa-angle-double-right"></i> Tin rao đã xóa</a> <span>({{\App\RealEstate::onlyTrashed()->where('posted_by', \Auth::user()->id)->count()}})</span></li>
+                <li><a href="/lich-su-giao-dich"><i class="fa fa-angle-double-right"></i> Lịch sử giao dịch</a></li>
             </ul>
         </div>
     </div>

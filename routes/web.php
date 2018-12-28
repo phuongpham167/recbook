@@ -51,6 +51,8 @@ Route::group(['middleware'=>'auth'], function(){
     Route::post('/doi-mat-khau', ['as' => 'post.change_password', 'uses' => 'AuthenticateController@postChangepassword']);
     Route::get('/thong-tin-thanh-vien', ['as' => 'info', 'uses' => 'AuthenticateController@getInfo']);
     Route::post('/thong-tin-thanh-vien', ['as' => 'post.info', 'uses' => 'AuthenticateController@postInfo']);
+    Route::get('/lich-su-giao-dich', ['as' => 'transaction', 'uses' => 'AuthenticateController@transactionList']);
+    Route::get('/lich-su-giao-dich/data', ['as' => 'transactionData', 'uses' => 'AuthenticateController@dataTran']);
 
     Route::group(['prefix'=>'bat-dong-san'], function(){
         Route::get('/{filter?}', ['as' => 'realEstateList', 'uses' => 'RealEstateController@list'])->where('filter', 'tin-rao-het-han|tin-rao-cho-duyet|tin-rao-nhap|tin-rao-da-xoa');
@@ -62,6 +64,8 @@ Route::group(['middleware'=>'auth'], function(){
         Route::get('/xoa', 'RealEstateController@delete');
         Route::get('/dang-bai', 'RealEstateController@publish');
         Route::post('/multi-delete', 'RealEstateController@multiDelete');
+        Route::get('/setvip', 'RealEstateController@setVip');
+        Route::get('/sethot', 'RealEstateController@setHot');
 
     });
     /*

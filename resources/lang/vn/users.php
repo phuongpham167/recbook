@@ -28,5 +28,14 @@ return [
     'password_not_correct' =>  'Mật khẩu cũ chưa trùng khớp!',
     'fill_all' =>  'Chưa điền đủ thông tin!',
     'dont_allow' =>  'Bạn không có quyền đăng ký nhóm thành viên này!',
-    'created_at' =>  'Thời gian'
+    'created_at' =>  'Thời gian',
+    'transaction_history' =>  'Lịch sử giao dịch',
+    'type_tran' =>  'Loại GD',
+    'type_tran_all' => 'Tất cả',
+    'type_tran_add' =>  'Cộng',
+    'type_tran_minus' =>  'Trừ',
+    'reason_tran' => 'Lí do',
+    'currency_tran' => 'Lí do',
+    'created_tran' => 'Thời gian giao dịch',
+    'value_tran' => 'Giá trị',
 ];

@@ -90,3 +90,19 @@ function to_slug($str) {
     $str = preg_replace('/(-+$)/', '', $str);
     return $str;
 }
+
+function transaction_log($reason, $value, $type) {
+    $data = new \App\TransactionLog();
+    if(!auth()->check()) {
+        $data->id = null;
+    }
+    else
+        $data->user_id = auth()->user()->id;
+
+    $data->reason = $reason;
+    $data->type = $type;
+    $data->value = $value;
+    $data->currency = \App\Currency::where('default',1)->first()->id;
+    $data->created_at = \Carbon\Carbon::now();
+    $data->save();
+}

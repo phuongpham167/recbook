@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\RealEstatesDataTable;
+use App\Http\Requests\HotVipRequest;
 use App\Http\Requests\RealEstateRequest;
 use App\Menu;
 use App\RealEstate;
@@ -115,9 +116,27 @@ class RealEstateController extends Controller
         else
             $data = $data->where('approved', 1);
 
+        $start  =   !empty(\request('datefrom'))?Carbon::createFromFormat('d/m/Y',\request('datefrom'))->startOfDay():Carbon::now()->startOfMonth();
+        $end    =   !empty(\request('dateto'))?Carbon::createFromFormat('d/m/Y',\request('dateto'))->endOfDay():Carbon::now();
+
+        $data   =   $data->where('created_at', '>=', $start)->where('created_at', '<=', $end);
+
+        if(!empty(\request('type_tran')))
+            $data = $data->where('type_tran',\request('type_tran'));
+
         $result = Datatables::of($data)
             ->addColumn('re_category_id', function($dt) {
                 return $dt->reCategory ? $dt->reCategory->name : '';
+            })
+            ->addColumn('title', function($dt) {
+                $title = null;
+                if($dt->is_hot == 1)
+                    $title .= '<img src="http://dothigroupfe.vn/images/vip1.gif"> ';
+                if($dt->is_vip == 1)
+                    $title .= '<img src="http://dothigroupfe.vn/images/vip2.gif"> ';
+                $title .= $dt->title;
+
+                return $title;
             })
             ->addColumn('re_type_id', function($dt) {
                 return $dt->reType ? $dt->reType->name : '';
@@ -135,8 +154,36 @@ class RealEstateController extends Controller
                 if(\request('filter') == 'tin-rao-nhap')
                     $manage .=   '  '.a('bat-dong-san/dang-bai', 'id='.$dt->id,trans('g.post'), ['class'=>'btn btn-xs btn-info']);
 
+                if($dt->is_vip == 0) {
+                    $manage .= ' <button type="button" class="btn btn-xs btn-success" data-toggle="popover" title="'.trans('system.pick_time').'" data-placement="left" data-content="
+                                                <form action=\''.asset("bat-dong-san/setvip").'\'>
+                                                <input type=\'hidden\' name=\'id\' value=\''.$dt->id.'\'>
+                                                <select name=\'vip_time\' id=\'vip_time\'>
+                                                    <option value=\'1\'>1 ngày</option>
+                                                    <option value=\'7\'>7 ngày</option>
+                                                    <option value=\'30\'>30 ngày</option>
+                                                    <option value=\'90\'>90 ngày</option>
+                                                </select>
+                                                <button type=\'submit\' class=\'btn btn-green\'> Gửi</button>
+                                                </form>
+                                                "><i class=\'fa fa-star-o\' aria-hidden=\'true\'></i> '.trans('g.setvip').'</button>';
+                }
+                if($dt->is_hot == 0) {
+                    $manage .= ' <button type="button" class="btn btn-xs btn-success" data-toggle="popover" title="'.trans('system.pick_time').'" data-placement="left" data-content="
+                                                <form method=\'get\' action=\''.asset("bat-dong-san/sethot?id=").$dt->id.'\'>
+                                                <input type=\'hidden\' name=\'id\' value=\''.$dt->id.'\'>
+                                                <select name=\'hot_time\' id=\'hot_time\'>
+                                                    <option value=\'1\'>1 ngày</option>
+                                                    <option value=\'7\'>7 ngày</option>
+                                                    <option value=\'30\'>30 ngày</option>
+                                                    <option value=\'90\'>90 ngày</option>
+                                                </select>
+                                                <button type=\'submit\' class=\'btn btn-green\'> Gửi </button>
+                                                </form>
+                                                "><i class=\'fa fa-star\' aria-hidden=\'true\'></i> '.trans('g.sethot').'</button>';
+                }
                 return $manage;
-            })->rawColumns(['manage']);
+            })->rawColumns(['manage','title']);
 
         return $result->make(true);
     }
@@ -293,5 +340,35 @@ class RealEstateController extends Controller
     {
         $result = $this->service->customerByPhone($phone);
         return response()->json($result);
+    }
+
+    public function setVip(HotVipRequest $request)
+    {
+        $data   =   RealEstate::find($request->id);
+        if(!empty($data)){
+
+            $data->is_vip = 1;
+            $data->vip_expire_at = Carbon::now()->addDay($request->vip_time);
+            $data->save();
+            set_notice(trans('system.set_vip_success').$request->vip_time.' ngày thành công!', 'success');
+        }else
+            set_notice(trans('system.not_exist'), 'warning');
+
+//        echo $request->id;
+        return redirect()->back();
+    }
+
+    public function setHot(HotVipRequest $request)
+    {
+        $data   =   RealEstate::find($request->id);
+        if(!empty($data)){
+
+            $data->is_hot = 1;
+            $data->hot_expire_at = Carbon::now()->addDay($request->hot_time);
+            $data->save();
+            set_notice(trans('system.set_hot_success').$request->hot_time.' ngày thành công!', 'success');
+        }else
+            set_notice(trans('system.not_exist'), 'warning');
+        return redirect()->back();
     }
 }
