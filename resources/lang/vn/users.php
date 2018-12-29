@@ -35,7 +35,7 @@ return [
     'type_tran_add' =>  'Cộng',
     'type_tran_minus' =>  'Trừ',
     'reason_tran' => 'Lí do',
-    'currency_tran' => 'Lí do',
+    'currency_tran' => 'Loại tiền',
     'created_tran' => 'Thời gian giao dịch',
     'value_tran' => 'Giá trị',
 ];

@@ -130,7 +130,7 @@
                 serverSide: true,
                 ajax: '{!! asset('/lich-su-giao-dich/data') !!}',
                 columns: [
-                    { data: 'name', name: 'name' },
+                    { data: 'user_id', name: 'user_id' },
                     { data: 'type', name: 'type' },
                     { data: 'value', name: 'value'},
                     { data: 'currency', name: 'currency' },

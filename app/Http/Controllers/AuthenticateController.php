@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Branch;
+use App\Currency;
 use App\Group;
 use App\Http\Requests\FormUserRequest;
 use App\Http\Requests\LoginRequest;
@@ -239,8 +240,7 @@ class AuthenticateController extends Controller
     public function dataTran() {
         $data   =   TransactionLog::query();
 
-        if(!empty(\request('type_tran')))
-            $data   =   $data->where('type_tran',\request('type_tran'));
+        $data   =   $data->where('user_id',auth()->user()->id);
 
         if(!empty(\request('type_tran')))
             $data   =   $data->where('type_tran',\request('type_tran'));
@@ -252,13 +252,21 @@ class AuthenticateController extends Controller
                 if($transaction->type==1)
                     return '+';
                 return '';
+            })
+            ->addColumn('user_id', function($transaction) {
+                return User::find($transaction->user_id)->name;
+            })
+            ->addColumn('currency', function($transaction) {
+                return Currency::find($transaction->currency)->code;
+            })->addColumn('value', function($transaction) {
+                return number_format($transaction->value);
             });
 
-        if(get_web_id() == 1) {
-            $result = $result->addColumn('web_id', function(Branch $branch) {
-                return Web::find($branch->web_id)->name;
-            });
-        }
+//        if(get_web_id() == 1) {
+//            $result = $result->addColumn('web_id', function(Branch $branch) {
+//                return Web::find($branch->web_id)->name;
+//            });
+//        }
 
         return $result->make(true);
     }
