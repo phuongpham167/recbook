@@ -7,14 +7,20 @@ use App\Menu;
 use App\RealEstate;
 use App\ReCategory;
 use App\ReType;
+use App\Services\BlockService;
+use App\Services\ConstructionTypeService;
 use App\Services\DirectionService;
 use App\Services\DistrictService;
+use App\Services\ExhibitService;
 use App\Services\PageService;
 use App\Services\ProjectService;
 use App\Services\ProvinceService;
 use App\Services\RangePriceService;
+use App\Services\ReCategoryService;
 use App\Services\ReTypeService;
 use App\Services\StreetService;
+use App\Services\UnitService;
+use App\Services\WardService;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -27,23 +33,35 @@ class PageController extends Controller
     protected $categories, $provinces, $districts, $streets, $directions, $projects;
 
     protected $service;
+    protected $reCategoryService;
     protected $reTypeService;
     protected $rangePriceService;
     protected $provinceService;
     protected $districtService;
+    protected $wardService;
     protected $streetService;
     protected $directionService;
+    protected $exhibitService;
     protected $projectService;
+    protected $blockService;
+    protected $constructionTypeService;
+    protected $unitService;
 
     public function __construct(
         PageService $pageService,
+        ReCategoryService $reCategoryService,
         ReTypeService $reTypeService,
         ProvinceService $provinceService,
         DistrictService $districtService,
+        WardService $wardService,
         StreetService $streetService,
         DirectionService $directionService,
-        RangePriceService $rangePriceService,
-        ProjectService $projectService
+        ExhibitService $exhibitService,
+        ProjectService $projectService,
+        BlockService $blockService,
+        ConstructionTypeService $constructionTypeService,
+        UnitService $unitService,
+        RangePriceService $rangePriceService
     )
     {
         $this->web_id = get_web_id();
@@ -51,13 +69,19 @@ class PageController extends Controller
         $this->menuFE = Menu::where('web_id', $this->web_id)->where('menu_type', $mmfe)->first();
 
         $this->service = $pageService;
+        $this->reCategoryService = $reCategoryService;
         $this->reTypeService = $reTypeService;
         $this->provinceService = $provinceService;
         $this->districtService = $districtService;
+        $this->wardService = $wardService;
         $this->streetService = $streetService;
         $this->directionService = $directionService;
-        $this->rangePriceService = $rangePriceService;
+        $this->exhibitService = $exhibitService;
         $this->projectService = $projectService;
+        $this->blockService = $blockService;
+        $this->constructionTypeService = $constructionTypeService;
+        $this->unitService = $unitService;
+        $this->rangePriceService = $rangePriceService;
 
         $this->categories = ReCategory::select('id', 'name', 'slug')
             ->orderBy('id', 'asc')
@@ -560,14 +584,28 @@ class PageController extends Controller
         try {
             $user = User::find($id);
             if ($user) {
+                $reCategories = $this->reCategoryService->getListDropDown();
+                $provinces = $this->provinceService->getListDropDown();
+                $streets = $this->streetService->getListDropDown();
+                $directions = $this->directionService->getListDropDown();
+                $exhibits = $this->exhibitService->getListDropDown();
+                $blocks = $this->blockService->getListDropDown();
+                $constructionTypes = $this->constructionTypeService->getListDropDown();
+                $units = $this->unitService->getListDropDown();
+
                 return v('users.user-info', [
                     'data' => $user,
                     'vipRealEstates' => $this->vipRealEstates,
                     'categories' => $this->categories,
+                    'reCategories' => $reCategories,
                     'provinces' => $this->provinces,
                     'districts' => $this->districts,
                     'streets' => $this->streets,
                     'directions' => $this->directions,
+                    'exhibits' => $exhibits,
+                    'blocks' => $blocks,
+                    'constructionTypes' => $constructionTypes,
+                    'units' => $units,
                     'projects' => $this->projects,
                     'menuData' => $this->menuFE
                 ]);

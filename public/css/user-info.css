@@ -1,3 +1,7 @@
+.user-info .panel {
+  border-radius: 0;
+}
+
 .user-info .name {
   font-size: 20px;
   font-weight: 600;
@@ -13,5 +17,82 @@
 
 .user-info .social {
   text-align: right;
+}
+
+.user-info .avatar {
+  border: 1px solid #ccc;
+  padding: 15px;
+}
+
+.user-info .user-desc {
+  margin-bottom: 15px;
+}
+
+.user-info .top-head {
+  background: #f5f6f7;
+  border: 1px solid #ccc;
+  border-bottom: none;
+}
+
+.user-info .top-head p {
+  font-size: 14px;
+  margin: 0;
+  padding: 10px 0;
+}
+
+.user-info .center-top {
+  border: 1px solid #ccc;
+  padding-top: 15px;
+}
+
+.user-info .alert-title {
+  font-size: 18px;
+  text-transform: uppercase;
+}
+
+.user-info .title-short-section {
+  margin-bottom: 0px;
+  margin-top: 0;
+  background: #e40b00;
+  color: #fff;
+  font-weight: 600;
+  font-size: 16px;
+  padding: 10px 15px;
+  text-transform: uppercase;
+}
+
+.user-info .border-block {
+  border: 1px solid #ccc;
+  border-top: none;
+  margin-bottom: 15px;
+  padding: 15px;
+}
+
+.user-info .list-re {
+  margin-top: 15px;
+}
+
+._btn {
+  display: inline-block;
+  padding: 9px 15px;
+  color: #fff;
+  font-weight: 600;
+}
+
+.bg_red {
+  background: #e40b00;
+}
+
+.panel-heading span {
+  margin-top: -20px;
+  font-size: 15px;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+#postReModal {
+  margin-top: 50px;
 }
 

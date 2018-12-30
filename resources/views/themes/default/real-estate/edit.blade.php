@@ -34,7 +34,9 @@ if ($user->group_id != $adminGroup) {
 
     <div class="container">
         <div class="row subpage">
-            @include(theme(TRUE).'.includes.left-menu')
+            <div class="col-xs-3 left">
+                @include(theme(TRUE).'.includes.left-menu')
+            </div>
             <div class="col-xs-9 right">
                 @if (!empty(session('message')))
                     <div class="alert alert-{{session('message.type')}} text-center">

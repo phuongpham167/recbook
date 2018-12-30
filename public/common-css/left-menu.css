@@ -1,0 +1,19 @@
+._boxM {margin-bottom: 20px;}
+._boxM>p {background: #e40b00; color: #fff; font-weight: 600; font-size: 16px; padding: 10px 15px; text-transform: uppercase;}
+._boxM>p i {margin-right: 5px;}
+._boxM>div {padding: 10px 15px; border: 1px solid #eaeaea; margin-top: 5px; background: #fafafa;}
+
+._manage_list li {border-top: 1px dotted #ddd; padding: 8px 0;}
+._manage_list li:first-child {border-top: 0;}
+._manage_list li a {color: #555; font-weight: 600; text-decoration: none;}
+._manage_list li a:hover {color: #e40b00;}
+ul {
+    padding-left: 0;
+}
+ul li {
+    list-style-type: none;
+}
+.title-box-manage {
+    margin-bottom: 0;
+}
+
