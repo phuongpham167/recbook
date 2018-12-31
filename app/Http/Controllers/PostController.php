@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Contact;
-use App\Http\Requests\CreateContactRequest;
+use App\Post;
 use App\Menu;
+use App\RealEstate;
 use App\ReCategory;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -17,7 +17,7 @@ use App\Services\RangePriceService;
 use App\Services\ReTypeService;
 use App\Services\StreetService;
 
-class ContactController extends Controller
+class PostController extends Controller
 {
     protected $menuFE, $vipRealEstates, $web_id;
     protected $categories, $provinces, $districts, $streets, $directions, $projects;
@@ -67,30 +67,29 @@ class ContactController extends Controller
         $this->projects = $this->projectService->getListDropDown();
     }
 
-//    public function getContact()
-//    {
-//        return v('contact.contact', ['menuData' => $this->menuFE]);
-//    }
-
-    public function postContact(CreateContactRequest $request)
+    private function getVipRealEstates()
     {
-        $data   =   new Contact();
-        $data->name   =   $request->name;
-        $data->address   =   $request->address;
-        $data->mobile   =   $request->mobile;
-        $data->note   =   $request->note;
-        $data->email   =   $request->email;
-        $data->created_at   =   Carbon::now();
-        $data->save();
-        set_notice(trans('contact.add_success'), 'success');
-        return redirect()->back();
+        $query = RealEstate::select('id', 'title', 'slug', 'direction_id',
+            'area_of_premises', 'price', 'unit_id', 'is_vip', 'is_hot', 'post_date', 'images')
+            ->where('is_vip',  1)
+            ->where('is_hot', '<>', 1)
+            ->where('post_date', '<=', Carbon::now())
+            ->where('web_id', $this->web_id);
+
+//            ->where('vip_expire_at',  '<=', Carbon::now())
+//        $query = $this->checkRegisterDate($query);
+        $query->limit(30);
+        $results = $query->get();
+//        dd($results);
+        return $results;
     }
 
-    public function getContact()
-    {
+    public function list() {
+        $data = Post::all();
+
         $this->vipRealEstates = $this->getVipRealEstates();
 
-        return v('contact.contact', [
+        return v('post.post_list',compact('data'), [
             'vipRealEstates' => $this->vipRealEstates,
             'categories' => $this->categories,
             'provinces' => $this->provinces,
@@ -100,5 +99,24 @@ class ContactController extends Controller
             'projects' => $this->projects,
             'menuData' => $this->menuFE
         ]);
+    }
+
+    public function detail() {
+        $data = Post::find(\request('id'));
+
+        if(!empty($data)){
+            return v('post.post_detail',compact('data'), [
+                'vipRealEstates' => $this->vipRealEstates,
+                'categories' => $this->categories,
+                'provinces' => $this->provinces,
+                'districts' => $this->districts,
+                'streets' => $this->streets,
+                'directions' => $this->directions,
+                'projects' => $this->projects,
+                'menuData' => $this->menuFE
+            ]);
+        }
+
+        return redirect()->back();
     }
 }

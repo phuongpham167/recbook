@@ -31,8 +31,9 @@ Route::get('/danh-muc-bds/{tag}', ['as' => 'danh-muc-bds', 'uses' => 'PageContro
  * */
 
 Route::get('/tin/{slug}', ['as' => 'detail-real-estate', 'uses' => 'PageController@detailRealEstate']);
-
-Route::get('/lien-he', ['as' => 'contact', 'uses' => 'PageController@getContact']);
+Route::get('/bai-viet/danh-sach', ['as' => 'postlist', 'uses' => 'PostController@list']);
+Route::get('/danh-muc-{slug-danh-muc}/{slug-chi-tiet}', ['as' => 'postdetail', 'uses' => 'PostController@detail']);
+Route::get('/lien-he', ['as' => 'contact', 'uses' => 'ContactController@getContact']);
 Route::post('/lien-he', ['as' => 'post.contact', 'uses' => 'ContactController@postContact']);
 
 Route::get('/dang-nhap', ['as' => 'login', 'uses' => 'AuthenticateController@getLogin']);
