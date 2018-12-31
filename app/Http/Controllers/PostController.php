@@ -101,8 +101,8 @@ class PostController extends Controller
         ]);
     }
 
-    public function detail() {
-        $data = Post::find(\request('id'));
+    public function detail($slugdanhmuc, $slugchitiet) {
+        $data = Post::where('slugdanhmuc',$slugdanhmuc)->where('slugchitiet',$slugchitiet)->first();
 
         if(!empty($data)){
             return v('post.post_detail',compact('data'), [

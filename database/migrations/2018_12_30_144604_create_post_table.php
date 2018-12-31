@@ -19,9 +19,8 @@ class CreatePostTable extends Migration
             $table->integer('branch_id');
             $table->integer('web_id');
             $table->text('title');
-            $table->text('slugdanhmuc');
             $table->text('slugchitiet');
-            $table->integer('postcategory_id');
+            $table->integer('post_category_id');
             $table->text('content');
             $table->timestamps();
         });

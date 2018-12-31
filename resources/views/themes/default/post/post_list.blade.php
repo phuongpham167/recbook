@@ -5,54 +5,48 @@
 @endsection
 
 @section('title')
-    {{trans('users.info')}}
+    Danh sách bài viết
 @endsection
 
 @push('style')
-    <link rel="stylesheet" href="{{ asset('css/theme.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/news.css') }}"/>
 @endpush
 
 @section('content')
     @include(theme(TRUE).'.includes.header')
 
-    <div class="container-vina">
-        <div class="row subpage">
-
-            <!--Begin left-->
-            <div class="col-xs-12 col-md-9 left catland_page">
-
-                <!--Begin land_box-->
-                <div class="_box">
-
-
-                    <p class="title_box"><strong>{{trans('post.list')}}</strong></p>
-                    <div class="">
-
-                        <div class="news_page">
-                            @foreach($data as $item)
-                                <li><a href="{{ route('postdetail', ['slugdanhmuc' => $item->slugdanhmuc,'slugchitiet' => $item->slugchitiet . '?id=' . $item->id]) }}">{{$item->title}}</a></li>
-                            @endforeach
-
-                            {{--<div class="tags_news_page"><strong>Tags:</strong>--}}
-                                {{--<a href="/tim-kiem.htm?txtkeyword=B%E1%BA%A3ng+gi%C3%A1+qu%E1%BA%A3ng+c%C3%A1o+nh%C3%A0+%C4%91%E1%BA%A5t+ch%C3%ADnh+ch%E1%BB%A7">Bảng giá quảng cáo nhà đất chính chủ</a>, <a href="/tim-kiem.htm?txtkeyword=+qu%E1%BA%A3ng+c%C3%A1o+banner"> quảng cáo banner</a>, <a href="/tim-kiem.htm?txtkeyword=+nh%C3%A0+%C4%91%E1%BA%A5t+h%E1%BA%A3i+ph%C3%B2ng"> nhà đất hải phòng</a>--}}
-                            {{--</div>--}}
+    <div class="content-body">
+        <div class="container padding-top-30 padding-bottom-30">
+            <div class="row">
+                <div class="col-xs-12 col-md-9 list-content-wrap">
+                    <p class="title_box">
+                        <strong>
+                            Danh sách bài viết
+                        </strong>
+                    </p>
+                    @if(isset($isSearch) && $isSearch)
+                        <div>
+                            <p style="margin: 10px 0 20px 0; font-weight: bold;">Có <strong style="color: #e00;">80</strong> kết quả tìm kiếm cho từ khóa hoặc mã số tin: <strong style="color: #e00;">"{{\request('txtkeyword')}}"</strong></p>
                         </div>
+                    @endif
+                    <div class="row list-re-item" style="margin-left: -15px; margin-right: -15px;">
+                        @foreach($data as $item)
+                            <dl>
+                                <dt><a href="/tin-tuc/nhung-chuyen-ke-ve-sinh-nhat-bac-n225.htm"><img width="110" height="75" src="/images/news/1625images1163920_19_5_02.jpg" alt="Những chuyện kể về sinh nhật Bác"></a></dt>
+                                <dd>
+                                    <h3><a href="/tin-tuc/nhung-chuyen-ke-ve-sinh-nhat-bac-n225.htm">Những chuyện kể về sinh nhật Bác</a></h3>
+                                    <span class="info_news">Cập nhật: 19-05-2018 | <a href="/tin-tuc-l2.htm">Giới thiệu về Doanh nghiệp</a> | xem: 470</span>
+                                    <p class="tablet-lg"> <a href="/tin-tuc/nhung-chuyen-ke-ve-sinh-nhat-bac-n225.htm">Xem thêm</a></p>
+                                </dd>
+                            </dl>
+                        @endforeach
                     </div>
                 </div>
-                <!--End detail_land-->
-
-
+                <div class="col-xs-12 col-md-3">
+                    @include(theme(TRUE).'.includes.right-sidebar')
+                    @include(theme(TRUE).'.includes.vip-slide')
+                </div>
             </div>
-            <!--End left-->
-
-            <!--Begin right-->
-            <div class="col-xs-12 col-md-3">
-                @include(theme(TRUE).'.includes.right-sidebar')
-                @include(theme(TRUE).'.includes.vip-slide')
-            </div>
-            <!--End right-->
-
         </div>
     </div>
 
