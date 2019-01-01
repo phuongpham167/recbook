@@ -1,4 +1,7 @@
 <?php
+
+use App\WebsiteConfig;
+
 /**
  * Created by PhpStorm.
  * User: admin
@@ -89,4 +92,13 @@ function to_slug($str) {
     $str = preg_replace('/(^-+)/', '', $str);
     $str = preg_replace('/(-+$)/', '', $str);
     return $str;
+}
+
+function checkNeedApprove() {
+    $web_id = get_web_id();
+    $webConfig = WebsiteConfig::where('web_id', $web_id)->first();
+    if($webConfig && $webConfig->need_approve) {
+        return 1;
+    }
+    return 0;
 }

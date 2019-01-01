@@ -4,7 +4,22 @@
           href="{{asset('plugins/bootstrap-datetimepicker-master/build/css/bootstrap-datetimepicker.min.css')}}">
 @endpush
 
-<form class="form-horizontal" method="post">
+@if (!empty(session('message')))
+    <div class="alert alert-{{session('message.type')}} text-center">
+        {{session('message.message')}}
+    </div>
+@endif
+@if (!empty($errors) && count($errors) > 0)
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+<form class="form-horizontal" method="post" action="{{route('post.create-real-estate')}}">
     {{csrf_field()}}
     <div class="form-group">
         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.title')}} <span
@@ -28,12 +43,10 @@
         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.contactPhone')}} <span
                 class="text-red">*</span></label>
 
-        <div class="col-sm-10">
+        <div class="col-sm-4">
             <input type="text" class="form-control" id="contact_phone_number" name="contact_phone_number"
                    value="{{ old('contact_phone_number') }}"/>
         </div>
-    </div>
-    <div class="form-group">
         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.contactPerson')}} <span
                 class="text-red">*</span></label>
 
@@ -41,10 +54,13 @@
             <input type="text" class="form-control" id="contact_person" name="contact_person"
                    value="{{ old('contact_person') }}"/>
         </div>
+    </div>
+    <div class="form-group">
+
         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.contactAddress')}} <span
                 class="text-red">*</span></label>
 
-        <div class="col-sm-4">
+        <div class="col-sm-10">
             <input type="text" class="form-control" id="contact_address" name="contact_address"
                    value="{{ old('contact_address') }}"/>
         </div>
@@ -99,6 +115,13 @@
                 <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
             </select>
         </div>
+        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.street')}} <span
+                class="text-red">*</span></label>
+        <div class="col-sm-4">
+            <select class="form-control" id="street" name="street_id" value="{{ old('street_id') }}">
+                <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
+            </select>
+        </div>
     </div>
     <div class="form-group">
         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.address')}} <span
@@ -108,13 +131,13 @@
         </div>
     </div>
     <div class="form-group">
-        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.street')}} <span
-                class="text-red">*</span></label>
-        <div class="col-sm-4">
-            <select class="form-control" id="street" name="street_id" value="{{ old('street_id') }}">
-                <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
-            </select>
+        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.position')}}</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="position" value="{{ old('position') }}" placeholder="VD: gần chợ 200m,"/>
         </div>
+    </div>
+    <div class="form-group">
+
         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.direction')}} <span class="text-red">*</span></label>
         <div class="col-sm-4">
             <select class="form-control" id="direction" name="direction_id" value="{{ old('direction_id') }}">
@@ -169,25 +192,37 @@
         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.width')}}</label>
 
         <div class="col-sm-4">
-            <input type="text" class="form-control" name="width" value="{{ old('width') }}"/>
+            <input type="number" class="form-control" name="width" value="{{ old('width') }}"/>
         </div>
         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.length')}}</label>
 
         <div class="col-sm-4">
-            <input type="text" class="form-control" name="length" value="{{ old('length') }}"/>
+            <input type="number" class="form-control" name="length" value="{{ old('length') }}"/>
         </div>
     </div>
     <div class="form-group">
         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.bedroom')}}</label>
 
         <div class="col-sm-4">
-            <input type="text" class="form-control" name="bedroom" value="{{ old('bedroom') }}"/>
+            <input type="number" class="form-control" name="bedroom" value="{{ old('bedroom') }}"/>
+        </div>
+        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.living_room')}}</label>
+
+        <div class="col-sm-4">
+            <input type="number" class="form-control" name="living_room" value="{{ old('living_room') }}"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.wc')}}</label>
+
+        <div class="col-sm-4">
+            <input type="number" class="form-control" name="wc" value="{{ old('wc') }}"/>
         </div>
         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.areaOfPremises')}} <span
                 class="text-red">*</span></label>
 
         <div class="col-sm-4">
-            <input type="text" class="form-control" name="area_of_premises" value="{{ old('area_of_premises') }}"/>
+            <input type="number" class="form-control" name="area_of_premises" value="{{ old('area_of_premises') }}" step="0.01"/>
         </div>
     </div>
     <div class="form-group">
@@ -195,18 +230,18 @@
         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.areaOfUse')}}</label>
 
         <div class="col-sm-4">
-            <input type="text" class="form-control" name="area_of_use" value="{{ old('area_of_use') }}"/>
+            <input type="number" class="form-control" name="area_of_use" value="{{ old('area_of_use') }}" step="0.01"/>
         </div>
         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.floor')}}</label>
 
         <div class="col-sm-4">
-            <input type="text" class="form-control" name="floor" value="{{ old('floor') }}"/>
+            <input type="number" class="form-control" name="floor" value="{{ old('floor') }}"/>
         </div>
     </div>
     <div class="form-group">
         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.price')}}</label>
         <div class="col-sm-4">
-            <input type="text" class="form-control" name="price" value="{{ old('price') }}"/>
+            <input type="number" class="form-control" name="price" value="{{ old('price') }}" step="0.01"/>
         </div>
 
         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.unit')}}</label>
@@ -240,7 +275,7 @@
     <div class="form-group">
         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.postDate')}} <span
                 class="text-red">*</span></label>
-        <div class="col-sm-4">
+        <div class="col-sm-6">
             <div class='input-group date' id='post-date'>
                 <input type='text' class="form-control" name="post_date" value="{{ old('post_date') }}"/>
                 <span class="input-group-addon">
@@ -248,8 +283,11 @@
                                     </span>
             </div>
         </div>
-        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.expireDate')}}</label>
-        <div class="col-sm-4">
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.expireDate')}} <span
+                class="text-red">*</span></label>
+        <div class="col-sm-6">
             <div class='input-group date' id='expire-date'>
                 <input type='text' class="form-control" name="expire_date" value="{{ old('expire_date') }}"/>
                 <span class="input-group-addon">
@@ -301,9 +339,10 @@
 
         <div class="col-sm-4">
             <select class="form-control" id="is-private" name="is_private" value="{{ old('is_private') }}">
-                <option value="1">{{ trans('real-estate.isPrivateSelectText.public') }}</option>
-                <option value="2">{{ trans('real-estate.isPrivateSelectText.private') }}</option>
-                <option value="3">{{ trans('real-estate.isPrivateSelectText.privateInOwnWebsite') }}</option>
+                <option value="1">Đăng trên trang cá nhân</option>
+                <option value="2">Đăng trên web cá nhân</option>
+                <option value="3">Đăng trên web công ty</option>
+                <option value="4">Đăng trên web đã đăng ký</option>
             </select>
         </div>
     </div>
@@ -339,27 +378,27 @@
     <script src="{{asset('plugins/ckeditor-4/ckeditor.js')}}"></script>
     <script>
         $(function () {
-            $('#contact_phone_number').keyup(function () {
-                emptyContactInfo();
-
-                let phone = $(this).val();
-                if (phone.length > 9) {
-                    $.ajax({
-                        url: "/customer-by-phone/" + phone,
-                        method: 'GET',
-                        success: function (result) {
-                            console.log('success');
-                            console.log(result);
-                            if (!jQuery.isEmptyObject(result)) {
-                                $('#contact_person').val(result.name).prop('readonly', true);
-                                $('#contact_address').val(result.address).prop('readonly', true);
-                            } else {
-                                emptyContactInfo();
-                            }
-                        }
-                    });
-                }
-            });
+            // $('#contact_phone_number').keyup(function () {
+            //     emptyContactInfo();
+            //
+            //     let phone = $(this).val();
+            //     if (phone.length > 9) {
+            //         $.ajax({
+            //             url: "/customer-by-phone/" + phone,
+            //             method: 'GET',
+            //             success: function (result) {
+            //                 console.log('success');
+            //                 console.log(result);
+            //                 if (!jQuery.isEmptyObject(result)) {
+            //                     $('#contact_person').val(result.name).prop('readonly', true);
+            //                     $('#contact_address').val(result.address).prop('readonly', true);
+            //                 } else {
+            //                     emptyContactInfo();
+            //                 }
+            //             }
+            //         });
+            //     }
+            // });
 
             // init datetime picker
             $('#post-date').datetimepicker({

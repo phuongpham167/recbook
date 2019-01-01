@@ -18,12 +18,8 @@ class RealEstateService
     protected $web_id;
     public function __construct()
     {
-        $this->needApprove = 0;
+        $this->needApprove = checkNeedApprove();
         $this->web_id = get_web_id();
-        $webConfig = WebsiteConfig::where('web_id', $this->web_id)->first();
-        if($webConfig && $webConfig->need_approve) {
-            $this->needApprove = 1;
-        }
     }
 
     public function getList()
@@ -36,12 +32,6 @@ class RealEstateService
     public function store($input)
     {
         $slug = to_slug($input['title']);
-
-        $phone = $input['contact_phone_number'];
-        $contactPerson = $input['contact_person'];
-        $contactAddress = $input['contact_address'];
-
-        $customer = $this->checkCustomer($phone, $contactPerson, $contactAddress);
 
         $imagesVal = [];
         if (isset($input['images'])) {
@@ -70,15 +60,16 @@ class RealEstateService
             'title' => $input['title'],
             'slug' => $slug,
             'short_description' => $input['short_description'],
-            'contact_person' => $customer->name,
-            'contact_phone_number' => $customer->phone,
-            'contact_address' => $customer->address,
+            'contact_person' => $input['contact_person'],
+            'contact_phone_number' => $input['contact_phone_number'],
+            'contact_address' => $input['contact_address'],
             're_category_id' => $input['re_category_id'],
             're_type_id' => $input['re_type_id'],
             'province_id' => $input['province_id'],
             'district_id' => $input['district_id'],
             'ward_id' => $input['ward_id'],
             'address' => $input['address'],
+            'position' => $input['position'],
             'street_id' => $input['street_id'],
             'direction_id' => $input['direction_id'],
             'exhibit_id' => $input['exhibit_id'],
@@ -88,6 +79,8 @@ class RealEstateService
             'width' => $input['width'],
             'length' => $input['length'],
             'bedroom' => $input['bedroom'],
+            'living_room' => $input['living_room'],
+            'wc' => $input['wc'],
             'area_of_premises' => $input['area_of_premises'],
             'area_of_use' => $input['area_of_use'],
             'floor' => $input['floor'],
@@ -104,7 +97,6 @@ class RealEstateService
             'is_private' => $input['is_private'],
             'posted_by' => \Auth::user()->id,
             'updated_by' => \Auth::user()->id,
-            'customer_id' => $customer->id,
             'web_id' => $this->web_id,
             'approve' => $approve,
             'draft' => isset($input['add_draft']) ? 1 : 0,
@@ -123,11 +115,11 @@ class RealEstateService
     {
         $slug = to_slug($input['title']);
 
-        $phone = $input['contact_phone_number'];
-        $contactPerson = $input['contact_person'];
-        $contactAddress = $input['contact_address'];
-
-        $customer = $this->checkCustomer($phone, $contactPerson, $contactAddress);
+//        $phone = $input['contact_phone_number'];
+//        $contactPerson = $input['contact_person'];
+//        $contactAddress = $input['contact_address'];
+//
+//        $customer = $this->checkCustomer($phone, $contactPerson, $contactAddress);
 
         $imagesVal = [];
         if (isset($input['images'])) {
@@ -157,15 +149,16 @@ class RealEstateService
             $realEstate->title = $input['title'];
             $realEstate->slug = $slug;
             $realEstate->short_description = $input['short_description'];
-            $realEstate->contact_person = $customer->name;
-            $realEstate->contact_phone_number = $customer->phone;
-            $realEstate->contact_address = $customer->address;
+            $realEstate->contact_person = $input['contact_person'];
+            $realEstate->contact_phone_number = $input['contact_phone_number'];
+            $realEstate->contact_address = $input['contact_address'];
             $realEstate->re_category_id = $input['re_category_id'];
             $realEstate->re_type_id = $input['re_type_id'];
             $realEstate->province_id = $input['province_id'];
             $realEstate->district_id = $input['district_id'];
             $realEstate->ward_id = $input['ward_id'];
             $realEstate->address = $input['address'];
+            $realEstate->position = $input['position'];
             $realEstate->street_id = $input['street_id'];
             $realEstate->direction_id = $input['direction_id'];
             $realEstate->exhibit_id = $input['exhibit_id'];
@@ -175,6 +168,8 @@ class RealEstateService
             $realEstate->width = $input['width'];
             $realEstate->length = $input['length'];
             $realEstate->bedroom = $input['bedroom'];
+            $realEstate->living_room = $input['living_room'];
+            $realEstate->wc = $input['wc'];
             $realEstate->area_of_premises = $input['area_of_premises'];
             $realEstate->area_of_use = $input['area_of_use'];
             $realEstate->floor = $input['floor'];
@@ -190,7 +185,6 @@ class RealEstateService
             $realEstate->detail = $input['detail'];
             $realEstate->is_private = $input['is_private'];
             $realEstate->updated_by = \Auth::user()->id;
-            $realEstate->customer_id = $customer->id;
             $realEstate->web_id = $this->web_id;
             $realEstate->approved = $realEstate->draft ? 0 : ( $this->needApprove ? 0 : 1 );
 //            if (isset($input['add_draft'])) {
