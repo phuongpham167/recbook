@@ -19,6 +19,7 @@ class CreatePostTable extends Migration
             $table->integer('branch_id');
             $table->integer('web_id');
             $table->text('title');
+            $table->text('image');
             $table->text('slugchitiet');
             $table->integer('post_category_id');
             $table->text('content');

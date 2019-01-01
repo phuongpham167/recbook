@@ -107,11 +107,12 @@ function transaction_log($reason, $value, $type) {
     $data->save();
 }
 
-function text_limit($str,$limit=10)
+function text_limit($str,$limit=20)
 {
     if(stripos($str," ")){
         $ex_str = explode(" ",$str);
         if(count($ex_str)>$limit){
+            $str_s = null;
             for($i=0;$i<$limit;$i++){
                 $str_s.=$ex_str[$i]." ";
             }

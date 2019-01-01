@@ -54,7 +54,7 @@
     color: #888;
     display: block;
     padding-left: 15px;
-    background:url(time.png) 0px 2px no-repeat;
+    background:url(../images/time.png) 0px 2px no-repeat;
 }
 
 .list_news dl dd span.info_news a {
@@ -71,7 +71,7 @@
     display: inline-block;
     padding-right: 12px;
     font-size: 11px;
-    background:url(arrow.png) center right no-repeat;
+    background:url(../images/arrow.png) center right no-repeat;
 }
 
 /*--------------news_page---------------*/
@@ -90,7 +90,7 @@
     color:#999;
     font-style: italic;
     margin-bottom: 10px;
-    background:url(time.png) 0px 4px no-repeat;
+    background:url(../images/time.png) 0px 4px no-repeat;
     padding-left: 15px;
 }
 

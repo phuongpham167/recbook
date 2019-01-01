@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Post;
 use App\Menu;
+use App\PostCategory;
 use App\RealEstate;
 use App\ReCategory;
 use Carbon\Carbon;
@@ -84,6 +85,23 @@ class PostController extends Controller
         return $results;
     }
 
+    public function listCategory($slugdanhmuc) {
+        $data = PostCategory::where('slugdanhmuc',$slugdanhmuc)->get();
+
+        $this->vipRealEstates = $this->getVipRealEstates();
+
+        return v('post.postcategory_list',compact('data'), [
+            'vipRealEstates' => $this->vipRealEstates,
+            'categories' => $this->categories,
+            'provinces' => $this->provinces,
+            'districts' => $this->districts,
+            'streets' => $this->streets,
+            'directions' => $this->directions,
+            'projects' => $this->projects,
+            'menuData' => $this->menuFE
+        ]);
+    }
+
     public function list() {
         $data = Post::all();
 
@@ -101,8 +119,8 @@ class PostController extends Controller
         ]);
     }
 
-    public function detail($slugdanhmuc, $slugchitiet) {
-        $data = Post::where('slugdanhmuc',$slugdanhmuc)->where('slugchitiet',$slugchitiet)->first();
+    public function detail($slugchitiet) {
+        $data = Post::where('slugchitiet',$slugchitiet)->first();
 
         if(!empty($data)){
             return v('post.post_detail',compact('data'), [
