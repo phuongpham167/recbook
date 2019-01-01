@@ -78,7 +78,7 @@
 
 .news_page {padding: 15px 0;}
 .news_page a {color: #333;}
-
+.news_page input {max-width: 100%}
 .news_page > h1 {
     font-size: 18px;
     font-weight: 600;

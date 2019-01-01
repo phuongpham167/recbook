@@ -86,11 +86,13 @@ class PostController extends Controller
     }
 
     public function listCategory($slugdanhmuc) {
-        $data = PostCategory::where('slugdanhmuc',$slugdanhmuc)->get();
+        $id = PostCategory::where('slugdanhmuc',$slugdanhmuc)->first()->id;
+
+        $data = Post::where('post_category_id',$id)->get();
 
         $this->vipRealEstates = $this->getVipRealEstates();
 
-        return v('post.postcategory_list',compact('data'), [
+        return v('post.postcategory_list',compact('data','id'), [
             'vipRealEstates' => $this->vipRealEstates,
             'categories' => $this->categories,
             'provinces' => $this->provinces,

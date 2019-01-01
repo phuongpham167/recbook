@@ -1,11 +1,11 @@
 @extends('themes.default.layouts.app')
 
 @section('meta-description')
-    <meta name="description" content="{{trans('post.list')}}" >
+    <meta name="description" content="Dothigroup" >
 @endsection
 
 @section('title')
-    Danh sách bài viết
+    Dothigroup
 @endsection
 
 @push('style')
@@ -22,7 +22,7 @@
                 <div class="col-xs-12 col-md-9 list-content-wrap">
                     <p class="title_box">
                         <strong>
-                            Danh sách bài viết
+                            {{\App\PostCategory::find($id)->name}}
                         </strong>
                     </p>
                     <div class="list_news">
