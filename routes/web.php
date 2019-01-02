@@ -56,6 +56,8 @@ Route::group(['middleware'=>'auth'], function(){
     Route::get('/lich-su-giao-dich', ['as' => 'transaction', 'uses' => 'AuthenticateController@transactionList']);
     Route::get('/lich-su-giao-dich/data', ['as' => 'transactionData', 'uses' => 'AuthenticateController@dataTran']);
 
+    Route::get('/nap-tien', ['as' => 'recharge', 'uses' => 'TransactionController@recharge']);
+
     Route::group(['prefix'=>'bat-dong-san'], function(){
         Route::get('/{filter?}', ['as' => 'realEstateList', 'uses' => 'RealEstateController@list'])->where('filter', 'tin-rao-het-han|tin-rao-cho-duyet|tin-rao-nhap|tin-rao-da-xoa');
         Route::get('/data',['as' => 'realEstateData', 'uses' => 'RealEstateController@data']);
