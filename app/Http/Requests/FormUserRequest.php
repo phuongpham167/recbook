@@ -28,8 +28,8 @@ class FormUserRequest extends FormRequest
             'name'  =>  'required',
             'phone'  =>  'required',
             'address'  =>  'required',
-            'password'  =>  'required',
-            'repassword'  =>  'required',
+            'password'  =>  'required|min:6',
+            'repassword'  =>  'required|min:6',
             'company_name'  =>  'required',
             'taxcode'  =>  'required',
             'email' =>   [
