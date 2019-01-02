@@ -11,6 +11,7 @@ class RealEstate extends Model
     protected $dates = ['deleted_at'];
 
     const same_search = 'SSO', related_item = 'RI';
+    const USER_PAGE = 1, USER_WEB = 2, COMPANY_WEB = 3, REG_WEB = 4;
 
     protected $table = 'real_estates';
 

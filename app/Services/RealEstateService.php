@@ -56,6 +56,10 @@ class RealEstateService
 
         $approve = isset($input['add_draft']) ? 0 : ($this->needApprove ? 0 : 1);
 
+        if ($input['is_private'] == RealEstate::USER_PAGE || $input['is_private'] == RealEstate::USER_WEB) {
+            $approve = 1;
+        }
+
         $realEstate = new RealEstate([
             'title' => $input['title'],
             'slug' => $slug,
@@ -143,6 +147,11 @@ class RealEstateService
 
         $realEstate = RealEstate::find($input['id']);
         if ($realEstate) {
+            $approve = $realEstate->draft ? 0 : ( $this->needApprove ? 0 : 1 );
+            if ($input['is_private'] == RealEstate::USER_PAGE || $input['is_private'] == RealEstate::USER_WEB) {
+                $approve = 1;
+            }
+
             if (!$realEstate->code) {
                 $realEstate->code = config('real-estate.codePrefix') . '-' . $realEstate->id;
             }
@@ -186,7 +195,7 @@ class RealEstateService
             $realEstate->is_private = $input['is_private'];
             $realEstate->updated_by = \Auth::user()->id;
             $realEstate->web_id = $this->web_id;
-            $realEstate->approved = $realEstate->draft ? 0 : ( $this->needApprove ? 0 : 1 );
+            $realEstate->approved = $approve;
 //            if (isset($input['add_draft'])) {
 //                $realEstate->approved = 0;
 //                $realEstate->draft = 1;
@@ -221,8 +230,12 @@ class RealEstateService
 
     public function publish($data)
     {
+        $approve = $this->needApprove ? 0 : 1;
+        if ($data->is_private == RealEstate::USER_PAGE || $data->is_private == RealEstate::USER_WEB) {
+            $approve = 1;
+        }
         $data->draft = 0;
-        $data->approved = $this->needApprove ? 0 : 1;
+        $data->approved = $approve;
         $data->save();
     }
 

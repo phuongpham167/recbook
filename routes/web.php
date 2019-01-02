@@ -75,6 +75,10 @@ Route::group(['middleware'=>'auth'], function(){
     Route::get('/tin-nhan', ['as' => 'chat', 'uses' => 'PageController@getChat']);
     Route::resource('conversation','ConversationController');
     Route::resource('message','MessageController');
+    /*
+     * friend route
+     * */
+    Route::get('them-ban-be/{id}', ['as'=> 'friend.request', 'uses' => 'FriendController@friendRequest']);
 });
 
 /*

@@ -593,6 +593,27 @@ class PageController extends Controller
                 $constructionTypes = $this->constructionTypeService->getListDropDown();
                 $units = $this->unitService->getListDropDown();
 
+                /*
+                 * get all post of user
+                 * */
+                $query = RealEstate::select('id', 'title', 'slug', 'code', 're_category_id', 'contact_phone_number', 'district_id', 'floor', 'position', 'bedroom', 'living_room',
+                    'wc', 'lat', 'long', 'area_of_premises', 'area_of_use', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date');
+                $query1 = clone $query;
+                $query1->where('posted_by', $id);
+                if (!Auth::user() || (Auth::user() && Auth::user()->id !== intval($id))) {
+                    $query1->where('draft', 0);
+                    $query1->where('approved', 1);
+                }
+                $listRe = $query1->get();
+
+                /*
+                 * get posted real estate
+                 * */
+                $query2 = clone $query;
+                $query2->where('posted_by', $id);
+                $query2->where('approved', 1);
+                $listPostedRe = $query2->get();
+
                 return v('users.user-info', [
                     'data' => $user,
                     'vipRealEstates' => $this->vipRealEstates,
@@ -607,6 +628,8 @@ class PageController extends Controller
                     'constructionTypes' => $constructionTypes,
                     'units' => $units,
                     'projects' => $this->projects,
+                    'listRe' => $listRe,
+                    'listPostedRe' => $listPostedRe,
                     'menuData' => $this->menuFE
                 ]);
             }
