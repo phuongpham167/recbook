@@ -551,7 +551,7 @@ namespace App\Services;
 					$nl_result->error_message = $this->GetErrorMessage($nl_result->error_code);
 				}
 				else{
-                    $nl_result->error_message = $error;
+                    return $error;
                 }
 				return $nl_result;
 			
