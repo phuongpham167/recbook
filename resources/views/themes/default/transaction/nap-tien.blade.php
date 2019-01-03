@@ -106,9 +106,9 @@
                         <em><span style="color:#ff5a00;font-weight:bold;text-decoration:underline;">Lưu ý:</span> Điền đầy đủ các thông tin sau</em>
 
                         <dl>
-                            <dt>Số tiền thanh toán: <span class="required">*</span></dt>
+                            <dt>Số tiền nạp: <span class="required">*</span></dt>
                             <dd>
-                                <input type="text" name="total_amount" class="form-control" required placeholder="Số tiền thanh toán" />
+                                <input type="text" name="total_amount" class="form-control" required placeholder="Số tiền nạp" />
                             </dd>
                         </dl>
 

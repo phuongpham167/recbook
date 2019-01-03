@@ -26,6 +26,7 @@
             @endif
             <li><a href="/doi-mat-khau"><i class="fa fa-angle-double-right"></i> Thay đổi mật khẩu</a></li>
             <li><a href="/thong-tin-thanh-vien"><i class="fa fa-angle-double-right"></i> Thông tin thành viên</a></li>
+            <li><a href="/nap-tien"><i class="fa fa-credit-card"></i> Nạp tiền</a></li>
             <li><a href="/dang-xuat"><i class="fa fa-angle-double-right"></i> Thoát khỏi hệ thống</a></li>
         </ul>
     </div>
