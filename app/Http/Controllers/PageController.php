@@ -2,19 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Friend;
 use App\MappingMenuFE;
 use App\Menu;
 use App\RealEstate;
 use App\ReCategory;
 use App\ReType;
+use App\Services\BlockService;
+use App\Services\ConstructionTypeService;
 use App\Services\DirectionService;
 use App\Services\DistrictService;
+use App\Services\ExhibitService;
 use App\Services\PageService;
 use App\Services\ProjectService;
 use App\Services\ProvinceService;
 use App\Services\RangePriceService;
+use App\Services\ReCategoryService;
 use App\Services\ReTypeService;
 use App\Services\StreetService;
+use App\Services\UnitService;
+use App\Services\WardService;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -27,23 +34,35 @@ class PageController extends Controller
     protected $categories, $provinces, $districts, $streets, $directions, $projects;
 
     protected $service;
+    protected $reCategoryService;
     protected $reTypeService;
     protected $rangePriceService;
     protected $provinceService;
     protected $districtService;
+    protected $wardService;
     protected $streetService;
     protected $directionService;
+    protected $exhibitService;
     protected $projectService;
+    protected $blockService;
+    protected $constructionTypeService;
+    protected $unitService;
 
     public function __construct(
         PageService $pageService,
+        ReCategoryService $reCategoryService,
         ReTypeService $reTypeService,
         ProvinceService $provinceService,
         DistrictService $districtService,
+        WardService $wardService,
         StreetService $streetService,
         DirectionService $directionService,
-        RangePriceService $rangePriceService,
-        ProjectService $projectService
+        ExhibitService $exhibitService,
+        ProjectService $projectService,
+        BlockService $blockService,
+        ConstructionTypeService $constructionTypeService,
+        UnitService $unitService,
+        RangePriceService $rangePriceService
     )
     {
         $this->web_id = get_web_id();
@@ -51,13 +70,19 @@ class PageController extends Controller
         $this->menuFE = Menu::where('web_id', $this->web_id)->where('menu_type', $mmfe)->first();
 
         $this->service = $pageService;
+        $this->reCategoryService = $reCategoryService;
         $this->reTypeService = $reTypeService;
         $this->provinceService = $provinceService;
         $this->districtService = $districtService;
+        $this->wardService = $wardService;
         $this->streetService = $streetService;
         $this->directionService = $directionService;
-        $this->rangePriceService = $rangePriceService;
+        $this->exhibitService = $exhibitService;
         $this->projectService = $projectService;
+        $this->blockService = $blockService;
+        $this->constructionTypeService = $constructionTypeService;
+        $this->unitService = $unitService;
+        $this->rangePriceService = $rangePriceService;
 
         $this->categories = ReCategory::select('id', 'name', 'slug')
             ->orderBy('id', 'asc')
@@ -537,6 +562,72 @@ class PageController extends Controller
             'projects' => $this->projects,
             'menuData' => $this->menuFE
         ]);
+    }
+
+    public function getUserInfo($id)
+    {
+        try {
+            $user = User::find($id);
+            if ($user) {
+                $reCategories = $this->reCategoryService->getListDropDown();
+                $provinces = $this->provinceService->getListDropDown();
+                $streets = $this->streetService->getListDropDown();
+                $directions = $this->directionService->getListDropDown();
+                $exhibits = $this->exhibitService->getListDropDown();
+                $blocks = $this->blockService->getListDropDown();
+                $constructionTypes = $this->constructionTypeService->getListDropDown();
+                $units = $this->unitService->getListDropDown();
+
+                /*
+                 * get all post of user
+                 * */
+                $query = RealEstate::select('id', 'title', 'slug', 'code', 're_category_id', 'contact_phone_number', 'district_id', 'floor', 'position', 'bedroom', 'living_room',
+                    'wc', 'lat', 'long', 'area_of_premises', 'area_of_use', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date');
+                $query1 = clone $query;
+                $query1->where('posted_by', $id);
+                if (!Auth::user() || (Auth::user() && Auth::user()->id !== intval($id))) {
+                    $query1->where('draft', 0);
+                    $query1->where('approved', 1);
+                }
+                $listRe = $query1->get();
+
+                /*
+                 * get posted real estate
+                 * */
+                $query2 = clone $query;
+                $query2->where('posted_by', $id);
+                $query2->where('draft', 0);
+                $query2->where('approved', 1);
+                $listPostedRe = $query2->get();
+
+                /*
+                 * get all friend
+                 * */
+                $listFriends = Friend::where('user1', $id)->orWhere('user2', $id)->where('confirmed', 1)->get();
+
+                return v('users.user-info', [
+                    'data' => $user,
+                    'vipRealEstates' => $this->vipRealEstates,
+                    'categories' => $this->categories,
+                    'reCategories' => $reCategories,
+                    'provinces' => $this->provinces,
+                    'districts' => $this->districts,
+                    'streets' => $this->streets,
+                    'directions' => $this->directions,
+                    'exhibits' => $exhibits,
+                    'blocks' => $blocks,
+                    'constructionTypes' => $constructionTypes,
+                    'units' => $units,
+                    'projects' => $this->projects,
+                    'listRe' => $listRe,
+                    'listPostedRe' => $listPostedRe,
+                    'listFriends' => $listFriends,
+                    'menuData' => $this->menuFE
+                ]);
+            }
+        } catch (\Exception $exception) {
+            \Log::info($exception->getMessage());
+        }
     }
 
     private function getVipRealEstates()

@@ -39,9 +39,9 @@
     <div class="container">
         <div class="row subpage">
 
-            <!--Begin right-->
-        @include(theme(TRUE).'.includes.left-menu')
-        <!--End right-->
+        <div class="col-xs-3 left">
+            @include(theme(TRUE).'.includes.left-menu')
+        </div>
 
             <!--Begin left-->
             <div class="col-xs-9 right">

@@ -1,4 +1,8 @@
 <?php
+
+use App\Friend;
+use App\WebsiteConfig;
+
 /**
  * Created by PhpStorm.
  * User: admin
@@ -91,6 +95,15 @@ function to_slug($str) {
     return $str;
 }
 
+function checkNeedApprove()
+{
+    $web_id = get_web_id();
+    $webConfig = WebsiteConfig::where('web_id', $web_id)->first();
+    if ($webConfig && $webConfig->need_approve) {
+        return 1;
+    }
+    return 0;
+}
 function transaction_log($reason, $value, $type) {
     $data = new \App\TransactionLog();
     if(!auth()->check()) {
@@ -123,4 +136,15 @@ function text_limit($str,$limit=20)
     }else{
         return $str;
     }
+}
+
+function isFriend($id1, $id2)
+{
+    $checkFriend1 = Friend::where('user1', $id1)->where('user2', $id2)->count();
+    $checkFriend2 = Friend::where('user1', $id2)->where('user2', $id1)->count();
+
+    if ($checkFriend1 != 0 || $checkFriend2 != 0) {
+        return true;
+    }
+    return false;
 }

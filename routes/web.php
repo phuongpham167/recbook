@@ -37,6 +37,11 @@ Route::get('/bai-viet/{slugchitiet}', ['as' => 'postdetail', 'uses' => 'PostCont
 Route::get('/lien-he', ['as' => 'contact', 'uses' => 'ContactController@getContact']);
 Route::post('/lien-he', ['as' => 'post.contact', 'uses' => 'ContactController@postContact']);
 
+/*
+ * route thong tin thanh vien
+ * */
+Route::get('/thong-tin-thanh-vien/{id}', ['as' => 'user.info', 'uses' => 'PageController@getUserInfo']);
+
 Route::get('/dang-nhap', ['as' => 'login', 'uses' => 'AuthenticateController@getLogin']);
 Route::post('/dang-nhap', ['as' => 'post.login', 'uses' => 'AuthenticateController@postLogin']);
 Route::get('/dang-xuat', ['as' => 'logout', 'uses' => 'AuthenticateController@getLogout']);
@@ -78,6 +83,11 @@ Route::group(['middleware'=>'auth'], function(){
     Route::get('/tin-nhan', ['as' => 'chat', 'uses' => 'PageController@getChat']);
     Route::resource('conversation','ConversationController');
     Route::resource('message','MessageController');
+    /*
+     * friend route
+     * */
+    Route::get('them-ban-be/{id}', ['as'=> 'friend.request', 'uses' => 'FriendController@friendRequest']);
+    Route::get('xac-nhan-ban-be/{id}', ['as'=> 'friend.confirm.request', 'uses' => 'FriendController@confirmFriendRequest']);
 });
 
 /*
