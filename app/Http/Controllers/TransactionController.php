@@ -35,7 +35,7 @@ class TransactionController extends Controller
         $bc = \request('bankcode');
         $buyer_email = auth()->user()->email;
         $buyer_fullname = auth()->user()->name;
-        $buyer_mobile = auth()->user()->phone;
+        $buyer_mobile = '0123456789';
 
 //        echo $bc;
 //        exit();
