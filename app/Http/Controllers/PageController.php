@@ -579,6 +579,10 @@ class PageController extends Controller
                 $units = $this->unitService->getListDropDown();
 
                 /*
+                 * TODO: get list districts by user province
+                 * */
+
+                /*
                  * get all post of user
                  * */
                 $query = RealEstate::select('id', 'title', 'slug', 'code', 're_category_id', 'contact_phone_number', 'district_id', 'floor', 'position', 'bedroom', 'living_room',
