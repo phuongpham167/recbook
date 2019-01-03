@@ -19,8 +19,9 @@
     <div class="container-vina">
         <div class="row subpage">
 
-            <!--Begin right-->
-        @include(theme(TRUE).'.includes.left-menu')
+            <div class="col-xs-3 left">
+                @include(theme(TRUE).'.includes.left-menu')
+            </div>
         <!--End right-->
 
             <!--Begin left-->

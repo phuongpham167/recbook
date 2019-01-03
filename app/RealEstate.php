@@ -11,6 +11,7 @@ class RealEstate extends Model
     protected $dates = ['deleted_at'];
 
     const same_search = 'SSO', related_item = 'RI';
+    const USER_PAGE = 1, USER_WEB = 2, COMPANY_WEB = 3, REG_WEB = 4;
 
     protected $table = 'real_estates';
 
@@ -26,6 +27,7 @@ class RealEstate extends Model
         'district_id',
         'ward_id',
         'address',
+        'position',
         'street_id',
         'direction_id',
         'exhibit_id',
@@ -35,6 +37,8 @@ class RealEstate extends Model
         'width',
         'length',
         'bedroom',
+        'living_room',
+        'wc',
         'area_of_premises',
         'area_of_use',
         'floor',

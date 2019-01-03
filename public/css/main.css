@@ -56,6 +56,10 @@ button {
   color: red;
 }
 
+.bx-wrapper .bx-controls-direction a {
+  z-index: 999;
+}
+
 /*------------ Header ------------*/
 
 .top_page {
