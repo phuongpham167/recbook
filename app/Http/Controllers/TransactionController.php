@@ -284,7 +284,7 @@ class TransactionController extends Controller
         $return_url =asset('/nap-tien/ket-qua');
         $cancel_url =urlencode(asset('nap-tien/huy-bo?orderid=').$order_code) ;
 
-        $buyer_address ='';
+        $buyer_address ='hp';
 
 
 
