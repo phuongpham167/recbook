@@ -25,11 +25,11 @@ class TransactionController extends Controller
 
     public function postRecharge() {
         $nlcheckout= new NL_CheckOutV3(env('MERCHANT_ID'),env('MERCHANT_PASS'),env('RECEIVER'),env('URL_API'));
-        $total_amount=$_POST['total_amount'];
+        $total_amount=\request('total_amount');
 
         $array_items[0]= array('item_name1' => 'nạp tiền',
             'item_quantity1' => 1,
-            'item_amount1' => \request('total_amount'),
+            'item_amount1' => $total_amount,
             'item_url1' => asset(''));
 
         $bc = \request('bankcode');

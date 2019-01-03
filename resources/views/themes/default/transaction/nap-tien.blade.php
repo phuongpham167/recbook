@@ -124,12 +124,6 @@
                                 <input type="text" name="buyer_email" class="form-control" value="{{auth()->user()->email}}" disabled />
                             </dd>
                         </dl>
-                        <dl>
-                            <dt>Số điện thoại: <span class="required">*</span></dt>
-                            <dd>
-                                <input type="text" name="buyer_mobile" class="form-control" value="{{auth()->user()->phone}}" disabled />
-                            </dd>
-                        </dl>
                         <div class="panel-group" id="accordion">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
