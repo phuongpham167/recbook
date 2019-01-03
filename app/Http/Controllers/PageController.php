@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Friend;
 use App\MappingMenuFE;
 use App\Menu;
 use App\RealEstate;
@@ -595,8 +596,14 @@ class PageController extends Controller
                  * */
                 $query2 = clone $query;
                 $query2->where('posted_by', $id);
+                $query2->where('draft', 0);
                 $query2->where('approved', 1);
                 $listPostedRe = $query2->get();
+
+                /*
+                 * get all friend
+                 * */
+                $listFriends = Friend::where('user1', $id)->orWhere('user2', $id)->where('confirmed', 1)->get();
 
                 return v('users.user-info', [
                     'data' => $user,
@@ -614,6 +621,7 @@ class PageController extends Controller
                     'projects' => $this->projects,
                     'listRe' => $listRe,
                     'listPostedRe' => $listPostedRe,
+                    'listFriends' => $listFriends,
                     'menuData' => $this->menuFE
                 ]);
             }

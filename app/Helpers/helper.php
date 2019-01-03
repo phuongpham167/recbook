@@ -1,5 +1,6 @@
 <?php
 
+use App\Friend;
 use App\WebsiteConfig;
 
 /**
@@ -135,4 +136,15 @@ function text_limit($str,$limit=20)
     }else{
         return $str;
     }
+}
+
+function isFriend($id1, $id2)
+{
+    $checkFriend1 = Friend::where('user1', $id1)->where('user2', $id2)->count();
+    $checkFriend2 = Friend::where('user1', $id2)->where('user2', $id1)->count();
+
+    if ($checkFriend1 != 0 || $checkFriend2 != 0) {
+        return true;
+    }
+    return false;
 }

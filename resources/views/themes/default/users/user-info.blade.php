@@ -14,6 +14,9 @@
     <link rel="stylesheet" href="{{asset('common-css/magnific-popup.css')}}" />
     <link rel="stylesheet" href="{{ asset('css/user-info.css') }}"/>
 @endpush
+@php
+//dd($listFriends);
+@endphp
 
 @section('content')
     {{-- Include Header --}}
@@ -24,6 +27,12 @@
                 <div class="col-xs-12 col-md-12 detail-content-wrap">
                     <p class="title_box"><strong>{{ $data->userinfo->full_name }}</strong>
                     </p>
+                    @php
+                        $isFriend = false;
+                        if(\Auth::user() && \Auth::user()->id  !== $data->id) {
+                            $isFriend = isFriend(\Auth::user()->id, $data->id);
+                        }
+                    @endphp
                     <div class="user-info">
                         <div class="row">
                             <div class="col-xs-12 col-md-3">
@@ -36,7 +45,7 @@
                                 <p class=" text-center">Đánh giá: 87/100 điểm</p>
                                 <p class="title-short-section">Giới thiệu</p>
                                 <p class="user-desc">{{ $data->userinfo->description }}</p>
-                                @if (\Auth::user() && \Auth::user()->id  == $data->id)
+                                @if ( (\Auth::user() && \Auth::user()->id  == $data->id) || $isFriend)
                                 <p class="title-short-section">Tin đã đăng</p>
                                 <div class="posted-re border-block">
                                         @foreach($listPostedRe as $re)
@@ -44,13 +53,13 @@
                                         @endforeach
                                 </div>
                                 @endif
-                                @if (\Auth::user() && \Auth::user()->id  == $data->id)
+                                @if ((\Auth::user() && \Auth::user()->id  == $data->id))
                                     @include(theme(TRUE).'.includes.left-menu')
                                 @endif
-                                @if (\Auth::user() && \Auth::user()->id  == $data->id)
+                                @if ((\Auth::user() && \Auth::user()->id  == $data->id)|| $isFriend)
                                 <p class="title-short-section">Dự án giao dịch thành công</p>
                                 <div class="success-project border-block">
-                                        <a href="#">Bán nhà số 44/54 Bạch Đằng</a>
+                                        {{--<a href="#">Bán nhà số 44/54 Bạch Đằng</a>--}}
                                 </div>
                                 @endif
                             </div>
@@ -94,7 +103,7 @@
                                                         @endif
                                                     @elseif($checkSendFRequest2)
                                                         @if(!$checkSendFRequest2->confirmed)
-                                                            <a class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Chấp nhận lời mời</a>
+                                                            <a href="{{route('friend.confirm.request', [$checkSendFRequest2->id])}}" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Chấp nhận lời mời</a>
                                                         @else
                                                             @if (\Auth::user()->group->chat_permission && $data->group->chat_permission)
                                                                 <form role="form" action="{{ route('conversation.store') }}" method="post" accept-charset="UTF-8">
@@ -113,7 +122,7 @@
                                     </div>
                                 </div>
                                 <div class="row list-re">
-                                    @if(\Auth::user() && \Auth::user()->id == $data->id)
+                                    @if((\Auth::user() && \Auth::user()->id == $data->id)|| $isFriend)
                                         @foreach($listRe as $re)
                                             <div class="col-xs-12">
                                                 <div class="panel panel-default">
@@ -228,17 +237,27 @@
                                 </div>
                             </div>
                             <div class="col-xs-12 col-md-3">
-                                @if (\Auth::user() && \Auth::user()->id  == $data->id)
+                                @if ((\Auth::user() && \Auth::user()->id  == $data->id)|| $isFriend)
                                 <p class="title-short-section">Bạn bè</p>
                                 <div class="list-friend border-block">
-                                        <a href="#">Thang Pham</a>
+                                    @foreach($listFriends as $friend)
+                                        @php
+                                        $f = $friend->fuser1;
+                                        if($friend->user1 == $data->id){
+                                            $f = $friend->fuser2;
+                                        }
+                                        @endphp
+                                        <p>
+                                            <a href="{{ route('user.info', [$f->id])}} ">{{$f->userinfo->full_name}}</a>
+                                        </p>
+                                    @endforeach
                                 </div>
                                 @endif
-                                @if (\Auth::user() && \Auth::user()->id  == $data->id)
+                                @if ((\Auth::user() && \Auth::user()->id  == $data->id)|| $isFriend)
                                 <p class="title-short-section">Dự án tham gia</p>
                                 <div class="joined-project border-block">
 
-                                        <a href="#">Bán nhà số 34/65 Bạch Đằng</a>
+                                        {{--<a href="#">Bán nhà số 34/65 Bạch Đằng</a>--}}
                                 </div>
                                 @endif
                             </div>

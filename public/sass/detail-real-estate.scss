@@ -80,7 +80,12 @@ ul {
             }
         }
     }
-
+    .verified {
+        color: #0084ff;
+    }
+    .none-verified {
+        color: #ccc;
+    }
 }
 
 .short-section {

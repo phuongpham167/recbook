@@ -31,4 +31,14 @@ class FriendController extends Controller
         }
         return redirect()->back();
     }
+    public function confirmFriendRequest($id)
+    {
+        $friendRequest = Friend::find($id);
+        if ($friendRequest) {
+            $friendRequest->confirmed = 1;
+            $friendRequest->save();
+
+        }
+        return redirect()->back();
+    }
 }

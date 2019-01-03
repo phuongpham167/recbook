@@ -87,6 +87,7 @@ Route::group(['middleware'=>'auth'], function(){
      * friend route
      * */
     Route::get('them-ban-be/{id}', ['as'=> 'friend.request', 'uses' => 'FriendController@friendRequest']);
+    Route::get('xac-nhan-ban-be/{id}', ['as'=> 'friend.confirm.request', 'uses' => 'FriendController@confirmFriendRequest']);
 });
 
 /*

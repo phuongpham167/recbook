@@ -24,7 +24,7 @@
                     <p class="title_box"><strong>{{ $data->reCategory->name }} <i class="fa fa-angle-right"></i> {{ $data->reType->name }} (1416)</strong>
                     </p>
                     <div class="detail-content">
-                        <h1 class="title">{{$data->title}}</h1>
+                        <h1 class="title">{{$data->title}} {!!$data->verified ? '<i class="fa fa-check-circle verified" title="Tin đã xác thực"></i>' : '<i class="fa fa-question-circle none-verified" aria-hidden="true" title="Tin chưa xác thực"></i>'!!}</h1>
                         <div class="imgs_land_box slide-images row">
                             <div class="col-xs-10 slide-images__left">
                                 <ul class="land_slider">
@@ -151,7 +151,7 @@
                                 </div>
                             </div>
                         </div>
-                        <h2 class="title-second">{{$data->title}}</h2>
+                        <h2 class="title-second">{{$data->title}} {!!$data->verified ? '<i class="fa fa-check-circle verified" title="Tin đã xác thực"></i>' : '<i class="fa fa-question-circle none-verified" aria-hidden="true" title="Tin chưa xác thực"></i>'!!}</h2>
                         <div class="brief_detail row">
                             <div class="col-xs-12 col-sm-8 brief_detail__left">
                                 <div class="row">
