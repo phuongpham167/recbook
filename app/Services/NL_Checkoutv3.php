@@ -544,7 +544,7 @@ namespace App\Services;
 				$result = curl_exec($ch);
 				$status = curl_getinfo($ch, CURLINFO_HTTP_CODE); 
 				$error = curl_error($ch);
-        $nl_result  =   \stdClass::class;
+        $nl_result  =   (object)[];
 				if ($result != '' && $status==200){						
 					$xml_result = str_replace('&','&amp;',(string)$result);
 					$nl_result  = simplexml_load_string($xml_result);					
