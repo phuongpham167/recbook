@@ -1,7 +1,7 @@
 @extends('themes.default.layouts.app')
 
 @section('meta-description')
-    <meta name="description" content="Thông tin thành viên" >
+    <meta name="description" content="{{trans('page.thongtinlienhe')}}" >
 @endsection
 
 @section('title')
@@ -26,7 +26,7 @@
                 <div class="_box">
 
 
-                    <p class="title_box"><strong>Thông tin liên hệ</strong></p>
+                    <p class="title_box"><strong>{{trans('page.thongtinlienhe')}}</strong></p>
                     <div class="">
                         <div id="map" style="width:100%;height:200px;">
                             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3728.2557187545517!2d106.6647693154282!3d20.861740686089085!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x314a7a5cfc79bf97%3A0x1f13e7ca9820fcbc!2zMTc3IELhuqFjaCDEkOG6sW5nLCBUaMaw4bujbmcgTMO9LCBI4buTbmcgQsOgbmcsIEjhuqNpIFBow7JuZywgVmnhu4d0IE5hbQ!5e0!3m2!1svi!2s!4v1542071768551" width="100%" height="200" frameborder="0" style="border:0" allowfullscreen></iframe>

@@ -69,4 +69,8 @@ return [
     'smart_search_title' => 'Tìm kiếm nhà đất',
     'tin_hot_box_title' => 'Tin nổi bật',
     'tin_vip_box_title' => 'TIN NHÀ ĐẤT VIP',
+    'tranlist' => 'Lịch sử giao dịch',
+    'thongtinthanhvien' => 'Thông tin thành viên',
+    'thongtinlienhe' => 'Thông tin liên hệ',
+    'diendan_hoidap' => 'Diễn đàn & hỏi đáp',
 ];

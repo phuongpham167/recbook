@@ -1,6 +1,6 @@
 <!--begin _box-->
 <div class="_boxM _manage_list">
-    <p class="title-box-manage"><i class="fa fa-list"></i> Danh mục quản lý</p>
+    <p><i class="fa fa-list"></i> Danh mục quản lý</p>
     <div>
         <ul>
             <li><a href="/bat-dong-san/tao-moi"><i class="fa fa-angle-double-right"></i> Đăng mới tin rao</a></li>
@@ -9,6 +9,7 @@
             <li><a href="/bat-dong-san/tin-rao-cho-duyet"><i class="fa fa-angle-double-right"></i> Tin rao chờ duyệt</a> <span>({{\App\RealEstate::where('approved','0')->where('draft', 0)->where('posted_by', \Auth::user()->id)->count()}})</span></li>
             <li><a href="/bat-dong-san/tin-rao-nhap"><i class="fa fa-angle-double-right"></i> Tin rao nháp</a> <span>({{\App\RealEstate::where('draft','1')->where('posted_by', \Auth::user()->id)->count()}})</span></li>
             <li><a href="/bat-dong-san/tin-rao-da-xoa"><i class="fa fa-angle-double-right"></i> Tin rao đã xóa</a> <span>({{\App\RealEstate::onlyTrashed()->where('posted_by', \Auth::user()->id)->count()}})</span></li>
+            <li><a href="/lich-su-giao-dich"><i class="fa fa-angle-double-right"></i> Lịch sử giao dịch</a></li>
         </ul>
     </div>
 </div>

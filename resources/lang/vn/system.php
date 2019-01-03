@@ -18,6 +18,9 @@ return [
     'not_rights'     =>  'Bạn không có quyền chỉnh sửa id này!',
     'cancel'    =>  'Quay lại',
     'submit'    =>  'Lưu lại',
+    'close'    =>  'Đóng',
+    'ok'    =>  'Ok',
+    'pick_time'    =>  'Chọn thời gian',
     'add'       =>  'Thêm mới',
     'add-menu'       =>  'Thêm menu mới',
     'edit-menu'       =>  'Sửa menu',
@@ -76,4 +79,6 @@ return [
     'ward'   =>  'Phường/Xã',
     'street'   =>  'Đường phố',
     'searchPlaceholder' => 'Từ khóa, mã số tin, số đt',
+    'set_vip_success'   =>  'Đăng ký tin vip ',
+    'set_hot_success'   =>  'Đăng ký tin hot '
 ];

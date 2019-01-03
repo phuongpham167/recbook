@@ -428,7 +428,7 @@ class PageController extends Controller
             'menuData' => $this->menuFE
         ]);
     }
-    
+
     public function search()
     {
         $searchText = \request('txtkeyword');
@@ -534,22 +534,6 @@ class PageController extends Controller
         }
 
         return redirect()->route('home');
-    }
-
-    public function getContact()
-    {
-        $this->vipRealEstates = $this->getVipRealEstates();
-
-        return v('contact.contact', [
-            'vipRealEstates' => $this->vipRealEstates,
-            'categories' => $this->categories,
-            'provinces' => $this->provinces,
-            'districts' => $this->districts,
-            'streets' => $this->streets,
-            'directions' => $this->directions,
-            'projects' => $this->projects,
-            'menuData' => $this->menuFE
-        ]);
     }
 
     /*

@@ -18,5 +18,7 @@ return [
     'public'    =>  'Công cộng',
     'manage'    =>  'Quản lý',
     'membersince'   =>  'Tham gia từ',
-    'submit'    =>  'Gửi'
+    'submit'    =>  'Gửi',
+    'setvip'   =>  'Up Vip',
+    'sethot'   =>  'Up Hot',
 ];

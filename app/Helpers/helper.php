@@ -94,11 +94,45 @@ function to_slug($str) {
     return $str;
 }
 
-function checkNeedApprove() {
+function checkNeedApprove()
+{
     $web_id = get_web_id();
     $webConfig = WebsiteConfig::where('web_id', $web_id)->first();
-    if($webConfig && $webConfig->need_approve) {
+    if ($webConfig && $webConfig->need_approve) {
         return 1;
     }
     return 0;
+}
+function transaction_log($reason, $value, $type) {
+    $data = new \App\TransactionLog();
+    if(!auth()->check()) {
+        $data->id = null;
+    }
+    else
+        $data->user_id = auth()->user()->id;
+
+    $data->reason = $reason;
+    $data->type = $type;
+    $data->value = $value;
+    $data->currency = \App\Currency::where('default',1)->first()->id;
+    $data->created_at = \Carbon\Carbon::now();
+    $data->save();
+}
+
+function text_limit($str,$limit=20)
+{
+    if(stripos($str," ")){
+        $ex_str = explode(" ",$str);
+        if(count($ex_str)>$limit){
+            $str_s = null;
+            for($i=0;$i<$limit;$i++){
+                $str_s.=$ex_str[$i]." ";
+            }
+            return $str_s;
+        }else{
+            return $str;
+        }
+    }else{
+        return $str;
+    }
 }

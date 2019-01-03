@@ -169,7 +169,16 @@
         $(function() {
             $('.datepicker').datetimepicker({format: 'DD/MM/YYYY'});
 
-            $('#datatable').DataTable({
+            $(document).on('click', '.btn-save-menu', function(e){
+                var data = window.JSON.stringify(nestable.nestable('serialize'));
+                var name = $('.form-group #menu-name').val();
+                console.log(data);
+                $.get('<?php echo asset('config/menu/data?id='.request('id')); ?>', {data: data, name, _token: '{{csrf_token()}}'}, function(r){
+                    window.location.reload();
+                });
+            });
+
+            datatable = $('#datatable').DataTable({
                 processing: true,
                 serverSide: true,
                 ajax: {
@@ -193,6 +202,12 @@
                     { data: 'manage', name: 'manage'  , sortable:false, searchable: false}
                 ]
             });
+            datatable.on( 'draw', function () {
+                $('[data-toggle="popover"]').popover({
+                    html: true
+                });
+            } );
         });
+
     </script>
 @endpush

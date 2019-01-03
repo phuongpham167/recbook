@@ -8,6 +8,7 @@ use App\Http\Requests\EditUserRequest;
 use App\Http\Requests\FormUserRequest;
 use App\Http\Requests\LoginRequest;
 use App\Province;
+use App\TransactionLog;
 use App\User;
 use App\Web;
 use Carbon\Carbon;
