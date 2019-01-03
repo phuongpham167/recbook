@@ -31,7 +31,7 @@ class TransactionController extends Controller
             'item_quantity1' => 1,
             'item_amount1' => $total_amount,
             'item_url1' => asset(''));
-
+        $array_items=array();
         $bc = \request('bankcode');
         $buyer_email = auth()->user()->email;
         $buyer_fullname = auth()->user()->name;
@@ -272,7 +272,7 @@ class TransactionController extends Controller
         }
 
 //        echo $buyer_email.'-'.$buyer_fullname.'-'.$buyer_mobile;
-//        echo $payment_method;
+//        echo $total_amount;
 //        exit();
         $order_code ="macode_".time();
 
