@@ -284,7 +284,7 @@ class TransactionController extends Controller
         $return_url =asset('/nap-tien/ket-qua');
         $cancel_url =urlencode(asset('nap-tien/huy-bo?orderid=').$order_code) ;
 
-        $buyer_address ='hp';
+        $buyer_address ='';
 
 
 
@@ -321,6 +321,9 @@ class TransactionController extends Controller
                 $nl_result = $nlcheckout->PrepaidVisaCheckout($order_code, $total_amount, $payment_type, $order_description, $tax_amount, $fee_shipping, $discount_amount, $return_url, $cancel_url, $buyer_fullname, $buyer_email, $buyer_mobile, $buyer_address, $array_items, $bank_code);
             }
 //var_dump($nl_result); die;
+            echo $nl_result;
+            exit();
+
             if ($nl_result->error_code =='00'){
 
 //Cập nhât order với token  $nl_result->token để sử dụng check hoàn thành sau này
