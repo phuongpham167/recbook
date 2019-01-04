@@ -195,4 +195,17 @@ class UserController extends Controller
             return response()->json(['status'=>'wrong'],422);
         }
     }
+
+    public function updateAvatar()
+    {
+        $avatar = request('avatar');
+        $user = \Auth::user();
+        $userInfo = $user->userinfo;
+        $userInfo->avatar = $avatar;
+        $userInfo->save();
+        return response()->json([
+            'code' => 200,
+            'message' => 'Successfully'
+        ]);
+    }
 }
