@@ -39,12 +39,23 @@
                                 @php
                                     $avatar = $data->userinfo->avatar ? $data->userinfo->avatar : '/images/default-avatar.png';
                                 @endphp
-                                <img class="img-responsive avatar" src="{{$avatar}}"/>
+                                <div class="col-xs-12 av-wrap">
+                                    <img class="img-responsive avatar" src="{{$avatar}}"/>
+                                    <input type="hidden" id="avatar" value="{{$avatar}}"/>
+                                    <button data-toggle="modal" data-target="#modalAvatar" class="btn btn-default btn-change-av"><i class="fa fa-camera" aria-hidden="true"></i></button>
+                                </div>
                                 <h1 class="name text-center">{{ $data->userinfo->full_name }} </h1>
                                 <p class=" text-center">Làm việc tại: {{ $data->userinfo->company }}</p>
                                 <p class=" text-center">Đánh giá: 87/100 điểm</p>
+                                @if (\Auth::user() && \Auth::user()->id  == $data->id)
+                                    <p class="text-center">
+                                        <a href="{{route('info')}}" ><i class="fa fa-pencil-square-o"></i> Cập nhật thông tin</a>
+                                    </p>
+                                @endif
                                 <p class="title-short-section">Giới thiệu</p>
-                                <p class="user-desc">{{ $data->userinfo->description }}</p>
+                                <div class="u-description border-block">
+                                    <p class="user-desc">{{ $data->userinfo->description }}</p>
+                                </div>
                                 @if ( (\Auth::user() && \Auth::user()->id  == $data->id) || $isFriend)
                                 <p class="title-short-section">Tin đã đăng</p>
                                 <div class="posted-re border-block">
@@ -77,10 +88,21 @@
                                                 <div class="panel panel-default">
                                                     <div class="panel-heading">
                                                         <h4 class="panel-title">Đăng tin mới </h4>
-                                                        <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+                                                        {{--<span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>--}}
                                                     </div>
-                                                    <div class="panel-body">
-                                                        @include(theme(TRUE).'.includes.create-re')
+                                                    <div class="panel-body ">
+                                                        @if (!empty(session('message')))
+                                                            <div class="alert alert-{{session('message.type')}} text-center">
+                                                                {{session('message.message')}}
+                                                            </div>
+                                                        @endif
+                                                        <textarea class="form-control" placeholder="Bán nhà ..." id="title-hold"></textarea>
+                                                        {{--@include(theme(TRUE).'.includes.create-re')--}}
+                                                    </div>
+                                                    <div class="panel-footer clearfix">
+                                                        <div class="pull-right">
+                                                            <button type="button" class="btn btn-primary" id="btn-hold">Đăng</button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             @else
@@ -128,7 +150,11 @@
                                                 <div class="panel panel-default">
                                                     <div class="panel-heading clearfix">
                                                         <div class="col-xs-12 col-md-8 left no-padding-left">
-                                                            <p>{{$re->title}}</p>
+                                                            <p>
+                                                                <a href="{{ route('detail-real-estate', ['slug' => $re->slug . '-' . $re->id]) }}">
+                                                                    {{$re->title}}
+                                                                </a>
+                                                            </p>
                                                             @if($re->price)
                                                                 <p class="price">Giá: {{$re->price}}</p>
                                                             @endif
@@ -136,6 +162,9 @@
                                                         <div class="col-xs-12 col-md-2 pull-right no-padding-right">
                                                             @if($re->lat && $re->long)
                                                             <a href="https://www.google.com/maps/search/?api=1&query={{$re->lat}},{{$re->long}}" target="_blank">Xem bản đồ</a>
+                                                            @endif
+                                                            @if (\Auth::user() && \Auth::user()->id == $data->id)
+                                                                <a href="{{route('get.edit-real-estate', ['id' => $re->id])}}" ><i class="fa fa-pencil-square-o"></i> Sửa tin</a>
                                                             @endif
                                                         </div>
                                                     </div>
@@ -173,13 +202,6 @@
                                                                 @foreach($images as $image)
                                                                     <a href="{{asset($image->link)}}" title="{{$image->alt ? $image->alt : $re->title}}" class="pg-item"><img src="{{asset($image->thumb)}}" width="122" height="91"></a>
                                                                 @endforeach
-                                                                {{--<a href="http://farm9.staticflickr.com/8242/8558295633_f34a55c1c6_b.jpg" title="The Cleaner"><img src="http://farm9.staticflickr.com/8242/8558295633_f34a55c1c6_s.jpg" width="75" height="75"></a>--}}
-                                                                {{--<a href="http://farm9.staticflickr.com/8382/8558295631_0f56c1284f_b.jpg" title="Winter Dance"><img src="http://farm9.staticflickr.com/8382/8558295631_0f56c1284f_s.jpg" width="75" height="75"></a>--}}
-                                                                {{--<a href="http://farm9.staticflickr.com/8225/8558295635_b1c5ce2794_b.jpg" title="The Uninvited Guest"><img src="http://farm9.staticflickr.com/8225/8558295635_b1c5ce2794_s.jpg" width="75" height="75"></a>--}}
-                                                                {{--<a href="http://farm9.staticflickr.com/8383/8563475581_df05e9906d_b.jpg" title="Oh no, not again!"><img src="http://farm9.staticflickr.com/8383/8563475581_df05e9906d_s.jpg" width="75" height="75"></a>--}}
-                                                                {{--<a href="http://farm9.staticflickr.com/8235/8559402846_8b7f82e05d_b.jpg" title="Swan Lake"><img src="http://farm9.staticflickr.com/8235/8559402846_8b7f82e05d_s.jpg" width="75" height="75"></a>--}}
-                                                                {{--<a href="http://farm9.staticflickr.com/8235/8558295467_e89e95e05a_b.jpg" title="The Shake"><img src="http://farm9.staticflickr.com/8235/8558295467_e89e95e05a_s.jpg" width="75" height="75"></a>--}}
-                                                                {{--<a href="http://farm9.staticflickr.com/8378/8559402848_9fcd90d20b_b.jpg" title="Who's that, mommy?"><img src="http://farm9.staticflickr.com/8378/8559402848_9fcd90d20b_s.jpg" width="75" height="75"></a>--}}
                                                             </div>
                                                         </div>
                                                         <div class="row">
@@ -194,45 +216,7 @@
                                                 </div>
                                             </div>
                                         @endforeach
-                                    {{--<div class="col-xs-12">--}}
-                                        {{--<div class="panel panel-default">--}}
-                                            {{--<div class="panel-heading clearfix">--}}
-                                                {{--<div class="col-xs-12 col-md-8 left no-padding-left"> Nhà số 3 Bạch Đằng</div>--}}
-                                                {{--<div class="col-xs-12 col-md-2 pull-right no-padding-right">--}}
-                                                    {{--<a href="#">Xem bản đồ</a>--}}
-                                                {{--</div>--}}
-                                            {{--</div>--}}
-                                            {{--<div class="panel-body">--}}
-                                                {{--<div class="row">--}}
-                                                    {{--<div class="col-xs-12 col-md-3">Khu vực: Bình Thạnh</div>--}}
-                                                    {{--<div class="col-xs-12 col-md-4">Số tầng: 4</div>--}}
-                                                    {{--<div class="col-xs-12 col-md-5">Gần: chợ 200m</div>--}}
-                                                {{--</div>--}}
-                                                {{--<div class="row">--}}
-                                                    {{--<div class="col-xs-12 col-md-3">Nhà mặt phố</div>--}}
-                                                    {{--<div class="col-xs-12 col-md-4">Số phòng</div>--}}
-                                                {{--</div>--}}
-                                                {{--<div class="row">--}}
-                                                    {{--<div class="popup-gallery">--}}
-                                                        {{--<a href="http://farm9.staticflickr.com/8242/8558295633_f34a55c1c6_b.jpg" title="The Cleaner"><img src="http://farm9.staticflickr.com/8242/8558295633_f34a55c1c6_s.jpg" width="75" height="75"></a>--}}
-                                                        {{--<a href="http://farm9.staticflickr.com/8382/8558295631_0f56c1284f_b.jpg" title="Winter Dance"><img src="http://farm9.staticflickr.com/8382/8558295631_0f56c1284f_s.jpg" width="75" height="75"></a>--}}
-                                                        {{--<a href="http://farm9.staticflickr.com/8225/8558295635_b1c5ce2794_b.jpg" title="The Uninvited Guest"><img src="http://farm9.staticflickr.com/8225/8558295635_b1c5ce2794_s.jpg" width="75" height="75"></a>--}}
-                                                        {{--<a href="http://farm9.staticflickr.com/8383/8563475581_df05e9906d_b.jpg" title="Oh no, not again!"><img src="http://farm9.staticflickr.com/8383/8563475581_df05e9906d_s.jpg" width="75" height="75"></a>--}}
-                                                        {{--<a href="http://farm9.staticflickr.com/8235/8558295467_e89e95e05a_b.jpg" title="The Shake"><img src="http://farm9.staticflickr.com/8235/8558295467_e89e95e05a_s.jpg" width="75" height="75"></a>--}}
-                                                        {{--<a href="http://farm9.staticflickr.com/8378/8559402848_9fcd90d20b_b.jpg" title="Who's that, mommy?"><img src="http://farm9.staticflickr.com/8378/8559402848_9fcd90d20b_s.jpg" width="75" height="75"></a>--}}
-                                                    {{--</div>--}}
-                                                {{--</div>--}}
-                                                {{--<div class="row">--}}
-                                                    {{--<div class="col-xs-12">--}}
-                                                        {{--<div class="pull-right">--}}
-                                                            {{--<a href="#" class="btn btn-success">Gọi điện</a>--}}
-                                                            {{--<a href="#" class="btn btn-info">Gửi SMS</a>--}}
-                                                        {{--</div>--}}
-                                                    {{--</div>--}}
-                                                {{--</div>--}}
-                                            {{--</div>--}}
-                                        {{--</div>--}}
-                                    {{--</div>--}}
+
                                     @endif
                                 </div>
                             </div>
@@ -265,47 +249,40 @@
                     </div>
                 </div>
             </div>
-        </div>
 
+        </div>
         {{-- modal post tin --}}
-        <div id="postReModal" class="modal fade" role="dialog">
+        <div id="postReModal" class="modal1 fade" role="dialog">
             <div class="modal-dialog">
 
                 <!-- Modal content-->
                 <div class="modal-content">
-                    <form role="form">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Đăng tin</h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <input class="form-control" type="text" name="title" placeholder="{{trans('real-estate.formCreateLabel.title')}}*">
-                            </div>
-                            <div class="form-group">
-                                <input class="form-control" type="text" name="short_description" placeholder="{{trans('real-estate.formCreateLabel.shortDescription')}}*">
-                            </div>
-                            <div class="form-group">
-                                <textarea class="form-control" name="description"></textarea>
-                            </div>
-                            <div class="row">
-                                <div class="col-xs-12 col-md-6">
-                                    <div class="form-group">
-                                        <input type="number" class="form-control" id="contact_phone_number" name="contact_phone_number" placeholder="{{trans('real-estate.formCreateLabel.contactPhone')}}">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Đăng</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        </div>
-                    </form>
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" onclick="closemd()">&times;</button>
+                        <h4 class="modal-title">Đăng tin mới</h4>
+                    </div>
+                    <div class="modal-body">
+                        @include(theme(TRUE).'.includes.create-re')
+                    </div>
                 </div>
 
             </div>
         </div>
         {{-- end modal --}}
+
+        <div class="modal fade" id="modalAvatar" style="opacity: 1; overflow: visible; display: none;" aria-hidden="true">
+            <div class="modal-dialog" style="width: 860px">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title">Chọn ảnh</h4>
+                    </div>
+                    <div class="modal-body" style="padding:0px; margin:0px; width: 100%;">
+                        <iframe width="100%" height="400" src="/plugins/filemanager/dialog.php?type=1&amp;field_id=avatar'&amp;fldr=" frameborder="0" style="overflow: scroll; overflow-x: hidden; overflow-y: scroll; "></iframe>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
 
     </div>
     {{-- Include footer --}}
@@ -335,6 +312,22 @@
                     }
                 });
             });
+            $(document).on("focus","#title-hold", function(){
+                // alert("textarea focus");
+                $('body').append('<div class="modal1-backdrop fade in"></div>');
+                $('#postReModal').addClass('in');
+                $('#postReModal').attr('style', 'overflow: hidden auto !important; display: block');
+                // $('#postReModal').modal('show');
+                $(this).blur();
+            });
+            $('#btn-hold').on('click', function() {
+                $('body').append('<div class="modal1-backdrop fade in"></div>');
+                $('#postReModal').addClass('in');
+                $('#postReModal').attr('style', 'overflow: hidden auto !important; display: block');
+            });
+            $('#myModal').on('hidden.bs.modal', function (e) {
+                $('body.modal-backdrop').remove();
+            });
         });
         $(document).on('click', '.panel-heading span.clickable', function(e){
             var $this = $(this);
@@ -348,5 +341,110 @@
                 $this.find('i').removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
             }
         });
+        $('#add-new-re').on('click', function() {
+            let title = $('#title').val();
+            let reCategory = $('#re-category').val();
+            let reType = $('#re-type').val();
+            let district = $('#district').val();
+            let ward = $('#ward').val();
+            let street = $('#street').val();
+            let direction = $('#direction').val();
+            let exhibit = $('#exhibit').val();
+            let project = $('#project').val();
+            let areaOfPremises = $('#area-of-premises').val();
+            let postDate = $('#post-date-val').val();
+            let expireDate = $('#expire-date-val').val();
+            let detail = $('textarea#detail').val();
+
+            if(!title || !reCategory || !reType || !district || !ward || !street
+                || !direction || !exhibit || !project || !areaOfPremises || !postDate || !expireDate || !detail) {
+                if (!title) {
+                    console.log('title empty');
+                    $('#title').parent().find('.error').html('Nhập tiêu đề tin');
+                } else {
+                    $('#title').parent().find('.error').html('');
+                }
+                if (!reCategory) {
+                    console.log('title empty');
+                    $('#re-category').parent().find('.error').html('Chọn danh mục');
+                } else {
+                    $('#re-category').parent().find('.error').html('');
+                }
+                if (!reType) {
+                    console.log('title empty');
+                    $('#re-type').parent().find('.error').html('Chọn loại BĐS');
+                } else {
+                    $('#re-type').parent().find('.error').html('');
+                }
+                if (!district) {
+                    console.log('title empty');
+                    $('#district').parent().find('.error').html('Chọn quận/huyện');
+                } else {
+                    $('#district').parent().find('.error').html('');
+                }
+                if (!ward) {
+                    console.log('title empty');
+                    $('#ward').parent().find('.error').html('Chọn phường/xã');
+                } else {
+                    $('#ward').parent().find('.error').html('');
+                }
+                if (!street) {
+                    console.log('title empty');
+                    $('#street').parent().find('.error').html('Chọn đường phố');
+                } else {
+                    $('#street').parent().find('.error').html('');
+                }
+                if (!direction) {
+                    console.log('title empty');
+                    $('#direction').parent().find('.error').html('Chọn hướng');
+                } else {
+                    $('#direction').parent().find('.error').html('');
+                }
+                if (!exhibit) {
+                    console.log('title empty');
+                    $('#exhibit').parent().find('.error').html('Chọn giấy tờ');
+                } else {
+                    $('#exhibit').parent().find('.error').html('');
+                }
+                if (!project) {
+                    console.log('title empty');
+                    $('#project').parent().find('.error').html('Chọn dự án');
+                } else {
+                    $('#project').parent().find('.error').html('');
+                }
+                if (!areaOfPremises) {
+                    console.log('title empty');
+                    $('#area-of-premises').parent().find('.error').html('Nhập diện tích mặt bằng');
+                } else {
+                    $('#area-of-premises').parent().find('.error').html('');
+                }
+                if (!postDate) {
+                    console.log('title empty');
+                    $('#post-date').parent().find('.error').html('Chọn ngày đăng');
+                } else {
+                    $('#post-date').parent().find('.error').html('');
+                }
+                if (!expireDate) {
+                    console.log('title empty');
+                    $('#expire-date').parent().find('.error').html('Chọn ngày hết hạn');
+                } else {
+                    $('#expire-date').parent().find('.error').html('');
+                }
+                if (!detail) {
+                    console.log('detail empty');
+                    $('textarea#detail').parent().find('.error').html('Nhập nội dung chi tiết');
+                } else {
+                    $('textarea#detail').parent().find('.error').html('');
+                }
+
+                return;
+            }
+            $(this).closest('form').submit();
+        });
+        function closemd() {
+            $('body').find('.modal1-backdrop').remove();
+            $('#postReModal').removeClass('in');
+            $('#postReModal').attr('style', 'display: none;');
+        }
     </script>
 @endpush
