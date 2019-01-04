@@ -9,6 +9,7 @@ use App\ReCategory;
 use App\Services\DirectionService;
 use App\Services\DistrictService;
 use App\Services\ProjectService;
+use App\Services\ProvinceService;
 use App\Services\RangePriceService;
 use App\Services\ReTypeService;
 use App\Services\StreetService;
@@ -21,10 +22,11 @@ use Carbon\Carbon;
 class ConversationController extends Controller
 {
     protected $menuFE, $vipRealEstates, $web_id;
-    protected $categories, $districts, $streets, $directions, $projects;
+    protected $categories, $provinces, $districts, $streets, $directions, $projects;
 
     protected $reTypeService;
     protected $rangePriceService;
+    protected $provinceService;
     protected $districtService;
     protected $streetService;
     protected $directionService;
@@ -32,6 +34,7 @@ class ConversationController extends Controller
 
     public function __construct(
         ReTypeService $reTypeService,
+        ProvinceService $provinceService,
         DistrictService $districtService,
         StreetService $streetService,
         DirectionService $directionService,
@@ -44,6 +47,7 @@ class ConversationController extends Controller
         $this->menuFE = Menu::where('web_id', $this->web_id)->where('menu_type', $mmfe)->first();
 
         $this->reTypeService = $reTypeService;
+        $this->provinceService = $provinceService;
         $this->districtService = $districtService;
         $this->streetService = $streetService;
         $this->directionService = $directionService;
@@ -64,6 +68,7 @@ class ConversationController extends Controller
             ->orderBy('id', 'asc')
 //            ->where('web_id', $web_id)
             ->get();
+        $this->provinces = $this->provinceService->getListDropDown();
         $this->districts = $this->districtService->getListDropDown();
         $this->streets = $this->streetService->getListDropDown();
         $this->directions = $this->directionService->getListDropDown();
@@ -100,6 +105,7 @@ class ConversationController extends Controller
                 'conversation' => $conversation,
                 'vipRealEstates' => $this->vipRealEstates,
                 'categories' => $this->categories,
+                'provinces' => $this->provinces,
                 'districts' => $this->districts,
                 'streets' => $this->streets,
                 'directions' => $this->directions,
