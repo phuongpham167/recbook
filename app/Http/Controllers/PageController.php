@@ -581,6 +581,9 @@ class PageController extends Controller
                 /*
                  * TODO: get list districts by user province
                  * */
+                $userProvinceId = $user->userinfo->province_id;
+                $districtByUProvince = $this->districtService->getDistrictByProvince($userProvinceId);
+                $projectByUProvince = $this->projectService->getProjectByProvince($userProvinceId);
 
                 /*
                  * get all post of user
@@ -626,6 +629,8 @@ class PageController extends Controller
                     'listRe' => $listRe,
                     'listPostedRe' => $listPostedRe,
                     'listFriends' => $listFriends,
+                    'districtByUProvince' => $districtByUProvince,
+                    'projectByUProvince' => $projectByUProvince,
                     'menuData' => $this->menuFE
                 ]);
             }
