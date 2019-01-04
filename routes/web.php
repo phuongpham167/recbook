@@ -69,7 +69,7 @@ Route::group(['middleware'=>'auth'], function(){
     Route::group(['prefix'=>'bat-dong-san'], function(){
         Route::get('/{filter?}', ['as' => 'realEstateList', 'uses' => 'RealEstateController@list'])->where('filter', 'tin-rao-het-han|tin-rao-cho-duyet|tin-rao-nhap|tin-rao-da-xoa');
         Route::get('/data',['as' => 'realEstateData', 'uses' => 'RealEstateController@data']);
-        Route::get('/sua', 'RealEstateController@edit');
+        Route::get('/sua', ['as' => 'get.edit-real-estate', 'uses' => 'RealEstateController@edit']);
         Route::post('/sua', 'RealEstateController@update');
         Route::get('/tao-moi', ['as' => 'get.create-real-estate',  'uses' => 'RealEstateController@create']);
         Route::post('tao-moi', ['as' => 'post.create-real-estate', 'uses' => 'RealEstateController@store']);
@@ -86,6 +86,8 @@ Route::group(['middleware'=>'auth'], function(){
     Route::get('/tin-nhan', ['as' => 'chat', 'uses' => 'PageController@getChat']);
     Route::resource('conversation','ConversationController');
     Route::resource('message','MessageController');
+
+    Route::post('/update-avatar', ['as' => 'post.update-avatar', 'uses' => 'UserController@updateAvatar']);
     /*
      * friend route
      * */

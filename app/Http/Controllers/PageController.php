@@ -579,6 +579,13 @@ class PageController extends Controller
                 $units = $this->unitService->getListDropDown();
 
                 /*
+                 * TODO: get list districts by user province
+                 * */
+                $userProvinceId = $user->userinfo->province_id;
+                $districtByUProvince = $this->districtService->getDistrictByProvince($userProvinceId);
+                $projectByUProvince = $this->projectService->getProjectByProvince($userProvinceId);
+
+                /*
                  * get all post of user
                  * */
                 $query = RealEstate::select('id', 'title', 'slug', 'code', 're_category_id', 'contact_phone_number', 'district_id', 'floor', 'position', 'bedroom', 'living_room',
@@ -622,6 +629,8 @@ class PageController extends Controller
                     'listRe' => $listRe,
                     'listPostedRe' => $listPostedRe,
                     'listFriends' => $listFriends,
+                    'districtByUProvince' => $districtByUProvince,
+                    'projectByUProvince' => $projectByUProvince,
                     'menuData' => $this->menuFE
                 ]);
             }
