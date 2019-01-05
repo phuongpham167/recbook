@@ -40,7 +40,7 @@ Route::post('/lien-he', ['as' => 'post.contact', 'uses' => 'ContactController@po
 /*
  * route thong tin thanh vien
  * */
-Route::get('/thong-tin-thanh-vien/{id}', ['as' => 'user.info', 'uses' => 'PageController@getUserInfo']);
+Route::get('/user/{id}', ['as' => 'user.info', 'uses' => 'PageController@getUserInfo']);
 
 Route::get('/dang-nhap', ['as' => 'login', 'uses' => 'AuthenticateController@getLogin']);
 Route::post('/dang-nhap', ['as' => 'post.login', 'uses' => 'AuthenticateController@postLogin']);

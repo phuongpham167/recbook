@@ -16,6 +16,7 @@ return [
     'failed'   => 'Thông tin tài khoản không tìm thấy trong hệ thống.',
     'throttle' => 'Vượt quá số lần đăng nhập cho phép. Vui lòng thử lại sau :seconds giây.',
     'login' =>  'Đăng nhập',
+    'register' =>  'Đăng ký',
     'need_login'    =>  'Vui lòng đăng nhập để truy cập hệ thống',
     'password'  =>  'Mật khẩu',
     'remember'  =>  'Ghi nhớ',

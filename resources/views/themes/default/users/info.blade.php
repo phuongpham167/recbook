@@ -54,7 +54,7 @@
 
                                     <div class="col-xs-12">
                                         <dl>
-                                            <dt class="txt_right">Số chứng minh/Mã số thuế <span class="required">*</span></dt>
+                                            <dt class="txt_right">Số CMT/Mã số thuế <span class="required">*</span></dt>
                                             <dd>
                                                 <input class="_required" name="identification" id="identification" type="text" maxlength="50" value="{{auth()->user()->userinfo->identification}}">
                                             </dd>
