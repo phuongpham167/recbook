@@ -229,17 +229,17 @@
                         <div class="contact short-section">
                             <div class="row margin-0">
                                 <div class="col-xs-12 description__item">
-                                    <strong>Người liên hệ :</strong> {{$data->contact_person}}
+                                    <strong>Người liên hệ :</strong> {{$data->user->userinfo ? $data->user->userinfo->full_name : $data->contact_person}}
                                 </div>
                             </div>
                             <div class="row margin-0">
                                 <div class="col-xs-12 description__item">
-                                    <strong>Địa chỉ :</strong> {{$data->contact_address}}
+                                    <strong>Địa chỉ :</strong> {{$data->user->userinfo ? $data->user->userinfo->address : $data->contact_address}}
                                 </div>
                             </div>
                             <div class="row margin-0">
                                 <div class="col-xs-12 description__item">
-                                    <strong>Điện thoại :</strong> {{$data->contact_phone_number}}
+                                    <strong>Điện thoại :</strong> {{$data->user->userinfo ? $data->user->userinfo->phone : $data->contact_phone_number}}
                                 </div>
                             </div>
                         </div>
