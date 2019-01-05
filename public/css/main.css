@@ -233,6 +233,10 @@ button {
   border-radius: 50%;
 }
 
+.main-menu-user-info .navbar-right .header-name {
+  text-transform: capitalize;
+}
+
 /*------------ End Header ------------*/
 
 /*------------ Footer ------------*/

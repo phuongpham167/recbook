@@ -1,56 +1,108 @@
-.user-info .panel {
+.detail-top .av-wrap {
+  display: inline-block;
+  position: relative;
+}
+
+.detail-top .av-wrap:hover .btn-change-av {
+  display: block !important;
+}
+
+.detail-top .av-wrap .btn-change-av {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  color: #fff;
+  display: none;
+  position: absolute;
+  bottom: 5px;
+  left: 5px;
+  background: -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(50%, rgba(0, 0, 0, 0.6)), to(rgba(0, 0, 0, 0.6)));
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.6) 50%, rgba(0, 0, 0, 0.6) 100%);
+}
+
+.detail-top .avatar {
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 4px;
+  width: 168px;
+  height: 168px;
+}
+
+.detail-top .name {
+  display: inline-block;
+  font-size: 24px;
+  text-shadow: 0 0 3px rgba(0, 0, 0, 0.4);
+  position: absolute;
+  bottom: 20px;
+  margin-left: 20px;
+}
+
+.detail-top .update-info-wrap {
+  position: absolute;
+  right: 25px;
+  bottom: 20px;
+}
+
+.detail-top .update-info-wrap p {
+  background-color: #ccc;
+  color: #000;
+  padding: 10px 15px;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 3px;
+}
+
+.detail-top .update-info-wrap p a {
+  color: #4b4f56;
+}
+
+.user-desc {
+  margin-bottom: 15px;
+}
+
+.panel {
   border-radius: 0;
 }
 
-.user-info .name {
+.name {
   font-size: 20px;
   font-weight: 600;
   margin-top: 10px;
 }
 
-.user-info .description-label,
-.user-info .rate-label,
-.user-info .posted-real-estate-label {
+.description-label,
+.rate-label,
+.posted-real-estate-label {
   font-size: 20px;
   font-weight: 600;
 }
 
-.user-info .social {
+.social {
   text-align: right;
 }
 
-.user-info .avatar {
-  border: 1px solid #ccc;
-  padding: 15px;
-}
-
-.user-info .user-desc {
-  margin-bottom: 15px;
-}
-
-.user-info .top-head {
+.top-head {
   background: #f5f6f7;
   border: 1px solid #ccc;
   border-bottom: none;
 }
 
-.user-info .top-head p {
+.top-head p {
   font-size: 14px;
   margin: 0;
   padding: 10px 0;
 }
 
-.user-info .center-top {
+.center-top {
   border: 1px solid #ccc;
   padding-top: 15px;
 }
 
-.user-info .alert-title {
+.alert-title {
   font-size: 18px;
   text-transform: uppercase;
 }
 
-.user-info .title-short-section {
+.title-short-section {
   margin-bottom: 0px;
   margin-top: 0;
   background: #e40b00;
@@ -61,14 +113,14 @@
   text-transform: uppercase;
 }
 
-.user-info .border-block {
+.border-block {
   border: 1px solid #ccc;
   border-top: none;
   margin-bottom: 15px;
   padding: 15px;
 }
 
-.user-info .list-re {
+.list-re {
   margin-top: 15px;
 }
 
@@ -164,23 +216,5 @@
   position: absolute;
   top: 25%;
   left: -20%;
-}
-
-.av-wrap {
-  margin-bottom: 15px;
-  position: relative;
-}
-
-.av-wrap:hover .btn-change-av {
-  display: block !important;
-}
-
-.av-wrap .btn-change-av {
-  display: none;
-  position: absolute;
-  bottom: 15px;
-  left: 31px;
-  background: -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(50%, rgba(255, 255, 255, 0.6)), to(rgba(0, 0, 0, 0.6)));
-  background: linear-gradient(transparent, rgba(255, 255, 255, 0.6) 50%, rgba(0, 0, 0, 0.6) 100%);
 }
 

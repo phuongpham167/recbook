@@ -66,29 +66,37 @@
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li>
-                    @php
-                        $avatar = auth()->user()->userinfo->avatar ? auth()->user()->userinfo->avatar : '/images/default-avatar.png';
-                    @endphp
-                    <a href="{{route('user.info', [auth()->user()->id])}}" title="{{auth()->user()->userinfo->full_name}}">
-                        <img class="img-responsive header-avatar" src="{{$avatar}}" > <span>{{auth()->user()->userinfo->full_name}}</span>
-                    </a>
-                </li>
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" title="Lời mời kết bạn"><i class="fa fa-users" aria-hidden="true"></i></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">Không có lời mời kết bạn nào</a></li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" title="Tin nhắn"><i class="fa fa-comment" aria-hidden="true"></i></a>
-                    {{--<ul class="dropdown-menu">--}}
-                    {{--</ul>--}}
-                </li>
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" title="Tin nhắn"><i class="fa fa-bell" aria-hidden="true"></i></a>
+                @if (auth()->check())
+                    <li>
+                        @php
+                            $avatar = auth()->user()->userinfo->avatar ? auth()->user()->userinfo->avatar : '/images/default-avatar.png';
+                        @endphp
+                        <a href="{{route('user.info', [auth()->user()->id])}}" title="{{auth()->user()->userinfo->full_name}}">
+                            <img class="img-responsive header-avatar" src="{{$avatar}}" > <span class="header-name">{{auth()->user()->userinfo->full_name}}</span>
+                        </a>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" title="Lời mời kết bạn"><i class="fa fa-users" aria-hidden="true"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Không có lời mời kết bạn nào</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" title="Tin nhắn"><i class="fa fa-comment" aria-hidden="true"></i></a>
+                        {{--<ul class="dropdown-menu">--}}
+                        {{--</ul>--}}
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" title="Thông báo"><i class="fa fa-bell" aria-hidden="true"></i></a>
 
-                </li>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" title="Thêm"><span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ route('logout') }}"><i class="fa fa-sign-out"></i> ĐĂNG XUẤT</a></li>
+                        </ul>
+                    </li>
+                @endif
             </ul>
         </div>
     </div>
