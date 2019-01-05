@@ -143,7 +143,11 @@ class AuthenticateController extends Controller
 
     public function getRegister()
     {
-        return v('authenticate.register', ['menuData' => $this->menuFE]);
+        $provinces = $this->provinceService->getListDropDown();
+        return v('authenticate.register', [
+            'menuData' => $this->menuFE,
+            'provinces' => $provinces
+        ]);
     }
 
     public function postRegister(FormUserRequest $request)
@@ -170,10 +174,13 @@ class AuthenticateController extends Controller
 
         $user_info = new UserInfo();
         $user_info->user_id = $data->id;
-        $user_info->company = $request->company_name;
-        $user_info->identification = $request->taxcode;
+        $user_info->full_name = $request->full_name;
+        $user_info->company = $request->company;
+        $user_info->identification = $request->identification;
         $user_info->phone = $request->phone;
+        $user_info->province_id = $request->province_id;
         $user_info->address = $request->address;
+        $user_info->description = $request->description;
         $user_info->website = $request->website;
 
         $user_info->save();

@@ -30,7 +30,7 @@
                         <dl>
                             <dt>Tên đăng nhập <span class="required">*</span></dt>
                             <dd>
-                                <input type="text" name="id" class="form-control" required placeholder="ID" />
+                                <input type="text" name="id" class="form-control" required placeholder="ID/Email" />
                             </dd>
                         </dl>
 

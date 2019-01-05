@@ -5,7 +5,7 @@
 @endsection
 
 @section('title')
-{{trans('auth.login')}}
+{{trans('auth.register')}}
 @endsection
 
 @push('style')
@@ -44,16 +44,23 @@
                 </dl>
 
                 <dl>
-                    <dt>Họ tên/Tên công ty <span class="required">*</span></dt>
+                    <dt>Họ và tên <span class="required">*</span></dt>
                     <dd>
-                        <input class="_required" name="company_name" id="company_name" value="{{old('company_name')}}" type="text" maxlength="200">
+                        <input class="_required" name="full_name" id="full_name" value="{{old('full_name')}}" type="text" maxlength="200">
+                    </dd>
+                </dl>
+
+                <dl>
+                    <dt>Nơi làm việc <span class="required">*</span></dt>
+                    <dd>
+                        <input class="_required" name="company" id="company" value="{{old('company')}}" type="text" maxlength="200">
                     </dd>
                 </dl>
 
                 <dl>
                     <dt>Số CMT/Mã số thuế <span class="required">*</span></dt>
                     <dd>
-                        <input class="_required" name="taxcode" id="taxcode" value="{{old('taxcode')}}" type="text" maxlength="50">
+                        <input class="_required" name="identification" id="identification" value="{{old('identification')}}" type="text" maxlength="50">
                     </dd>
                 </dl>
 
@@ -72,9 +79,27 @@
                 </dl>
 
                 <dl>
+                    <dt>Tỉnh/thành <span class="required">*</span></dt>
+                    <dd>
+                        <select class="_required" name="province_id">
+                            @foreach($provinces as $province)
+                                <option value="{{$province->id}}" value="{{old('province_id')}}">{{$province->name}}</option>
+                            @endforeach
+                        </select>
+                    </dd>
+                </dl>
+
+                <dl>
                     <dt>Địa chỉ <span class="required">*</span></dt>
                     <dd>
                         <input class="_required" name="address" id="address" value="{{old('address')}}" type="text" maxlength="200">
+                    </dd>
+                </dl>
+
+                <dl>
+                    <dt>Giới thiệu <span class="required">*</span></dt>
+                    <dd>
+                        <textarea class="_required" name="description">{{old('description')}}</textarea>
                     </dd>
                 </dl>
 
