@@ -373,93 +373,92 @@
         });
         $('#add-new-re').on('click', function() {
             let title = $('#title').val();
-            let reCategory = $('#re-category').val();
-            let reType = $('#re-type').val();
-            let district = $('#district').val();
-            let ward = $('#ward').val();
-            let street = $('#street').val();
-            let direction = $('#direction').val();
-            let exhibit = $('#exhibit').val();
-            let project = $('#project').val();
-            let areaOfPremises = $('#area-of-premises').val();
-            let postDate = $('#post-date-val').val();
-            let expireDate = $('#expire-date-val').val();
+            // let reCategory = $('#re-category').val();
+            // let reType = $('#re-type').val();
+            // let district = $('#district').val();
+            // let ward = $('#ward').val();
+            // let street = $('#street').val();
+            // let direction = $('#direction').val();
+            // let exhibit = $('#exhibit').val();
+            // let project = $('#project').val();
+            // let areaOfPremises = $('#area-of-premises').val();
+            // let postDate = $('#post-date-val').val();
+            // let expireDate = $('#expire-date-val').val();
             let detail = $('textarea#detail').val();
 
-            if(!title || !reCategory || !reType || !district || !ward || !street
-                || !direction || !exhibit || !project || !areaOfPremises || !postDate || !expireDate || !detail) {
+            if(!title || !detail) {
                 if (!title) {
                     console.log('title empty');
                     $('#title').parent().find('.error').html('Nhập tiêu đề tin');
                 } else {
                     $('#title').parent().find('.error').html('');
                 }
-                if (!reCategory) {
-                    console.log('title empty');
-                    $('#re-category').parent().find('.error').html('Chọn danh mục');
-                } else {
-                    $('#re-category').parent().find('.error').html('');
-                }
-                if (!reType) {
-                    console.log('title empty');
-                    $('#re-type').parent().find('.error').html('Chọn loại BĐS');
-                } else {
-                    $('#re-type').parent().find('.error').html('');
-                }
-                if (!district) {
-                    console.log('title empty');
-                    $('#district').parent().find('.error').html('Chọn quận/huyện');
-                } else {
-                    $('#district').parent().find('.error').html('');
-                }
-                if (!ward) {
-                    console.log('title empty');
-                    $('#ward').parent().find('.error').html('Chọn phường/xã');
-                } else {
-                    $('#ward').parent().find('.error').html('');
-                }
-                if (!street) {
-                    console.log('title empty');
-                    $('#street').parent().find('.error').html('Chọn đường phố');
-                } else {
-                    $('#street').parent().find('.error').html('');
-                }
-                if (!direction) {
-                    console.log('title empty');
-                    $('#direction').parent().find('.error').html('Chọn hướng');
-                } else {
-                    $('#direction').parent().find('.error').html('');
-                }
-                if (!exhibit) {
-                    console.log('title empty');
-                    $('#exhibit').parent().find('.error').html('Chọn giấy tờ');
-                } else {
-                    $('#exhibit').parent().find('.error').html('');
-                }
-                if (!project) {
-                    console.log('title empty');
-                    $('#project').parent().find('.error').html('Chọn dự án');
-                } else {
-                    $('#project').parent().find('.error').html('');
-                }
-                if (!areaOfPremises) {
-                    console.log('title empty');
-                    $('#area-of-premises').parent().find('.error').html('Nhập diện tích mặt bằng');
-                } else {
-                    $('#area-of-premises').parent().find('.error').html('');
-                }
-                if (!postDate) {
-                    console.log('title empty');
-                    $('#post-date').parent().find('.error').html('Chọn ngày đăng');
-                } else {
-                    $('#post-date').parent().find('.error').html('');
-                }
-                if (!expireDate) {
-                    console.log('title empty');
-                    $('#expire-date').parent().find('.error').html('Chọn ngày hết hạn');
-                } else {
-                    $('#expire-date').parent().find('.error').html('');
-                }
+                // if (!reCategory) {
+                //     console.log('title empty');
+                //     $('#re-category').parent().find('.error').html('Chọn danh mục');
+                // } else {
+                //     $('#re-category').parent().find('.error').html('');
+                // }
+                // if (!reType) {
+                //     console.log('title empty');
+                //     $('#re-type').parent().find('.error').html('Chọn loại BĐS');
+                // } else {
+                //     $('#re-type').parent().find('.error').html('');
+                // }
+                // if (!district) {
+                //     console.log('title empty');
+                //     $('#district').parent().find('.error').html('Chọn quận/huyện');
+                // } else {
+                //     $('#district').parent().find('.error').html('');
+                // }
+                // if (!ward) {
+                //     console.log('title empty');
+                //     $('#ward').parent().find('.error').html('Chọn phường/xã');
+                // } else {
+                //     $('#ward').parent().find('.error').html('');
+                // }
+                // if (!street) {
+                //     console.log('title empty');
+                //     $('#street').parent().find('.error').html('Chọn đường phố');
+                // } else {
+                //     $('#street').parent().find('.error').html('');
+                // }
+                // if (!direction) {
+                //     console.log('title empty');
+                //     $('#direction').parent().find('.error').html('Chọn hướng');
+                // } else {
+                //     $('#direction').parent().find('.error').html('');
+                // }
+                // if (!exhibit) {
+                //     console.log('title empty');
+                //     $('#exhibit').parent().find('.error').html('Chọn giấy tờ');
+                // } else {
+                //     $('#exhibit').parent().find('.error').html('');
+                // }
+                // if (!project) {
+                //     console.log('title empty');
+                //     $('#project').parent().find('.error').html('Chọn dự án');
+                // } else {
+                //     $('#project').parent().find('.error').html('');
+                // }
+                // if (!areaOfPremises) {
+                //     console.log('title empty');
+                //     $('#area-of-premises').parent().find('.error').html('Nhập diện tích mặt bằng');
+                // } else {
+                //     $('#area-of-premises').parent().find('.error').html('');
+                // }
+                // if (!postDate) {
+                //     console.log('title empty');
+                //     $('#post-date').parent().find('.error').html('Chọn ngày đăng');
+                // } else {
+                //     $('#post-date').parent().find('.error').html('');
+                // }
+                // if (!expireDate) {
+                //     console.log('title empty');
+                //     $('#expire-date').parent().find('.error').html('Chọn ngày hết hạn');
+                // } else {
+                //     $('#expire-date').parent().find('.error').html('');
+                // }
                 if (!detail) {
                     console.log('detail empty');
                     $('textarea#detail').parent().find('.error').html('Nhập nội dung chi tiết');

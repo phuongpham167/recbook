@@ -1,3 +1,13 @@
+.btn-collapse {
+  border-radius: 25px;
+  background-color: #f5f6f7;
+  width: 100%;
+}
+
+.btn-collapse:hover {
+  background-color: #ebedf0;
+}
+
 .detail-top .av-wrap {
   display: inline-block;
   position: relative;
@@ -10,6 +20,7 @@
 .detail-top .av-wrap .btn-change-av {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
   color: #fff;
   display: none;
   position: absolute;
@@ -53,6 +64,7 @@
 
 .detail-top .update-info-wrap p a {
   color: #4b4f56;
+  text-decoration: none;
 }
 
 .user-desc {
