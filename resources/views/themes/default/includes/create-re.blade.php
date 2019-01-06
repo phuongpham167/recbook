@@ -25,8 +25,24 @@
         </div>
     </div>
     <div class="form-group">
-        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.reCategory')}} <span
-                class="text-red">*</span></label>
+        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.detail')}} <span
+                class="text-red">*</span>
+        </label>
+        <div class="col-sm-10">
+            <textarea name="detail" class="form-control" id="detail"></textarea>
+            <p class="text-red error"></p>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-6">
+            <button type="button" class="btn btn-default btn-collapse" data-toggle="collapse" data-target="#catSelect">Danh mục</button>
+        </div>
+        <div class="col-sm-6">
+            <button type="button" class="btn btn-default btn-collapse" data-toggle="collapse" data-target="#addressSelect"><i class="fa fa-road" aria-hidden="true"></i> Khu vực</button>
+        </div>
+    </div>
+    <div class="form-group collapse" id="catSelect">
+        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.reCategory')}}</label>
         <div class="col-sm-4">
             <select class="form-control" id="re-category" name="re_category_id" onchange="changeReCategory(this)"
                     value="{{ old('re_category_id') }}">
@@ -37,8 +53,7 @@
             </select>
             <p class="text-red error"></p>
         </div>
-        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.reType')}} <span
-                class="text-red">*</span></label>
+        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.reType')}}</label>
         <div class="col-sm-4">
             <select class="form-control" id="re-type" name="re_type_id" value="{{ old('re_type_id') }}">
                 <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
@@ -46,9 +61,13 @@
             <p class="text-red error"></p>
         </div>
     </div>
-    <div class="form-group">
-        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.district')}} <span
-                class="text-red">*</span></label>
+    {{--<div class="form-group">--}}
+        {{--<div class="col-sm-10 col-sm-offset-2">--}}
+            {{--<button type="button" class="btn btn-default" data-toggle="collapse" data-target="#addressSelect"><i class="fa fa-road" aria-hidden="true"></i> Khu vực</button>--}}
+        {{--</div>--}}
+    {{--</div>--}}
+    <div class="form-group collapse" id="addressSelect">
+        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.district')}} </label>
         <div class="col-sm-4">
             <select class="form-control" id="district" name="district_id" onchange="changeDistrict(this)"
                     value="{{ old('district_id') }}">
@@ -59,8 +78,7 @@
             </select>
             <p class="text-red error"></p>
         </div>
-        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.ward')}} <span
-                class="text-red">*</span></label>
+        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.ward')}} </label>
         <div class="col-sm-4">
             <select class="form-control" id="ward" name="ward_id" value="{{ old('ward_id') }}"
                     onchange="changeWard(this)">
@@ -68,11 +86,7 @@
             </select>
             <p class="text-red error"></p>
         </div>
-    </div>
-    <div class="form-group">
-
-        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.street')}} <span
-                class="text-red">*</span></label>
+        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.street')}} </label>
         <div class="col-sm-4">
             <select class="form-control" id="street" name="street_id" value="{{ old('street_id') }}">
                 <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
@@ -80,15 +94,24 @@
             <p class="text-red error"></p>
         </div>
     </div>
+
     <div class="form-group">
+        <div class="col-sm-6">
+            <button type="button" class="btn btn-default btn-collapse" data-toggle="collapse" data-target="#nearBy">Gần</button>
+        </div>
+        <div class="col-sm-6">
+            <button type="button" class="btn btn-default btn-collapse" data-toggle="collapse" data-target="#directionSelect">Hướng</button>
+        </div>
+    </div>
+    <div class="form-group collapse" id="nearBy">
         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.position')}}</label>
         <div class="col-sm-10">
             <input type="text" class="form-control" name="position" value="{{ old('position') }}" placeholder="VD: gần chợ 200m,"/>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group collapse" id="directionSelect">
 
-        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.direction')}} <span class="text-red">*</span></label>
+        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.direction')}} </label>
         <div class="col-sm-4">
             <select class="form-control" id="direction" name="direction_id" value="{{ old('direction_id') }}">
                 <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
@@ -98,8 +121,17 @@
             </select>
             <p class="text-red error"></p>
         </div>
-        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.exhibit')}} <span
-                class="text-red">*</span></label>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-6">
+            <button type="button" class="btn btn-default btn-collapse" data-toggle="collapse" data-target="#exhibitSelect">Giấy tờ</button>
+        </div>
+        <div class="col-sm-6">
+            <button type="button" class="btn btn-default btn-collapse" data-toggle="collapse" data-target="#projectSelect">Dự án</button>
+        </div>
+    </div>
+    <div class="form-group collapse" id="exhibitSelect">
+        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.exhibit')}} </label>
         <div class="col-sm-4">
             <select class="form-control" id="exhibit" name="exhibit_id" value="{{ old('exhibit_id') }}">
                 <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
@@ -110,10 +142,9 @@
             <p class="text-red error"></p>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group collapse" id="projectSelect">
 
-        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.project')}} <span
-                class="text-red">*</span></label>
+        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.project')}} </label>
         <div class="col-sm-4">
             <select class="form-control" id="project" name="project_id" value="{{ old('project_id') }}">
                 <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
@@ -123,11 +154,7 @@
             </select>
             <p class="text-red error"></p>
         </div>
-        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.bedroom')}}</label>
 
-        <div class="col-sm-4">
-            <input type="number" class="form-control" name="bedroom" value="{{ old('bedroom') }}"/>
-        </div>
         {{--<label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.block')}}</label>--}}
         {{--<div class="col-sm-4">--}}
             {{--<select class="form-control" id="block" name="block_id" value="{{ old('block_id') }}">--}}
@@ -138,7 +165,7 @@
             {{--</select>--}}
         {{--</div>--}}
     </div>
-    <div class="form-group">
+    {{--<div class="form-group">--}}
 
         {{--<label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.constructionType')}}</label>--}}
         {{--<div class="col-sm-4">--}}
@@ -151,7 +178,7 @@
             {{--</select>--}}
         {{--</div>--}}
 
-    </div>
+    {{--</div>--}}
     {{--<div class="form-group">--}}
         {{--<label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.width')}}</label>--}}
 
@@ -165,22 +192,41 @@
         {{--</div>--}}
     {{--</div>--}}
     <div class="form-group">
-
-        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.living_room')}}</label>
-
-        <div class="col-sm-4">
-            <input type="number" class="form-control" name="living_room" value="{{ old('living_room') }}"/>
+        <div class="col-sm-6">
+            <button type="button" class="btn btn-default btn-collapse" data-toggle="collapse" data-target="#room"><i class="fa fa-bed" aria-hidden="true"></i> Phòng</button>
         </div>
-        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.wc')}}</label>
-
-        <div class="col-sm-4">
-            <input type="number" class="form-control" name="wc" value="{{ old('wc') }}"/>
+        <div class="col-sm-6">
+            <button type="button" class="btn btn-default btn-collapse" data-toggle="collapse" data-target="#area"><i class="fa fa-area-chart" aria-hidden="true"></i> Diện tích</button>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group collapse" id="room">
+        <div class="row">
+            <div class="col-xs-12">
+                <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.bedroom')}}</label>
 
-        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.areaOfPremises')}} <span
-                class="text-red">*</span></label>
+                <div class="col-sm-4">
+                    <input type="number" class="form-control" name="bedroom" value="{{ old('bedroom') }}"/>
+                </div>
+                <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.living_room')}}</label>
+
+                <div class="col-sm-4">
+                    <input type="number" class="form-control" name="living_room" value="{{ old('living_room') }}"/>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.wc')}}</label>
+
+                <div class="col-sm-4">
+                    <input type="number" class="form-control" name="wc" value="{{ old('wc') }}"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group collapse" id="area">
+
+        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.areaOfPremises')}} </label>
 
         <div class="col-sm-4">
             <input type="number" class="form-control" id="area-of-premises" name="area_of_premises" value="{{ old('area_of_premises') }}" step="0.01"/>
@@ -194,17 +240,25 @@
 
     </div>
     <div class="form-group">
+        <div class="col-sm-6">
+            <button type="button" class="btn btn-default btn-collapse" data-toggle="collapse" data-target="#floorSelect">Số tầng</button>
+        </div>
+        <div class="col-sm-6">
+            <button type="button" class="btn btn-default btn-collapse" data-toggle="collapse" data-target="#priceSelect">Giá</button>
+        </div>
+    </div>
+    <div class="form-group collapse" id="floorSelect">
         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.floor')}}</label>
 
         <div class="col-sm-4">
             <input type="number" class="form-control" name="floor" value="{{ old('floor') }}"/>
         </div>
+    </div>
+    <div class="form-group collapse" id="priceSelect">
         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.price')}}</label>
         <div class="col-sm-4">
             <input type="text" class="form-control" name="price" value="{{ old('price') }}" step="0.01"/>
         </div>
-    </div>
-    <div class="form-group">
         <div class="col-sm-10 col-sm-offset-2">
             <div class="checkbox">
                 <label>
@@ -215,32 +269,59 @@
         </div>
     </div>
     <div class="form-group">
-        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.postDate')}} <span
-                class="text-red">*</span></label>
         <div class="col-sm-6">
-            <div class='input-group date' id='post-date'>
-                <input type='text' class="form-control" id="post-date-val" name="post_date" value="{{ old('post_date') }}"/>
-                <span class="input-group-addon">
-                                        <span class="glyphicon glyphicon-calendar"></span>
-                                    </span>
-            </div>
-            <p class="text-red error"></p>
+            <button type="button" class="btn btn-default btn-collapse" data-toggle="collapse" data-target="#time"><i class="fa fa-calendar-minus-o"></i> Lịch</button>
+        </div>
+        <div class="col-sm-6">
+            <button type="button" class="btn btn-default btn-collapse" data-toggle="collapse" data-target="#mapSelect"><i class="fa fa-map-marker"></i> Vị ví</button>
         </div>
     </div>
-    <div class="form-group">
-        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.expireDate')}} <span
-                class="text-red">*</span></label>
-        <div class="col-sm-6">
-            <div class='input-group date' id='expire-date'>
-                <input type='text' class="form-control" id="expire-date-val" name="expire_date" value="{{ old('expire_date') }}"/>
-                <span class="input-group-addon">
+    <div class="form-group collapse" id="time">
+        <div class="row">
+            <div class="col-xs-12">
+                <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.postDate')}} </label>
+                <div class="col-sm-6">
+                    <div class='input-group date' id='post-date'>
+                        <input type='text' class="form-control" id="post-date-val" name="post_date" value="{{ old('post_date') }}"/>
+                        <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                    </div>
+                    <p class="text-red error"></p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.expireDate')}} </label>
+                <div class="col-sm-6">
+                    <div class='input-group date' id='expire-date'>
+                        <input type='text' class="form-control" id="expire-date-val" name="expire_date" value="{{ old('expire_date') }}"/>
+                        <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-calendar"></span>
                                         </span>
+                    </div>
+                    <p class="text-red error"></p>
+                </div>
             </div>
-            <p class="text-red error"></p>
+        </div>
+    </div>
+    <div class="form-group collapse" id="mapSelect">
+        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.map')}}</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="map" id="map" value="{{ old('map') }}"/>
+            <span class="help-block"><i>{{trans('real-estate.formCreateLabel.mapHelpBlock')}}</i></span>
+        </div>
+        <div class="col-sm-12">
+            <div id="map-view" style="width: 100%; height: 250px;"></div>
         </div>
     </div>
     <div class="form-group">
+        <div class="col-sm-6">
+            <button type="button" class="btn btn-default btn-collapse" data-toggle="collapse" data-target="#imageSelect"><i class="fa fa-picture-o"></i> Hình ảnh</button>
+        </div>
+    </div>
+    <div class="form-group collapse" id="imageSelect">
         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.image')}}</label>
         <div class="col-sm-10">
             <div class="input-group">
@@ -255,30 +336,6 @@
         </div>
         <div class="col-sm-12 img-preview">
 
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-sm-10 col-sm-offset-2">
-            <button type="button" class="btn btn-default" data-toggle="collapse" data-target="#mapSelect"><i class="fa fa-map-marker"></i> Vị ví</button>
-        </div>
-    </div>
-    <div class="form-group collapse" id="mapSelect">
-        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.map')}}</label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control" name="map" id="map" value="{{ old('map') }}"/>
-            <span class="help-block"><i>{{trans('real-estate.formCreateLabel.mapHelpBlock')}}</i></span>
-        </div>
-        <div class="col-sm-12">
-            <div id="map-view" style="width: 100%; height: 250px;"></div>
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.detail')}} <span
-                class="text-red">*</span>
-        </label>
-        <div class="col-sm-10">
-            <textarea name="detail" class="form-control" id="detail"></textarea>
-            <p class="text-red error"></p>
         </div>
     </div>
     <div class="form-group">
