@@ -228,7 +228,7 @@
                                                                     <div class="col-xs-12 contact-phone">
                                                                         <div class="pull-right">
                                                                             <a href="tel:{{$data->userinfo->phone}}" class="btn btn-success">Gọi điện</a>
-                                                                            <a href="sms://{{$data->userinfo->phone}}" class="btn btn-info">Gửi SMS</a>
+                                                                            <a href="sms:{{$data->userinfo->phone}}" class="btn btn-info">Gửi SMS</a>
                                                                         </div>
                                                                     </div>
                                                                 </div>
