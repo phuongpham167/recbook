@@ -190,12 +190,12 @@
                                                             </div>
                                                             <div class="panel-body">
                                                                 <div class="row">
-                                                                    <div class="col-xs-12 col-md-4">Khu vực: {{$re->district->name}}</div>
+                                                                    <div class="col-xs-12 col-md-4">Khu vực: {{$re->district ? $re->district->name : ''}}</div>
                                                                     <div class="col-xs-12 col-md-2">Số tầng: {{$re->floor}}</div>
                                                                     <div class="col-xs-12 col-md-6">Gần: {{$re->position}}</div>
                                                                 </div>
                                                                 <div class="row">
-                                                                    <div class="col-xs-12 col-md-3">{{$re->reCategory->name}}</div>
+                                                                    <div class="col-xs-12 col-md-3">{{$re->reCategory ? $re->reCategory->name : ''}}</div>
                                                                     <div class="col-xs-12 col-md-9">Phòng ngủ: {{$re->bedroom}}, Phòng khách: {{$re->living_room}}, WC: {{$re->wc}}</div>
                                                                 </div>
                                                                 <div class="row">
