@@ -611,6 +611,12 @@ class PageController extends Controller
                  * get all friend
                  * */
                 $listFriends = Friend::where('user1', $id)->orWhere('user2', $id)->where('confirmed', 1)->get();
+                /*
+                 * get list friend request
+                 * */
+//                $authUser = \Auth::user();
+//                $authFriendRequestLists = Friend::where('user2', $authUser->id)->where('confirmed', 0)->get();
+//                dd($authFriendRequestLists);
 
                 return v('users.user-info', [
                     'data' => $user,

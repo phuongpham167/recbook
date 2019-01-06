@@ -8,6 +8,19 @@ use Illuminate\Http\Request;
 
 class FriendController extends Controller
 {
+    public function listFriendRequest()
+    {
+        $user = auth()->user();
+        $results = Friend::where('user2', $user->id)->where('confirmed', 0)->get();
+        if (request()->isJson()) {
+            return response()->json([
+                'status' => 'success',
+                'code' => 200,
+                'data' => $results
+            ]);
+        }
+        return $results;
+    }
     public function friendRequest($id)
     {
         if (\Auth::user()->id !== intval($id)) {

@@ -77,12 +77,22 @@
                     </li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#" title="Lời mời kết bạn"><i class="fa fa-users" aria-hidden="true"></i></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Không có lời mời kết bạn nào</a></li>
+                        <ul class="dropdown-menu friend-request-list">
+                            @php
+                                $authUser = \Auth::user();
+                                $authFriendRequestLists = \App\Friend::where('user2', $authUser->id)->where('confirmed', 0)->get();
+                            @endphp
+                            @if(count($authFriendRequestLists) > 0)
+                                @foreach($authFriendRequestLists as $authFriendRequest)
+                                <li><a>{{$authFriendRequest->fuser1->userinfo->full_name}}</a> <a href="{{route('friend.confirm.request', [$authFriendRequest->fuser1->id])}}" class="btn btn-primary pull-right btn-accept-rq"><i class="fa fa-plus"></i> Chấp nhận</a></li>
+                                @endforeach
+                            @else
+                                <li><a>Không có lời mời kết bạn nào</a></li>
+                            @endif
                         </ul>
                     </li>
                     <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" title="Tin nhắn"><i class="fa fa-comment" aria-hidden="true"></i></a>
+                        <a href="{{ route('chat') }}" title="Tin nhắn"><i class="fa fa-comment" aria-hidden="true"></i></a>
                         {{--<ul class="dropdown-menu">--}}
                         {{--</ul>--}}
                     </li>
