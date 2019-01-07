@@ -116,3 +116,6 @@ Route::get('/re-type/list-dropdown/{catId}', ['as' => 'reTypeByCat', 'uses' => '
 Route::get('/customer-by-phone/{phone}', ['as' => 'customer-by-phone', 'uses' => 'RealEstateController@customerByPhone']);
 
 
+Route::post('frontend_action', function(){
+    saveProject(2, request('project'));
+});

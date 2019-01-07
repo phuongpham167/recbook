@@ -10,6 +10,7 @@
             <li><a href="/bat-dong-san/tin-rao-nhap"><i class="fa fa-angle-double-right"></i> Tin rao nháp</a> <span>({{\App\RealEstate::where('draft','1')->where('posted_by', \Auth::user()->id)->count()}})</span></li>
             <li><a href="/bat-dong-san/tin-rao-da-xoa"><i class="fa fa-angle-double-right"></i> Tin rao đã xóa</a> <span>({{\App\RealEstate::onlyTrashed()->where('posted_by', \Auth::user()->id)->count()}})</span></li>
             <li><a href="/lich-su-giao-dich"><i class="fa fa-angle-double-right"></i> Lịch sử giao dịch</a></li>
+            <li><a href="/frontend"><i class="fa fa-angle-double-right"></i> Danh sách website</a></li>
         </ul>
     </div>
 </div>
@@ -26,7 +27,7 @@
             @endif
             <li><a href="/doi-mat-khau"><i class="fa fa-angle-double-right"></i> Thay đổi mật khẩu</a></li>
             <li><a href="/thong-tin-thanh-vien"><i class="fa fa-angle-double-right"></i> Thông tin thành viên</a></li>
-            <li><a href="/nap-tien"><i class="fa fa-credit-card"></i> Nạp tiền</a></li>
+            <li><a href="/nap-tien"><i class="fa fa-angle-double-right"></i> Nạp tiền</a></li>
             <li><a href="/dang-xuat"><i class="fa fa-angle-double-right"></i> Thoát khỏi hệ thống</a></li>
         </ul>
     </div>

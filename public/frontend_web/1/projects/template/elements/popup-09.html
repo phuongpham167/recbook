@@ -1,0 +1,49 @@
+<!--
+	************************************************************
+	* Popup form block
+	************************************************************ -->
+	
+	<!-- form : "mfp-hide" Add this class before using -->
+	<div id="popup-content" class="white-popup-block popup-content mfp-hide">
+		<div class="pop-header pos-rel">
+			<div class="content pd-tb-mini typo-light pos-rel z1">
+				<h2 class="title small" data-rgen-sm="small">DROP US A LINE</h2>
+				<p class="mr-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt labore magna aliqua</p>
+			</div>
+			<b class="full-wh bg-cc bg-cover" data-bg="images/gym-bg1.jpg"></b>
+		</div>
+		<div class="pop-body" data-rgen-sm="pd-20">
+			
+			<!-- form-block -->
+			<div class="form-block">
+				<form action="form-data/formdata.php" class="form-widget">
+					<div class="field-wrp">
+						<input type="hidden" name="to" value="r.genesis.art@gmail.com">
+						<div class="row gt10">
+							<div class="col-md-6">
+								<div class="form-group">
+									<input class="form-control" data-label="Name" required data-msg="Please enter name." type="text" name="name" placeholder="Enter your name">
+								</div>
+							</div><!-- // END : column //  -->
+							
+							<div class="col-md-6">
+								<div class="form-group">
+									<input class="form-control" data-label="Email" required data-msg="Please enter email." type="email" name="email" placeholder="Enter your email">
+								</div>
+							</div><!-- // END : column //  -->
+						</div><!-- // END : row //  -->
+						<div class="form-group">
+							<input class="form-control" required data-label="Phone" data-msg="Please phone number." type="text" name="phone" placeholder="Enter your phone number">
+						</div>
+						<div class="form-group">
+							<textarea class="form-control" data-label="Message" required data-msg="Please enter your message." name="message" placeholder="Add your message" cols="30" rows="10"></textarea>
+						</div>
+					</div>
+					<button type="submit" class="btn solid btn-dark block"><i class="fa fa-envelope-o"></i> SUBMIT</button>
+				</form><!-- / form -->
+			</div><!-- / form block -->
+		</div>
+		
+
+	</div><!-- /#popup-content -->
+	<!-- ************** END : Popup form block **************  -->

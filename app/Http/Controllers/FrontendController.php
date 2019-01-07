@@ -34,8 +34,8 @@ class FrontendController extends Controller
     public function dataList() {
         $data   =   Frontend::query();
 
-        if(auth()->user()->id != 1)
-            $data = $data->where('user_id',auth()->user()->id);
+//        if(auth()->user()->id != 1)
+//            $data = $data->where('user_id',auth()->user()->id);
 
         $result = Datatables::of($data)
             ->addColumn('manage', function($frontend) {

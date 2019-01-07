@@ -1,16 +1,20 @@
 @extends(theme(TRUE).'.layouts.app')
 
+@section('meta-description')
+    <meta name="description" content="Frontend List">
+@endsection
+
 @section('title')
     {{trans('frontend.index')}}
 @endsection
 
 @push('style')
     <link rel="stylesheet" href="{{ asset('css/theme.css') }}"/>
-    <link rel="stylesheet" href="{{asset('plugins/jquery.datatables/css/jquery.dataTables.min.css')}}" />
+    <link rel="stylesheet" href="{{asset('plugins/jquery.datatables/css/jquery.dataTables.min.css')}}"/>
 @endpush
 
 @section('content')
-{{--    @include(theme(TRUE).'.includes.header')--}}
+    @include(theme(TRUE).'.includes.header')
     <div class="container-vina">
         <div class="row subpage">
             <!--Begin left-->
@@ -22,10 +26,10 @@
             <div class="col-xs-9 right">
                 @include('themes.default.includes.message')
                 <div class="listlandA_page">
-                    <p class="title_boxM"><strong><i class="fa fa-history"></i>{{trans('frontend.index')}}</strong></p>
+                    <p class="title_boxM"><strong><i class="fa fa-list-alt"></i>{{trans('frontend.index')}}</strong></p>
 
                     <div class="box-tools pull-right">
-                        {!! a('frontend/create', '', '<i class="fa fa-plus"></i> '.trans('system.add'), ['class'=>'btn btn-sm btn-primary'],'')  !!}
+                        {!! a('frontend/create', '', '<i class="fa fa-plus"></i> '.trans('system.add'), ['class'=>'_btn bg_red'],'')  !!}
                     </div>
 
                     <div>
@@ -48,25 +52,27 @@
                 </div>
             </div>
         </div>
+    </div>
+    @include(theme(TRUE).'.includes.footer')
 
-        @include(theme(TRUE).'.includes.footer')
-        @endsection
-
-        @section('js')
-            <script>
-                $(function () {
-                    $('#datatable').DataTable({
-                        processing: true,
-                        serverSide: true,
-                        ajax: '{!! asset('frontend/data') !!}',
-                        columns: [
-                            {data: 'title', name: 'title'},
-                            {data: 'domain', name: 'domain'},
-                            {data: 'theme', name: 'theme'},
-                            {data: 'user_id', name: 'user_id'},
-                            {data: 'manage', name: 'manage', sortable: false, searchable: false}
-                        ]
-                    });
-                });
-            </script>
 @endsection
+
+@push('js')
+    <script src="{{asset('plugins/jquery.datatables/js/jquery.dataTables.js')}}"></script>
+    <script>
+        $(function () {
+            $('#datatable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: '{!! asset('frontend/data') !!}',
+                columns: [
+                    {data: 'title', name: 'title'},
+                    {data: 'domain', name: 'domain'},
+                    {data: 'theme', name: 'theme'},
+                    {data: 'user_id', name: 'user_id'},
+                    {data: 'manage', name: 'manage', sortable: false, searchable: false}
+                ]
+            });
+        });
+    </script>
+@endpush
