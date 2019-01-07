@@ -66,6 +66,14 @@ Route::group(['middleware'=>'auth'], function(){
     Route::get('/nap-tien/ket-qua', ['as' => 'rechargeResult', 'uses' => 'TransactionController@rechargeResult']);
     Route::get('/nap-tien/huy-bo', ['as' => 'rechargeCancel', 'uses' => 'TransactionController@rechargeCancel']);
 
+    Route::get('frontend', ['as' => 'frontendList', 'uses' => 'FrontendController@getList']);
+    Route::get('frontend/data', ['as' => 'frontendData', 'uses' => 'FrontendController@dataList']);
+    Route::get('frontend/create', ['as' => 'frontendCreate', 'uses' => 'FrontendController@getCreate']);
+    Route::post('frontend/create', ['as' => 'frontendCreate', 'uses' => 'FrontendController@postCreate']);
+    Route::get('frontend/del', ['as' => 'frontendDelete', 'uses' => 'FrontendController@getDelete']);
+    Route::get('frontend/edit', ['as' => 'frontendEdit', 'uses' => 'FrontendController@getEdit']);
+    Route::post('frontend/edit', ['as' => 'frontendEdit', 'uses' => 'FrontendController@postEdit']);
+
     Route::group(['prefix'=>'bat-dong-san'], function(){
         Route::get('/{filter?}', ['as' => 'realEstateList', 'uses' => 'RealEstateController@list'])->where('filter', 'tin-rao-het-han|tin-rao-cho-duyet|tin-rao-nhap|tin-rao-da-xoa');
         Route::get('/data',['as' => 'realEstateData', 'uses' => 'RealEstateController@data']);
