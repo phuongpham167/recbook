@@ -194,6 +194,60 @@ button {
   width: 30px;
 }
 
+/*---------- menu header only for user info page ---------------*/
+
+.main-menu-user-info .menu-search input {
+  width: 300px !important;
+  border-top-left-radius: 3px !important;
+  border-bottom-left-radius: 3px !important;
+}
+
+.main-menu-user-info .menu-search button {
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+.main-menu-user-info .menu-search button i {
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+.main-menu-user-info .navbar-right li.dropdown a {
+  padding-left: 12px;
+  padding-top: 16px;
+}
+
+.main-menu-user-info .navbar-right li.dropdown a i {
+  font-size: 18px;
+}
+
+.main-menu-user-info .navbar-right a {
+  padding: 12px;
+  padding-left: 12px !important;
+}
+
+.main-menu-user-info .navbar-right .header-avatar {
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+}
+
+.main-menu-user-info .navbar-right .header-name {
+  text-transform: capitalize;
+}
+
+.main-menu-user-info .friend-request-list li a {
+  display: inline-block;
+  padding-bottom: 5px !important;
+  padding-top: 5px !important;
+}
+
+.main-menu-user-info .friend-request-list li .btn-accept-rq {
+  border-color: #fff;
+  margin-right: 5px;
+}
+
 /*------------ End Header ------------*/
 
 /*------------ Footer ------------*/

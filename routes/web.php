@@ -40,7 +40,7 @@ Route::post('/lien-he', ['as' => 'post.contact', 'uses' => 'ContactController@po
 /*
  * route thong tin thanh vien
  * */
-Route::get('/thong-tin-thanh-vien/{id}', ['as' => 'user.info', 'uses' => 'PageController@getUserInfo']);
+Route::get('/user/{id}', ['as' => 'user.info', 'uses' => 'PageController@getUserInfo']);
 
 Route::get('/dang-nhap', ['as' => 'login', 'uses' => 'AuthenticateController@getLogin']);
 Route::post('/dang-nhap', ['as' => 'post.login', 'uses' => 'AuthenticateController@postLogin']);
@@ -77,7 +77,7 @@ Route::group(['middleware'=>'auth'], function(){
     Route::group(['prefix'=>'bat-dong-san'], function(){
         Route::get('/{filter?}', ['as' => 'realEstateList', 'uses' => 'RealEstateController@list'])->where('filter', 'tin-rao-het-han|tin-rao-cho-duyet|tin-rao-nhap|tin-rao-da-xoa');
         Route::get('/data',['as' => 'realEstateData', 'uses' => 'RealEstateController@data']);
-        Route::get('/sua', 'RealEstateController@edit');
+        Route::get('/sua', ['as' => 'get.edit-real-estate', 'uses' => 'RealEstateController@edit']);
         Route::post('/sua', 'RealEstateController@update');
         Route::get('/tao-moi', ['as' => 'get.create-real-estate',  'uses' => 'RealEstateController@create']);
         Route::post('tao-moi', ['as' => 'post.create-real-estate', 'uses' => 'RealEstateController@store']);
@@ -94,9 +94,12 @@ Route::group(['middleware'=>'auth'], function(){
     Route::get('/tin-nhan', ['as' => 'chat', 'uses' => 'PageController@getChat']);
     Route::resource('conversation','ConversationController');
     Route::resource('message','MessageController');
+
+    Route::post('/update-avatar', ['as' => 'post.update-avatar', 'uses' => 'UserController@updateAvatar']);
     /*
      * friend route
      * */
+    Route::get('danh-sach-loi-moi-ket-ban', ['as' => 'friend.request.list', 'uses' => 'FriendController@listFriendRequest']);
     Route::get('them-ban-be/{id}', ['as'=> 'friend.request', 'uses' => 'FriendController@friendRequest']);
     Route::get('xac-nhan-ban-be/{id}', ['as'=> 'friend.confirm.request', 'uses' => 'FriendController@confirmFriendRequest']);
 });

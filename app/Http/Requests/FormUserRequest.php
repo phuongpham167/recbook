@@ -30,17 +30,17 @@ class FormUserRequest extends FormRequest
             'address'  =>  'required',
             'password'  =>  'required|min:6',
             'repassword'  =>  'required|min:6',
-            'company_name'  =>  'required',
-            'taxcode'  =>  'required',
             'email' =>   [
                 'required',
                 'email',
                 'unique:users'
 //                Rule::unique('users')->ignore(auth()->user()->id),
             ],
-//            'password'  =>  'required',
-//            'group_id'  =>  'required',
-//            'branch_id' =>  'required'
+            'full_name'  =>  'required',
+            'company'  =>  'required',
+            'identification'  =>  'required',
+            'province_id'  =>  'required',
+            'description'  =>  'required'
         ];
     }
 
@@ -48,17 +48,20 @@ class FormUserRequest extends FormRequest
     {
         return [
             'name.required'  =>  'Vui lòng điền Tên đăng nhập',
-            'phone.required'  =>  'Vui lòng điền số điện thoại',
-            'address.required'  =>  'Vui lòng điền địa chỉ',
             'password.required'  =>  'Vui lòng điền mật khẩu',
             'password.min'  =>  'Mật khẩu phải có tối thiểu 6 ký tự',
             'repassword.required'  =>  'Vui lòng nhập lại mật khẩu',
             'repassword.min'  =>  'Mật khẩu phải có tối thiểu 6 ký tự',
-            'company_name.required'  =>  'Vui lòng điền họ tên/ tên công ty',
             'email.required'  =>  'Vui lòng điền email',
             'email.unique'  =>  'Email đã được sử dụng',
             'email.email'  =>  'Định dạng email chưa chính xác',
-            'taxcode.required'  =>  'Vui lòng điền CMT/ Mã số thuế'
+            'full_name.required'  =>  'Vui lòng điền họ têb',
+            'company.required'  =>  'Vui lòng điền nơi làm việc',
+            'identification.required'  =>  'Vui lòng điền CMT/ Mã số thuế',
+            'province_id.required'  =>  'Vui lòng chọn tỉnh/thành',
+            'phone.required'  =>  'Vui lòng điền số điện thoại',
+            'address.required'  =>  'Vui lòng điền địa chỉ',
+            'description.required'  =>  'Vui lòng điền mô tả',
         ];
     }
 }

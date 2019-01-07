@@ -1,5 +1,74 @@
+.btn-collapse {
+    -webkit-border-radius: 25px;
+    -moz-border-radius: 25px;
+    border-radius: 25px;
+    background-color: #f5f6f7;
+    width: 100%;
+    &:hover {
+        background-color: #ebedf0;
+    }
+}
+.detail-top {
+    .av-wrap {
+        display: inline-block;
+        //margin-bottom: 15px;
+        position: relative;
+        &:hover {
+            .btn-change-av {
 
-.user-info {
+                display: block !important;
+
+            }
+        }
+        .btn-change-av {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+            color: #fff;
+            display: none;
+            position: absolute;
+            bottom: 5px;
+            left: 5px;
+            background: linear-gradient( transparent, rgba(0, 0, 0, .6) 50%, rgba(0, 0, 0, .6) 100% );
+        }
+    }
+    .avatar {
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        padding: 4px;
+        width: 168px;
+        height: 168px;
+    }
+    .name {
+        display: inline-block;
+        font-size: 24px;
+        text-shadow: 0 0 3px rgba(0, 0, 0, .4);
+        position: absolute;
+        bottom: 20px;
+        margin-left: 20px;
+    }
+    .update-info-wrap {
+        position: absolute;
+        right: 25px;
+        bottom: 20px;
+        p {
+            background-color: #ccc;
+            color: #000;
+            padding: 10px 15px;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 3px;
+            a {
+                color: #4b4f56;
+                text-decoration: none;
+            }
+        }
+    }
+}
+.user-desc {
+    margin-bottom: 15px;
+}
+//.user-info {
     .panel {
         border-radius: 0;
     }
@@ -18,13 +87,7 @@
 
         }
     }
-    .avatar {
-        border: 1px solid #ccc;
-        padding: 15px;
-    }
-    .user-desc {
-        margin-bottom: 15px;
-    }
+
     .top-head {
         background: #f5f6f7;
         border: 1px solid #ccc;
@@ -68,7 +131,7 @@
     .list-re {
         margin-top: 15px;
     }
-}
+//}
 
 ._btn {
     display: inline-block;
@@ -89,7 +152,10 @@
     cursor: pointer;
 }
 #postReModal {
-    margin-top: 50px;
+    //margin-top: 150px;
+    padding-top:400px;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
 }
 
 .pg-item {
@@ -104,3 +170,55 @@
 .contact-phone {
     padding-top: 15px;
 }
+.modal1 {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1050;
+        display: none;
+        overflow: hidden;
+        -webkit-overflow-scrolling: touch;
+        outline: 0;
+
+}
+.modal1.in .modal-dialog {
+    -webkit-transform: translate(0,0);
+    -ms-transform: translate(0,0);
+    -o-transform: translate(0,0);
+    transform: translate(0,0);
+}
+
+.modal1.fade .modal-dialog {
+    -webkit-transition: -webkit-transform .3s ease-out;
+    -o-transition: -o-transform .3s ease-out;
+    transition: transform .3s ease-out;
+    -webkit-transform: translate(0,-25%);
+    -ms-transform: translate(0,-25%);
+    -o-transform: translate(0,-25%);
+    transform: translate(0,-25%);
+}
+.modal1-backdrop {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1040;
+    background-color: #000;
+}
+.modal1-backdrop.in {
+    filter: alpha(opacity=50);
+    opacity: .5 !important;
+}
+.modal1-backdrop.fade {
+    filter: alpha(opacity=0);
+    opacity: 0;
+}
+#myModal {
+    position: absolute;
+    top: 25%;
+    left: -20%;
+}
+

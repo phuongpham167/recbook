@@ -1,56 +1,120 @@
-.user-info .panel {
+.btn-collapse {
+  border-radius: 25px;
+  background-color: #f5f6f7;
+  width: 100%;
+}
+
+.btn-collapse:hover {
+  background-color: #ebedf0;
+}
+
+.detail-top .av-wrap {
+  display: inline-block;
+  position: relative;
+}
+
+.detail-top .av-wrap:hover .btn-change-av {
+  display: block !important;
+}
+
+.detail-top .av-wrap .btn-change-av {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  color: #fff;
+  display: none;
+  position: absolute;
+  bottom: 5px;
+  left: 5px;
+  background: -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(50%, rgba(0, 0, 0, 0.6)), to(rgba(0, 0, 0, 0.6)));
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.6) 50%, rgba(0, 0, 0, 0.6) 100%);
+}
+
+.detail-top .avatar {
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 4px;
+  width: 168px;
+  height: 168px;
+}
+
+.detail-top .name {
+  display: inline-block;
+  font-size: 24px;
+  text-shadow: 0 0 3px rgba(0, 0, 0, 0.4);
+  position: absolute;
+  bottom: 20px;
+  margin-left: 20px;
+}
+
+.detail-top .update-info-wrap {
+  position: absolute;
+  right: 25px;
+  bottom: 20px;
+}
+
+.detail-top .update-info-wrap p {
+  background-color: #ccc;
+  color: #000;
+  padding: 10px 15px;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 3px;
+}
+
+.detail-top .update-info-wrap p a {
+  color: #4b4f56;
+  text-decoration: none;
+}
+
+.user-desc {
+  margin-bottom: 15px;
+}
+
+.panel {
   border-radius: 0;
 }
 
-.user-info .name {
+.name {
   font-size: 20px;
   font-weight: 600;
   margin-top: 10px;
 }
 
-.user-info .description-label,
-.user-info .rate-label,
-.user-info .posted-real-estate-label {
+.description-label,
+.rate-label,
+.posted-real-estate-label {
   font-size: 20px;
   font-weight: 600;
 }
 
-.user-info .social {
+.social {
   text-align: right;
 }
 
-.user-info .avatar {
-  border: 1px solid #ccc;
-  padding: 15px;
-}
-
-.user-info .user-desc {
-  margin-bottom: 15px;
-}
-
-.user-info .top-head {
+.top-head {
   background: #f5f6f7;
   border: 1px solid #ccc;
   border-bottom: none;
 }
 
-.user-info .top-head p {
+.top-head p {
   font-size: 14px;
   margin: 0;
   padding: 10px 0;
 }
 
-.user-info .center-top {
+.center-top {
   border: 1px solid #ccc;
   padding-top: 15px;
 }
 
-.user-info .alert-title {
+.alert-title {
   font-size: 18px;
   text-transform: uppercase;
 }
 
-.user-info .title-short-section {
+.title-short-section {
   margin-bottom: 0px;
   margin-top: 0;
   background: #e40b00;
@@ -61,14 +125,14 @@
   text-transform: uppercase;
 }
 
-.user-info .border-block {
+.border-block {
   border: 1px solid #ccc;
   border-top: none;
   margin-bottom: 15px;
   padding: 15px;
 }
 
-.user-info .list-re {
+.list-re {
   margin-top: 15px;
 }
 
@@ -93,7 +157,9 @@
 }
 
 #postReModal {
-  margin-top: 50px;
+  padding-top: 400px;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
 }
 
 .pg-item {
@@ -109,5 +175,58 @@
 
 .contact-phone {
   padding-top: 15px;
+}
+
+.modal1 {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1050;
+  display: none;
+  overflow: hidden;
+  -webkit-overflow-scrolling: touch;
+  outline: 0;
+}
+
+.modal1.in .modal-dialog {
+  -webkit-transform: translate(0, 0);
+  transform: translate(0, 0);
+}
+
+.modal1.fade .modal-dialog {
+  -webkit-transition: -webkit-transform .3s ease-out;
+  transition: -webkit-transform .3s ease-out;
+  transition: transform .3s ease-out;
+  transition: transform .3s ease-out, -webkit-transform .3s ease-out;
+  -webkit-transform: translate(0, -25%);
+  transform: translate(0, -25%);
+}
+
+.modal1-backdrop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1040;
+  background-color: #000;
+}
+
+.modal1-backdrop.in {
+  filter: alpha(opacity=50);
+  opacity: .5 !important;
+}
+
+.modal1-backdrop.fade {
+  filter: alpha(opacity=0);
+  opacity: 0;
+}
+
+#myModal {
+  position: absolute;
+  top: 25%;
+  left: -20%;
 }
 

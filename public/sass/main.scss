@@ -175,6 +175,62 @@ button {
         }
     }
 }
+/*---------- menu header only for user info page ---------------*/
+.main-menu-user-info {
+    .menu-search {
+        input {
+            width: 300px !important;
+            border-top-left-radius: 3px !important;
+            border-bottom-left-radius: 3px !important;
+        }
+        button {
+            border-top-right-radius: 3px;
+            border-bottom-right-radius: 3px;
+            i {
+                border-top-right-radius: 3px;
+                border-bottom-right-radius: 3px;
+            }
+        }
+    }
+    .navbar-right {
+        li.dropdown {
+            a {
+                padding-left: 12px;
+                padding-top: 16px;
+                i {
+                    font-size: 18px;
+                }
+            }
+        }
+        a {
+            padding: 12px;
+            padding-left: 12px !important;
+        }
+        .header-avatar {
+            display: inline-block;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+        }
+        .header-name {
+            text-transform: capitalize;
+        }
+    }
+    .friend-request-list {
+        li {
+            a {
+                display: inline-block;
+                padding-bottom: 5px !important;
+                padding-top: 5px !important;
+            }
+            .btn-accept-rq {
+                //background-color: #4267b2 !important;
+                border-color: #fff;
+                margin-right: 5px;
+            }
+        }
+    }
+}
 /*------------ End Header ------------*/
 
 /*------------ Footer ------------*/

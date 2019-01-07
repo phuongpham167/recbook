@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\Branch;
 use App\Currency;
 use App\Group;
+use App\Http\Requests\FormUserInfoRequest;
 use App\Http\Requests\FormUserRequest;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\ResetPasswordRequest;
 use App\Menu;
 use App\PasswordReset;
+use App\Services\ProvinceService;
 use App\TransactionLog;
 use App\User;
 use App\UserInfo;
@@ -23,10 +25,13 @@ use \DataTables;
 
 class AuthenticateController extends Controller
 {
-    protected $menuFE;
+    protected $menuFE, $provinceService;
 
-    public function __construct()
+    public function __construct(
+        ProvinceService $provinceService
+    )
     {
+        $this->provinceService = $provinceService;
         $web_id = get_web_id();
         $mmfe = config('menu.mainMenuFE');
         $this->menuFE = Menu::where('web_id', $web_id)->where('menu_type', $mmfe)->first();
@@ -65,7 +70,8 @@ class AuthenticateController extends Controller
     public function postLogin(LoginRequest $request)
     {
         if($this->login($request->input('id'),$request->input('password'),$request->has('remember'))){
-            return redirect()->to(asset('/quan-ly-tin-rao'));
+//            return redirect()->to(asset('/quan-ly-tin-rao'));
+            return redirect()->route('user.info', [auth()->user()->id]);
         } else {
             return redirect()->back()->withErrors(trans('auth.failed'));
         }
@@ -111,17 +117,25 @@ class AuthenticateController extends Controller
 
     public function getInfo()
     {
-        return v('users.info', ['menuData' => $this->menuFE]);
+        $provinces = $this->provinceService->getListDropDown();
+        return v('users.info', [
+            'menuData' => $this->menuFE,
+            'provinces' => $provinces
+        ]);
     }
 
-    public function postInfo(FormUserRequest $request)
+    public function postInfo(FormUserInfoRequest $request)
     {
-        auth()->user()->name   =   $request->name;
-        auth()->user()->taxcode    =   $request->taxcode;
-        auth()->user()->phone    =   $request->phone;
-        auth()->user()->address    =   $request->address;
-        auth()->user()->email    =   $request->email;
-        auth()->user()->save();
+        $userInfo = auth()->user()->userinfo;
+        $userInfo->full_name   =   $request->full_name;
+        $userInfo->company    =   $request->company;
+        $userInfo->identification    =   $request->identification;
+        $userInfo->phone    =   $request->phone;
+        $userInfo->province_id    =   $request->province_id;
+        $userInfo->address    =   $request->address;
+        $userInfo->website    =   $request->website;
+        $userInfo->description    =   $request->description;
+        $userInfo->save();
 //        event_log('Sửa thành viên '.auth()->user()->name.' id '.auth()->user()->id);
         set_notice(trans('system.edit_success'), 'success');
 
@@ -130,7 +144,11 @@ class AuthenticateController extends Controller
 
     public function getRegister()
     {
-        return v('authenticate.register', ['menuData' => $this->menuFE]);
+        $provinces = $this->provinceService->getListDropDown();
+        return v('authenticate.register', [
+            'menuData' => $this->menuFE,
+            'provinces' => $provinces
+        ]);
     }
 
     public function postRegister(FormUserRequest $request)
@@ -157,10 +175,13 @@ class AuthenticateController extends Controller
 
         $user_info = new UserInfo();
         $user_info->user_id = $data->id;
-        $user_info->company = $request->company_name;
-        $user_info->identification = $request->taxcode;
+        $user_info->full_name = $request->full_name;
+        $user_info->company = $request->company;
+        $user_info->identification = $request->identification;
         $user_info->phone = $request->phone;
+        $user_info->province_id = $request->province_id;
         $user_info->address = $request->address;
+        $user_info->description = $request->description;
         $user_info->website = $request->website;
 
         $user_info->save();

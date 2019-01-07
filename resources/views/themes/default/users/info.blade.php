@@ -29,9 +29,8 @@
                 @include(theme(TRUE).'.includes.message')
                 <!--begin manage_page-->
                 <div class="changeinfoA_page member_page">
-                    <p class="title_boxM"><strong><i class="fa fa-file-pdf-o"></i> THAY ĐỔI MẬT KHẨU</strong></p>
+                    <p class="title_boxM"><strong><i class="fa fa-file-pdf-o"></i> Cập nhật thông tin</strong></p>
                     <div>
-
                         <div class="_form">
                             <form id="dangnhap-form" method="post">
                                 {{csrf_field()}}
@@ -40,17 +39,24 @@
 
                                     <div class="col-xs-12">
                                         <dl>
-                                            <dt class="txt_right">Cá nhân/Tổ chức <span class="required">*</span></dt>
+                                            <dt class="txt_right">Họ và tên <span class="required">*</span></dt>
                                             <dd>
-                                                <input class="_required" name="name" id="name" type="text" maxlength="200" value="{{auth()->user()->name}}">											<div class="errorMessage" id="Account_name_em_" style="display:none"></div>										</dd>
+                                                <input class="_required" name="full_name" id="full_name" type="text" maxlength="200" value="{{auth()->user()->userinfo->full_name}}">											<div class="errorMessage" id="Account_name_em_" style="display:none"></div>										</dd>
+                                        </dl>
+                                    </div>
+                                    <div class="col-xs-12">
+                                        <dl>
+                                            <dt class="txt_right">Nơi làm việc <span class="required">*</span></dt>
+                                            <dd>
+                                                <input class="_required" name="company" id="company" type="text" maxlength="200" value="{{auth()->user()->userinfo->company}}">											<div class="errorMessage" id="Account_name_em_" style="display:none"></div>										</dd>
                                         </dl>
                                     </div>
 
                                     <div class="col-xs-12">
                                         <dl>
-                                            <dt class="txt_right">Số chứng minh/Mã số thuế <span class="required">*</span></dt>
+                                            <dt class="txt_right">Số CMT/Mã số thuế <span class="required">*</span></dt>
                                             <dd>
-                                                <input class="_required" name="taxcode" id="taxcode" type="text" maxlength="50" value="{{auth()->user()->taxcode}}">
+                                                <input class="_required" name="identification" id="identification" type="text" maxlength="50" value="{{auth()->user()->userinfo->identification}}">
                                             </dd>
                                         </dl>
                                     </div>
@@ -59,33 +65,54 @@
                                         <dl>
                                             <dt class="txt_right">Điện thoại <span class="required">*</span></dt>
                                             <dd>
-                                                <input class="_required" name="phone" id="phone" type="text" maxlength="50" value="{{auth()->user()->phone}}">
+                                                <input class="_required" name="phone" id="phone" type="text" maxlength="50" value="{{auth()->user()->userinfo->phone}}">
                                             </dd>
                                         </dl>
                                     </div>
 
                                     <div class="col-xs-12">
                                         <dl>
-                                            <dt class="txt_right">Địa chỉ</dt>
+                                            <dt class="txt_right">Tỉnh/Thành <span class="required">*</span></dt>
                                             <dd>
-                                                <input name="address" id="address" type="text" maxlength="200" value="{{auth()->user()->address}}">
+                                                <select class="_required" name="province_id">
+                                                    @foreach($provinces as $province)
+                                                        <option value="{{$province->id}}" {{$province->id == auth()->user()->userinfo->province_id ? 'selected' : ''}}>{{$province->name}}</option>
+                                                    @endforeach
+                                                </select>
                                             </dd>
                                         </dl>
                                     </div>
 
                                     <div class="col-xs-12">
                                         <dl>
-                                            <dt class="txt_right">Email <span class="required">*</span></dt>
+                                            <dt class="txt_right">Địa chỉ <span class="required">*</span></dt>
                                             <dd>
-                                                <input class="_required" name="email" id="email" type="text" maxlength="200" value="{{auth()->user()->email}}">											<div class="errorMessage" id="Account_email_em_" style="display:none"></div>										</dd>
+                                                <input class="_required" name="address" id="address" type="text" maxlength="200" value="{{auth()->user()->userinfo->address}}">
+                                            </dd>
                                         </dl>
                                     </div>
+
+                                    {{--<div class="col-xs-12">--}}
+                                        {{--<dl>--}}
+                                            {{--<dt class="txt_right">Email <span class="required">*</span></dt>--}}
+                                            {{--<dd>--}}
+                                                {{--<input class="_required" name="email" id="email" type="text" maxlength="200" value="{{auth()->user()->email}}">											<div class="errorMessage" id="Account_email_em_" style="display:none"></div>										</dd>--}}
+                                        {{--</dl>--}}
+                                    {{--</div>--}}
 
                                     <div class="col-xs-12">
                                         <dl>
                                             <dt class="txt_right">Website</dt>
                                             <dd>
-                                                <input name="web_id" id="web_id" type="text" maxlength="200" value="{{ auth()->user()->website }}">
+                                                <input name="website" id="website" type="text" maxlength="200" value="{{ auth()->user()->userinfo->website }}">
+                                            </dd>
+                                        </dl>
+                                    </div>
+                                    <div class="col-xs-12">
+                                        <dl>
+                                            <dt class="txt_right">Giới thiệu <span class="required">*</span></dt>
+                                            <dd>
+                                                <textarea class="_required" name="description" >{{ auth()->user()->userinfo->description }}</textarea>
                                             </dd>
                                         </dl>
                                     </div>
