@@ -237,6 +237,17 @@ button {
   text-transform: capitalize;
 }
 
+.main-menu-user-info .friend-request-list li a {
+  display: inline-block;
+  padding-bottom: 5px !important;
+  padding-top: 5px !important;
+}
+
+.main-menu-user-info .friend-request-list li .btn-accept-rq {
+  border-color: #fff;
+  margin-right: 5px;
+}
+
 /*------------ End Header ------------*/
 
 /*------------ Footer ------------*/

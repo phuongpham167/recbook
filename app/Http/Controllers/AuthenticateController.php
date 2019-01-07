@@ -70,7 +70,8 @@ class AuthenticateController extends Controller
     public function postLogin(LoginRequest $request)
     {
         if($this->login($request->input('id'),$request->input('password'),$request->has('remember'))){
-            return redirect()->to(asset('/quan-ly-tin-rao'));
+//            return redirect()->to(asset('/quan-ly-tin-rao'));
+            return redirect()->route('user.info', [auth()->user()->id]);
         } else {
             return redirect()->back()->withErrors(trans('auth.failed'));
         }

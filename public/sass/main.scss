@@ -216,6 +216,20 @@ button {
             text-transform: capitalize;
         }
     }
+    .friend-request-list {
+        li {
+            a {
+                display: inline-block;
+                padding-bottom: 5px !important;
+                padding-top: 5px !important;
+            }
+            .btn-accept-rq {
+                //background-color: #4267b2 !important;
+                border-color: #fff;
+                margin-right: 5px;
+            }
+        }
+    }
 }
 /*------------ End Header ------------*/
 
