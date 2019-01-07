@@ -75,7 +75,7 @@
                                     <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 deal deal-block">
                                         <div class="item-slide">
                                             <div class="box-img">
-                                                <img src="{{asset('images/themes/index-agency-01.jpg')}}"
+                                                <img src="{{asset('images/themes/BDS-01.jpg')}}"
                                                      alt="dasdas"/>
                                                 <div class="text-wrap">
                                                     <h4>Bất động sản 01
@@ -108,7 +108,7 @@
                                     <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 deal deal-block">
                                         <div class="item-slide">
                                             <div class="box-img">
-                                                <img src="{{asset('images/themes/index-agency-02.jpg')}}"
+                                                <img src="{{asset('images/themes/BDS-02.jpg')}}"
                                                      alt="dasdas"/>
                                                 <div class="text-wrap">
                                                     <h4>Bất động sản 02
@@ -141,7 +141,7 @@
                                     <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 deal deal-block">
                                         <div class="item-slide">
                                             <div class="box-img">
-                                                <img src="{{asset('images/themes/index-agency-03.jpg')}}"
+                                                <img src="{{asset('images/themes/BDS-03.jpg')}}"
                                                      alt="dasdas"/>
                                                 <div class="text-wrap">
                                                     <h4>Bất động sản 03
