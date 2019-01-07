@@ -32,7 +32,7 @@ class FrontendController extends Controller
     }
 
     public function dataList() {
-        $data   =   Frontend::with('users');
+        $data   =   Frontend::query();
 
         if(auth()->user()->id != 1)
             $data = $data->where('user_id',auth()->user()->id);
@@ -42,11 +42,11 @@ class FrontendController extends Controller
                 return a('frontend/del', 'id='.$frontend->id,trans('g.delete'), ['class'=>'btn btn-xs btn-danger'],'#',"return bootbox.confirm('".trans('system.delete_confirm')."', function(result){if(result==true){window.location.replace('".asset('frontend/del?id='.$frontend->id)."')}})").'  '.a('frontend/edit', 'id='.$frontend->id,trans('g.edit'), ['class'=>'btn btn-xs btn-default']);
             })->rawColumns(['manage']);
 
-        if(get_web_id() == 1) {
-            $result = $result->addColumn('web_id', function(Branch $branch) {
-                return Web::find($branch->web_id)->name;
-            });
-        }
+//        if(get_web_id() == 1) {
+//            $result = $result->addColumn('web_id', function(Branch $branch) {
+//                return Web::find($branch->web_id)->name;
+//            });
+//        }
 
         return $result->make(true);
     }
