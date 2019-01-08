@@ -8,12 +8,15 @@ use App\Events\WebDeletedEvent;
 use App\Frontend;
 use App\Http\Requests\CreateFrontendRequest;
 use App\Http\Requests\CreateWebRequest;
+use App\Jobs\PublishWeb;
 use App\Menu;
 use App\User;
 use App\Web;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use \DataTables;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class FrontendController extends Controller
 {
@@ -111,5 +114,32 @@ class FrontendController extends Controller
         }else
             set_notice(trans('system.not_exist'), 'warning');
         return redirect()->back();
+    }
+    public function saveProject(){
+        $id =   request('id');
+        $web    =   Frontend::where('user_id', auth()->user()->id)->where('id', $id)->get();
+        if($web->count())
+            saveProject($id, request('project'));
+    }
+    public function exportProject(){
+        $id =   request('id');
+        $web    =   Frontend::where('user_id', auth()->user()->id)->where('id', $id)->get();
+        if($web->count()){
+            PublishWeb::dispatch($web->first());
+            return response()->json(['domain'=>$web->first()->domain]);
+//            if (file_exists($destination)){
+//                unlink($destination);
+//            }
+//            if ($z=zip($sourceUrl, $destination)){
+//                echo json_encode(array( "download_file" => "temp/" . basename($destination)));
+//            } else var_dump($z);
+        }else echo 'z';
+
+    }
+    public function saveProjectByParts(){
+        $id =   request('id');
+        $web    =   Frontend::where('user_id', auth()->user()->id)->where('id', $id)->get();
+        if($web->count())
+            saveProjectByParts($id, request('part'), request('index'), \request('lastChunk'));
     }
 }

@@ -54,7 +54,12 @@ return [
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
         ],
-
+        'public_path'   =>  [
+            'driver' => 'local',
+            'root' => public_path(),
+            'url' => env('APP_URL').'',
+            'visibility' => 'public',
+        ],
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),
@@ -63,7 +68,18 @@ return [
             'bucket' => env('AWS_BUCKET'),
             'url' => env('AWS_URL'),
         ],
-
+        'ftp' => [
+            'driver'   => 'ftp',
+            'host'     => '150.95.105.195',
+            'username' => 'remote@sv2.fastup.vn',
+            'password' => 'Tuandaika1',
+            //Các thông số mở rộng
+            // 'port'     => 21,
+            // 'root'     => '',
+            // 'passive'  => true,
+            // 'ssl'      => true,
+            // 'timeout'  => 30,
+        ],
     ],
 
 ];

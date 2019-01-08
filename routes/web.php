@@ -73,6 +73,10 @@ Route::group(['middleware'=>'auth'], function(){
     Route::get('frontend/del', ['as' => 'frontendDelete', 'uses' => 'FrontendController@getDelete']);
     Route::get('frontend/edit', ['as' => 'frontendEdit', 'uses' => 'FrontendController@getEdit']);
     Route::post('frontend/edit', ['as' => 'frontendEdit', 'uses' => 'FrontendController@postEdit']);
+    Route::post('frontend/save', ['as'=>'saveProjectFrontend', 'uses'=>'FrontendController@saveProject']);
+    Route::post('frontend/saveByParts', ['as'=>'saveProjectFrontend', 'uses'=>'FrontendController@saveProjectByParts']);
+    Route::post('frontend/export', ['as'=>'saveProjectFrontend', 'uses'=>'FrontendController@exportProject']);
+
 
     Route::group(['prefix'=>'bat-dong-san'], function(){
         Route::get('/{filter?}', ['as' => 'realEstateList', 'uses' => 'RealEstateController@list'])->where('filter', 'tin-rao-het-han|tin-rao-cho-duyet|tin-rao-nhap|tin-rao-da-xoa');
@@ -115,7 +119,6 @@ Route::get('/range-price/list-dropdown/{catId}', ['as' => 'rangePriceByCat', 'us
 Route::get('/re-type/list-dropdown/{catId}', ['as' => 'reTypeByCat', 'uses' => 'ReTypeController@getListDropDown']);
 Route::get('/customer-by-phone/{phone}', ['as' => 'customer-by-phone', 'uses' => 'RealEstateController@customerByPhone']);
 
+Route::get('t', function(){
 
-Route::post('frontend_action', function(){
-    saveProject(2, request('project'));
 });
