@@ -179,7 +179,7 @@ button {
 .main-menu-user-info {
     .menu-search {
         input {
-            width: 300px !important;
+            width: 400px !important;
             border-top-left-radius: 3px !important;
             border-bottom-left-radius: 3px !important;
         }
@@ -193,6 +193,9 @@ button {
         }
     }
     .navbar-right {
+        .home-link {
+            padding-top: 16px;
+        }
         li.dropdown {
             a {
                 padding-left: 12px;

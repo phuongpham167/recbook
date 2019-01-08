@@ -8,9 +8,55 @@
   background-color: #ebedf0;
 }
 
+.detail-top {
+  margin-bottom: 20px;
+}
+
+.detail-top .row-wrap {
+  height: 215px;
+}
+
+.detail-top .cover-wrap {
+  position: absolute;
+  z-index: 10;
+}
+
+.detail-top .cover-wrap .cover-content-wrap {
+  background: #1c1e21;
+  height: 215px;
+}
+
+.detail-top .cover-wrap img {
+  height: 215px;
+  width: 100%;
+}
+
+.detail-top .cover-wrap .btn-change-cover {
+  position: absolute;
+  top: 10px;
+  left: 30px;
+  background-clip: padding-box;
+  background-color: #000;
+  border: 1px solid #fff;
+  border-color: rgba(255, 255, 255, 0.8);
+  border-radius: 2px;
+  -webkit-box-shadow: 0 0 6px rgba(0, 0, 0, 0.6);
+          box-shadow: 0 0 6px rgba(0, 0, 0, 0.6);
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  color: #fff;
+}
+
+.detail-top .av-and-name-wrap {
+  height: 215px;
+  z-index: 11;
+}
+
 .detail-top .av-wrap {
   display: inline-block;
-  position: relative;
+  position: absolute;
+  left: 30px;
+  bottom: 0;
 }
 
 .detail-top .av-wrap:hover .btn-change-av {
@@ -31,7 +77,8 @@
 }
 
 .detail-top .avatar {
-  border: 1px solid #ccc;
+  background: #fff;
+  border: 1px solid #fff;
   border-radius: 3px;
   padding: 4px;
   width: 168px;
@@ -39,12 +86,13 @@
 }
 
 .detail-top .name {
+  color: #fff;
   display: inline-block;
   font-size: 24px;
   text-shadow: 0 0 3px rgba(0, 0, 0, 0.4);
   position: absolute;
   bottom: 20px;
-  margin-left: 20px;
+  left: 220px;
 }
 
 .detail-top .update-info-wrap {
@@ -54,12 +102,17 @@
 }
 
 .detail-top .update-info-wrap p {
-  background-color: #ccc;
-  color: #000;
+  background-color: #f5f6f7;
+  border-color: rgba(0, 0, 0, 0.4);
+  color: #4b4f56;
   padding: 10px 15px;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: bold;
   border-radius: 3px;
+  -webkit-transition: 200ms cubic-bezier(0.08, 0.52, 0.52, 1) background-color, 200ms cubic-bezier(0.08, 0.52, 0.52, 1) -webkit-box-shadow, 200ms cubic-bezier(0.08, 0.52, 0.52, 1) -webkit-transform;
+  transition: 200ms cubic-bezier(0.08, 0.52, 0.52, 1) background-color, 200ms cubic-bezier(0.08, 0.52, 0.52, 1) -webkit-box-shadow, 200ms cubic-bezier(0.08, 0.52, 0.52, 1) -webkit-transform;
+  transition: 200ms cubic-bezier(0.08, 0.52, 0.52, 1) background-color, 200ms cubic-bezier(0.08, 0.52, 0.52, 1) box-shadow, 200ms cubic-bezier(0.08, 0.52, 0.52, 1) transform;
+  transition: 200ms cubic-bezier(0.08, 0.52, 0.52, 1) background-color, 200ms cubic-bezier(0.08, 0.52, 0.52, 1) box-shadow, 200ms cubic-bezier(0.08, 0.52, 0.52, 1) transform, 200ms cubic-bezier(0.08, 0.52, 0.52, 1) -webkit-box-shadow, 200ms cubic-bezier(0.08, 0.52, 0.52, 1) -webkit-transform;
 }
 
 .detail-top .update-info-wrap p a {
