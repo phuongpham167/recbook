@@ -22,7 +22,7 @@
     {{-- Include Header --}}
     @include(theme(TRUE).'.includes.user-info-header')
     <div class="content-body">
-        <div class="container padding-top-30 padding-bottom-30">
+        <div class="container padding-bottom-30">
             <div class="row">
                 <div class="col-xs-12 col-md-12 detail-content-wrap">
                     {{--<p class="title_box"><strong>{{ $data->userinfo->full_name }}</strong>--}}
@@ -30,8 +30,14 @@
                     <div class="row">
                         <div class="col-xs-12 col-md-9">
                             <div class="detail-top">
-                                <div class="row">
-                                    <div class="col-xs-12">
+                                <div class="row row-wrap" >
+                                    <div class="col-xs-12 cover-wrap">
+                                        <div class="cover-content-wrap">
+                                            {{--<img src="http://thuthuat123.com/uploads/2018/01/27/tong-hop-anh-bia-facebook-dep-50_101149.jpg" class="img-responsive" />--}}
+                                        </div>
+                                        <button class="btn btn-default btn-change-cover"><i class="fa fa-camera"></i> Thêm banner</button>
+                                    </div>
+                                    <div class="col-xs-12 av-and-name-wrap">
                                         @php
                                             $avatar = $data->userinfo->avatar ? $data->userinfo->avatar : '/images/default-avatar.png';
                                         @endphp
@@ -190,13 +196,27 @@
                                                             </div>
                                                             <div class="panel-body">
                                                                 <div class="row">
-                                                                    <div class="col-xs-12 col-md-4">Khu vực: {{$re->district ? $re->district->name : ''}}</div>
-                                                                    <div class="col-xs-12 col-md-2">Số tầng: {{$re->floor}}</div>
-                                                                    <div class="col-xs-12 col-md-6">Gần: {{$re->position}}</div>
+                                                                    @if($re->district)
+                                                                    <div class="col-xs-12 col-md-4">
+                                                                            Khu vực: {{$re->district->name}}
+                                                                    </div>
+                                                                    @endif
+                                                                    @if($re->floor)
+                                                                    <div class="col-xs-12 col-md-2">
+                                                                            Số tầng: {{$re->floor}}
+                                                                    </div>
+                                                                    @endif
+                                                                    @if($re->position)
+                                                                    <div class="col-xs-12 col-md-6">
+                                                                            Gần: {{$re->position}}
+                                                                    </div>
+                                                                    @endif
                                                                 </div>
                                                                 <div class="row">
-                                                                    <div class="col-xs-12 col-md-3">{{$re->reCategory ? $re->reCategory->name : ''}}</div>
-                                                                    <div class="col-xs-12 col-md-9">Phòng ngủ: {{$re->bedroom}}, Phòng khách: {{$re->living_room}}, WC: {{$re->wc}}</div>
+                                                                    @if($re->reCategory)
+                                                                        <div class="col-xs-12 col-md-3">{{$re->reCategory ? $re->reCategory->name : ''}}</div>
+                                                                    @endif
+                                                                    <div class="col-xs-12 col-md-9"> {{$re->bedroom ? 'Phòng ngủ: ' . $re->bedroom . ', ' : ''}}  {{$re->living_room ? 'Phòng khách: ' . $re->living_room . ', ' : ''}},  {{$re->wc ? 'WC: ' . $re->wc : ''}}</div>
                                                                 </div>
                                                                 <div class="row">
                                                                     @php
