@@ -35,7 +35,9 @@
                                         <div class="cover-content-wrap">
                                             {{--<img src="http://thuthuat123.com/uploads/2018/01/27/tong-hop-anh-bia-facebook-dep-50_101149.jpg" class="img-responsive" />--}}
                                         </div>
+                                        @if (\Auth::user() && \Auth::user()->id  == $data->id)
                                         <button class="btn btn-default btn-change-cover"><i class="fa fa-camera"></i> Thêm banner</button>
+                                        @endif
                                     </div>
                                     <div class="col-xs-12 av-and-name-wrap">
                                         @php
@@ -45,7 +47,7 @@
                                             <img class="img-responsive avatar" src="{{$avatar}}"/>
                                             @if (\Auth::user() && \Auth::user()->id  == $data->id)
                                                 <input type="hidden" id="avatar" value="{{$avatar}}"/>
-                                                <button data-toggle="modal" data-target="#modalAvatar" class="btn btn-default btn-change-av"><i class="fa fa-camera" aria-hidden="true"></i> Cập nhật</button>
+                                                <button class="btn btn-default btn-change-av"><i class="fa fa-camera" aria-hidden="true"></i> Cập nhật</button>
                                             @endif
                                         </div>
                                         <h1 class="name">{{ $data->userinfo->full_name }} </h1>
@@ -216,7 +218,7 @@
                                                                     @if($re->reCategory)
                                                                         <div class="col-xs-12 col-md-3">{{$re->reCategory ? $re->reCategory->name : ''}}</div>
                                                                     @endif
-                                                                    <div class="col-xs-12 col-md-9"> {{$re->bedroom ? 'Phòng ngủ: ' . $re->bedroom . ', ' : ''}}  {{$re->living_room ? 'Phòng khách: ' . $re->living_room . ', ' : ''}},  {{$re->wc ? 'WC: ' . $re->wc : ''}}</div>
+                                                                    <div class="col-xs-12 col-md-9"> {{$re->bedroom ? 'Phòng ngủ: ' . $re->bedroom : ''}}{{ ($re->bedroom && $re->living_room) ? ', ' : ''}}{{$re->living_room ? 'Phòng khách: ' . $re->living_room : ''}}{{ ($re->living_room && $re->wc) ? ', ' : '' }}{{$re->wc ? 'WC: ' . $re->wc : ''}}</div>
                                                                 </div>
                                                                 <div class="row">
                                                                     @php
@@ -301,7 +303,7 @@
 
         </div>
         {{-- modal post tin --}}
-        <div id="postReModal" class="modal1 fade" role="dialog">
+        <div id="postReModal" class="modal fade" role="dialog">
             <div class="modal-dialog">
 
                 <!-- Modal content-->
@@ -317,26 +319,9 @@
 
             </div>
         </div>
-        {{-- end modal --}}
-        @if (auth()->check())
-        <div class="modal fade" id="modalAvatar" style="opacity: 1; overflow: visible; display: none;" aria-hidden="true">
-            <div class="modal-dialog" style="width: 860px">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h4 class="modal-title">Chọn ảnh</h4>
-                    </div>
-                    <div class="modal-body" style="padding:0px; margin:0px; width: 100%;">
-                        <iframe width="100%" height="400" src="/plugins/filemanager/dialog.php?type=1&amp;field_id=avatar'&amp;fldr=" frameborder="0" style="overflow: scroll; overflow-x: hidden; overflow-y: scroll; "></iframe>
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div>
-        @endif
-
     </div>
     {{-- Include footer --}}
-    @include(theme(TRUE).'.includes.footer')
+    @include(theme(TRUE).'.includes.user-info-footer')
 @endsection
 
 @push('js')
@@ -364,19 +349,11 @@
             });
             $(document).on("focus","#title-hold", function(){
                 // alert("textarea focus");
-                $('body').append('<div class="modal1-backdrop fade in"></div>');
-                $('#postReModal').addClass('in');
-                $('#postReModal').attr('style', 'overflow: hidden auto !important; display: block');
-                // $('#postReModal').modal('show');
+                $('#postReModal').modal('show');
                 $(this).blur();
             });
             $('#btn-hold').on('click', function() {
-                $('body').append('<div class="modal1-backdrop fade in"></div>');
-                $('#postReModal').addClass('in');
-                $('#postReModal').attr('style', 'overflow: hidden auto !important; display: block');
-            });
-            $('#myModal').on('hidden.bs.modal', function (e) {
-                $('body.modal-backdrop').remove();
+                $('#postReModal').modal('show');
             });
         });
         $(document).on('click', '.panel-heading span.clickable', function(e){
