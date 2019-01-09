@@ -96,7 +96,9 @@ class FrontendController extends Controller
             $data->theme   =   $request->theme;
             $data->save();
             event_log('Sửa website frontend đơn vị '.$data->domain.' id '.$data->id);
-            set_notice(trans('system.edit_success'), 'success');
+            frontendweb_create($data->id, $data->theme, $data->title);
+            return response()->json(['status'=>0, 'url'=>asset('frontend_web/'.$data->id)]);
+//            set_notice(trans('system.edit_success'), 'success');
         }else
             set_notice(trans('system.not_exist'), 'warning');
         return redirect()->back();
