@@ -30,7 +30,7 @@
                             <img class="img-responsive header-avatar" src="{{$avatar}}" > <span class="header-name">{{auth()->user()->userinfo->full_name}}</span>
                         </a>
                     </li>
-                    <li class="home-link"><a href="{{ route('home') }}">{{ trans('header.navbar-item.home') }}</a></li>
+                    <li class="home-link"><a href="{{ route('home') }}" style="text-transform: capitalize">{{ trans('header.navbar-item.home') }}</a></li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#" title="Lời mời kết bạn"><i class="fa fa-users" aria-hidden="true"></i></a>
                         <ul class="dropdown-menu friend-request-list">

@@ -213,7 +213,8 @@ button {
 }
 
 .main-menu-user-info .navbar-right .home-link {
-  padding-top: 16px;
+  padding-top: 2px;
+  text-transform: capitalize;
 }
 
 .main-menu-user-info .navbar-right li.dropdown a {
