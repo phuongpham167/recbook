@@ -1,15 +1,30 @@
-.btn-collappse-wrap {
-  text-align: center;
-}
-
-.btn-collapse {
+.btn-collapse,
+.btn-collapse-second {
+  -webkit-border-radius: 25px;
+  -moz-border-radius: 25px;
+  border: none;
   border-radius: 25px;
   background-color: #f5f6f7;
   width: 102px;
 }
 
-.btn-collapse:hover {
+.btn-collapse:hover,
+.btn-collapse-second:hover {
   background-color: #ebedf0;
+}
+
+.btn-collapse:focus,
+.btn-collapse-second:focus {
+  outline: none;
+}
+
+.btn-collapse-second {
+  width: 60px;
+}
+
+.btn-collapse-second i {
+  color: #4b4f56;
+  font-size: 9px;
 }
 
 .detail-top {
@@ -230,5 +245,13 @@
 
 .contact-phone {
   padding-top: 15px;
+}
+
+.form-create-re .panel-footer {
+  background: #fff;
+}
+
+.form-create-re #list-cl {
+  margin-top: 15px;
 }
 

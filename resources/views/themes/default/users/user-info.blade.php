@@ -118,20 +118,77 @@
                                                                 <h4 class="panel-title">Đăng tin mới </h4>
                                                                 {{--<span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>--}}
                                                             </div>
-                                                            <div class="panel-body ">
-                                                                @if (!empty(session('message')))
-                                                                    <div class="alert alert-{{session('message.type')}} text-center">
-                                                                        {{session('message.message')}}
+                                                            <form class="form-horizontal form-create-re" method="post" action="{{route('post.create-real-estate')}}" enctype="multipart/form-data">
+                                                                {{csrf_field()}}
+                                                                <div class="panel-body ">
+                                                                    @if (!empty(session('message')))
+                                                                        <div class="alert alert-{{session('message.type')}} text-center">
+                                                                            {{session('message.message')}}
+                                                                        </div>
+                                                                    @endif
+                                                                    {{--<textarea class="form-control" placeholder="Bán nhà ..." id="title-hold"></textarea>--}}
+
+                                                                    <div class="form-group">
+                                                                        <div class="col-sm-12">
+                                                                            <input type="text" class="form-control" name="title" id="title" value="{{ old('title') }}" placeholder="Tiêu đề *"/>
+                                                                            <p class="text-red error"></p>
+                                                                        </div>
                                                                     </div>
-                                                                @endif
-                                                                <textarea class="form-control" placeholder="Bán nhà ..." id="title-hold"></textarea>
-                                                                {{--@include(theme(TRUE).'.includes.create-re')--}}
-                                                            </div>
-                                                            <div class="panel-footer clearfix">
-                                                                <div class="pull-right">
-                                                                    <button type="button" class="btn btn-primary" id="btn-hold">Đăng</button>
+                                                                    <div class="form-group">
+                                                                        <div class="col-sm-12">
+                                                                            <textarea name="detail" class="form-control autoExpand" id="detail" placeholder="Nội dung tin *"></textarea>
+                                                                            <p class="text-red error"></p>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
+                                                                <div class="panel-footer clearfix">
+                                                                    @include(theme(TRUE).'.includes.create-re-collapse')
+                                                                    <div class="form-group" style="margin-bottom: 0px;">
+                                                                        <div class="col-xs-12">
+                                                                            <button type="button" class="btn btn-default btn-collapse" data-target="#catSelect">Danh mục</button>
+                                                                            <button type="button" class="btn btn-default btn-collapse" data-target="#addressSelect"><i class="fa fa-road" aria-hidden="true"></i> Khu vực</button>
+                                                                            <button type="button" class="btn btn-default btn-collapse" data-target="#nearBy">Gần</button>
+                                                                            <button type="button" class="btn btn-default btn-collapse-second" data-toggle="collapse" data-target="#list-cl">
+                                                                                <i class="fa fa-circle"></i>
+                                                                                <i class="fa fa-circle"></i>
+                                                                                <i class="fa fa-circle"></i>
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="collapse" id="list-cl">
+                                                                        <div class="form-group">
+                                                                            <div class="col-xs-12">
+                                                                                <button type="button" class="btn btn-default btn-collapse" data-target="#nearBy">Gần</button>
+                                                                                <button type="button" class="btn btn-default btn-collapse" data-target="#directionSelect">Hướng</button>
+                                                                                <button type="button" class="btn btn-default btn-collapse" data-target="#exhibitSelect">Giấy tờ</button>
+                                                                                <button type="button" class="btn btn-default btn-collapse" data-target="#projectSelect">Dự án</button>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <div class="col-xs-12">
+                                                                                <button type="button" class="btn btn-default btn-collapse" data-target="#room"><i class="fa fa-bed" aria-hidden="true"></i> Phòng</button>
+                                                                                <button type="button" class="btn btn-default btn-collapse" data-target="#area"><i class="fa fa-area-chart" aria-hidden="true"></i> Diện tích</button>
+                                                                                <button type="button" class="btn btn-default btn-collapse" data-target="#floorSelect">Số tầng</button>
+                                                                                <button type="button" class="btn btn-default btn-collapse" data-target="#priceSelect">Giá</button>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <div class="col-xs-12">
+                                                                                <button type="button" class="btn btn-default btn-collapse" data-target="#mapSelect"><i class="fa fa-map-marker"></i> Vị ví</button>
+                                                                                <button type="button" class="btn btn-default btn-collapse" data-target="#imageSelect"><i class="fa fa-picture-o"></i> Hình ảnh</button>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="col-xs-12">
+                                                                            <div class="pull-right">
+                                                                                <button type="button" name="add_new" id="add-new-re" class="_btn bg_red"><i class="fa fa-plus"></i> &nbsp;&nbsp;ĐĂNG TIN
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </form>
                                                         </div>
                                                     @else
                                                         <div class="col-xs-12">
@@ -313,7 +370,7 @@
                         <h4 class="modal-title">Đăng tin mới</h4>
                     </div>
                     <div class="modal-body">
-                        @include(theme(TRUE).'.includes.create-re')
+                        {{--@include(theme(TRUE).'.includes.create-re')--}}
                     </div>
                 </div>
 
@@ -472,5 +529,19 @@
             $('#postReModal').removeClass('in');
             $('#postReModal').attr('style', 'display: none;');
         }
+
+        $(document)
+        .one('focus.autoExpand', 'textarea.autoExpand', function(){
+            var savedValue = this.value;
+            this.value = '';
+            this.baseScrollHeight = this.scrollHeight;
+            this.value = savedValue;
+        })
+        .on('input.autoExpand', 'textarea.autoExpand', function(){
+            var minRows = this.getAttribute('data-min-rows')|0, rows;
+            this.rows = minRows;
+            rows = Math.ceil((this.scrollHeight - this.baseScrollHeight) / 16);
+            this.rows = minRows + rows;
+        });
     </script>
 @endpush
