@@ -14,7 +14,7 @@
     </div>
 @endif
 
-<form class="form-horizontal" method="post" action="{{route('post.create-real-estate')}}">
+<form class="form-horizontal form-create-re" method="post" action="{{route('post.create-real-estate')}}" enctype="multipart/form-data">
     {{csrf_field()}}
     <div class="form-group">
         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.title')}} <span
@@ -34,11 +34,11 @@
         </div>
     </div>
     <div class="form-group">
-        <div class="col-sm-6">
-            <button type="button" class="btn btn-default btn-collapse" data-toggle="collapse" data-target="#catSelect">Danh mục</button>
+        <div class="col-sm-6 btn-collappse-wrap">
+            <button type="button" class="btn btn-default btn-collapse" data-target="#catSelect">Danh mục</button>
         </div>
-        <div class="col-sm-6">
-            <button type="button" class="btn btn-default btn-collapse" data-toggle="collapse" data-target="#addressSelect"><i class="fa fa-road" aria-hidden="true"></i> Khu vực</button>
+        <div class="col-sm-6 btn-collappse-wrap">
+            <button type="button" class="btn btn-default btn-collapse" data-target="#addressSelect"><i class="fa fa-road" aria-hidden="true"></i> Khu vực</button>
         </div>
     </div>
     <div class="form-group collapse" id="catSelect">
@@ -96,11 +96,11 @@
     </div>
 
     <div class="form-group">
-        <div class="col-sm-6">
-            <button type="button" class="btn btn-default btn-collapse" data-toggle="collapse" data-target="#nearBy">Gần</button>
+        <div class="col-sm-6 btn-collappse-wrap">
+            <button type="button" class="btn btn-default btn-collapse" data-target="#nearBy">Gần</button>
         </div>
-        <div class="col-sm-6">
-            <button type="button" class="btn btn-default btn-collapse" data-toggle="collapse" data-target="#directionSelect">Hướng</button>
+        <div class="col-sm-6 btn-collappse-wrap">
+            <button type="button" class="btn btn-default btn-collapse" data-target="#directionSelect">Hướng</button>
         </div>
     </div>
     <div class="form-group collapse" id="nearBy">
@@ -123,11 +123,11 @@
         </div>
     </div>
     <div class="form-group">
-        <div class="col-sm-6">
-            <button type="button" class="btn btn-default btn-collapse" data-toggle="collapse" data-target="#exhibitSelect">Giấy tờ</button>
+        <div class="col-sm-6 btn-collappse-wrap">
+            <button type="button" class="btn btn-default btn-collapse" data-target="#exhibitSelect">Giấy tờ</button>
         </div>
-        <div class="col-sm-6">
-            <button type="button" class="btn btn-default btn-collapse" data-toggle="collapse" data-target="#projectSelect">Dự án</button>
+        <div class="col-sm-6 btn-collappse-wrap">
+            <button type="button" class="btn btn-default btn-collapse" data-target="#projectSelect">Dự án</button>
         </div>
     </div>
     <div class="form-group collapse" id="exhibitSelect">
@@ -192,11 +192,11 @@
         {{--</div>--}}
     {{--</div>--}}
     <div class="form-group">
-        <div class="col-sm-6">
-            <button type="button" class="btn btn-default btn-collapse" data-toggle="collapse" data-target="#room"><i class="fa fa-bed" aria-hidden="true"></i> Phòng</button>
+        <div class="col-sm-6 btn-collappse-wrap">
+            <button type="button" class="btn btn-default btn-collapse" data-target="#room"><i class="fa fa-bed" aria-hidden="true"></i> Phòng</button>
         </div>
-        <div class="col-sm-6">
-            <button type="button" class="btn btn-default btn-collapse" data-toggle="collapse" data-target="#area"><i class="fa fa-area-chart" aria-hidden="true"></i> Diện tích</button>
+        <div class="col-sm-6 btn-collappse-wrap">
+            <button type="button" class="btn btn-default btn-collapse" data-target="#area"><i class="fa fa-area-chart" aria-hidden="true"></i> Diện tích</button>
         </div>
     </div>
     <div class="form-group collapse" id="room">
@@ -240,11 +240,11 @@
 
     </div>
     <div class="form-group">
-        <div class="col-sm-6">
-            <button type="button" class="btn btn-default btn-collapse" data-toggle="collapse" data-target="#floorSelect">Số tầng</button>
+        <div class="col-sm-6 btn-collappse-wrap">
+            <button type="button" class="btn btn-default btn-collapse" data-target="#floorSelect">Số tầng</button>
         </div>
-        <div class="col-sm-6">
-            <button type="button" class="btn btn-default btn-collapse" data-toggle="collapse" data-target="#priceSelect">Giá</button>
+        <div class="col-sm-6 btn-collappse-wrap">
+            <button type="button" class="btn btn-default btn-collapse" data-target="#priceSelect">Giá</button>
         </div>
     </div>
     <div class="form-group collapse" id="floorSelect">
@@ -269,41 +269,11 @@
         </div>
     </div>
     <div class="form-group">
-        <div class="col-sm-6">
-            <button type="button" class="btn btn-default btn-collapse" data-toggle="collapse" data-target="#time"><i class="fa fa-calendar-minus-o"></i> Lịch</button>
+        <div class="col-sm-6 btn-collappse-wrap">
+            <button type="button" class="btn btn-default btn-collapse" data-target="#mapSelect"><i class="fa fa-map-marker"></i> Vị ví</button>
         </div>
-        <div class="col-sm-6">
-            <button type="button" class="btn btn-default btn-collapse" data-toggle="collapse" data-target="#mapSelect"><i class="fa fa-map-marker"></i> Vị ví</button>
-        </div>
-    </div>
-    <div class="form-group collapse" id="time">
-        <div class="row">
-            <div class="col-xs-12">
-                <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.postDate')}} </label>
-                <div class="col-sm-6">
-                    <div class='input-group date' id='post-date'>
-                        <input type='text' class="form-control" id="post-date-val" name="post_date" value="{{ old('post_date') }}"/>
-                        <span class="input-group-addon">
-                                                <span class="glyphicon glyphicon-calendar"></span>
-                                            </span>
-                    </div>
-                    <p class="text-red error"></p>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-12">
-                <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.expireDate')}} </label>
-                <div class="col-sm-6">
-                    <div class='input-group date' id='expire-date'>
-                        <input type='text' class="form-control" id="expire-date-val" name="expire_date" value="{{ old('expire_date') }}"/>
-                        <span class="input-group-addon">
-                                            <span class="glyphicon glyphicon-calendar"></span>
-                                        </span>
-                    </div>
-                    <p class="text-red error"></p>
-                </div>
-            </div>
+        <div class="col-sm-6  btn-collappse-wrap">
+            <button type="button" class="btn btn-default btn-collapse" data-target="#imageSelect"><i class="fa fa-picture-o"></i> Hình ảnh</button>
         </div>
     </div>
     <div class="form-group collapse" id="mapSelect">
@@ -316,22 +286,16 @@
             <div id="map-view" style="width: 100%; height: 250px;"></div>
         </div>
     </div>
-    <div class="form-group">
-        <div class="col-sm-6">
-            <button type="button" class="btn btn-default btn-collapse" data-toggle="collapse" data-target="#imageSelect"><i class="fa fa-picture-o"></i> Hình ảnh</button>
-        </div>
-    </div>
     <div class="form-group collapse" id="imageSelect">
         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.image')}}</label>
         <div class="col-sm-10">
             <div class="input-group">
                     <span class="input-group-btn">
-                        <a data-toggle="modal" href="javascript:;" data-target="#myModal"
-                           class="btn btn-primary" type="button" id="choose-image">
+                        <a class="btn btn-primary" type="button" id="choose-image">
                             <i class="fa fa-picture-o"></i> Choose
                         </a>
                     </span>
-                <input id="images" class="form-control" name="imagesList" type="hidden" value="" readonly>
+                <input id="images" class="form-control hidden" name="imagesList[]" type="file" multiple="multiple">
             </div>
         </div>
         <div class="col-sm-12 img-preview">
@@ -359,81 +323,63 @@
     </div>
     <!-- /.box-footer -->
 </form>
-{{-- modal select image --}}
-<div class="modal fade" id="myModal" style="opacity: 1; overflow: visible; display: none;" aria-hidden="true">
-    <div class="modal-dialog" style="width: 860px">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">Chọn ảnh</h4>
-            </div>
-            <div class="modal-body" style="padding:0px; margin:0px; width: 100%;">
-                <iframe width="100%" height="400"
-                        src="/plugins/filemanager/dialog.php?type=2&amp;field_id=images&amp;fldr=" frameborder="0"
-                        style="overflow: scroll; overflow-x: hidden; overflow-y: scroll; "></iframe>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div>
 
 @push('js')
-    <script
-        src="{{asset('plugins/bootstrap-datetimepicker-master/build/js/bootstrap-datetimepicker.min.js')}}"></script>
+    {{--<script src="{{asset('plugins/bootstrap-datetimepicker-master/build/js/bootstrap-datetimepicker.min.js')}}"></script>--}}
     <script src="{{asset('plugins/ckeditor-4/ckeditor.js')}}"></script>
     <script>
         $(function () {
-            // $('#contact_phone_number').keyup(function () {
-            //     emptyContactInfo();
-            //
-            //     let phone = $(this).val();
-            //     if (phone.length > 9) {
-            //         $.ajax({
-            //             url: "/customer-by-phone/" + phone,
-            //             method: 'GET',
-            //             success: function (result) {
-            //                 console.log('success');
-            //                 console.log(result);
-            //                 if (!jQuery.isEmptyObject(result)) {
-            //                     $('#contact_person').val(result.name).prop('readonly', true);
-            //                     $('#contact_address').val(result.address).prop('readonly', true);
-            //                 } else {
-            //                     emptyContactInfo();
-            //                 }
-            //             }
-            //         });
-            //     }
-            // });
+            //------------------------------------------------------------
+            // COLLAPSE CONTENT
+            //------------------------------------------------------------
+            $('.btn-collapse').on('click', function () {
+                let targetId = $(this).data('target');
+                console.log(targetId);
+                let has = $(targetId).hasClass('in') ? 'yes' : 'no';
+                console.log(has);
+                if($(targetId).hasClass('in')) {
+                    console.log('opening');
+                    $('.form-create-re .collapse').collapse('hide');
+                } else {
+                    console.log('close');
+                    $('.form-create-re .collapse').collapse('hide');
+                    $(targetId).collapse('show');
+                }
+            });
+            //------------------------------------------------------------
+            // END COLLAPSE CONTENT
+            //------------------------------------------------------------
 
             // init datetime picker
-            $('#post-date').datetimepicker({
-                format: 'YYYY-MM-DD HH:mm:ss',
-                defaultDate: moment.now()
-            });
-            $('#expire-date').datetimepicker({
-                format: 'YYYY-MM-DD',
-                useCurrent: false
-            });
-            $("#post-date").on("dp.change", function (e) {
-                $('#expire-date').data("DateTimePicker").minDate(e.date);
-            });
-            $("#expire-date").on("dp.change", function (e) {
-                $('#post-date').data("DateTimePicker").maxDate(e.date);
-            });
+            // $('#post-date').datetimepicker({
+            //     format: 'YYYY-MM-DD HH:mm:ss',
+            //     defaultDate: moment.now()
+            // });
+            // $('#expire-date').datetimepicker({
+            //     format: 'YYYY-MM-DD',
+            //     useCurrent: false
+            // });
+            // $("#post-date").on("dp.change", function (e) {
+            //     $('#expire-date').data("DateTimePicker").minDate(e.date);
+            // });
+            // $("#expire-date").on("dp.change", function (e) {
+            //     $('#post-date').data("DateTimePicker").maxDate(e.date);
+            // });
 
             // var domain = "";
             // $('#lfm').filemanager('image', {prefix: domain});
 
-            $('#map-view').locationpicker({
-                location: {
-                    latitude: 10.774839,
-                    longitude: 106.700766
-                },
-                radius: 0,
-                onchanged: function (currentLocation, radius, isMarkerDropped) {
-                    console.log("Location changed. New location (" + currentLocation.latitude + ", " + currentLocation.longitude + ")");
-                    $('#map').val(currentLocation.latitude + ", " + currentLocation.longitude);
-                }
-            });
+            // $('#map-view').locationpicker({
+            //     location: {
+            //         latitude: 10.774839,
+            //         longitude: 106.700766
+            //     },
+            //     radius: 0,
+            //     onchanged: function (currentLocation, radius, isMarkerDropped) {
+            //         console.log("Location changed. New location (" + currentLocation.latitude + ", " + currentLocation.longitude + ")");
+            //         $('#map').val(currentLocation.latitude + ", " + currentLocation.longitude);
+            //     }
+            // });
 
             // var options = {
             //     filebrowserBrowseUrl: '/plugins/filemanager/dialog.php?type=2&editor=ckeditor&fldr=',
@@ -442,7 +388,7 @@
             // };
             // CKEDITOR.replace('editor', options);
 
-            let totalShortDesLetter = 150;
+            // let totalShortDesLetter = 150;
 
             // $('#short-description').keyup(function () {
             //     let txtLength = $(this).val().length;
@@ -575,6 +521,33 @@
                 }
             });
         }
+
+        //---------------------------------
+        // HANDLE WHEN CLICK BUTTON CHOOSE IMAGE
+        //---------------------------------
+        $("#choose-image").unbind("click").bind("click", function () {
+            $("#images").click();
+        });
+        function readURL(input) {
+            console.log('list select images');
+            console.log(input.files);
+            // if (input.files && input.files[0]) {
+            //     var reader = new FileReader();
+            //
+            //     reader.onload = function(e) {
+            //         $('#blah').attr('src', e.target.result);
+            //     }
+            //
+            //     reader.readAsDataURL(input.files[0]);
+            // }
+        }
+
+        $("#images").change(function() {
+            readURL(this);
+        });
+        //---------------------------------
+        // END HANDLE WHEN CLICK BUTTON CHOOSE IMAGE
+        //---------------------------------
 
         function responsive_filemanager_callback(field_id) {
             console.log(field_id);

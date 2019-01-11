@@ -1,11 +1,25 @@
-.btn-collapse {
+.btn-collappse-wrap {
+    //text-align: center;
+}
+.btn-collapse, .btn-collapse-second {
     -webkit-border-radius: 25px;
     -moz-border-radius: 25px;
+    border: none;
     border-radius: 25px;
     background-color: #f5f6f7;
-    width: 100%;
+    width: 102px;
     &:hover {
         background-color: #ebedf0;
+    }
+    &:focus {
+        outline: none;
+    }
+}
+.btn-collapse-second {
+    width: 60px;
+    i {
+        color: #4b4f56;
+        font-size: 9px;
     }
 }
 .detail-top {
@@ -191,10 +205,9 @@
     cursor: pointer;
 }
 #postReModal {
-    //margin-top: 150px;
-    padding-top:400px;
-    overflow-x: hidden !important;
-    overflow-y: auto !important;
+    .modal-content {
+        margin-top: 50px;
+    }
 }
 
 .pg-item {
@@ -209,55 +222,12 @@
 .contact-phone {
     padding-top: 15px;
 }
-.modal1 {
-        position: fixed;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        z-index: 1050;
-        display: none;
-        overflow: hidden;
-        -webkit-overflow-scrolling: touch;
-        outline: 0;
 
+.form-create-re {
+    .panel-footer {
+        background: #fff;
+    }
+    #list-cl {
+        margin-top: 15px;
+    }
 }
-.modal1.in .modal-dialog {
-    -webkit-transform: translate(0,0);
-    -ms-transform: translate(0,0);
-    -o-transform: translate(0,0);
-    transform: translate(0,0);
-}
-
-.modal1.fade .modal-dialog {
-    -webkit-transition: -webkit-transform .3s ease-out;
-    -o-transition: -o-transform .3s ease-out;
-    transition: transform .3s ease-out;
-    -webkit-transform: translate(0,-25%);
-    -ms-transform: translate(0,-25%);
-    -o-transform: translate(0,-25%);
-    transform: translate(0,-25%);
-}
-.modal1-backdrop {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 1040;
-    background-color: #000;
-}
-.modal1-backdrop.in {
-    filter: alpha(opacity=50);
-    opacity: .5 !important;
-}
-.modal1-backdrop.fade {
-    filter: alpha(opacity=0);
-    opacity: 0;
-}
-#myModal {
-    position: absolute;
-    top: 25%;
-    left: -20%;
-}
-
