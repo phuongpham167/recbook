@@ -22,7 +22,7 @@
     {{-- Include Header --}}
     @include(theme(TRUE).'.includes.user-info-header')
     <div class="content-body">
-        <div class="container padding-top-30 padding-bottom-30">
+        <div class="container padding-bottom-30">
             <div class="row">
                 <div class="col-xs-12 col-md-12 detail-content-wrap">
                     {{--<p class="title_box"><strong>{{ $data->userinfo->full_name }}</strong>--}}
@@ -30,8 +30,16 @@
                     <div class="row">
                         <div class="col-xs-12 col-md-9">
                             <div class="detail-top">
-                                <div class="row">
-                                    <div class="col-xs-12">
+                                <div class="row row-wrap" >
+                                    <div class="col-xs-12 cover-wrap">
+                                        <div class="cover-content-wrap">
+                                            {{--<img src="http://thuthuat123.com/uploads/2018/01/27/tong-hop-anh-bia-facebook-dep-50_101149.jpg" class="img-responsive" />--}}
+                                        </div>
+                                        @if (\Auth::user() && \Auth::user()->id  == $data->id)
+                                        <button class="btn btn-default btn-change-cover"><i class="fa fa-camera"></i> Thêm banner</button>
+                                        @endif
+                                    </div>
+                                    <div class="col-xs-12 av-and-name-wrap">
                                         @php
                                             $avatar = $data->userinfo->avatar ? $data->userinfo->avatar : '/images/default-avatar.png';
                                         @endphp
@@ -39,7 +47,7 @@
                                             <img class="img-responsive avatar" src="{{$avatar}}"/>
                                             @if (\Auth::user() && \Auth::user()->id  == $data->id)
                                                 <input type="hidden" id="avatar" value="{{$avatar}}"/>
-                                                <button data-toggle="modal" data-target="#modalAvatar" class="btn btn-default btn-change-av"><i class="fa fa-camera" aria-hidden="true"></i> Cập nhật</button>
+                                                <button class="btn btn-default btn-change-av"><i class="fa fa-camera" aria-hidden="true"></i> Cập nhật</button>
                                             @endif
                                         </div>
                                         <h1 class="name">{{ $data->userinfo->full_name }} </h1>
@@ -110,20 +118,77 @@
                                                                 <h4 class="panel-title">Đăng tin mới </h4>
                                                                 {{--<span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>--}}
                                                             </div>
-                                                            <div class="panel-body ">
-                                                                @if (!empty(session('message')))
-                                                                    <div class="alert alert-{{session('message.type')}} text-center">
-                                                                        {{session('message.message')}}
+                                                            <form class="form-horizontal form-create-re" method="post" action="{{route('post.create-real-estate')}}" enctype="multipart/form-data">
+                                                                {{csrf_field()}}
+                                                                <div class="panel-body ">
+                                                                    @if (!empty(session('message')))
+                                                                        <div class="alert alert-{{session('message.type')}} text-center">
+                                                                            {{session('message.message')}}
+                                                                        </div>
+                                                                    @endif
+                                                                    {{--<textarea class="form-control" placeholder="Bán nhà ..." id="title-hold"></textarea>--}}
+
+                                                                    <div class="form-group">
+                                                                        <div class="col-sm-12">
+                                                                            <input type="text" class="form-control" name="title" id="title" value="{{ old('title') }}" placeholder="Tiêu đề *"/>
+                                                                            <p class="text-red error"></p>
+                                                                        </div>
                                                                     </div>
-                                                                @endif
-                                                                <textarea class="form-control" placeholder="Bán nhà ..." id="title-hold"></textarea>
-                                                                {{--@include(theme(TRUE).'.includes.create-re')--}}
-                                                            </div>
-                                                            <div class="panel-footer clearfix">
-                                                                <div class="pull-right">
-                                                                    <button type="button" class="btn btn-primary" id="btn-hold">Đăng</button>
+                                                                    <div class="form-group">
+                                                                        <div class="col-sm-12">
+                                                                            <textarea name="detail" class="form-control autoExpand" id="detail" placeholder="Nội dung tin *"></textarea>
+                                                                            <p class="text-red error"></p>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
+                                                                <div class="panel-footer clearfix">
+                                                                    @include(theme(TRUE).'.includes.create-re-collapse')
+                                                                    <div class="form-group" style="margin-bottom: 0px;">
+                                                                        <div class="col-xs-12">
+                                                                            <button type="button" class="btn btn-default btn-collapse" data-target="#catSelect">Danh mục</button>
+                                                                            <button type="button" class="btn btn-default btn-collapse" data-target="#addressSelect"><i class="fa fa-road" aria-hidden="true"></i> Khu vực</button>
+                                                                            <button type="button" class="btn btn-default btn-collapse" data-target="#nearBy">Gần</button>
+                                                                            <button type="button" class="btn btn-default btn-collapse-second" data-toggle="collapse" data-target="#list-cl">
+                                                                                <i class="fa fa-circle"></i>
+                                                                                <i class="fa fa-circle"></i>
+                                                                                <i class="fa fa-circle"></i>
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="collapse" id="list-cl">
+                                                                        <div class="form-group">
+                                                                            <div class="col-xs-12">
+                                                                                <button type="button" class="btn btn-default btn-collapse" data-target="#nearBy">Gần</button>
+                                                                                <button type="button" class="btn btn-default btn-collapse" data-target="#directionSelect">Hướng</button>
+                                                                                <button type="button" class="btn btn-default btn-collapse" data-target="#exhibitSelect">Giấy tờ</button>
+                                                                                <button type="button" class="btn btn-default btn-collapse" data-target="#projectSelect">Dự án</button>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <div class="col-xs-12">
+                                                                                <button type="button" class="btn btn-default btn-collapse" data-target="#room"><i class="fa fa-bed" aria-hidden="true"></i> Phòng</button>
+                                                                                <button type="button" class="btn btn-default btn-collapse" data-target="#area"><i class="fa fa-area-chart" aria-hidden="true"></i> Diện tích</button>
+                                                                                <button type="button" class="btn btn-default btn-collapse" data-target="#floorSelect">Số tầng</button>
+                                                                                <button type="button" class="btn btn-default btn-collapse" data-target="#priceSelect">Giá</button>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <div class="col-xs-12">
+                                                                                <button type="button" class="btn btn-default btn-collapse" data-target="#mapSelect"><i class="fa fa-map-marker"></i> Vị ví</button>
+                                                                                <button type="button" class="btn btn-default btn-collapse" data-target="#imageSelect"><i class="fa fa-picture-o"></i> Hình ảnh</button>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="col-xs-12">
+                                                                            <div class="pull-right">
+                                                                                <button type="button" name="add_new" id="add-new-re" class="_btn bg_red"><i class="fa fa-plus"></i> &nbsp;&nbsp;ĐĂNG TIN
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </form>
                                                         </div>
                                                     @else
                                                         <div class="col-xs-12">
@@ -190,13 +255,27 @@
                                                             </div>
                                                             <div class="panel-body">
                                                                 <div class="row">
-                                                                    <div class="col-xs-12 col-md-4">Khu vực: {{$re->district ? $re->district->name : ''}}</div>
-                                                                    <div class="col-xs-12 col-md-2">Số tầng: {{$re->floor}}</div>
-                                                                    <div class="col-xs-12 col-md-6">Gần: {{$re->position}}</div>
+                                                                    @if($re->district)
+                                                                    <div class="col-xs-12 col-md-4">
+                                                                            Khu vực: {{$re->district->name}}
+                                                                    </div>
+                                                                    @endif
+                                                                    @if($re->floor)
+                                                                    <div class="col-xs-12 col-md-2">
+                                                                            Số tầng: {{$re->floor}}
+                                                                    </div>
+                                                                    @endif
+                                                                    @if($re->position)
+                                                                    <div class="col-xs-12 col-md-6">
+                                                                            Gần: {{$re->position}}
+                                                                    </div>
+                                                                    @endif
                                                                 </div>
                                                                 <div class="row">
-                                                                    <div class="col-xs-12 col-md-3">{{$re->reCategory ? $re->reCategory->name : ''}}</div>
-                                                                    <div class="col-xs-12 col-md-9">Phòng ngủ: {{$re->bedroom}}, Phòng khách: {{$re->living_room}}, WC: {{$re->wc}}</div>
+                                                                    @if($re->reCategory)
+                                                                        <div class="col-xs-12 col-md-3">{{$re->reCategory ? $re->reCategory->name : ''}}</div>
+                                                                    @endif
+                                                                    <div class="col-xs-12 col-md-9"> {{$re->bedroom ? 'Phòng ngủ: ' . $re->bedroom : ''}}{{ ($re->bedroom && $re->living_room) ? ', ' : ''}}{{$re->living_room ? 'Phòng khách: ' . $re->living_room : ''}}{{ ($re->living_room && $re->wc) ? ', ' : '' }}{{$re->wc ? 'WC: ' . $re->wc : ''}}</div>
                                                                 </div>
                                                                 <div class="row">
                                                                     @php
@@ -281,7 +360,7 @@
 
         </div>
         {{-- modal post tin --}}
-        <div id="postReModal" class="modal1 fade" role="dialog">
+        <div id="postReModal" class="modal fade" role="dialog">
             <div class="modal-dialog">
 
                 <!-- Modal content-->
@@ -291,32 +370,15 @@
                         <h4 class="modal-title">Đăng tin mới</h4>
                     </div>
                     <div class="modal-body">
-                        @include(theme(TRUE).'.includes.create-re')
+                        {{--@include(theme(TRUE).'.includes.create-re')--}}
                     </div>
                 </div>
 
             </div>
         </div>
-        {{-- end modal --}}
-        @if (auth()->check())
-        <div class="modal fade" id="modalAvatar" style="opacity: 1; overflow: visible; display: none;" aria-hidden="true">
-            <div class="modal-dialog" style="width: 860px">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h4 class="modal-title">Chọn ảnh</h4>
-                    </div>
-                    <div class="modal-body" style="padding:0px; margin:0px; width: 100%;">
-                        <iframe width="100%" height="400" src="/plugins/filemanager/dialog.php?type=1&amp;field_id=avatar'&amp;fldr=" frameborder="0" style="overflow: scroll; overflow-x: hidden; overflow-y: scroll; "></iframe>
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div>
-        @endif
-
     </div>
     {{-- Include footer --}}
-    @include(theme(TRUE).'.includes.footer')
+    @include(theme(TRUE).'.includes.user-info-footer')
 @endsection
 
 @push('js')
@@ -344,19 +406,11 @@
             });
             $(document).on("focus","#title-hold", function(){
                 // alert("textarea focus");
-                $('body').append('<div class="modal1-backdrop fade in"></div>');
-                $('#postReModal').addClass('in');
-                $('#postReModal').attr('style', 'overflow: hidden auto !important; display: block');
-                // $('#postReModal').modal('show');
+                $('#postReModal').modal('show');
                 $(this).blur();
             });
             $('#btn-hold').on('click', function() {
-                $('body').append('<div class="modal1-backdrop fade in"></div>');
-                $('#postReModal').addClass('in');
-                $('#postReModal').attr('style', 'overflow: hidden auto !important; display: block');
-            });
-            $('#myModal').on('hidden.bs.modal', function (e) {
-                $('body.modal-backdrop').remove();
+                $('#postReModal').modal('show');
             });
         });
         $(document).on('click', '.panel-heading span.clickable', function(e){
@@ -475,5 +529,19 @@
             $('#postReModal').removeClass('in');
             $('#postReModal').attr('style', 'display: none;');
         }
+
+        $(document)
+        .one('focus.autoExpand', 'textarea.autoExpand', function(){
+            var savedValue = this.value;
+            this.value = '';
+            this.baseScrollHeight = this.scrollHeight;
+            this.value = savedValue;
+        })
+        .on('input.autoExpand', 'textarea.autoExpand', function(){
+            var minRows = this.getAttribute('data-min-rows')|0, rows;
+            this.rows = minRows;
+            rows = Math.ceil((this.scrollHeight - this.baseScrollHeight) / 16);
+            this.rows = minRows + rows;
+        });
     </script>
 @endpush

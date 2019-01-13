@@ -42,7 +42,7 @@ class FrontendController extends Controller
 
         $result = Datatables::of($data)
             ->addColumn('manage', function($frontend) {
-                return a('frontend/del', 'id='.$frontend->id,trans('g.delete'), ['class'=>'btn btn-xs btn-danger'],'#',"return bootbox.confirm('".trans('system.delete_confirm')."', function(result){if(result==true){window.location.replace('".asset('frontend/del?id='.$frontend->id)."')}})").'  '.a('frontend/edit', 'id='.$frontend->id,trans('g.edit'), ['class'=>'btn btn-xs btn-default']);
+                return a('frontend/del', 'id='.$frontend->id,trans('g.delete'), ['class'=>'btn btn-xs btn-danger'],'#',"return bootbox.confirm('".trans('system.delete_confirm')."', function(result){if(result==true){window.location.replace('".asset('frontend/del?id='.$frontend->id)."')}})").'  '.a('frontend/edit','id='.$frontend->id,trans('g.edit'), ['class'=>'btn btn-xs btn-default']).'  '.a('frontend_web/'.$frontend->id,'','Chỉnh sửa', ['class'=>'btn btn-xs btn-default']);
             })->rawColumns(['manage']);
 
 //        if(get_web_id() == 1) {
@@ -96,7 +96,9 @@ class FrontendController extends Controller
             $data->theme   =   $request->theme;
             $data->save();
             event_log('Sửa website frontend đơn vị '.$data->domain.' id '.$data->id);
-            set_notice(trans('system.edit_success'), 'success');
+            frontendweb_create($data->id, $data->theme, $data->title);
+            return response()->json(['status'=>0, 'url'=>asset('frontend_web/'.$data->id)]);
+//            set_notice(trans('system.edit_success'), 'success');
         }else
             set_notice(trans('system.not_exist'), 'warning');
         return redirect()->back();

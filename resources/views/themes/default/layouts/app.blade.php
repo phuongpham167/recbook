@@ -10,32 +10,31 @@
     <link rel="stylesheet" href="{{ asset('common-css/jquery.bxslider.css') }}">
     {{--<link rel="stylesheet" href="{{ asset('css/theme.css') }}" />--}}
     <link rel="stylesheet" href="{{ asset('css/main.css') }}"/>
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i&amp;subset=vietnamese" rel="stylesheet">
     @stack('style')
 </head>
 <body>
 
-@yield('content')
+    @yield('content')
 
-{{--<script src="{{ asset('js/jquery.min.js') }}"></script>--}}
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-<script type="text/javascript" src='http://maps.googleapis.com/maps/api/js?sensor=false&key=AIzaSyAxgnRkMsWPSqlxOz_kLga0hJ4eG2l0Vmo'></script>
-<script src="{{asset('plugins/moment-develop/min/moment.min.js')}}"></script>
-<script src="{{ asset('js/bootstrap.min.js') }}"></script>
-<script src="{{ asset('js/jquery.bxslider.js') }}"></script>
-<script src="{{asset('plugins/jquery-locationpicker-plugin-master/dist/locationpicker.jquery.min.js')}}"></script>
-<script>
-    $(document).ready(function() {
-        // Show or hide the sticky footer button
-        $(window).scroll(function() {
-            if ($(this).scrollTop() > 100) {
-                $('.main-menu').css({'position': 'fixed','top': '0px', 'left': '0px', 'width': '100%', 'z-index': '9999999'});
-            } else {
-                $('.main-menu').css({'position': 'static','top': '0px', 'left': '0px'});
-            }
+    {{--<script src="{{ asset('js/jquery.min.js') }}"></script>--}}
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+    <script type="text/javascript" src='http://maps.googleapis.com/maps/api/js?sensor=false&key=AIzaSyAxgnRkMsWPSqlxOz_kLga0hJ4eG2l0Vmo'></script>
+    <script src="{{asset('plugins/moment-develop/min/moment.min.js')}}"></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/jquery.bxslider.js') }}"></script>
+{{--    <script src="{{asset('plugins/jquery-locationpicker-plugin-master/dist/locationpicker.jquery.min.js')}}"></script>--}}
+    <script>
+        $(document).ready(function() {
+            // Show or hide the sticky footer button
+            $(window).scroll(function() {
+                if ($(this).scrollTop() > 100) {
+                    $('.main-menu').css({'position': 'fixed','top': '0px', 'left': '0px', 'width': '100%', 'z-index': '9999999'});
+                } else {
+                    $('.main-menu').css({'position': 'static','top': '0px', 'left': '0px'});
+                }
 
+            });
         });
-    });
-</script>
-@stack('js')
+    </script>
+    @stack('js')
 </body>

@@ -1,18 +1,67 @@
-.btn-collapse {
+.btn-collappse-wrap {
+    //text-align: center;
+}
+.btn-collapse, .btn-collapse-second {
     -webkit-border-radius: 25px;
     -moz-border-radius: 25px;
+    border: none;
     border-radius: 25px;
     background-color: #f5f6f7;
-    width: 100%;
+    width: 102px;
     &:hover {
         background-color: #ebedf0;
     }
+    &:focus {
+        outline: none;
+    }
+}
+.btn-collapse-second {
+    width: 60px;
+    i {
+        color: #4b4f56;
+        font-size: 9px;
+    }
 }
 .detail-top {
+    margin-bottom: 20px;
+    .row-wrap {
+        height: 215px;
+    }
+    .cover-wrap {
+        position: absolute;
+        z-index: 10;
+        .cover-content-wrap {
+            background: #1c1e21;
+            height: 215px;
+        }
+        img {
+            height: 215px;
+            width: 100%;
+        }
+        .btn-change-cover {
+            position: absolute;
+            top: 10px;
+            left: 30px;
+            background-clip: padding-box;
+            background-color: #000;
+            border: 1px solid #fff;
+            border-color: rgba(255, 255, 255, .8);
+            border-radius: 2px;
+            box-shadow: 0 0 6px rgba(0, 0, 0, .6);
+            box-sizing: border-box;
+            color: #fff;
+        }
+    }
+    .av-and-name-wrap {
+        height: 215px;
+        z-index: 11;
+    }
     .av-wrap {
         display: inline-block;
         //margin-bottom: 15px;
-        position: relative;
+        position: absolute;
+        left: 30px;
+        bottom: 0;
         &:hover {
             .btn-change-av {
 
@@ -33,31 +82,35 @@
         }
     }
     .avatar {
-        border: 1px solid #ccc;
+        background: #fff;
+        border: 1px solid #fff;
         border-radius: 3px;
         padding: 4px;
         width: 168px;
         height: 168px;
     }
     .name {
+        color: #fff;
         display: inline-block;
         font-size: 24px;
         text-shadow: 0 0 3px rgba(0, 0, 0, .4);
         position: absolute;
         bottom: 20px;
-        margin-left: 20px;
+        left: 220px;
     }
     .update-info-wrap {
         position: absolute;
         right: 25px;
         bottom: 20px;
         p {
-            background-color: #ccc;
-            color: #000;
+            background-color: #f5f6f7;
+            border-color: rgba(0, 0, 0, .4);
+            color: #4b4f56;
             padding: 10px 15px;
-            font-size: 14px;
+            font-size: 12px;
             font-weight: bold;
             border-radius: 3px;
+            transition: 200ms cubic-bezier(.08,.52,.52,1) background-color, 200ms cubic-bezier(.08,.52,.52,1) box-shadow, 200ms cubic-bezier(.08,.52,.52,1) transform;
             a {
                 color: #4b4f56;
                 text-decoration: none;
@@ -152,10 +205,9 @@
     cursor: pointer;
 }
 #postReModal {
-    //margin-top: 150px;
-    padding-top:400px;
-    overflow-x: hidden !important;
-    overflow-y: auto !important;
+    .modal-content {
+        margin-top: 50px;
+    }
 }
 
 .pg-item {
@@ -170,55 +222,12 @@
 .contact-phone {
     padding-top: 15px;
 }
-.modal1 {
-        position: fixed;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        z-index: 1050;
-        display: none;
-        overflow: hidden;
-        -webkit-overflow-scrolling: touch;
-        outline: 0;
 
+.form-create-re {
+    .panel-footer {
+        background: #fff;
+    }
+    #list-cl {
+        margin-top: 15px;
+    }
 }
-.modal1.in .modal-dialog {
-    -webkit-transform: translate(0,0);
-    -ms-transform: translate(0,0);
-    -o-transform: translate(0,0);
-    transform: translate(0,0);
-}
-
-.modal1.fade .modal-dialog {
-    -webkit-transition: -webkit-transform .3s ease-out;
-    -o-transition: -o-transform .3s ease-out;
-    transition: transform .3s ease-out;
-    -webkit-transform: translate(0,-25%);
-    -ms-transform: translate(0,-25%);
-    -o-transform: translate(0,-25%);
-    transform: translate(0,-25%);
-}
-.modal1-backdrop {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 1040;
-    background-color: #000;
-}
-.modal1-backdrop.in {
-    filter: alpha(opacity=50);
-    opacity: .5 !important;
-}
-.modal1-backdrop.fade {
-    filter: alpha(opacity=0);
-    opacity: 0;
-}
-#myModal {
-    position: absolute;
-    top: 25%;
-    left: -20%;
-}
-

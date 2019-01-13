@@ -305,7 +305,7 @@ button {
 
 
 .main-menu-user-info .menu-search input {
-  width: 300px !important;
+  width: 400px !important;
   border-top-left-radius: 3px !important;
   border-bottom-left-radius: 3px !important;
 }
@@ -318,6 +318,11 @@ button {
 .main-menu-user-info .menu-search button i {
   border-top-right-radius: 3px;
   border-bottom-right-radius: 3px;
+}
+
+.main-menu-user-info .navbar-right .home-link {
+  padding-top: 2px;
+  text-transform: capitalize;
 }
 
 .main-menu-user-info .navbar-right li.dropdown a {
