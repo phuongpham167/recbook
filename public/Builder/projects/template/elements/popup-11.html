@@ -1,0 +1,51 @@
+<!--
+	************************************************************
+	* Popup form block
+	************************************************************ -->
+	
+	<!-- form : "mfp-hide" Add this class before using -->
+	<div id="popup-content" class="white-popup-block popup-content mfp-hide">
+		<div class="pop-header pos-rel bg-cover bg-cc typo-light" data-bg="images/bg5.jpg">
+			<div class="content pos-rel z2">
+				<p class="sq90 inline-flex flex-cc fs80 mr-0"><i class="pe-7s-wine"></i></p>
+				<h2 class="title" data-rgen-sm="small">BOOK YOUR TABLE</h2>
+			</div>
+			<b class="full-wh z1 bg-dark op-08"></b>
+		</div>
+
+		<div class="pop-body" data-rgen-sm="pd-20">
+			<!-- form-block -->
+			<div class="form-block pos-rel z1 align-c">
+				<form action="form-data/formdata.php" class="form-widget">
+					<div class="field-wrp mr-b-30">
+						<input type="hidden" name="to" value="r.genesis.art@gmail.com">
+						<div class="form-group">
+							<input class="form-control" data-label="Name" required data-msg="Please enter name." type="text" name="name" placeholder="Enter your name">
+						</div>
+						<div class="form-group">
+							<input class="form-control" data-label="Email" required data-msg="Please enter email." type="email" name="email" placeholder="Enter your email">
+						</div>
+						<div class="form-group">
+							<input class="form-control" required data-label="Phone" data-msg="Please phone number." type="text" name="phone" placeholder="Enter your phone number">
+						</div>
+						<div class="form-group">
+							<input class="form-control datetime-pick" required data-label="Date" data-msg="Please select date" type="text" name="date" placeholder="Enter your date">
+						</div>
+						<div class="form-group">
+							<select class="form-control" data-label="People" required data-msg="How many people?" name="people">
+								<option>How many people?</option>
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+								<option value="6">6</option>
+							</select>
+						</div>
+					</div>
+					<button type="submit" class="btn btn-secondary solid block"><i class="fa fa-envelope-o"></i> SUBMIT</button>
+				</form><!-- / form -->
+			</div><!-- / form block -->
+		</div>
+	</div><!-- /#popup-content -->
+	<!-- ************** END : Popup form block **************  -->

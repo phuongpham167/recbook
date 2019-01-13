@@ -10,6 +10,7 @@
 
 @push('style')
     <link rel="stylesheet" href="{{ asset('css/theme.css') }}" />
+    <link rel="stylesheet" href="{{asset('plugins/jquery.datatables/css/jquery.dataTables.min.css')}}" />
 
 @endpush
 
@@ -19,9 +20,11 @@
     <div class="container-vina">
         <div class="row subpage">
 
-            <!--Begin right-->
-        @include(theme(TRUE).'.includes.left-menu')
-        <!--End right-->
+            <!--Begin left-->
+            <div class="col-xs-3 left">
+                @include(theme(TRUE).'.includes.left-menu')
+            </div>
+        <!--End left-->
 
             <!--Begin left-->
             <div class="col-xs-9 right">
@@ -111,7 +114,6 @@
 
         </div>
     </div>
-    <link rel="stylesheet" href="{{asset('plugins/jquery.datatables/css/jquery.dataTables.min.css')}}" />
 
     @include(theme(TRUE).'.includes.footer')
 @endsection

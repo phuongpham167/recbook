@@ -1,0 +1,98 @@
+<!--
+	************************************************************
+	* Popup form block
+	************************************************************ -->
+	<!-- form : "mfp-hide" Add this class before using -->
+	<div id="popup-content" class="white-popup-block popup-content max-w100 px-w800 mfp-hide">
+		<div class="row">
+			<div class="col-md-5 pos-rel bg-cover bg-cc flex-cc typo-light" data-bg="images/bg-img8.jpg">
+				<div class="content w75 pos-rel z2">
+					<p class="sq90 inline-flex flex-cc fs80 mr-0"><i class="pe-7s-car"></i></p>
+					<h2 class="title" data-rgen-sm="small">Book a Car</h2>
+					<p class="mr-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+					tempor incididunt labore magna aliqua</p>
+				</div>
+				<b class="full-wh z1 bg-dark op-08"></b>
+			</div><!-- // END : column //  -->
+
+			<div class="col-md-7 bg-gray">
+				<div class="pop-body" data-rgen-sm="pd-20">
+					<!-- form-block -->
+					<div class="form-block align-l">
+						<form action="form-data/formdata.php" class="form-widget">
+							<div class="field-wrp">
+								<input type="hidden" name="to" value="r.genesis.art@gmail.com">
+								<div class="row gt10">
+									<div class="col-md-6">
+										<div class="form-group">
+											<input class="form-control bg-white" data-label="Name" required data-msg="Please enter name." type="text" name="name" placeholder="Enter your name">
+										</div>
+									</div><!-- // END : column //  -->
+									
+									<div class="col-md-6">
+										<div class="form-group">
+											<input class="form-control bg-white" data-label="Email" required data-msg="Please enter email." type="email" name="email" placeholder="Enter your email">
+										</div>
+									</div><!-- // END : column //  -->
+								</div><!-- // END : row //  -->
+								<div class="form-group">
+									<input class="form-control bg-white" required data-label="Phone" data-msg="Please phone number." type="text" name="phone" placeholder="Enter your phone number">
+								</div>
+
+								<div class="form-group">
+									<select class="form-control mr-b-6 bg-white" required name="cartype" data-label="Car type">
+										<option value="Economy">Car type - Economy</option>
+										<option value="Compact">Car type - Compact</option>
+										<option value="Intermediate">Car type - Intermediate</option>
+										<option value="Standard">Car type - Standard</option>
+										<option value="Signature Series">Car type - Signature Series</option>
+										<option value="Luxury">Car type - Luxury</option>
+										<option value="Standard SUV">Car type - Standard SUV</option>
+										<option value="Passenger Van">Car type - Passenger Van</option>
+									</select>
+								</div>
+								
+								<div class="pd-20 pd-b-10 bg-white shadow-micro rd-4 bdr-1 bdr-op-1 mr-b-10">
+									<div class="form-group">
+										<label>Pick-up information</label>
+										<select class="form-control bg-white" required name="pickup_location" data-label="Pick-up Location" data-msg="Please pick-up location.">
+											<option value="">Select pick-up location</option>
+											<option value="7351 West Street Granger, IN 46530">7351 West Street Granger, IN 46530</option>
+											<option value="5397 Heather Lane Westford, MA 01886">5397 Heather Lane Westford, MA 01886</option>
+											<option value="23 Cedar Avenue Potomac, MD 20854">23 Cedar Avenue Potomac, MD 20854</option>
+											<option value="4931 Jackson Street Memphis, TN 38106">4931 Jackson Street Memphis, TN 38106</option>
+											<option value="464 Valley View Road Hanover Park, IL 60133">464 Valley View Road Hanover Park, IL 60133</option>
+											<option value="6098 Briarwood Court Berwyn, IL 60402">6098 Briarwood Court Berwyn, IL 60402</option>
+										</select>
+									</div>
+									<div class="form-group">
+										<input class="form-control bg-white datetime-pick" data-label="Pick-up date and time" required data-msg="Please select date and time." type="text" name="pickup_datetime" placeholder="Pick-up date and time">
+									</div>
+								</div>
+								<div class="pd-20 pd-b-10 bg-white shadow-micro rd-4 bdr-1 bdr-op-1 mr-b-30">
+									<div class="form-group">
+										<label>Drop-off information</label>
+										<select class="form-control bg-white datetime-pick" required name="dropoff_location" data-label="Drop-off Location" data-msg="Please drop-off location.">
+											<option value="">Select drop-off location</option>
+											<option value="7351 West Street Granger, IN 46530">7351 West Street Granger, IN 46530</option>
+											<option value="5397 Heather Lane Westford, MA 01886">5397 Heather Lane Westford, MA 01886</option>
+											<option value="23 Cedar Avenue Potomac, MD 20854">23 Cedar Avenue Potomac, MD 20854</option>
+											<option value="4931 Jackson Street Memphis, TN 38106">4931 Jackson Street Memphis, TN 38106</option>
+											<option value="464 Valley View Road Hanover Park, IL 60133">464 Valley View Road Hanover Park, IL 60133</option>
+											<option value="6098 Briarwood Court Berwyn, IL 60402">6098 Briarwood Court Berwyn, IL 60402</option>
+										</select>
+									</div>
+									<div class="form-group">
+										<input class="form-control bg-white datetime-pick" required data-label="Drop-off date and time" data-msg="Please select date and time." type="text" name="dropoff_datetime" placeholder="Drop-off date and time">
+									</div>
+								</div>
+								
+							</div>
+							<button type="submit" class="btn solid btn-dark block"><i class="fa fa-envelope-o"></i> SUBMIT</button>
+						</form><!-- / form -->
+					</div><!-- / form block -->
+				</div>
+			</div><!-- // END : column //  -->
+		</div><!-- // END : row //  -->
+	</div><!-- /#popup-content -->
+	<!-- ************** END : Popup form block **************  -->
