@@ -11,164 +11,83 @@
 @push('style')
     <link rel="stylesheet" href="{{ asset('common-css/flexslider.css') }}"/>
     <link rel="stylesheet" href="{{ asset('css/home.css') }}"/>
+
+    <link rel="stylesheet" href="{{ asset('plugins/OwlCarousel2-2.3.4/dist/owl.carousel.js') }}"/>
+    <link rel="stylesheet" href="{{ asset('plugins/OwlCarousel2-2.3.4/dist/assets/owl.theme.default.min.css') }}"/>
 @endpush
 
 @section('content')
-    @include(theme(TRUE).'.includes.header')
-    <div class="content-body">
-        <section class="slider">
-            <div class="flexslider">
-                <ul class="slides">
-                    <li>
-                        <img src="{{ asset('images/slider/8226anhbia1.gif') }}" />
-                    </li>
-                    <li>
-                        <img src="{{ asset('images/slider/9742anhbia4.gif') }}" />
-                    </li>
-                    <li>
-                        <img src="{{ asset('images/slider/7070anhbia5.gif') }}" />
-                    </li>
-                    <li>
-                        <img src="{{ asset('images/slider/8292anhbia6.gif') }}" />
-                    </li>
-                    <li>
-                        <img src="{{ asset('images/slider/3691anhbia7.gif') }}" />
-                    </li>
-                </ul>
+    @include(theme(TRUE).'.includes.header-home')
+    <div class="sliderz">
+        <div>
+            <div class="owl-carousel owl-theme slide_carousel">
+                <div>
+                    <a href="#"><img src="images/slider/1.jpg" alt="Bán bánh lạ bọc ống inox: Bám vỉa hè Hà Nội, chàng trai thu 70 triệu đồng/tháng" /></a>
+                </div>
+                <div>
+                    <a href="#"><img src="images/slider/2.jpg" alt="Philippines dè chừng với tất cả các dự án vay vốn của Trung Quốc" /></a>
+                </div>
+                <div>
+                    <a href="#"><img src="images/slider/3.jpg" alt="Sớm đưa Việt Nam vào nhóm các nước dẫn đầu ASEAN" /></a>
+                </div>
             </div>
-        </section>
-        <div class="smart-search hidden-xs">
-            <div class="container search-wrap">
-                <div class="search-content search_slide">
-                    <ul>
-                        @foreach($categories as $key => $category)
-                            <li @if($key == 0) class="active" @endif>
-                                <a href="{{ $category->id }}">{{$category->name}}</a><span></span>
-                            </li>
-                        @endforeach
-                        {{--<li class="active">--}}
-                            {{--<a href="#">Cần bán</a><span></span>--}}
-                        {{--</li>--}}
-                        {{--<li>--}}
-                            {{--<a href="#">Cho thuê</a><span></span>--}}
-                        {{--</li>--}}
-                        {{--<li>--}}
-                            {{--<a href="#">Cần mua</a><span></span>--}}
-                        {{--</li>--}}
-                        {{--<li>--}}
-                            {{--<a href="#">Cần thuê</a><span></span>--}}
-                        {{--</li>--}}
-                        <li>
-                            <form action="{{route('search')}}" method="GET">
-                                <input placeholder="{{trans('system.searchPlaceholder')}}" autocomplete="off" type="text" value="" name="txtkeyword" id="txtkeyword">
-                                <button type="submit"><i class="fa fa-search"></i></button>
-                            </form>
-                        </li>
-                    </ul>
-                    <div class="clearfix"></div>
-                    <form action="{{route('smart-search')}}" method="GET">
-                        @php
-                            if($categories) {
-                                $firstCat = $categories[0];
-                            }
-                        @endphp
-                        <input name="Search[cat_id]" id="Search_kind_id" type="hidden" value="{{ $firstCat ? $firstCat->id : 1 }}">
-                        <div class="row search-select-wrap">
-                            <div class="col-xs-2 item">
-                                <select id="re-type" name="Search[type_id]">
-                                    @foreach($reTypes as $reType)
-                                        <option value="{{$reType->id}}">{{$reType->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-xs-2 item">
-                                <select name="Search[province_id]" id="Search_province_id">
-                                    @foreach($provinces as $province)
-                                        <option value="{{$province->id}}">{{$province->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-xs-2 item">
-                                <select name="Search[district_id]" id="Search_district_id">
-                                    @foreach($districts as $district)
-                                        <option value="{{$district->id}}">{{$district->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-xs-2 item">
-                                <select name="Search[street_id]" id="Search_street_id">
-                                    @foreach($streets as $street)
-                                        <option value="{{$street->id}}">{{$street->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            {{--<div class="col-xs-2 item">--}}
-                                {{--<select name="Search[direction_id]" id="Search_direction_id">--}}
-                                    {{--@foreach($directions as $direction)--}}
-                                        {{--<option value="{{$direction->id}}">{{$direction->name}}</option>--}}
-                                    {{--@endforeach--}}
-                                {{--</select>--}}
-                            {{--</div>--}}
-                            <div class="col-xs-2 item">
-                                <select id="range-price" name="Search[range_price_id]">
-                                    @foreach($rangePrices as $rangePrice)
-                                        <option value="{{$rangePrice->id}}">{{$rangePrice->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-xs-2 item">
-                                <button type="submit"><i class="fa fa-search"></i> tìm kiếm</button>
-                            </div>
-                        </div>
-                    </form>
+            <div class="row d-none  d-md-block">
+                <div class="col-4 offset-4">
+                    <div class="owl-carousel owl-theme text_carousel">
+                        <div class="item"><p>Bán bánh lạ bọc ống inox: Bám vỉa hè Hà Nội, chàng trai thu 70 triệu đồng/tháng</p></div><div class="item"><p>Philippines dè chừng với tất cả các dự án vay vốn của Trung Quốc</p></div><div class="item"><p>Sớm đưa Việt Nam vào nhóm các nước dẫn đầu ASEAN</p></div>               </div>
                 </div>
             </div>
         </div>
+    </div>
+
+
+    <div class="content-body">
+
+
         {{-- end smart search --}}
         <section class="hot-real-estate">
             <div class="container ">
                 <div class="row title-hot-wrap">
                     <div class="col-xs-12 title-hot-real-estate">
-                            <a href="{{ route('tin-noi-bat') }}" class="active">BẤT ĐỘNG SẢN NỔI BẬT <span></span></a>
-                            <a href="{{route('newest-real-estate')}}">TIN MỚI NHẤT <span></span></a>
-                            <a href="{{route('free-real-estate')}}">TIN RAO VẶT CỘNG ĐỒNG MIỄN PHÍ <span></span></a>
+                        <a href="{{ route('tin-noi-bat') }}" class="active">TIN BẤT ĐỘNG SẢN HOT</a>
+                        <a class="pull-right postnew" href="{{route('free-real-estate')}}">ĐĂNG TIN HOT</a>
                     </div>
                 </div>
-                <div class="row list-re-item list-hot">
+                <div class="row list_product theend" id="hot_landbox">
+                    <!--Begin right-->
                     @foreach($hotRealEstates as $item)
-                        <div class="col-xs-12 col-sm-6 col-md-3">
-                            <div class="col-xs-12 re-item hot">
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3 item" data-id="266">
+                            <div class="img_item">
                                 <a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">
                                     @php
                                         $images = $item->images ? json_decode($item->images) : [];
                                         $imgThumbnail = $images ? $images[0]->link : '/images/default_real_estate_image.jpg';
                                         $imgAlt = $images ? $images[0]->alt : $item->title;
                                     @endphp
-                                    <img src="{{asset($imgThumbnail)}}" alt="{{ $imgAlt }}">
-                                </a>
-                                <div class="icon_viphot">
-                                    <img src="{{ asset('images/vip1.gif') }}" alt="Bán nhà số 23/11 Hàng Kênh, Lê Chân, Hải Phòng">
-                                </div>
+                                    <img src="{{asset($imgThumbnail)}}" alt="{{ $imgAlt }}"></a>
+                                <img class="vip" src="/images/hot.png"
+                                     alt="{{ $imgAlt }}"
+                                     title="{{ $imgAlt }}">
+                            </div>
 
-                                <div class="code_row">{{ $item->code }}</div>
-
+                            <div class="brief_item">
                                 <h3>
-                                    <a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">{{ $item->title }}</a>
-                                </h3>
+                                    <a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">{{ $item->title }}</a></h3>
+                                <div><p>{{ $item->short_description }}</p></div>
+                            </div>
 
-                                <p>{{ $item->short_description }}
-                                </p>
-                                <div class="row area">
-                                    <div class="col-xs-6 larea">DTMB: {{$item->area_of_premises ? $item->area_of_premises . 'm2' : '0m2'}}</div>
-                                    <div class="col-xs-6 rarea">DTSD: {{$item->area_of_use ? $item->area_of_use . 'm2' : '0m2'}}</div>
+                            <div class="row no-gutters info_item">
+                                <div class="col-md-6 no-padding-left no-padding-right">
+                                    <p class="area">DTMB: {{$item->area_of_premises ? $item->area_of_premises . 'm2' : '0m2'}}</p>
                                 </div>
-                                <div class="row price">
-                                    <div class="col-xs-12 lprice">
-                                        <i class="fa fa-map-marker"></i> {{$item->district->name}}
-                                    </div>
-                                    <div class="col-xs-12 rprice">
-                                        {{$item->price}} {{$item->unit ? $item->unit->name : 'VND'}}
-                                    </div>
+                                <div class="col-md-6 no-padding-left no-padding-right">
+                                    <p class="direction">Hướng: {{$item->direction?$item->direction->name:''}}</p>
+                                </div>
+                                <div class="col-md-6 no-padding-left no-padding-right">
+                                    <p class="area1">DTSD: {{$item->area_of_use ? $item->area_of_use . 'm2' : '0m2'}}</p>
+                                </div>
+                                <div class="col-md-6 no-padding-left no-padding-right">
+                                    <p class="place">Giá: {{$item->price}} {{$item->unit ? $item->unit->name : 'VND'}}</p>
                                 </div>
                             </div>
                         </div>
@@ -176,350 +95,280 @@
                 </div>
             </div>
         </section>
-        <section class="good_price">
+        <div class="container d-none d-md-block">
+            <div class="row adv_home">
+                <div class="col-md-4">
+                    <a href="#"><img src="images/banner/1-1.jpg" alt="Đăng ký Bộ Công Thương" title="Đăng ký Bộ Công Thương"></a>
+                </div>
+                <div class="col-md-4">
+                    <a href="#"><img src="images/banner/1-2.jpg" alt="Thanh toán" title="Thanh toán"></a>
+                </div>
+                <div class="col-md-4">
+                    <a href="#"><img src="images/banner/1-3.jpg" alt="Dịch vụ 3" title="Dịch vụ 3"></a>
+                </div>
+
+            </div>
+        </div>
+        <div class="second_box">
             <div class="container">
-                <div class="row two_cols">
-                    <div class="col-xs-12 col-md-12 col_left">
-                        <div class="left_box">
-                            <p class="title_box">
-                                <strong>TIN GIÁ HẤP DẪN</strong>
-                            </p>
-                            <div>
-                                <div class="cat_top_box">
-                                    @foreach($categories as $category)
-                                        <a href="{{'/danh-muc-bds/' . $category->slug . '-c' . $category->id}}">{{$category->name}}</a>
-                                    @endforeach
-                                    <a href="{{route('tin-vip')}}">Tin VIP</a>
-                                    <form action="{{route('search')}}" method="GET">
-                                        <input placeholder="{{trans('system.searchPlaceholder')}}" autocomplete="off" type="text" value="" name="txtkeyword" id="txtkeyword">
-                                        <button type="submit"><i class="fa fa-search"></i></button>
-                                    </form>
-                                </div>
-                                <div class="row body_top_box">
-                                    @foreach($goodPriceRealEstate as $item)
-                                        <div class="col-xs-12 col-sm-6 col-md-4  good_price_item_wrap">
-                                            <div class="col-xs-12  re_item2 good_price_item">
-                                            @php
-                                                $itemClass = '';
-                                                if($item->is_hot && $item->is_vip) {
-                                                    $itemClass = '_vip_hot';
-                                                }
-                                                if($item->is_vip && !$item->is_hot) {
-                                                    $itemClass = '_vip';
-                                                }
+                <div class="row">
+                    <!-- Begin Tin Mới Nhất -->
+                    <div class="col-12 col-md-6 item_sc">
+                        <div class="tit_box3">
+                            <strong>TIN MỚI NHẤT</strong>
+                            @foreach($categories as $category)
+                                <a class="d-none d-md-inline-block" href="{{'/danh-muc-bds/' . $category->slug . '-c' . $category->id}}">{{$category->name}}</a>
+                            @endforeach
+                        </div>
+                        <div class="list_product2">
+                            @foreach($newestRealEstates as $item)
+                                @php
+                                    $images = $item->images ? json_decode($item->images) : [];
+                                    $imgThumbnail = $images ? $images[0]->link : '/images/default_real_estate_image.jpg';
+                                    $imgAlt = $images ? $images[0]->alt : $item->title;
+                                @endphp
+                                <div class="row no-gutters item">
 
-                                                $images = $item->images ? json_decode($item->images) : [];
-                                                $imgThumbnail = $images ? $images[0]->link : '/images/default_real_estate_image.jpg';
-                                                $imgAlt = $images ? $images[0]->alt : $item->title;
-                                            @endphp
-                                                <div class="row {{$itemClass}}">
-                                                    <div class="col-xs-5 lgp_item">
-                                                        <a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">
-                                                            <img src="{{ asset($imgThumbnail) }}" alt="{{ $imgAlt }}">
-                                                        </a>
-                                                        <div class="code_row">{{$item->code}}</div>
-                                                    </div>
-
-                                                    <div class="col-xs-7 rgp_item">
-                                                        <h3>
-                                                            <a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">{{ $item->title }}
-                                                            </a>
-                                                            <span></span>
-                                                        </h3>
-                                                        <div>{{ $item->short_description }}
-                                                        </div>
-                                                        <p>
-                                                            <strong>DTMB:</strong> {{$item->area_of_premises ? $item->area_of_premises . 'm2' : '0m2'}} - <strong>Giá:</strong>
-                                                            <span>
-                                                                {{$item->price}} {{$item->unit ? $item->unit->name : 'VND'}}
-                                                            </span>
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                                @if($item->is_vip)
-                                                <div class="icon_viphot">
-                                                    <img src="{{ asset('images/vip2.gif') }}" alt="Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng">
-                                                </div>
-                                                @endif
-                                            </div>
-
-                                        </div>
-                                    @endforeach
-                                    {{--<div class="col-xs-12 col-sm-6  good_price_item_wrap">--}}
-                                        {{--<div class="col-xs-12  re_item2 good_price_item">--}}
-                                            {{--<div class="row _vip">--}}
-                                                {{--<div class="col-xs-5 lgp_item">--}}
-                                                    {{--<a href="#">--}}
-                                                        {{--<img src="http://nhadathaiphong.vn/images/attachment/thumb/565610.jpg" alt="Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng">--}}
-                                                    {{--</a>--}}
-                                                    {{--<div class="code_row">HP-36845</div>--}}
-                                                {{--</div>--}}
-
-                                                {{--<div class="col-xs-7 rgp_item">--}}
-                                                    {{--<h3>--}}
-                                                        {{--<a href="#">Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng--}}
-                                                        {{--</a>--}}
-                                                        {{--<span></span>--}}
-                                                    {{--</h3>--}}
-                                                    {{--<div>Nhà xây 4 tầng kiên cố, chắc chắn, thiết kế hiện đại, ngõ rộng 4m, sân cổng riêng--}}
-                                                        {{--biệt, gần trường, chợ, hướng Tây, an ninh tốt, sổ đỏ chính chủ--}}
-                                                    {{--</div>--}}
-                                                    {{--<p>--}}
-                                                        {{--<strong>DTMB:</strong> 57.7 m2 - <strong>Giá:</strong>--}}
-                                                        {{--<span>--}}
-                                                            {{--1.87 tỷ VND--}}
-                                                        {{--</span>--}}
-                                                    {{--</p>--}}
-                                                {{--</div>--}}
-                                            {{--</div>--}}
-                                            {{--<div class="icon_viphot">--}}
-                                                {{--<img src="{{ asset('images/vip2.gif') }}" alt="Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng">--}}
-                                            {{--</div>--}}
-                                        {{--</div>--}}
-
-                                    {{--</div>--}}
-                                    {{--<div class="col-xs-12 col-sm-6  good_price_item_wrap">--}}
-                                        {{--<div class="col-xs-12  re_item2 good_price_item">--}}
-                                            {{--<div class="row _vip_hot">--}}
-                                                {{--<div class="col-xs-5 lgp_item">--}}
-                                                    {{--<a href="#">--}}
-                                                        {{--<img src="http://nhadathaiphong.vn/images/attachment/thumb/4951.jpg" alt="Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng">--}}
-                                                    {{--</a>											<div class="code_row">HP-36845</div>--}}
-                                                {{--</div>--}}
-
-                                                {{--<div class="col-xs-7 rgp_item">--}}
-                                                    {{--<h3>--}}
-                                                        {{--<a href="#">Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng--}}
-                                                        {{--</a>--}}
-                                                        {{--<span></span>--}}
-                                                    {{--</h3>--}}
-                                                    {{--<div>Nhà xây 4 tầng kiên cố, chắc chắn, thiết kế hiện đại, ngõ rộng 4m, sân cổng riêng--}}
-                                                        {{--biệt, gần trường, chợ, hướng Tây, an ninh tốt, sổ đỏ chính chủ--}}
-                                                    {{--</div>--}}
-                                                    {{--<p>--}}
-                                                        {{--<strong>DTMB:</strong> 57.7 m2 - <strong>Giá:</strong>--}}
-                                                        {{--<span>--}}
-                                                            {{--1.87 tỷ VND--}}
-                                                        {{--</span>--}}
-                                                    {{--</p>--}}
-                                                {{--</div>--}}
-                                            {{--</div>--}}
-
-                                            {{--<div class="icon_viphot">--}}
-                                                {{--<img src="{{ asset('images/vip2.gif') }}" alt="Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng">--}}
-                                            {{--</div>--}}
-                                        {{--</div>--}}
-                                    {{--</div>--}}
-                                    {{----}}
-                                    {{--<div class="col-xs-12 col-sm-6  good_price_item_wrap">--}}
-                                        {{--<div class="col-xs-12  re_item2 good_price_item">--}}
-                                            {{--<div class="row">--}}
-                                                {{--<div class="col-xs-5 lgp_item">--}}
-                                                    {{--<a href="#">--}}
-                                                        {{--<img src="http://nhadathaiphong.vn/images/attachment/thumb/28489.jpg" alt="Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng">--}}
-                                                    {{--</a>											<div class="code_row">HP-36845</div>--}}
-                                                {{--</div>--}}
-
-                                                {{--<div class="col-xs-7 rgp_item">--}}
-                                                    {{--<h3><a href="#">Cho thuê nhà số 9 Đoạn Xá, Đông Hải 1, Hải An, Hải Phòng</a>--}}
-                                                        {{--<span></span>--}}
-                                                    {{--</h3>--}}
-                                                    {{--<div>Nhà 1.5 tầng xây độc lập,  sạch sẽ về ở ngay, ngõ rộng 2,2m, khu dân cư đông đúc,--}}
-                                                        {{--gần trường, chợ, bệnh viện, hướng Đông Nam, sổ hồng chính chủ--}}
-                                                    {{--</div>--}}
-                                                    {{--<p>--}}
-                                                        {{--<strong>DTMB:</strong> 57.7 m2 - <strong>Giá:</strong>--}}
-                                                        {{--<span>--}}
-                                                            {{--1.87 tỷ VND--}}
-                                                        {{--</span>--}}
-                                                    {{--</p>--}}
-                                                {{--</div>--}}
-                                            {{--</div>--}}
-
-                                            {{--<div class="icon_viphot">--}}
-                                                {{--<img src="{{ asset('images/vip2.gif') }}" alt="Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng">--}}
-                                            {{--</div>--}}
-                                        {{--</div>--}}
-                                    {{--</div>--}}
-                                    @if(count($goodPriceRealEstate))
-                                    <div class="col-xs-12" style="border-bottom: 0; margin-bottom: 0; padding-bottom: 0; margin-top: 15px;">
-                                        @php
-                                            $cat = $categories[0];
-                                        @endphp
-                                        <p class="more"><a href="{{'/danh-muc-bds/' . $cat->slug . '-c' . $cat->id}}"><i class="fa fa-angle-double-right"></i> Xem thêm</a></p>
+                                    <div class="col-md-3 img_th">
+                                        <a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">
+                                            <img src="{{$imgThumbnail}}" alt="{{ $item->title }}" title="{{ $item->title }}"></a>
                                     </div>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {{--<div class="col-xs-12 col-md-3 col_right">--}}
-                        {{--@include(theme(TRUE).'.includes.vip-slide')--}}
-                    {{--</div>--}}
-                </div>
-            </div>
-        </section>
-        <section class="free_price">
-            <div class="container">
-                <div class="row margin-0">
-                    <div class="col-xs-12">
-                        <div class="free_price_box">
-                            <p class="title_box1">
-                                <strong>{{ trans('home.free_real_estate') }}</strong>
-                            </p>
-                            <div >
-                                <div class="row body_top_box">
-                                    @foreach($freeRealEstates as $item)
-                                        <div class="col-xs-12 col-sm-4  free_price_item_wrap">
-                                            <div class="col-xs-12 re_item2 free_price_item">
-                                                <div class="row">
-                                                    @php
-                                                        $images = $item->images ? json_decode($item->images) : [];
-                                                        $imgThumbnail = $images ? $images[0]->link : '/images/default_real_estate_image.jpg';
-                                                        $imgAlt = $images ? $images[0]->alt : $item->title;
-                                                    @endphp
-                                                    <div class="col-xs-5 lgp_item">
-                                                        <a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">
-                                                            <img src="{{ asset($imgThumbnail) }}" alt="{{ $imgAlt }}">
-                                                        </a>
-                                                        <div class="code_row">{{$item->code}}</div>
-                                                    </div>
 
-                                                    <div class="col-xs-7 rgp_item">
-                                                        <h3><a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">{{ $item->title }}</a>
-                                                            <span></span>
-                                                        </h3>
-                                                        <div>{{$item->short_description ? $item->short_description : ''}}
-                                                        </div>
-                                                        <p>
-                                                            <strong>DTMB:</strong> {{$item->area_of_premises ? $item->area_of_premises . 'm2' : '0m2'}} - <strong>Giá:</strong>
-                                                            <span>
-                                                            {{$item->price}} {{$item->unit ? $item->unit->name : 'VND'}}
-                                                        </span>
-                                                        </p>
-                                                    </div>
+                                    <div class="col-md-6 brief_th">
+                                        <h3>
+                                            <a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">{{ $item->title }}</a>
+                                            <img class="vip" src="/images/new.gif" alt="{{ $item->title }}" title="{{ $item->title }}">
+                                        </h3>
+                                        <div>{{ $item->short_description }}</div>
+                                    </div>
+
+                                    <div class="col-md-3 info_th">
+                                        <p class="price"><strong>Giá:</strong> {{$item->price}} {{$item->unit ? $item->unit->name : 'VND'}}</p>
+                                        <p><strong>DTMB:</strong> {{$item->area_of_premises ? $item->area_of_premises . 'm2' : '0m2'}}</p>
+                                        <p><strong>Khu vực:</strong> {{$item->province?$item->province->name:''}}</p>
+                                        <p><strong>Hướng:</strong> {{$item->direction?$item->direction->name:''}}</p>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                        <br class="d-md-none">
+                    </div>
+                    <!-- End Tin Mới Nhất -->
+                    <!-- Begin vip_home -->
+                    <div class="col-12 col-md-6 item_sc">
+                        <div class="vip_home">
+                            <p>TIN ĐĂNG VIP</p>
+                            <div>
+                                <div class="row list_vip">
+                                    @foreach($vipRealEstates as $item)
+                                        @php
+                                            $images = $item->images ? json_decode($item->images) : [];
+                                            $imgThumbnail = $images ? $images[0]->link : '/images/default_real_estate_image.jpg';
+                                            $imgAlt = $images ? $images[0]->alt : $item->title;
+                                        @endphp
+                                        <div class="col-12 col-md-6 item">
+                                            <h4>
+                                                <a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">{{ $item->title }}</a>
+                                                <img src="/images/vip2.gif" alt="vip">
+                                            </h4>
+
+                                            <div class="row no-gutters">
+                                                <div class="col-md-4 item_l">
+                                                    <a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">
+                                                        <img src="{{$imgThumbnail}}" alt="{{ $item->title }}" title="{{ $item->title }}"></a>
+                                                </div>
+                                                <div class="col-md-8 item_r">
+                                                    <strong>{{$item->price}} {{$item->unit ? $item->unit->name : 'VND'}}</strong>
+                                                    <p>DTMB: {{$item->area_of_premises ? $item->area_of_premises . 'm2' : '0m2'}}</p>
+                                                    <p>Hướng: {{$item->direction?$item->direction->name:''}}</p>
                                                 </div>
                                             </div>
                                         </div>
                                     @endforeach
-{{--                                    @for ($i=0; $i<1; $i++)--}}
-                                    {{--<div class="col-xs-12 col-sm-4  free_price_item_wrap">--}}
-                                        {{--<div class="col-xs-12 re_item2 free_price_item">--}}
-                                            {{--<div class="row">--}}
-                                                {{--<div class="col-xs-5 lgp_item">--}}
-                                                    {{--<a href="#">--}}
-                                                        {{--<img src="http://nhadathaiphong.vn/images/attachment/thumb/28489.jpg" alt="Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng">--}}
-                                                    {{--</a>											<div class="code_row">HP-36845</div>--}}
-                                                {{--</div>--}}
-
-                                                {{--<div class="col-xs-7 rgp_item">--}}
-                                                    {{--<h3><a href="#">Cho thuê nhà số 9 Đoạn Xá, Đông Hải 1, Hải An, Hải Phòng</a>--}}
-                                                        {{--<span></span>--}}
-                                                    {{--</h3>--}}
-                                                    {{--<div>Nhà 1.5 tầng xây độc lập,  sạch sẽ về ở ngay, ngõ rộng 2,2m, khu dân cư đông đúc,--}}
-                                                        {{--gần trường, chợ, bệnh viện, hướng Đông Nam, sổ hồng chính chủ--}}
-                                                    {{--</div>--}}
-                                                    {{--<p>--}}
-                                                        {{--<strong>DTMB:</strong> 57.7 m2 - <strong>Giá:</strong>--}}
-                                                        {{--<span>--}}
-                                                            {{--1.87 tỷ VND--}}
-                                                        {{--</span>--}}
-                                                    {{--</p>--}}
-                                                {{--</div>--}}
-                                            {{--</div>--}}
-                                        {{--</div>--}}
-                                    {{--</div>--}}
-                                    {{--<div class="col-xs-12 col-sm-4  free_price_item_wrap">--}}
-                                        {{--<div class="col-xs-12 re_item2 free_price_item">--}}
-                                            {{--<div class="row">--}}
-                                                {{--<div class="col-xs-5 lgp_item">--}}
-                                                    {{--<a href="#">--}}
-                                                        {{--<img src="http://nhadathaiphong.vn/images/attachment/thumb/568z106.jpg" alt="Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng">--}}
-                                                    {{--</a>											<div class="code_row">HP-36845</div>--}}
-                                                {{--</div>--}}
-
-                                                {{--<div class="col-xs-7 rgp_item">--}}
-                                                    {{--<h3><a href="#">Cho thuê nhà số 9 Đoạn Xá, Đông Hải 1, Hải An, Hải Phòng</a>--}}
-                                                        {{--<span></span>--}}
-                                                    {{--</h3>--}}
-                                                    {{--<div>Nhà 1.5 tầng xây độc lập,  sạch sẽ về ở ngay, ngõ rộng 2,2m, khu dân cư đông đúc,--}}
-                                                        {{--gần trường, chợ, bệnh viện, hướng Đông Nam, sổ hồng chính chủ--}}
-                                                    {{--</div>--}}
-                                                    {{--<p>--}}
-                                                        {{--<strong>DTMB:</strong> 57.7 m2 - <strong>Giá:</strong>--}}
-                                                        {{--<span>--}}
-                                                                {{--1.87 tỷ VND--}}
-                                                            {{--</span>--}}
-                                                    {{--</p>--}}
-                                                {{--</div>--}}
-                                            {{--</div>--}}
-                                        {{--</div>--}}
-                                    {{--</div>--}}
-                                    {{--<div class="col-xs-12 col-sm-4  free_price_item_wrap">--}}
-                                        {{--<div class="col-xs-12 re_item2 free_price_item">--}}
-                                            {{--<div class="row">--}}
-                                                {{--<div class="col-xs-5 lgp_item">--}}
-                                                    {{--<a href="#">--}}
-                                                        {{--<img src="http://nhadathaiphong.vn/images/attachment/thumb/2960486327MHT3.jpg" alt="Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng">--}}
-                                                    {{--</a>											<div class="code_row">HP-36845</div>--}}
-                                                {{--</div>--}}
-
-                                                {{--<div class="col-xs-7 rgp_item">--}}
-                                                    {{--<h3><a href="#">Cho thuê nhà số 9 Đoạn Xá, Đông Hải 1, Hải An, Hải Phòng</a>--}}
-                                                        {{--<span></span>--}}
-                                                    {{--</h3>--}}
-                                                    {{--<div>Nhà 1.5 tầng xây độc lập,  sạch sẽ về ở ngay, ngõ rộng 2,2m, khu dân cư đông đúc,--}}
-                                                        {{--gần trường, chợ, bệnh viện, hướng Đông Nam, sổ hồng chính chủ--}}
-                                                    {{--</div>--}}
-                                                    {{--<p>--}}
-                                                        {{--<strong>DTMB:</strong> 57.7 m2 - <strong>Giá:</strong>--}}
-                                                        {{--<span>--}}
-                                                                {{--1.87 tỷ VND--}}
-                                                            {{--</span>--}}
-                                                    {{--</p>--}}
-                                                {{--</div>--}}
-                                            {{--</div>--}}
-                                        {{--</div>--}}
-                                    {{--</div>--}}
-                                    {{--<div class="col-xs-12 col-sm-4  free_price_item_wrap">--}}
-                                        {{--<div class="col-xs-12 re_item2 free_price_item">--}}
-                                            {{--<div class="row">--}}
-                                                {{--<div class="col-xs-5 lgp_item">--}}
-                                                    {{--<a href="#">--}}
-                                                        {{--<img src="http://nhadathaiphong.vn/images/attachment/thumb/4592d597efe08641661f3f50.jpg" alt="Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng">--}}
-                                                    {{--</a>											<div class="code_row">HP-36845</div>--}}
-                                                {{--</div>--}}
-
-                                                {{--<div class="col-xs-7 rgp_item">--}}
-                                                    {{--<h3><a href="#">Cho thuê nhà số 9 Đoạn Xá, Đông Hải 1, Hải An, Hải Phòng</a>--}}
-                                                        {{--<span></span>--}}
-                                                    {{--</h3>--}}
-                                                    {{--<div>Nhà 1.5 tầng xây độc lập,  sạch sẽ về ở ngay, ngõ rộng 2,2m, khu dân cư đông đúc,--}}
-                                                        {{--gần trường, chợ, bệnh viện, hướng Đông Nam, sổ hồng chính chủ--}}
-                                                    {{--</div>--}}
-                                                    {{--<p>--}}
-                                                        {{--<strong>DTMB:</strong> 57.7 m2 - <strong>Giá:</strong>--}}
-                                                        {{--<span>--}}
-                                                                {{--1.87 tỷ VND--}}
-                                                            {{--</span>--}}
-                                                    {{--</p>--}}
-                                                {{--</div>--}}
-                                            {{--</div>--}}
-                                        {{--</div>--}}
-                                    {{--</div>--}}
-                                    {{--@endfor--}}
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <!-- End vip_home -->
+
+                </div><!--row-->
+            </div><!--container-->
+        </div>
+        <div class="container d-none d-md-block">
+            <div class="row adv_home">
+                <div class="col-md-4">
+                    <a href="#"><img src="images/banner/1-1.jpg" alt="Đăng ký Bộ Công Thương" title="Đăng ký Bộ Công Thương"></a>
                 </div>
+                <div class="col-md-4">
+                    <a href="#"><img src="images/banner/1-2.jpg" alt="Thanh toán" title="Thanh toán"></a>
+                </div>
+                <div class="col-md-4">
+                    <a href="#"><img src="images/banner/1-3.jpg" alt="Dịch vụ 3" title="Dịch vụ 3"></a>
+                </div>
+
             </div>
-        </section>
+        </div>
+
+        <div class="third_box">
+            <div class="container">
+                <!-- Begin Tin giá hấp dẫn -->
+                <div class="tit_box3">
+                    <strong>TIN GIÁ HẤP DẪN</strong>
+                    @foreach($categories as $category)
+                        <a class="d-none d-md-inline-block" href="{{'/danh-muc-bds/' . $category->slug . '-c' . $category->id}}">{{$category->name}}</a>
+                    @endforeach
+                </div>
+                <div class="list_vip three_land">
+                    <div class="row">
+                        @foreach($goodPriceRealEstate as $item)
+                            @php
+                                $itemClass = '';
+                                if($item->is_hot && $item->is_vip) {
+                                    $itemClass = '_vip_hot';
+                                }
+                                if($item->is_vip && !$item->is_hot) {
+                                    $itemClass = '_vip';
+                                }
+
+                                $images = $item->images ? json_decode($item->images) : [];
+                                $imgThumbnail = $images ? $images[0]->link : '/images/default_real_estate_image.jpg';
+                                $imgAlt = $images ? $images[0]->alt : $item->title;
+                            @endphp
+                            <div class="col-md-12 col-md-4 item">
+                                <div class="row no-gutters">
+                                    <div class="col-md-5 item_l">
+                                        <a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">
+                                            <img src="{{ asset($imgThumbnail) }}" alt="{{ $item->title }}" title="{{ $item->title }}">
+                                        </a>
+                                    </div>
+                                    <div class="col-md-7 item_r">
+                                        <strong>{{$item->price}} {{$item->unit ? $item->unit->name : 'VND'}}</strong>
+                                        <p>DTMB: {{$item->area_of_premises ? $item->area_of_premises . 'm2' : '0m2'}}</p>
+                                        <p>DTSD: {{$item->area_of_use ? $item->area_of_use . 'm2' : '0m2'}}</p>
+                                        <p>Khu vực: {{$item->province?$item->province->name.', ':''}}{{$item->district?$item->district->name:''}}</p>
+                                        <p>Hướng: {{$item->direction?$item->direction->name:''}}</p>
+                                    </div>
+                                </div>
+                                <h4><a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">{{ $item->title }}</a></h4>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+                <!-- End Tin giá hấp dẫn -->
+            </div>
+        </div>
+        <div class="container d-none d-md-block">
+            <div class="row adv_home">
+                <div class="col-md-4">
+                    <a href="#"><img src="images/banner/1-1.jpg" alt="Đăng ký Bộ Công Thương" title="Đăng ký Bộ Công Thương"></a>
+                </div>
+                <div class="col-md-4">
+                    <a href="#"><img src="images/banner/1-2.jpg" alt="Thanh toán" title="Thanh toán"></a>
+                </div>
+                <div class="col-md-4">
+                    <a href="#"><img src="images/banner/1-3.jpg" alt="Dịch vụ 3" title="Dịch vụ 3"></a>
+                </div>
+
+            </div>
+        </div>
+        <div class="third_box">
+            <div class="container">
+                <!-- Begin Tin đăng cộng đồng -->
+                <div class="tit_box3">
+                    <strong>TIN ĐĂNG CỘNG ĐỒNG</strong>
+                    @foreach($categories as $category)
+                        <a class="d-none d-md-inline-block" href="{{'/danh-muc-bds/' . $category->slug . '-c' . $category->id}}">{{$category->name}}</a>
+                    @endforeach
+                </div>
+                <div class="list_vip">
+                    <div class="row">
+                        @foreach($freeRealEstates as $item)
+                            @php
+                                $images = $item->images ? json_decode($item->images) : [];
+                                $imgThumbnail = $images ? $images[0]->link : '/images/default_real_estate_image.jpg';
+                                $imgAlt = $images ? $images[0]->alt : $item->title;
+                            @endphp
+                            <div class="col-12 col-md-3 item">
+                                <div class="row no-gutters">
+                                    <div class="col-md-6 item_l">
+                                        <a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">
+                                            <img src="{{ asset($imgThumbnail) }}" alt="{{ $item->title }}" title="{{ $item->title }}">
+                                        </a>
+                                    </div>
+                                    <div class="col-md-6 item_r">
+                                        <strong>{{$item->price}} {{$item->unit ? $item->unit->name : 'VND'}}</strong>
+                                        <p>DTMB: {{$item->area_of_premises ? $item->area_of_premises . 'm2' : '0m2'}}</p>
+                                        <p>DTSD: {{$item->area_of_use ? $item->area_of_use . 'm2' : '0m2'}}</p>
+                                        <p>Khu vực: {{$item->province?$item->province->name.', ':''}}{{$item->district?$item->district->name:''}}</p>
+                                        <p>Hướng: {{$item->direction?$item->direction->name:''}}</p>
+                                    </div>
+                                </div>
+                                <h4><a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">{{ $item->title }}</a></h4>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+                <!-- Begin Tin đăng cộng đồng -->
+            </div>
+        </div>
+        <div class="container d-none d-md-block">
+            <div class="row adv_home">
+                <div class="col-md-4">
+                    <a href="#"><img src="images/banner/1-1.jpg" alt="Đăng ký Bộ Công Thương" title="Đăng ký Bộ Công Thương"></a>
+                </div>
+                <div class="col-md-4">
+                    <a href="#"><img src="images/banner/1-2.jpg" alt="Thanh toán" title="Thanh toán"></a>
+                </div>
+                <div class="col-md-4">
+                    <a href="#"><img src="images/banner/1-3.jpg" alt="Dịch vụ 3" title="Dịch vụ 3"></a>
+                </div>
+
+            </div>
+        </div>
+        <div class="third_box">
+            <div class="container">
+                <!-- Begin Tin đăng cộng đồng -->
+                <div class="tit_box3">
+                    <strong>TIN RAO DỰ ÁN</strong>
+                    <a class="d-none d-md-inline-block pull-right"> Xem tất cả >></a>
+                </div>
+                <div class="list_vip">
+                    <div class="row">
+                        @foreach($freeRealEstates as $item)
+                            @php
+                                $images = $item->images ? json_decode($item->images) : [];
+                                $imgThumbnail = $images ? $images[0]->link : '/images/default_real_estate_image.jpg';
+                                $imgAlt = $images ? $images[0]->alt : $item->title;
+                            @endphp
+                            <div class="col-12 col-md-3 item">
+                                <div class="row no-gutters">
+                                    <div class="col-md-6 item_l">
+                                        <a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">
+                                            <img src="{{ asset($imgThumbnail) }}" alt="{{ $item->title }}" title="{{ $item->title }}">
+                                        </a>
+                                    </div>
+                                    <div class="col-md-6 item_r">
+                                        <strong>{{$item->price}} {{$item->unit ? $item->unit->name : 'VND'}}</strong>
+                                        <p>DTMB: {{$item->area_of_premises ? $item->area_of_premises . 'm2' : '0m2'}}</p>
+                                        <p>DTSD: {{$item->area_of_use ? $item->area_of_use . 'm2' : '0m2'}}</p>
+                                        <p>Khu vực: {{$item->province?$item->province->name.', ':''}}{{$item->district?$item->district->name:''}}</p>
+                                        <p>Hướng: {{$item->direction?$item->direction->name:''}}</p>
+                                    </div>
+                                </div>
+                                <h4><a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">{{ $item->title }}</a></h4>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+                <!-- Begin Tin đăng cộng đồng -->
+            </div>
+        </div>
     </div>
     @include(theme(TRUE).'.includes.footer')
 @endsection
 
 @push('js')
+    <script src="{{ asset('plugins/OwlCarousel2-2.3.4/dist/owl.carousel.js') }}"></script>
     <script src="{{ asset('js/jquery.flexslider.js') }}"></script>
     <script>
         $('.search_slide ul li a').click(function() {
@@ -586,6 +435,35 @@
             moveSlides: 1,
             pager: false
         });
+        $(window).on('load',function() {
+            var owl_slide = $('.slide_carousel'),
+                owl_text = $('.text_carousel');
+            owl_slide.owlCarousel({
+                loop: true,
+                autoplay:false,
+                margin:8,
+                responsiveClass:true,
+                responsive:{
+                    0:{ items:1, nav:true, dots: false },
+                    600:{ items:3, nav:true, dots: false },
+                    1000:{ items:3, nav:true, dots: false }
+                }
+            });
+            owl_text.owlCarousel({
+                loop: true,
+                autoplay:false,
+                margin:0,
+                nav : true,
+                responsiveClass:true,
+                responsive:{
+                    0:{ items:1, nav:true, dots: false },
+                    600:{ items:1, nav:true, dots: false },
+                    1000:{ items:1, nav:true, dots: false }
+                },
+            });
+        });
+        $(document).ready(function(){
 
+        });
     </script>
 @endpush
