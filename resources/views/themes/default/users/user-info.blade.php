@@ -682,5 +682,29 @@
             $('.cfr-change-cv').css('display', 'none');
         }
         /*---------------- end change cover -----------------*/
+
+        /*---------------- handle upload images  re -----------------*/
+        let formDataReImages = false;
+        function readMultipleURL(input, target) {
+            console.log(input.files);
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    $(target).attr('src', e.target.result);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+            if ( target == '.avatar' ) {
+                formDataAv = new FormData();
+                formDataAv.append('avatar', input.files[0]);
+            }
+            if (target == '.cover') {
+                formDataCover = new FormData();
+                formDataCover.append('cover', input.files[0]);
+            }
+        }
+        /*---------------- end handle upload images  re -----------------*/
     </script>
 @endpush
