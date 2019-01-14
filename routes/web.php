@@ -14,6 +14,7 @@ Route::get( '/gui-mail', function(){
 
 });
 Route::get('/', 'PageController@index')->name('home');
+Route::get('/home', ['as'=>'Home2', 'uses'=>'PageController@index2']);
 Route::get('/danh-muc/{tag}', ['as' => 'danh-muc', 'uses' => 'PageController@getDanhmuc']);
 Route::get('/tim-kiem', ['as' => 'search' , 'uses' => 'PageController@search']);
 Route::get('/tim-kiem-thong-minh', ['as' => 'smart-search', 'uses' => 'PageController@smartSearch']);
@@ -92,6 +93,16 @@ Route::group(['middleware'=>'auth'], function(){
         Route::get('/sethot', 'RealEstateController@setHot');
 
     });
+
+    Route::group(['prefix' => 'du-an'], function () {
+        Route::get('', ['as' => 'freelancerList', 'uses' => 'FreelancerController@index']);
+        Route::get('{id}/{slug}', ['as' => 'freelancerDetail', 'uses' => 'FreelancerController@show']);
+        Route::post('luu/{id?}', ['as'=>'freelancerCreate', 'uses'=>'FreelancerController@store']);
+        Route::post('dat-gia', ['as'=>'freelancerDeal', 'uses'=>'FreelancerController@deal']);
+        Route::post('chon', ['as'=>'freelancerChoosen', 'uses'=>'FreelancerController@choosen']);
+        Route::post('ket-thuc', ['as'=>'freelancerFinish', 'uses'=>'FreelancerController@finish']);
+    });
+
     /*
      * route for chat
      * */
