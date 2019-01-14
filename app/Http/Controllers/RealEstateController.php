@@ -116,10 +116,11 @@ class RealEstateController extends Controller
         else
             $data = $data->where('approved', 1);
 
-        $start  =   !empty(\request('datefrom'))?Carbon::createFromFormat('d/m/Y',\request('datefrom'))->startOfDay():Carbon::now()->startOfMonth();
-        $end    =   !empty(\request('dateto'))?Carbon::createFromFormat('d/m/Y',\request('dateto'))->endOfDay():Carbon::now();
+        $start  =   !empty(\request('datefrom'))?Carbon::createFromFormat('d/m/Y',\request('datefrom'))->startOfDay():'';
+        $end    =   !empty(\request('dateto'))?Carbon::createFromFormat('d/m/Y',\request('dateto'))->endOfDay():'';
 
-        $data   =   $data->where('created_at', '>=', $start)->where('created_at', '<=', $end);
+        if($start != '' && $end != '')
+            $data   =   $data->where('created_at', '>=', $start)->where('created_at', '<=', $end);
 
         if(!empty(\request('type_tran')))
             $data = $data->where('type_tran',\request('type_tran'));
