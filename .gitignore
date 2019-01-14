@@ -17,3 +17,4 @@ storage/settings.json
 /public/uploads/
 /public/thumbs
 /public/frontend_web
+package-lock\.json

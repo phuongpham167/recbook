@@ -40,6 +40,10 @@
   z-index: 10;
 }
 
+.detail-top .cover-wrap:hover .btn-change-cover {
+  display: block;
+}
+
 .detail-top .cover-wrap .cover-content-wrap {
   background: #1c1e21;
   height: 215px;
@@ -51,6 +55,7 @@
 }
 
 .detail-top .cover-wrap .btn-change-cover {
+  display: none;
   position: absolute;
   top: 10px;
   left: 30px;
@@ -66,9 +71,33 @@
   color: #fff;
 }
 
+.detail-top .cover-wrap .cfr-change-cv {
+  background: -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(50%, rgba(0, 0, 0, 0.6)), to(rgba(0, 0, 0, 0.6)));
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.6) 50%, rgba(0, 0, 0, 0.6) 100%);
+  display: none;
+  position: absolute;
+  top: 5px;
+  right: 25px;
+}
+
+.detail-top .cover-wrap .cfr-change-cv a {
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.detail-top .cover-wrap .cfr-change-cv a:first-child {
+  margin-right: 5px;
+}
+
+.detail-top .cover-wrap .cfr-change-cv a i {
+  cursor: pointer;
+  font-size: 20px;
+}
+
 .detail-top .av-and-name-wrap {
   height: 215px;
-  z-index: 11;
 }
 
 .detail-top .av-wrap {
@@ -76,6 +105,7 @@
   position: absolute;
   left: 30px;
   bottom: 0;
+  z-index: 11;
 }
 
 .detail-top .av-wrap:hover .btn-change-av {
@@ -95,6 +125,31 @@
   background: linear-gradient(transparent, rgba(0, 0, 0, 0.6) 50%, rgba(0, 0, 0, 0.6) 100%);
 }
 
+.detail-top .av-wrap .cfr-change-av {
+  background: -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(50%, rgba(0, 0, 0, 0.6)), to(rgba(0, 0, 0, 0.6)));
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.6) 50%, rgba(0, 0, 0, 0.6) 100%);
+  display: none;
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+}
+
+.detail-top .av-wrap .cfr-change-av a {
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.detail-top .av-wrap .cfr-change-av a:first-child {
+  margin-right: 5px;
+}
+
+.detail-top .av-wrap .cfr-change-av a i {
+  cursor: pointer;
+  font-size: 20px;
+}
+
 .detail-top .avatar {
   background: #fff;
   border: 1px solid #fff;
@@ -112,12 +167,14 @@
   position: absolute;
   bottom: 20px;
   left: 220px;
+  z-index: 11;
 }
 
 .detail-top .update-info-wrap {
   position: absolute;
   right: 25px;
   bottom: 20px;
+  z-index: 11;
 }
 
 .detail-top .update-info-wrap p {
