@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Hash;
 use Namshi\JOSE\JWT;
 use JWTAuth;
+use Validator;
 
 class UserController extends Controller
 {
@@ -196,16 +197,73 @@ class UserController extends Controller
         }
     }
 
-    public function updateAvatar()
+    public function updateAvatar(Request $request)
     {
-        $avatar = request('avatar');
-        $user = \Auth::user();
-        $userInfo = $user->userinfo;
-        $userInfo->avatar = $avatar;
-        $userInfo->save();
-        return response()->json([
-            'code' => 200,
-            'message' => 'Successfully'
+        $root = \Request::root();
+        $validation = Validator::make($request->all(), [
+            'avatar' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
+        if ($validation->passes())
+        {
+            $image = $request->file('avatar');
+            $new_name = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('storage/uploads'), $new_name);
+
+            /*-----------save avatar to user ----------*/
+            $uploadedAv = $root . '/storage/uploads/'.$new_name;
+            $user = \Auth::user();
+            $userInfo = $user->userinfo;
+            $userInfo->avatar = $uploadedAv;
+            $userInfo->save();
+            /*-----------end save avatar to user ----------*/
+
+            return response()->json([
+                'message'   => 'Change avatar successfully',
+                'uploaded_image' => $uploadedAv,
+                'class_name'  => 'alert-success'
+            ]);
+        } else {
+            return response()->json([
+                'message'   => $validation->errors()->all(),
+                'uploaded_image' => '',
+                'class_name'  => 'alert-danger'
+            ]);
+        }
+    }
+
+    public function updateCover(Request $request)
+    {
+        $root = \Request::root();
+        $validation = Validator::make($request->all(), [
+            'cover' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
+        ]);
+        if ($validation->passes())
+        {
+            $image = $request->file('cover');
+            $new_name = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('storage/uploads'), $new_name);
+
+            /*-----------save avatar to user ----------*/
+            $uploadedCv = $root . '/storage/uploads/'.$new_name;
+            $user = \Auth::user();
+            $userInfo = $user->userinfo;
+            $userInfo->cover = $uploadedCv;
+            $userInfo->save();
+            /*-----------end save cover to user ----------*/
+
+            return response()->json([
+                'message'   => 'Change avatar successfully',
+                'uploaded_image' => $uploadedCv,
+                'class_name'  => 'alert-success',
+                'success' => true
+            ]);
+        } else {
+            return response()->json([
+                'message'   => $validation->errors()->all(),
+                'uploaded_image' => '',
+                'class_name'  => 'alert-danger',
+                'success' => false
+            ]);
+        }
     }
 }

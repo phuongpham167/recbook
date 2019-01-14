@@ -101,6 +101,7 @@ Route::group(['middleware'=>'auth'], function(){
     Route::resource('message','MessageController');
 
     Route::post('/update-avatar', ['as' => 'post.update-avatar', 'uses' => 'UserController@updateAvatar']);
+    Route::post('/update-cover', ['as' => 'post.update-cover', 'uses' => 'UserController@updateCover']);
     /*
      * friend route
      * */
