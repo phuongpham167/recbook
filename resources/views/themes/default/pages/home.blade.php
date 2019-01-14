@@ -136,7 +136,7 @@
 
                                     <div class="col-md-6 brief_th">
                                         <h3>
-                                            <a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">{{ $item->title }}</a>
+                                            <strong><a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">{{ $item->title }}</a></strong>
                                             <img class="vip" src="/images/new.gif" alt="{{ $item->title }}" title="{{ $item->title }}">
                                         </h3>
                                         <div>{{ $item->short_description }}</div>
@@ -168,7 +168,7 @@
                                         @endphp
                                         <div class="col-12 col-md-6 item">
                                             <h4>
-                                                <a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">{{ $item->title }}</a>
+                                                <strong><a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">{{ $item->title }}</a></strong>
                                                 <img src="/images/vip2.gif" alt="vip">
                                             </h4>
 
@@ -249,7 +249,7 @@
                                         <p>Hướng: {{$item->direction?$item->direction->name:''}}</p>
                                     </div>
                                 </div>
-                                <h4><a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">{{ $item->title }}</a></h4>
+                                <h4><strong><a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">{{ $item->title }}</a></strong></h4>
                             </div>
                         @endforeach
                     </div>
@@ -303,7 +303,7 @@
                                         <p>Hướng: {{$item->direction?$item->direction->name:''}}</p>
                                     </div>
                                 </div>
-                                <h4><a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">{{ $item->title }}</a></h4>
+                                <h4><strong><a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">{{ $item->title }}</a></strong></h4>
                             </div>
                         @endforeach
                     </div>
@@ -355,7 +355,7 @@
                                         <p>Hướng: {{$item->direction?$item->direction->name:''}}</p>
                                     </div>
                                 </div>
-                                <h4><a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">{{ $item->title }}</a></h4>
+                                <h4><strong><a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">{{ $item->title }}</a></strong></h4>
                             </div>
                         @endforeach
                     </div>

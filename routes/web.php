@@ -93,6 +93,16 @@ Route::group(['middleware'=>'auth'], function(){
         Route::get('/sethot', 'RealEstateController@setHot');
 
     });
+
+    Route::group(['prefix' => 'du-an'], function () {
+        Route::get('', ['as' => 'freelancerList', 'uses' => 'FreelancerController@index']);
+        Route::get('{id}/{slug}', ['as' => 'freelancerDetail', 'uses' => 'FreelancerController@show']);
+        Route::post('luu/{id?}', ['as'=>'freelancerCreate', 'uses'=>'FreelancerController@store']);
+        Route::post('dat-gia', ['as'=>'freelancerDeal', 'uses'=>'FreelancerController@deal']);
+        Route::post('chon', ['as'=>'freelancerChoosen', 'uses'=>'FreelancerController@choosen']);
+        Route::post('ket-thuc', ['as'=>'freelancerFinish', 'uses'=>'FreelancerController@finish']);
+    });
+
     /*
      * route for chat
      * */
