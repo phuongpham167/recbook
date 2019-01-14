@@ -89,6 +89,7 @@
                                         <div class="u-description border-block">
                                             <p class=" text-center">Làm việc tại: {{ $data->userinfo->company }}</p>
                                             <p class=" text-center">Đánh giá: 87/100 điểm</p>
+                                            <p class=" text-center">Chứng chỉ: </p>
                                             <p class="user-desc">{{ $data->userinfo->description }}</p>
                                         </div>
                                         @if ( (\Auth::user() && \Auth::user()->id  == $data->id) || $isFriend)
