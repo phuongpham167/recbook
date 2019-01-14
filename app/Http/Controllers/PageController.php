@@ -96,7 +96,7 @@ class PageController extends Controller
         $this->projects = $this->projectService->getListDropDown();
     }
 
-    public function index()
+    public function index2()
     {
         $hotRealEstates = RealEstate::select('id', 'title', 'slug', 'short_description', 'code',
             'area_of_premises', 'area_of_use', 'district_id', 'price', 'unit_id', 'is_vip', 'is_hot',
@@ -122,6 +122,7 @@ class PageController extends Controller
             ->where('post_date', '<=', Carbon::now())
             ->where('web_id', $this->web_id)
             ->orderBy('post_date', 'desc');
+
 
 //        $goodPriceRealEstate = $this->checkRegisterDate($goodPriceRealEstate);
         $goodPriceRealEstate->limit(200);
@@ -160,7 +161,88 @@ class PageController extends Controller
             'menuData' => $this->menuFE
         ]);
     }
+    public function index()
+    {
+        $hotRealEstates = RealEstate::select('id', 'title', 'slug', 'short_description', 'code',
+            'area_of_premises', 'area_of_use', 'district_id', 'price', 'unit_id', 'is_vip', 'is_hot',
+            'post_date', 'images','district_id', 'province_id', 'direction_id')
+            ->where('is_hot', 1)
+            ->where('is_vip', '<>', 1)
+            ->where('post_date', '<=', Carbon::now())
+//            ->where('hot_expire_at', '<=', Carbon::now())
+            ->where('web_id', $this->web_id);
 
+//        $hotRealEstates = $this->checkRegisterDate($hotRealEstates);
+        $hotRealEstates->limit(16);
+        $hotRealEstates = $hotRealEstates->get();
+//        dd($hotRealEstates);
+
+        $newestRealEstates  =   RealEstate::select('id', 'title', 'slug', 'short_description', 'code',
+            'area_of_premises', 'area_of_use', 'district_id', 'price', 'unit_id', 'is_vip', 'is_hot',
+            'post_date', 'images','district_id', 'province_id', 'direction_id')
+            ->where('post_date', '<=', Carbon::now())
+//            ->where('hot_expire_at', '<=', Carbon::now())
+            ->where('web_id', $this->web_id)->orderBy('post_date','DESC');
+        $newestRealEstates = $newestRealEstates->take(10)->get();
+        $vipRealEstates  =   RealEstate::select('id', 'title', 'slug', 'short_description', 'code',
+            'area_of_premises', 'area_of_use', 'district_id', 'price', 'unit_id', 'is_vip', 'is_hot',
+            'post_date', 'images','district_id', 'province_id', 'direction_id')
+            ->where('is_hot', '<>', 1)
+            ->where('is_vip', 1)
+            ->where('post_date', '<=', Carbon::now())
+//            ->where('hot_expire_at', '<=', Carbon::now())
+            ->where('web_id', $this->web_id)->orderBy('post_date','DESC');
+        $vipRealEstates = $vipRealEstates->take(10)->get();
+        /*
+         * TODO: need more info to filter good price items
+         * Now: get vip only
+         * */
+        $goodPriceRealEstate = RealEstate::select('id', 'title', 'short_description', 'slug', 'code',
+            'area_of_premises', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date','district_id', 'province_id', 'direction_id')
+            ->where('is_vip', 1)
+            ->where('post_date', '<=', Carbon::now())
+            ->where('web_id', $this->web_id)
+            ->orderBy('post_date', 'desc');
+
+//        $goodPriceRealEstate = $this->checkRegisterDate($goodPriceRealEstate);
+        $goodPriceRealEstate->limit(200);
+        $goodPriceRealEstate = $goodPriceRealEstate->get();
+
+        $freeRealEstates = RealEstate::with('district','province')->select('id', 'title','province_id','district_id' ,'direction_id','short_description', 'slug', 'code',
+            'area_of_premises', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date')
+            ->where('is_hot', '<>', 1)
+            ->where('is_vip', '<>', 1)
+            ->where('web_id', $this->web_id);
+
+//        $freeRealEstates = $this->checkRegisterDate($freeRealEstates);
+        $freeRealEstates->limit(40);
+        $freeRealEstates = $freeRealEstates->get();
+
+        /*
+         * get lít category
+         * */
+        $firstCat = $this->categories->first();
+//        dd($firstCat->id);
+        $reTypes = $this->reTypeService->getReTypeByCat($firstCat->id);
+        $rangePrices = $this->rangePriceService->getRangePriceByCat($firstCat->id);
+
+
+        return v('pages.home', [
+            'hotRealEstates' => $hotRealEstates,
+            'goodPriceRealEstate' => $goodPriceRealEstate,
+            'freeRealEstates' => $freeRealEstates,
+            'categories' => $this->categories,
+            'reTypes' => $reTypes,
+            'provinces' => $this->provinces,
+            'districts' => $this->districts,
+            'streets' => $this->streets,
+            'directions' => $this->directions,
+            'rangePrices' => $rangePrices,
+            'menuData' => $this->menuFE,
+            'newestRealEstates' => $newestRealEstates,
+            'vipRealEstates' => $vipRealEstates
+        ]);
+    }
     public function getDanhmuc($tag)
     {
         try {

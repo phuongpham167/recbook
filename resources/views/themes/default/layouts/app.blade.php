@@ -22,7 +22,7 @@
     <script src="{{asset('plugins/moment-develop/min/moment.min.js')}}"></script>
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/jquery.bxslider.js') }}"></script>
-    <script src="{{asset('plugins/jquery-locationpicker-plugin-master/dist/locationpicker.jquery.min.js')}}"></script>
+{{--    <script src="{{asset('plugins/jquery-locationpicker-plugin-master/dist/locationpicker.jquery.min.js')}}"></script>--}}
     <script>
         $(document).ready(function() {
             // Show or hide the sticky footer button
