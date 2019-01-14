@@ -21,7 +21,7 @@
         <div class="container padding-top-30 padding-bottom-30">
             <div class="row">
                 <div class="col-xs-12 col-md-9 detail-content-wrap">
-                    <p class="title_box"><strong>{{ $data->reCategory->name }} <i class="fa fa-angle-right"></i> {{ $data->reType->name }} (1416)</strong>
+                    <p class="title_box"><strong>{{ $data->reCategory ? $data->reCategory->name : '' }} @if($data->reCategory)<i class="fa fa-angle-right"></i>@endif {{ $data->reType ? $data->reType->name : '' }}</strong>
                     </p>
                     <div class="detail-content">
                         <h1 class="title">{{$data->title}} {!!$data->verified ? '<i class="fa fa-check-circle verified" title="Tin đã xác thực"></i>' : '<i class="fa fa-question-circle none-verified" aria-hidden="true" title="Tin chưa xác thực"></i>'!!}</h1>
@@ -165,7 +165,7 @@
                                         <p><strong>- Lượt xem:</strong> {{$data->views}}</p>
                                     </div>
                                     <div class="col-xs-12 col-sm-6">
-                                        <p><strong>- Ngày hết hạn:</strong> {{ \Carbon\Carbon::parse($data->expire_date)->format('d/m/Y')}}</p>
+                                        <p><strong>- Ngày hết hạn:</strong> {{ $data->expire_date ? \Carbon\Carbon::parse($data->expire_date)->format('d/m/Y') : ''}}</p>
                                     </div>
                                     <div class="col-xs-12 col-sm-6">
                                         <p><strong>- DTMB:</strong> {{ $data->area_of_premises ? $data->area_of_premises . 'm2' : '0m2' }}</p>
@@ -174,10 +174,10 @@
                                         <p><strong>- DTSD:</strong> {{ $data->area_of_use ? $data->area_of_use . 'm2' : '0m2' }}</p>
                                     </div>
                                     <div class="col-xs-12 col-sm-6">
-                                        <p><strong>- Danh mục:</strong> {{ $data->reCategory->name }}</p>
+                                        <p><strong>- Danh mục:</strong> {{ $data->reCategory ? $data->reCategory->name : '' }}</p>
                                     </div>
                                     <div class="col-xs-12 col-sm-6">
-                                        <p><strong>- Loại BĐS:</strong> {{ $data->reType->name }}</p>
+                                        <p><strong>- Loại BĐS:</strong> {{ $data->reType ? $data->reType->name : '' }}</p>
                                     </div>
                                     <div class="col-xs-12">
                                         <p><strong>- Địa chỉ:</strong> {{ $data->address }}
@@ -209,11 +209,11 @@
                                 </div>
                                 <div class="col-xs-12 col-sm-4 description__item"><strong>Diện tích SD:</strong> {{ $data->area_of_use ? $data->area_of_use . 'm2' : '0m2' }}
                                 </div>
-                                <div class="col-xs-12 col-sm-4 description__item"><strong>Hướng:</strong> {{ $data->direction->name }}</div>
+                                <div class="col-xs-12 col-sm-4 description__item"><strong>Hướng:</strong> {{ $data->direction ? $data->direction->name : '' }}</div>
                             </div>
                             <div class="row margin-0">
                                 <div class="col-xs-12 description__item">
-                                    <strong>Tên dự án:</strong> {{ $data->project->name }}
+                                    <strong>Tên dự án:</strong> {{ $data->project ? $data->project->name : '' }}
                                 </div>
                             </div>
                             <div class="row margin-0">
