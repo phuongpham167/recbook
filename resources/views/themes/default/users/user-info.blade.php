@@ -188,10 +188,23 @@
                                                                         </div>
 
                                                                         <div class="col-xs-12">
-                                                                            <div class="pull-right">
-                                                                                <button type="button" name="add_new" id="add-new-re" class="_btn bg_red"><i class="fa fa-plus"></i> &nbsp;&nbsp;ĐĂNG TIN
-                                                                                </button>
+                                                                            <div class="row">
+                                                                                <div class="col-xs-12 col-sm-6">
+                                                                                    <select class="form-control" id="is-private" name="is_private" value="{{ old('is_private') }}">
+                                                                                        <option value="1">Đăng trên trang cá nhân</option>
+                                                                                        <option value="2">Đăng trên web cá nhân</option>
+                                                                                        <option value="3">Đăng trên web công ty</option>
+                                                                                        <option value="4">Đăng trên web đã đăng ký</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                                <div class="col-xs-12 col-sm-6">
+                                                                                    <div class="pull-right">
+                                                                                        <button type="button" name="add_new" id="add-new-re" class="_btn bg_red"><i class="fa fa-plus"></i> &nbsp;&nbsp;ĐĂNG TIN
+                                                                                        </button>
+                                                                                    </div>
+                                                                                </div>
                                                                             </div>
+
                                                                         </div>
                                                                     </div>
 
