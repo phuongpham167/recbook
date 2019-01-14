@@ -12,6 +12,7 @@
     {{-- Link css for page here --}}
     <link rel="stylesheet" href="{{ asset('common-css/left-menu.css') }}" />
     <link rel="stylesheet" href="{{asset('common-css/magnific-popup.css')}}" />
+    <link rel="stylesheet" href="{{asset('plugins/toastr/toastr.min.css')}}" />
     <link rel="stylesheet" href="{{ asset('css/user-info.css') }}"/>
 @endpush
 @php
@@ -33,10 +34,15 @@
                                 <div class="row row-wrap" >
                                     <div class="col-xs-12 cover-wrap">
                                         <div class="cover-content-wrap">
-                                            {{--<img src="http://thuthuat123.com/uploads/2018/01/27/tong-hop-anh-bia-facebook-dep-50_101149.jpg" class="img-responsive" />--}}
+                                            @php
+                                                $cover = $data->userinfo->cover ? $data->userinfo->cover : '';
+                                            @endphp
+                                            <img src="{{$cover}}" class="img-responsive cover {{$cover ? '' : 'hidden'}}" />
                                         </div>
                                         @if (\Auth::user() && \Auth::user()->id  == $data->id)
-                                        <button class="btn btn-default btn-change-cover"><i class="fa fa-camera"></i> Thêm banner</button>
+                                            <input type="file" name="cover" class="hidden" id="cover-change" accept="image/*"/>
+                                        <button class="btn btn-default btn-change-cover"><i class="fa fa-camera"></i> {{$cover ? 'Cập nhật' : 'Thêm banner'}}</button>
+                                        <div class="cfr-change-cv"><a onclick="acceptChangeCv()">Lưu </a><a onclick="cancelChangeCv()"><i class="fa fa-times"></i> </a></div>
                                         @endif
                                     </div>
                                     <div class="col-xs-12 av-and-name-wrap">
@@ -46,8 +52,9 @@
                                         <div class="av-wrap">
                                             <img class="img-responsive avatar" src="{{$avatar}}"/>
                                             @if (\Auth::user() && \Auth::user()->id  == $data->id)
-                                                <input type="hidden" id="avatar" value="{{$avatar}}"/>
+                                                <input type="file" class="hidden" name="av_change" id="avatar-change" value="{{$avatar}}" accept="image/*"/>
                                                 <button class="btn btn-default btn-change-av"><i class="fa fa-camera" aria-hidden="true"></i> Cập nhật</button>
+                                                <div class="cfr-change-av"><a onclick="acceptChangeAv()">Lưu </a><a onclick="cancelChange()"><i class="fa fa-times"></i> </a></div>
                                             @endif
                                         </div>
                                         <h1 class="name">{{ $data->userinfo->full_name }} </h1>
@@ -82,6 +89,7 @@
                                         <div class="u-description border-block">
                                             <p class=" text-center">Làm việc tại: {{ $data->userinfo->company }}</p>
                                             <p class=" text-center">Đánh giá: 87/100 điểm</p>
+                                            <p class=" text-center">Chứng chỉ: </p>
                                             <p class="user-desc">{{ $data->userinfo->description }}</p>
                                         </div>
                                         @if ( (\Auth::user() && \Auth::user()->id  == $data->id) || $isFriend)
@@ -383,6 +391,7 @@
 
 @push('js')
     <script src="{{asset('js/jquery.magnific-popup.min.js')}}"></script>
+    <script src="{{asset('plugins/toastr/toastr.min.js')}}"></script>
     <script>
         $(document).ready(function() {
             $('.popup-gallery').each(function() {
@@ -543,5 +552,159 @@
             rows = Math.ceil((this.scrollHeight - this.baseScrollHeight) / 16);
             this.rows = minRows + rows;
         });
+
+        /*---------------- change avatar -----------------*/
+        let curAvatar = $('.avatar').attr('src');
+        let curCover = $('.cover').attr('src');
+        let formDataAv = false;
+        let formDataCover = false;
+        console.log('current avatar');
+        console.log(curAvatar);
+        $('.btn-change-av').click( function () {
+            $('#avatar-change').trigger('click');
+        });
+        $('#avatar-change').on('change', function () {
+            console.log('new avatar');
+            console.log($(this).val());
+            readSingleURL(this, '.avatar');
+            $('.cfr-change-av').css('display', 'block');
+        });
+
+        function readSingleURL(input, target) {
+            console.log(input.files);
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    $(target).attr('src', e.target.result);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+            if ( target == '.avatar' ) {
+                formDataAv = new FormData();
+                formDataAv.append('avatar', input.files[0]);
+            }
+            if (target == '.cover') {
+                formDataCover = new FormData();
+                formDataCover.append('cover', input.files[0]);
+            }
+        }
+        function acceptChangeAv() {
+            if (formDataAv) {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': '{{csrf_token()}}'
+                    }
+                });
+                $.ajax({
+                    url: '{{route('post.update-avatar')}}',
+                    type: 'POST',
+                    data: formDataAv,
+                    processData: false,
+                    contentType: false,
+                    success: function (res) {
+                        console.log('success change av');
+                        console.log(res);
+                        toastr.success(res.message);
+                        $('.avatar').attr('src', res.uploaded_image);
+                        $('.cfr-change-av').css('display', 'none');
+                    },
+                    error: function(err) {
+                        console.log('err change av');
+                        console.log(err);
+                        toastr.error(err.message);
+                    }
+                });
+            }
+        }
+        function cancelChange() {
+            $('.avatar').attr('src', curAvatar);
+            $('.cfr-change-av').css('display', 'none');
+        }
+        /*---------------- end change avatar -----------------*/
+
+        /*---------------- change cover -----------------*/
+        $('.btn-change-cover').click( function () {
+            $('#cover-change').trigger('click');
+        });
+        $('#cover-change').on('change', function () {
+            console.log('new cover');
+            console.log($(this).val());
+            readSingleURL(this, '.cover');
+            $('.cover').removeClass('hidden');
+            $('.cfr-change-cv').css('display', 'block');
+        });
+        function acceptChangeCv() {
+            if (formDataCover) {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': '{{csrf_token()}}'
+                    }
+                });
+                $.ajax({
+                    url: '{{route('post.update-cover')}}',
+                    type: 'POST',
+                    data: formDataCover,
+                    processData: false,
+                    contentType: false,
+                    success: function (res) {
+                        console.log('success change cover');
+                        console.log(res);
+                        if (res.success) {
+                            toastr.success(res.message);
+                            $('.cover').attr('src', res.uploaded_image);
+                            $('.cfr-change-cv').css('display', 'none');
+                        } else {
+                            toastr.error(res.message);
+                            // $('.cover').attr('src', res.uploaded_image);
+                            // $('.cfr-change-cv').css('display', 'none');
+                        }
+                    },
+                    error: function(err) {
+                        console.log('err change cover');
+                        console.log(err);
+                        err.message.each(mes => {
+                            toastr.error(mes);
+                        });
+                        // toastr.error(err.message);
+                    }
+                });
+            }
+        }
+        function cancelChangeCv() {
+            $('.cover').attr('src', curCover);
+            if (!curCover) {
+                if(!$('.cover').hasClass('hidden')) {
+                    $('.cover').addClass('hidden');
+                }
+            }
+            $('.cfr-change-cv').css('display', 'none');
+        }
+        /*---------------- end change cover -----------------*/
+
+        /*---------------- handle upload images  re -----------------*/
+        let formDataReImages = false;
+        function readMultipleURL(input, target) {
+            console.log(input.files);
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    $(target).attr('src', e.target.result);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+            if ( target == '.avatar' ) {
+                formDataAv = new FormData();
+                formDataAv.append('avatar', input.files[0]);
+            }
+            if (target == '.cover') {
+                formDataCover = new FormData();
+                formDataCover.append('cover', input.files[0]);
+            }
+        }
+        /*---------------- end handle upload images  re -----------------*/
     </script>
 @endpush

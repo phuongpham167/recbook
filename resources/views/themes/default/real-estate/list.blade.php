@@ -39,7 +39,7 @@
                                         <dl>
                                             <dt>{{trans('page.datefrom')}}</dt>
                                             <dd>
-                                                <input type="text" class="form-control input-sm datepicker" name="datefrom" id="datefrom" value="{{request('datefrom', \Carbon\Carbon::now()->startOfMonth()->format('d/m/Y'))}}">
+                                                <input type="text" class="form-control input-sm datepicker" name="datefrom" id="datefrom" value="{{request('datefrom')}}">
                                             </dd>
                                         </dl>
                                     </div>
@@ -48,7 +48,7 @@
                                         <dl>
                                             <dt>{{trans('page.dateto')}}</dt>
                                             <dd>
-                                                <input type="text" class="form-control input-sm datepicker" name="dateto" id="dateto" value="{{request('dateto', \Carbon\Carbon::now()->format('d/m/Y'))}}">
+                                                <input type="text" class="form-control input-sm datepicker" name="dateto" id="dateto" value="{{request('dateto')}}">
                                             </dd>
                                         </dl>
                                     </div>
