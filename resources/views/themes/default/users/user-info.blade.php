@@ -41,7 +41,7 @@
                                         </div>
                                         @if (\Auth::user() && \Auth::user()->id  == $data->id)
                                             <input type="file" name="cover" class="hidden" id="cover-change" accept="image/*"/>
-                                        <button class="btn btn-default btn-change-cover"><i class="fa fa-camera"></i> Thêm banner</button>
+                                        <button class="btn btn-default btn-change-cover"><i class="fa fa-camera"></i> {{$cover ? 'Cập nhật' : 'Thêm banner'}}</button>
                                         <div class="cfr-change-cv"><a onclick="acceptChangeCv()">Lưu </a><a onclick="cancelChangeCv()"><i class="fa fa-times"></i> </a></div>
                                         @endif
                                     </div>
@@ -554,6 +554,7 @@
 
         /*---------------- change avatar -----------------*/
         let curAvatar = $('.avatar').attr('src');
+        let curCover = $('.cover').attr('src');
         let formDataAv = false;
         let formDataCover = false;
         console.log('current avatar');
@@ -634,10 +635,50 @@
             $('.cfr-change-cv').css('display', 'block');
         });
         function acceptChangeCv() {
-
+            if (formDataCover) {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': '{{csrf_token()}}'
+                    }
+                });
+                $.ajax({
+                    url: '{{route('post.update-cover')}}',
+                    type: 'POST',
+                    data: formDataCover,
+                    processData: false,
+                    contentType: false,
+                    success: function (res) {
+                        console.log('success change cover');
+                        console.log(res);
+                        if (res.success) {
+                            toastr.success(res.message);
+                            $('.cover').attr('src', res.uploaded_image);
+                            $('.cfr-change-cv').css('display', 'none');
+                        } else {
+                            toastr.error(res.message);
+                            // $('.cover').attr('src', res.uploaded_image);
+                            // $('.cfr-change-cv').css('display', 'none');
+                        }
+                    },
+                    error: function(err) {
+                        console.log('err change cover');
+                        console.log(err);
+                        err.message.each(mes => {
+                            toastr.error(mes);
+                        });
+                        // toastr.error(err.message);
+                    }
+                });
+            }
         }
         function cancelChangeCv() {
-
+            $('.cover').attr('src', curCover);
+            if (!curCover) {
+                if(!$('.cover').hasClass('hidden')) {
+                    $('.cover').addClass('hidden');
+                }
+            }
+            $('.cfr-change-cv').css('display', 'none');
         }
         /*---------------- end change cover -----------------*/
     </script>

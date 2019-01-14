@@ -30,6 +30,11 @@
     .cover-wrap {
         position: absolute;
         z-index: 10;
+        &:hover {
+            .btn-change-cover {
+                display: block;
+            }
+        }
         .cover-content-wrap {
             background: #1c1e21;
             height: 215px;
@@ -39,6 +44,7 @@
             width: 100%;
         }
         .btn-change-cover {
+            display: none;
             position: absolute;
             top: 10px;
             left: 30px;

@@ -249,18 +249,20 @@ class UserController extends Controller
             $userInfo = $user->userinfo;
             $userInfo->cover = $uploadedCv;
             $userInfo->save();
-            /*-----------end save avatar to user ----------*/
+            /*-----------end save cover to user ----------*/
 
             return response()->json([
                 'message'   => 'Change avatar successfully',
                 'uploaded_image' => $uploadedCv,
-                'class_name'  => 'alert-success'
+                'class_name'  => 'alert-success',
+                'success' => true
             ]);
         } else {
             return response()->json([
                 'message'   => $validation->errors()->all(),
                 'uploaded_image' => '',
-                'class_name'  => 'alert-danger'
+                'class_name'  => 'alert-danger',
+                'success' => false
             ]);
         }
     }
