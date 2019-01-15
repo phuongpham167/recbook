@@ -143,7 +143,7 @@ class RealEstateController extends Controller
                 return $dt->reType ? $dt->reType->name : '';
             })
             ->addColumn('district_id', function($dt) {
-                return $dt->district->name;
+                return $dt->district?$dt->district->name:'-';
             })->addColumn('manage', function($dt) {
                 $manage = null;
 
