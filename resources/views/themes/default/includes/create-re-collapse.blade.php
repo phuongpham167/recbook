@@ -164,14 +164,10 @@
 <div class="form-group collapse collapse1" id="imageSelect">
     <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.image')}}</label>
     <div class="col-sm-10">
-        <div class="input-group">
-                    <span class="input-group-btn">
-                        <a class="btn btn-primary" type="button" id="choose-image">
-                            <i class="fa fa-picture-o"></i> Choose
-                        </a>
-                    </span>
+            <button class="btn btn-primary" type="button" id="choose-image">
+                <i class="fa fa-picture-o"></i> Choose
+            </button>
             <input id="images" class="form-control hidden" name="imagesList[]" type="file" multiple="multiple">
-        </div>
     </div>
     <div class="col-sm-12 img-preview">
 
@@ -379,26 +375,26 @@
         //---------------------------------
         // HANDLE WHEN CLICK BUTTON CHOOSE IMAGE
         //---------------------------------
-        $("#choose-image").unbind("click").bind("click", function () {
-            $("#images").click();
-        });
-        function readURL(input) {
-            console.log('list select images');
-            console.log(input.files);
-            // if (input.files && input.files[0]) {
-            //     var reader = new FileReader();
-            //
-            //     reader.onload = function(e) {
-            //         $('#blah').attr('src', e.target.result);
-            //     }
-            //
-            //     reader.readAsDataURL(input.files[0]);
-            // }
-        }
-
-        $("#images").change(function() {
-            readURL(this);
-        });
+        // $("#choose-image").unbind("click").bind("click", function () {
+        //     $("#images").click();
+        // });
+        // function readURL(input) {
+        //     console.log('list select images');
+        //     console.log(input.files);
+        //     // if (input.files && input.files[0]) {
+        //     //     var reader = new FileReader();
+        //     //
+        //     //     reader.onload = function(e) {
+        //     //         $('#blah').attr('src', e.target.result);
+        //     //     }
+        //     //
+        //     //     reader.readAsDataURL(input.files[0]);
+        //     // }
+        // }
+        //
+        // $("#images").change(function() {
+        //     readURL(this);
+        // });
         //---------------------------------
         // END HANDLE WHEN CLICK BUTTON CHOOSE IMAGE
         //---------------------------------
