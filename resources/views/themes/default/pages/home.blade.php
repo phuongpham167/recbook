@@ -30,9 +30,9 @@
             <div class="row d-none  d-md-block">
                 <div class="col-4 offset-4">
                     <div class="owl-carousel owl-theme text_carousel">
-                        <div class="item"><p>Bán bánh lạ bọc ống inox: Bám vỉa hè Hà Nội, chàng trai thu 70 triệu đồng/tháng</p></div>
-                        <div class="item"><p>Philippines dè chừng với tất cả các dự án vay vốn của Trung Quốc</p></div>
-                        <div class="item"><p>Sớm đưa Việt Nam vào nhóm các nước dẫn đầu ASEAN</p></div>
+                        @foreach(\App\Post::orderBy('created_at', 'desc')->take(3)->get() as $item)
+                            <div class="item"><a href="{{ route('postdetail', ['slugchitiet' => $item->slugchitiet]) }}">{{$item->title}}</a></div>
+                        @endforeach
                     </div>
                 </div>
             </div>
