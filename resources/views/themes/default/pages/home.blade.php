@@ -31,7 +31,7 @@
                 <div class="col-4 offset-4">
                     <div class="owl-carousel owl-theme text_carousel">
                         @foreach(\App\Post::orderBy('created_at', 'desc')->take(3)->get() as $item)
-                            <div class="item"><a href="{{ route('postdetail', ['slugchitiet' => $item->slugchitiet]) }}">{{$item->title}}</a></div>
+                            <div class="item"><p><a href="{{ route('postdetail', ['slugchitiet' => $item->slugchitiet]) }}" style="color: white">{{$item->title}}</a></p></div>
                         @endforeach
                     </div>
                 </div>
