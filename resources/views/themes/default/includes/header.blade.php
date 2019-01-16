@@ -100,7 +100,7 @@
 
 <div class="container">
     @foreach(\App\Banner::where('location', 5)->get() as $item)
-        <img src="http://{{env('DOMAIN_BACKEND')}}{{$item->image}}" alt="{{$item->note}}" style="
+        <img src="http://{{env('DOMAIN_BACKEND','recbook.net')}}{{$item->image}}" alt="{{$item->note}}" style="
     width: 100%;
 ">
     @endforeach

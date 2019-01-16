@@ -23,14 +23,17 @@
             <div class="owl-carousel owl-theme slide_carousel">
                 @foreach(\App\Banner::where('location', 0)->get() as $item)
                     <div>
-                        <a href="{{$item->url?$item->url:'#a'}}"><img src="http://{{env('DOMAIN_BACKEND')}}{{$item->image}}" alt="{{$item->note}}"></a>
+                        <a href="{{$item->url?$item->url:'#a'}}"><img src="http://{{env('DOMAIN_BACKEND','recbook.net')}}{{$item->image}}" alt="{{$item->note}}"></a>
                     </div>
                 @endforeach
             </div>
             <div class="row d-none  d-md-block">
                 <div class="col-4 offset-4">
                     <div class="owl-carousel owl-theme text_carousel">
-                        <div class="item"><p>Bán bánh lạ bọc ống inox: Bám vỉa hè Hà Nội, chàng trai thu 70 triệu đồng/tháng</p></div><div class="item"><p>Philippines dè chừng với tất cả các dự án vay vốn của Trung Quốc</p></div><div class="item"><p>Sớm đưa Việt Nam vào nhóm các nước dẫn đầu ASEAN</p></div>               </div>
+                        <div class="item"><p>Bán bánh lạ bọc ống inox: Bám vỉa hè Hà Nội, chàng trai thu 70 triệu đồng/tháng</p></div>
+                        <div class="item"><p>Philippines dè chừng với tất cả các dự án vay vốn của Trung Quốc</p></div>
+                        <div class="item"><p>Sớm đưa Việt Nam vào nhóm các nước dẫn đầu ASEAN</p></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -95,7 +98,7 @@
             <div class="row adv_home">
                 @foreach(\App\Banner::where('location', 1)->get() as $item)
                     <div class="col-md-4">
-                        <a href="{{$item->url?$item->url:'#a'}}"><img src="http://{{env('DOMAIN_BACKEND')}}{{$item->image}}" alt="{{$item->note}}" title="{{$item->note}}"></a>
+                        <a href="{{$item->url?$item->url:'#a'}}"><img src="http://{{env('DOMAIN_BACKEND','recbook.net')}}{{$item->image}}" alt="{{$item->note}}" title="{{$item->note}}"></a>
                     </div>
                 @endforeach
             </div>
@@ -189,7 +192,7 @@
             <div class="row adv_home">
                 @foreach(\App\Banner::where('location', 2)->get() as $item)
                     <div class="col-md-4">
-                        <a href="{{$item->url?$item->url:'#a'}}"><img src="http://{{env('DOMAIN_BACKEND')}}{{$item->image}}" alt="{{$item->note}}" title="{{$item->note}}"></a>
+                        <a href="{{$item->url?$item->url:'#a'}}"><img src="http://{{env('DOMAIN_BACKEND', 'recbook.net')}}{{$item->image}}" alt="{{$item->note}}" title="{{$item->note}}"></a>
                     </div>
                 @endforeach
             </div>
@@ -247,7 +250,7 @@
             <div class="row adv_home">
                 @foreach(\App\Banner::where('location', 1)->get() as $item)
                     <div class="col-md-4">
-                        <a href="{{$item->url?$item->url:'#a'}}"><img src="http://{{env('DOMAIN_BACKEND')}}{{$item->image}}" alt="{{$item->note}}" title="{{$item->note}}"></a>
+                        <a href="{{$item->url?$item->url:'#a'}}"><img src="http://{{env('DOMAIN_BACKEND','recbook.net')}}{{$item->image}}" alt="{{$item->note}}" title="{{$item->note}}"></a>
                     </div>
                 @endforeach
             </div>
@@ -296,7 +299,7 @@
             <div class="row adv_home">
                 @foreach(\App\Banner::where('location', 1)->get() as $item)
                     <div class="col-md-4">
-                        <a href="{{$item->url?$item->url:'#a'}}"><img src="http://{{env('DOMAIN_BACKEND')}}{{$item->image}}" alt="{{$item->note}}" title="{{$item->note}}"></a>
+                        <a href="{{$item->url?$item->url:'#a'}}"><img src="http://{{env('DOMAIN_BACKEND','recbook.net')}}{{$item->image}}" alt="{{$item->note}}" title="{{$item->note}}"></a>
                     </div>
                 @endforeach
             </div>
