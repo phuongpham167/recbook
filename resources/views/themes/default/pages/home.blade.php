@@ -21,15 +21,11 @@
     <div class="sliderz">
         <div>
             <div class="owl-carousel owl-theme slide_carousel">
-                <div>
-                    <a href="#"><img src="images/slider/1.jpg" alt="Bán bánh lạ bọc ống inox: Bám vỉa hè Hà Nội, chàng trai thu 70 triệu đồng/tháng" /></a>
-                </div>
-                <div>
-                    <a href="#"><img src="images/slider/2.jpg" alt="Philippines dè chừng với tất cả các dự án vay vốn của Trung Quốc" /></a>
-                </div>
-                <div>
-                    <a href="#"><img src="images/slider/3.jpg" alt="Sớm đưa Việt Nam vào nhóm các nước dẫn đầu ASEAN" /></a>
-                </div>
+                @foreach(\App\Banner::where('location', 0)->get() as $item)
+                    <div>
+                        <a href="{{$item->url?$item->url:'#a'}}"><img src="http://{{env('DOMAIN_BACKEND')}}{{$item->image}}" alt="{{$item->note}}"></a>
+                    </div>
+                @endforeach
             </div>
             <div class="row d-none  d-md-block">
                 <div class="col-4 offset-4">
@@ -97,16 +93,11 @@
         </section>
         <div class="container d-none d-md-block">
             <div class="row adv_home">
-                <div class="col-md-4">
-                    <a href="#"><img src="images/banner/1-1.jpg" alt="Đăng ký Bộ Công Thương" title="Đăng ký Bộ Công Thương"></a>
-                </div>
-                <div class="col-md-4">
-                    <a href="#"><img src="images/banner/1-2.jpg" alt="Thanh toán" title="Thanh toán"></a>
-                </div>
-                <div class="col-md-4">
-                    <a href="#"><img src="images/banner/1-3.jpg" alt="Dịch vụ 3" title="Dịch vụ 3"></a>
-                </div>
-
+                @foreach(\App\Banner::where('location', 1)->get() as $item)
+                    <div class="col-md-4">
+                        <a href="{{$item->url?$item->url:'#a'}}"><img src="http://{{env('DOMAIN_BACKEND')}}{{$item->image}}" alt="{{$item->note}}" title="{{$item->note}}"></a>
+                    </div>
+                @endforeach
             </div>
         </div>
         <div class="second_box">
@@ -196,16 +187,11 @@
         </div>
         <div class="container d-none d-md-block">
             <div class="row adv_home">
-                <div class="col-md-4">
-                    <a href="#"><img src="images/banner/1-1.jpg" alt="Đăng ký Bộ Công Thương" title="Đăng ký Bộ Công Thương"></a>
-                </div>
-                <div class="col-md-4">
-                    <a href="#"><img src="images/banner/1-2.jpg" alt="Thanh toán" title="Thanh toán"></a>
-                </div>
-                <div class="col-md-4">
-                    <a href="#"><img src="images/banner/1-3.jpg" alt="Dịch vụ 3" title="Dịch vụ 3"></a>
-                </div>
-
+                @foreach(\App\Banner::where('location', 2)->get() as $item)
+                    <div class="col-md-4">
+                        <a href="{{$item->url?$item->url:'#a'}}"><img src="http://{{env('DOMAIN_BACKEND')}}{{$item->image}}" alt="{{$item->note}}" title="{{$item->note}}"></a>
+                    </div>
+                @endforeach
             </div>
         </div>
 
@@ -259,16 +245,11 @@
         </div>
         <div class="container d-none d-md-block">
             <div class="row adv_home">
-                <div class="col-md-4">
-                    <a href="#"><img src="images/banner/1-1.jpg" alt="Đăng ký Bộ Công Thương" title="Đăng ký Bộ Công Thương"></a>
-                </div>
-                <div class="col-md-4">
-                    <a href="#"><img src="images/banner/1-2.jpg" alt="Thanh toán" title="Thanh toán"></a>
-                </div>
-                <div class="col-md-4">
-                    <a href="#"><img src="images/banner/1-3.jpg" alt="Dịch vụ 3" title="Dịch vụ 3"></a>
-                </div>
-
+                @foreach(\App\Banner::where('location', 1)->get() as $item)
+                    <div class="col-md-4">
+                        <a href="{{$item->url?$item->url:'#a'}}"><img src="http://{{env('DOMAIN_BACKEND')}}{{$item->image}}" alt="{{$item->note}}" title="{{$item->note}}"></a>
+                    </div>
+                @endforeach
             </div>
         </div>
         <div class="third_box">
@@ -313,16 +294,11 @@
         </div>
         <div class="container d-none d-md-block">
             <div class="row adv_home">
-                <div class="col-md-4">
-                    <a href="#"><img src="images/banner/1-1.jpg" alt="Đăng ký Bộ Công Thương" title="Đăng ký Bộ Công Thương"></a>
-                </div>
-                <div class="col-md-4">
-                    <a href="#"><img src="images/banner/1-2.jpg" alt="Thanh toán" title="Thanh toán"></a>
-                </div>
-                <div class="col-md-4">
-                    <a href="#"><img src="images/banner/1-3.jpg" alt="Dịch vụ 3" title="Dịch vụ 3"></a>
-                </div>
-
+                @foreach(\App\Banner::where('location', 1)->get() as $item)
+                    <div class="col-md-4">
+                        <a href="{{$item->url?$item->url:'#a'}}"><img src="http://{{env('DOMAIN_BACKEND')}}{{$item->image}}" alt="{{$item->note}}" title="{{$item->note}}"></a>
+                    </div>
+                @endforeach
             </div>
         </div>
         <div class="third_box">

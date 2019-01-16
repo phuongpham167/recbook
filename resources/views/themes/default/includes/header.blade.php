@@ -98,6 +98,10 @@
 </div>
 {{-- end banner header --}}
 
-<div class="container"><img src="http://demo02.vinaweb.vn/dothihp/images/partner/9841slide.jpg" alt="Header" style="
+<div class="container">
+    @foreach(\App\Banner::where('location', 5)->get() as $item)
+        <img src="http://{{env('DOMAIN_BACKEND')}}{{$item->image}}" alt="{{$item->note}}" style="
     width: 100%;
-"></div>
+">
+    @endforeach
+</div>
