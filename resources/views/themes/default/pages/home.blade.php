@@ -248,7 +248,7 @@
         </div>
         <div class="container d-none d-md-block">
             <div class="row adv_home">
-                @foreach(\App\Banner::where('location', 1)->get() as $item)
+                @foreach(\App\Banner::where('location', 3)->get() as $item)
                     <div class="col-md-4">
                         <a href="{{$item->url?$item->url:'#a'}}"><img src="http://{{env('DOMAIN_BACKEND','recbook.net')}}{{$item->image}}" alt="{{$item->note}}" title="{{$item->note}}"></a>
                     </div>
@@ -297,7 +297,7 @@
         </div>
         <div class="container d-none d-md-block">
             <div class="row adv_home">
-                @foreach(\App\Banner::where('location', 1)->get() as $item)
+                @foreach(\App\Banner::where('location', 4)->get() as $item)
                     <div class="col-md-4">
                         <a href="{{$item->url?$item->url:'#a'}}"><img src="http://{{env('DOMAIN_BACKEND','recbook.net')}}{{$item->image}}" alt="{{$item->note}}" title="{{$item->note}}"></a>
                     </div>
