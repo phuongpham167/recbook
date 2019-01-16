@@ -28,7 +28,7 @@
                     <div class="list_news">
                         @foreach($data as $item)
                             <dl>
-                                <dt><a href="{{ route('postdetail', ['slugchitiet' => $item->slugchitiet]) }}"><img width="110" height="75" @if(!empty($item->thumbnail)) src="{{env('BACKEND_DOMAIN')}}{{$item->thumbnail}}" @else src="{{asset('/images/default_real_estate_image.jpg')}}" @endif alt="{{$item->title}}"></a></dt>
+                                <dt><a href="{{ route('postdetail', ['slugchitiet' => $item->slugchitiet]) }}"><img width="110" height="75" @if(!empty($item->thumbnail)) src="{{$item->thumbnail}}" @else src="{{asset('/images/default_real_estate_image.jpg')}}" @endif alt="{{$item->title}}"></a></dt>
                                 <dd>
                                     <h3><a href="{{ route('postdetail', ['slugchitiet' => $item->slugchitiet]) }}">{{$item->title}}</a></h3>
                                     <span class="info_news">Cập nhật: {{$item->created_at}} | <a href="{{ route('postcategorylist', ['slugdanhmuc' => \App\PostCategory::find($item->post_category_id)->slugdanhmuc]) }}">{{\App\PostCategory::find($item->post_category_id)->name}}</a></span>
