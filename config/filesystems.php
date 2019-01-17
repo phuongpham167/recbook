@@ -70,7 +70,7 @@ return [
         ],
         'ftp' => [
             'driver'   => 'ftp',
-            'host'     => 'subweb.fastup.vn',
+            'host'     => '178.128.91.83',
             'username' => 'admin@subweb.fastup.vn',
             'password' => 'Quang@123',
             //Các thông số mở rộng
