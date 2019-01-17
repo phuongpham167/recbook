@@ -40,12 +40,15 @@ class RealEstateService
             $images = $input['images'];
             $alt = $input['alt'];
             foreach ($images as $key => $image) {
-                $png_url = time().".png";
+                $png_url = rand() . '_' . time().".png";
                 $path = public_path().'/storage/uploads/' . $png_url;
+                $thumbPath = public_path().'/storage/thumbs/' . $png_url;
+                $watermark_logo = public_path().'/images/watermark_logo.png';
 
-                Image::make(file_get_contents($image))->save($path);
+                $originImg = Image::make(file_get_contents($image))->insert($watermark_logo)->save($path);
+                $thumbnail = $originImg->resize(122, 91)->save($thumbPath);
                 $imagesVal[] = [
-                    'link' => $root . $path . '/' . $png_url,
+                    'link' => $root . '/storage/uploads/' . $png_url,
                     'alt' => $alt[$key]
                 ];
             }
