@@ -70,9 +70,9 @@ return [
         ],
         'ftp' => [
             'driver'   => 'ftp',
-            'host'     => '150.95.105.195',
-            'username' => 'remote@sv2.fastup.vn',
-            'password' => 'Tuandaika1',
+            'host'     => 'subweb.fastup.vn',
+            'username' => 'admin@subweb.fastup.vn',
+            'password' => 'Quang@123',
             //Các thông số mở rộng
             // 'port'     => 21,
             // 'root'     => '',
