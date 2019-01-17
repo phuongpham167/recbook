@@ -12,7 +12,6 @@ const mix = require('laravel-mix');
  */
 
 mix.sass('public/sass/main.scss', 'public/css')
-    .sass('public/sass/home.scss', 'public/css')
     .sass('public/sass/list-real-estate.scss', 'public/css')
     .sass('public/sass/right-sidebar.scss', 'public/css')
     .sass('public/sass/detail-real-estate.scss', 'public/css')
