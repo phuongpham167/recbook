@@ -25,6 +25,24 @@
                     </p>
                     <div class="detail-content">
                         <h1 class="title">{{$data->title}} {!!$data->verified ? '<i class="fa fa-check-circle verified" title="Tin đã xác thực"></i>' : '<i class="fa fa-question-circle none-verified" aria-hidden="true" title="Tin chưa xác thực"></i>'!!}</h1>
+                        <div class="title-short-section">Thông tin liên hệ:</div>
+                        <div class="contact short-section">
+                            <div class="row margin-0">
+                                <div class="col-xs-12 description__item">
+                                    <strong>Người liên hệ :</strong> {!! $data->user?'<a target="_blank" href="'.asset('user/'.$data->posted_by).'">':''!!} {{$data->user->userinfo ? $data->user->userinfo->full_name : $data->contact_person}}{!!$data->user?'</a>':''!!}
+                                </div>
+                            </div>
+                            <div class="row margin-0">
+                                <div class="col-xs-12 description__item">
+                                    <strong>Địa chỉ :</strong> {{$data->user->userinfo ? $data->user->userinfo->address : $data->contact_address}}
+                                </div>
+                            </div>
+                            <div class="row margin-0">
+                                <div class="col-xs-12 description__item">
+                                    <strong>Điện thoại :</strong> {{$data->user->userinfo ? $data->user->userinfo->phone : $data->contact_phone_number}}
+                                </div>
+                            </div>
+                        </div>
                         <div class="imgs_land_box slide-images row">
                             <div class="col-xs-10 slide-images__left">
                                 <ul class="land_slider">
@@ -225,24 +243,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="title-short-section">Thông tin liên hệ:</div>
-                        <div class="contact short-section">
-                            <div class="row margin-0">
-                                <div class="col-xs-12 description__item">
-                                    <strong>Người liên hệ :</strong> {{$data->user->userinfo ? $data->user->userinfo->full_name : $data->contact_person}}
-                                </div>
-                            </div>
-                            <div class="row margin-0">
-                                <div class="col-xs-12 description__item">
-                                    <strong>Địa chỉ :</strong> {{$data->user->userinfo ? $data->user->userinfo->address : $data->contact_address}}
-                                </div>
-                            </div>
-                            <div class="row margin-0">
-                                <div class="col-xs-12 description__item">
-                                    <strong>Điện thoại :</strong> {{$data->user->userinfo ? $data->user->userinfo->phone : $data->contact_phone_number}}
-                                </div>
-                            </div>
-                        </div>
+
                         <div class="title-short-section">Bản đồ vị trí:</div>
                         <div class="strike-title">
                             <strong>Dành cho quảng cáo</strong>

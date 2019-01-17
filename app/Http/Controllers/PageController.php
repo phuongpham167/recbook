@@ -101,11 +101,18 @@ class PageController extends Controller
         $hotRealEstates = RealEstate::select('id', 'title', 'slug', 'short_description', 'code',
             'area_of_premises', 'area_of_use', 'district_id', 'price', 'unit_id', 'is_vip', 'is_hot',
             'post_date', 'images')
-            ->where('is_hot', 1)
-            ->where('is_vip', '<>', 1)
+            ->where(function($q){
+                $q->where('is_hot', 1)
+                  ->where('is_vip', '<>', 1);
+            })
+            ->where(function($q){
+                $q->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
+                ->orWhere('post_date', '>=', Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->subDays(Settings('system_changenametime'))->format('m/d/Y H:i A')));
+            })
             ->where('post_date', '<=', Carbon::now())
 //            ->where('hot_expire_at', '<=', Carbon::now())
             ->where('web_id', $this->web_id);
+
 
 //        $hotRealEstates = $this->checkRegisterDate($hotRealEstates);
         $hotRealEstates->limit(16);
@@ -118,11 +125,14 @@ class PageController extends Controller
          * */
         $goodPriceRealEstate = RealEstate::select('id', 'title', 'short_description', 'slug', 'code',
             'area_of_premises', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date')
+            ->where(function($q){
+                $q->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
+                    ->orWhere('post_date', '>=', Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->subDays(Settings('system_changenametime'))->format('m/d/Y H:i A')));
+            })
             ->where('is_vip', 1)
             ->where('post_date', '<=', Carbon::now())
             ->where('web_id', $this->web_id)
             ->orderBy('post_date', 'desc');
-
 
 //        $goodPriceRealEstate = $this->checkRegisterDate($goodPriceRealEstate);
         $goodPriceRealEstate->limit(200);
@@ -131,8 +141,14 @@ class PageController extends Controller
         $vipRealEstates  =   RealEstate::select('id', 'title', 'slug', 'short_description', 'code',
             'area_of_premises', 'area_of_use', 'district_id', 'price', 'unit_id', 'is_vip', 'is_hot',
             'post_date', 'images','district_id', 'province_id', 'direction_id')
-            ->where('is_hot', '<>', 1)
-            ->where('is_vip', 1)
+            ->where(function($q){
+                $q->where('is_hot', '<>', 1)
+                    ->where('is_vip', 1);
+            })
+            ->where(function($q){
+                $q->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
+                    ->orWhere('post_date', '>=', Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->subDays(Settings('system_changenametime'))->format('m/d/Y H:i A')));
+            })
             ->where('post_date', '<=', Carbon::now())
 //            ->where('hot_expire_at', '<=', Carbon::now())
             ->where('web_id', $this->web_id)->orderBy('post_date','DESC');
@@ -143,6 +159,10 @@ class PageController extends Controller
             ->where('is_hot', '<>', 1)
             ->where('is_vip', '<>', 1)
             ->where('web_id', $this->web_id);
+
+        $freeRealEstates = $freeRealEstates
+            ->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
+            ->orWhere('post_date', '>=', Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->subDays(Settings('system_changenametime'))->format('m/d/Y H:i A')));
 
 //        $freeRealEstates = $this->checkRegisterDate($freeRealEstates);
         $freeRealEstates->limit(40);
@@ -177,8 +197,14 @@ class PageController extends Controller
         $hotRealEstates = RealEstate::select('id', 'title', 'slug', 'short_description', 'code',
             'area_of_premises', 'area_of_use', 'district_id', 'price', 'unit_id', 'is_vip', 'is_hot',
             'post_date', 'images','district_id', 'province_id', 'direction_id')
-            ->where('is_hot', 1)
-            ->where('is_vip', '<>', 1)
+            ->where(function($q){
+                $q->where('is_hot', 1)
+                    ->where('is_vip', '<>', 1);
+            })
+            ->where(function($q){
+                $q->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
+                    ->orWhere('post_date', '>=', Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->subDays(Settings('system_changenametime'))->format('m/d/Y H:i A')));
+            })
             ->where('post_date', '<=', Carbon::now())
 //            ->where('hot_expire_at', '<=', Carbon::now())
             ->where('web_id', $this->web_id);
@@ -191,18 +217,30 @@ class PageController extends Controller
         $newestRealEstates  =   RealEstate::select('id', 'title', 'slug', 'short_description', 'code',
             'area_of_premises', 'area_of_use', 'district_id', 'price', 'unit_id', 'is_vip', 'is_hot',
             'post_date', 'images','district_id', 'province_id', 'direction_id')
+            ->where(function($q){
+                $q->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
+                    ->orWhere('post_date', '>=', Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->subDays(Settings('system_changenametime'))->format('m/d/Y H:i A')));
+            })
             ->where('post_date', '<=', Carbon::now())
 //            ->where('hot_expire_at', '<=', Carbon::now())
             ->where('web_id', $this->web_id)->orderBy('post_date','DESC');
+
         $newestRealEstates = $newestRealEstates->take(10)->get();
         $vipRealEstates  =   RealEstate::select('id', 'title', 'slug', 'short_description', 'code',
             'area_of_premises', 'area_of_use', 'district_id', 'price', 'unit_id', 'is_vip', 'is_hot',
             'post_date', 'images','district_id', 'province_id', 'direction_id')
-            ->where('is_hot', '<>', 1)
-            ->where('is_vip', 1)
+            ->where(function($q){
+                $q->where('is_hot', '<>', 1)
+                    ->where('is_vip', 1);
+            })
+            ->where(function($q){
+                $q->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
+                    ->orWhere('post_date', '>=', Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->subDays(Settings('system_changenametime'))->format('m/d/Y H:i A')));
+            })
             ->where('post_date', '<=', Carbon::now())
 //            ->where('hot_expire_at', '<=', Carbon::now())
             ->where('web_id', $this->web_id)->orderBy('post_date','DESC');
+
         $vipRealEstates = $vipRealEstates->take(10)->get();
         /*
          * TODO: need more info to filter good price items
@@ -211,6 +249,10 @@ class PageController extends Controller
         $goodPriceRealEstate = RealEstate::select('id', 'title', 'short_description', 'slug', 'code',
             'area_of_premises', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date','district_id', 'province_id', 'direction_id')
             ->where('is_vip', 1)
+            ->where(function($q){
+                $q->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
+                    ->orWhere('post_date', '>=', Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->subDays(Settings('system_changenametime'))->format('m/d/Y H:i A')));
+            })
             ->where('post_date', '<=', Carbon::now())
             ->where('web_id', $this->web_id)
             ->orderBy('post_date', 'desc');
@@ -221,6 +263,10 @@ class PageController extends Controller
 
         $freeRealEstates = RealEstate::with('district','province')->select('id', 'title','province_id','district_id' ,'direction_id','short_description', 'slug', 'code',
             'area_of_premises', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date')
+            ->where(function($q){
+                $q->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
+                    ->orWhere('post_date', '>=', Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->subDays(Settings('system_changenametime'))->format('m/d/Y H:i A')));
+            })
             ->where('is_hot', '<>', 1)
             ->where('is_vip', '<>', 1)
             ->where('web_id', $this->web_id);
@@ -332,11 +378,18 @@ class PageController extends Controller
     {
         $query = RealEstate::select('id', 'title', 'short_description', 'slug', 'code', 'district_id',
             'area_of_premises', 'area_of_use', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date')
-            ->where('is_hot', 1)
-            ->where('is_vip', '<>', 1)
+            ->where(function($q){
+                $q->where('is_hot', 1)
+                    ->where('is_vip', '<>', 1);
+            })
+            ->where(function($q){
+                $q->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
+                    ->orWhere('post_date', '>=', Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->subDays(Settings('system_changenametime'))->format('m/d/Y H:i A')));
+            })
             ->where('post_date', '<=', Carbon::now())
             ->where('web_id', $this->web_id)
             ->orderBy('post_date', 'desc');
+
 //        $query = $this->checkRegisterDate($query);
         $results = $query->get();
 
@@ -365,8 +418,13 @@ class PageController extends Controller
             'area_of_premises', 'area_of_use', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date')
             ->where('post_date', '<=', Carbon::now())
             ->where('web_id', $this->web_id)
+            ->where(function($q){
+                $q->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
+                    ->orWhere('post_date', '>=', Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->subDays(Settings('system_changenametime'))->format('m/d/Y H:i A')));
+            })
             ->orderBy('post_date', 'desc');
 //        $query = $this->checkRegisterDate($query);
+
         $results = $query->get();
 
         $this->vipRealEstates = $this->getVipRealEstates();
@@ -392,12 +450,19 @@ class PageController extends Controller
     {
         $query = RealEstate::select('id', 'title', 'short_description', 'slug', 'code', 'district_id',
             'area_of_premises', 'area_of_use', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date')
-            ->where('is_hot', '<>', 1)
-            ->where('is_vip', '<>', 1)
+            ->where(function($q){
+                $q->where('is_hot', '<>', 1)
+                    ->where('is_vip', '<>', 1);
+            })
+            ->where(function($q){
+                $q->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
+                    ->orWhere('post_date', '>=', Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->subDays(Settings('system_changenametime'))->format('m/d/Y H:i A')));
+            })
             ->where('post_date', '<=', Carbon::now())
             ->where('web_id', $this->web_id)
             ->orderBy('post_date', 'desc');
 //        $query = $this->checkRegisterDate($query);
+
         $results = $query->get();
 
         $this->vipRealEstates = $this->getVipRealEstates();
@@ -429,10 +494,15 @@ class PageController extends Controller
         if ($category) {
             $query = RealEstate::select('id', 'title', 'short_description', 'slug', 'code', 'district_id',
                 'area_of_premises', 'area_of_use', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date')
+                ->where(function($q){
+                    $q->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
+                        ->orWhere('post_date', '>=', Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->subDays(Settings('system_changenametime'))->format('m/d/Y H:i A')));
+                })
                 ->where('re_category_id', $catId)
                 ->where('post_date', '<=', Carbon::now())
                 ->where('web_id', $this->web_id)
                 ->orderBy('post_date', 'desc');
+
 //            $query = $this->checkRegisterDate($query);
             $countAll = $query->count();
             $results = $query->get();
@@ -460,11 +530,18 @@ class PageController extends Controller
     {
         $query = RealEstate::select('id', 'title', 'short_description', 'slug', 'code', 'district_id',
             'area_of_premises', 'area_of_use', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date')
-            ->where('is_vip', 1)
-            ->where('is_hot', '<>', 1)
+            ->where(function($q){
+                $q->where('is_vip', 1)
+                    ->where('is_hot', '<>', 1);
+            })
+            ->where(function($q){
+                $q->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
+                    ->orWhere('post_date', '>=', Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->subDays(Settings('system_changenametime'))->format('m/d/Y H:i A')));
+            })
             ->where('post_date', '<=', Carbon::now())
             ->where('web_id', $this->web_id)
             ->orderBy('post_date', 'desc');
+
 //        $query = $this->checkRegisterDate($query);
         $results = $query->get();
 
@@ -743,8 +820,14 @@ class PageController extends Controller
     {
         $query = RealEstate::select('id', 'title', 'slug', 'direction_id',
             'area_of_premises', 'price', 'unit_id', 'is_vip', 'is_hot', 'post_date', 'images')
-            ->where('is_vip',  1)
-            ->where('is_hot', '<>', 1)
+            ->where(function($q){
+                $q->where('is_vip', 1)
+                    ->where('is_hot', '<>', 1);
+            })
+            ->where(function($q){
+                $q->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
+                    ->orWhere('post_date', '>=', Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->subDays(Settings('system_changenametime'))->format('m/d/Y H:i A')));
+            })
             ->where('post_date', '<=', Carbon::now())
             ->where('web_id', $this->web_id);
 

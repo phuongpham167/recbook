@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use \DataTables;
+use Sabberworm\CSS\Settings;
 
 
 class AuthenticateController extends Controller
@@ -127,6 +128,15 @@ class AuthenticateController extends Controller
     public function postInfo(FormUserInfoRequest $request)
     {
         $userInfo = auth()->user()->userinfo;
+        if($userInfo->full_name != $request->full_name){
+            if(!empty($userInfo->changed_name_at)){
+                if(Carbon::now()->diffInDays($userInfo->changed_name_at) < Settings('system_changenametime')){
+                    set_notice(trans('system.changed_name_error'), 'danger');
+                    return redirect()->back();
+                }
+            }
+            $userInfo->changed_name_at = Carbon::now();
+        }
         $userInfo->full_name   =   $request->full_name;
         $userInfo->company    =   $request->company;
         $userInfo->identification    =   $request->identification;
