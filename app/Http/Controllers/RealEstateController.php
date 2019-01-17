@@ -22,7 +22,9 @@ use App\Services\ReTypeService;
 use App\Services\StreetService;
 use App\Services\UnitService;
 use App\Services\WardService;
+use App\User;
 use Carbon\Carbon;
+use Efriandika\LaravelSettings\Settings;
 use Illuminate\Http\Request;
 use App\Services\RealEstateService;
 use \DataTables;
@@ -102,7 +104,7 @@ class RealEstateController extends Controller
 
         if(!empty(\request('filter'))) {
             if(\request('filter') == 'tin-rao-het-han')
-                $data = $data->where('expire_date','<',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')));
+                $data = $data->where('expire_date','<',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))->orWhere('post_date', '<', Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->subDays(Settings('system_changenametime'))->format('m/d/Y H:i A')));
 
             if(\request('filter') == 'tin-rao-cho-duyet')
                 $data = $data->where('approved','0');
@@ -368,6 +370,24 @@ class RealEstateController extends Controller
             $data->hot_expire_at = Carbon::now()->addDay($request->hot_time);
             $data->save();
             set_notice(trans('system.set_hot_success').$request->hot_time.' ngày thành công!', 'success');
+        }else
+            set_notice(trans('system.not_exist'), 'warning');
+        return redirect()->back();
+    }
+
+    public function upPost(Request $request)
+    {
+        if(auth()->user()->up_limit >= auth()->user()->group()->first()->up_limit) {
+            set_notice(trans('real-estate.message.up_limit'), 'error');
+            return redirect()->back();
+        }
+        $data   =   RealEstate::find($request->id);
+        if(!empty($data)){
+            $user = User::find($data->posted_by);
+            $user->up_limit++;
+            $data->updated_at = Carbon::now();
+            $data->save();
+            set_notice(trans('system.up_post_success'), 'success');
         }else
             set_notice(trans('system.not_exist'), 'warning');
         return redirect()->back();

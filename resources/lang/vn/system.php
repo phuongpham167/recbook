@@ -14,6 +14,7 @@ return [
     'delete_confirm'    =>  'Xác nhận xóa?',
     'delete_success'    =>  'Xóa thành công!',
     'edit_success'  =>  'Sửa thành công',
+    'changed_name_error'  =>  'Chưa đủ thời gian giới hạn đổi tên kể từ lần đổi tên gần nhất!',
     'not_exist'     =>  'Bản ghi không tồn tại!',
     'not_rights'     =>  'Bạn không có quyền chỉnh sửa id này!',
     'cancel'    =>  'Quay lại',
@@ -81,5 +82,6 @@ return [
     'searchPlaceholder' => 'Từ khóa, mã số tin, số đt',
     'set_vip_success'   =>  'Đăng ký tin vip ',
     'set_hot_success'   =>  'Đăng ký tin hot ',
-    'not_enough_info'   =>  'Bạn chưa điền đầy đủ thông tin!'
+    'not_enough_info'   =>  'Bạn chưa điền đầy đủ thông tin!',
+    'up_post_success'   =>  'Up tin thành công!'
 ];

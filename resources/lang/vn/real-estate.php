@@ -73,7 +73,9 @@ return [
         'createSuccess' => 'Thêm tin mới thành công',
         'updateSuccess' => 'Cập nhật thành công',
         'deleteSuccess' => 'Xóa thành công',
-        'error' => 'Error'
+        'error' => 'Error',
+        'post_limit' => 'Đã hết số lượt đăng tin cho phép, hãy nâng cấp nhóm thành viên để đăng nhiều tin hơn!',
+        'up_limit' => 'Đã hết số lượt up tin cho phép, hãy nâng cấp nhóm thành viên để up nhiều tin hơn!',
     ],
     'list' => [
         'pageTitle' => 'Danh sách tin BĐS',
