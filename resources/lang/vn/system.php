@@ -83,5 +83,6 @@ return [
     'set_vip_success'   =>  'Đăng ký tin vip ',
     'set_hot_success'   =>  'Đăng ký tin hot ',
     'not_enough_info'   =>  'Bạn chưa điền đầy đủ thông tin!',
-    'up_post_success'   =>  'Up tin thành công!'
+    'up_post_success'   =>  'Up tin thành công!',
+    'expired'   =>  'Đã hết hạn!'
 ];

@@ -91,6 +91,7 @@ Route::group(['middleware'=>'auth'], function(){
         Route::post('/multi-delete', 'RealEstateController@multiDelete');
         Route::get('/setvip', 'RealEstateController@setVip');
         Route::get('/sethot', 'RealEstateController@setHot');
+        Route::get('/up', 'RealEstateController@upPost');
 
     });
 
@@ -132,5 +133,5 @@ Route::get('/re-type/list-dropdown/{catId}', ['as' => 'reTypeByCat', 'uses' => '
 Route::get('/customer-by-phone/{phone}', ['as' => 'customer-by-phone', 'uses' => 'RealEstateController@customerByPhone']);
 
 Route::get('t', function(){
-
+    echo settings('system_postexpire');
 });
