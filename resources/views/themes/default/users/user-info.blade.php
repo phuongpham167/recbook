@@ -162,6 +162,8 @@
                                                                                 <i class="fa fa-circle"></i>
                                                                                 <i class="fa fa-circle"></i>
                                                                             </button>
+                                                                            <button type="button" name="add_new" id="add-new-re" class="_btn bg_red pull-right"><i class="fa fa-plus"></i> &nbsp;&nbsp;ĐĂNG TIN
+                                                                            </button>
                                                                         </div>
                                                                     </div>
                                                                     <div class="collapse" id="list-cl">
@@ -198,12 +200,12 @@
                                                                                         <option value="4">Đăng trên web đã đăng ký</option>
                                                                                     </select>
                                                                                 </div>
-                                                                                <div class="col-xs-12 col-sm-6">
-                                                                                    <div class="pull-right">
-                                                                                        <button type="button" name="add_new" id="add-new-re" class="_btn bg_red"><i class="fa fa-plus"></i> &nbsp;&nbsp;ĐĂNG TIN
-                                                                                        </button>
-                                                                                    </div>
-                                                                                </div>
+                                                                                {{--<div class="col-xs-12 col-sm-6">--}}
+                                                                                    {{--<div class="pull-right">--}}
+                                                                                        {{--<button type="button" name="add_new" id="add-new-re" class="_btn bg_red"><i class="fa fa-plus"></i> &nbsp;&nbsp;ĐĂNG TIN--}}
+                                                                                        {{--</button>--}}
+                                                                                    {{--</div>--}}
+                                                                                {{--</div>--}}
                                                                             </div>
 
                                                                         </div>
@@ -380,23 +382,6 @@
                 </div>
             </div>
 
-        </div>
-        {{-- modal post tin --}}
-        <div id="postReModal" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" onclick="closemd()">&times;</button>
-                        <h4 class="modal-title">Đăng tin mới</h4>
-                    </div>
-                    <div class="modal-body">
-                        {{--@include(theme(TRUE).'.includes.create-re')--}}
-                    </div>
-                </div>
-
-            </div>
         </div>
     </div>
     {{-- Include footer --}}
