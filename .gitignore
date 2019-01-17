@@ -12,6 +12,7 @@ yarn-error.log
 .env
 composer.lock
 storage/settings.json
+storage
 /public/files
 /public/photos
 /public/uploads/

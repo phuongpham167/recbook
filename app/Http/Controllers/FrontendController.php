@@ -41,9 +41,12 @@ class FrontendController extends Controller
 //            $data = $data->where('user_id',auth()->user()->id);
 
         $result = Datatables::of($data)
+            ->editColumn('domain', function($frontend){
+                return "<a href='http://{$frontend->domain}' target='_blank'>{$frontend->domain} <i class='fa fa-external-link'></i></a>";
+            })
             ->addColumn('manage', function($frontend) {
                 return a('frontend/del', 'id='.$frontend->id,trans('g.delete'), ['class'=>'btn btn-xs btn-danger'],'#',"return bootbox.confirm('".trans('system.delete_confirm')."', function(result){if(result==true){window.location.replace('".asset('frontend/del?id='.$frontend->id)."')}})").'  '.a('frontend/edit','id='.$frontend->id,trans('g.edit'), ['class'=>'btn btn-xs btn-default']).'  '.a('frontend_web/'.$frontend->id,'','Chỉnh sửa', ['class'=>'btn btn-xs btn-default']);
-            })->rawColumns(['manage']);
+            })->rawColumns(['domain','manage']);
 
 //        if(get_web_id() == 1) {
 //            $result = $result->addColumn('web_id', function(Branch $branch) {

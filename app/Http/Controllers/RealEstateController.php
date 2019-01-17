@@ -132,9 +132,9 @@ class RealEstateController extends Controller
             ->addColumn('title', function($dt) {
                 $title = null;
                 if($dt->is_hot == 1)
-                    $title .= '<img src="http://dothigroupfe.vn/images/vip1.gif"> ';
+                    $title .= '<img src="'.asset('/images/vip1.gif').'"> ';
                 if($dt->is_vip == 1)
-                    $title .= '<img src="http://dothigroupfe.vn/images/vip2.gif"> ';
+                    $title .= '<img src="'.asset('/images/vip2.gif').'"> ';
                 $title .= $dt->title;
 
                 return $title;
@@ -143,7 +143,7 @@ class RealEstateController extends Controller
                 return $dt->reType ? $dt->reType->name : '';
             })
             ->addColumn('district_id', function($dt) {
-                return $dt->district->name;
+                return $dt->district?$dt->district->name:'-';
             })->addColumn('manage', function($dt) {
                 $manage = null;
 

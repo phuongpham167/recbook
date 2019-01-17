@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Contact;
 use App\Http\Requests\CreateContactRequest;
 use App\Menu;
+use App\RealEstate;
 use App\ReCategory;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -100,5 +101,21 @@ class ContactController extends Controller
             'projects' => $this->projects,
             'menuData' => $this->menuFE
         ]);
+    }
+    private function getVipRealEstates()
+    {
+        $query = RealEstate::select('id', 'title', 'slug', 'direction_id',
+            'area_of_premises', 'price', 'unit_id', 'is_vip', 'is_hot', 'post_date', 'images')
+            ->where('is_vip',  1)
+            ->where('is_hot', '<>', 1)
+            ->where('post_date', '<=', Carbon::now())
+            ->where('web_id', $this->web_id);
+
+//            ->where('vip_expire_at',  '<=', Carbon::now())
+//        $query = $this->checkRegisterDate($query);
+        $query->limit(30);
+        $results = $query->get();
+//        dd($results);
+        return $results;
     }
 }

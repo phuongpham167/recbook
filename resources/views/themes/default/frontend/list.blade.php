@@ -40,7 +40,6 @@
                                     <th>{{trans('frontend.title')}}</th>
                                     <th>{{trans('frontend.domain')}}</th>
                                     <th>{{trans('frontend.theme')}}</th>
-                                    <th>{{trans('frontend.administrator')}}</th>
                                     <th>{{trans('g.manage')}}</th>
                                 </tr>
                                 </thead>
@@ -58,6 +57,7 @@
 @endsection
 
 @push('js')
+    <script src="{{asset('plugins/bootbox.min.js')}}"></script>
     <script src="{{asset('plugins/jquery.datatables/js/jquery.dataTables.js')}}"></script>
     <script>
         $(function () {
@@ -69,7 +69,6 @@
                     {data: 'title', name: 'title'},
                     {data: 'domain', name: 'domain'},
                     {data: 'theme', name: 'theme'},
-                    {data: 'user_id', name: 'user_id'},
                     {data: 'manage', name: 'manage', sortable: false, searchable: false}
                 ]
             });

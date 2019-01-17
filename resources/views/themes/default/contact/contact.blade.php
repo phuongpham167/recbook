@@ -66,7 +66,7 @@
                                     </li>
 
                                     <li>
-                                        <button type="submit" class="btn btn-green"><i class="fa fa-arrow-right fa-fw"></i> Gửi</button>
+                                        <button type="submit" class="btn btn-primary"><i class="fa fa-arrow-right fa-fw"></i> Gửi</button>
                                         <button type="submit" class="btn btn-gray"><i class="fa fa-refresh fa-fw"></i> Làm lại</button>
                                     </li>
                                 </ul>
