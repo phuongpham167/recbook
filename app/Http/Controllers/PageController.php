@@ -96,7 +96,7 @@ class PageController extends Controller
         $this->projects = $this->projectService->getListDropDown();
     }
 
-    public function index2()
+    public function index1()
     {
         $hotRealEstates = RealEstate::select('id', 'title', 'slug', 'short_description', 'code',
             'area_of_premises', 'area_of_use', 'district_id', 'price', 'unit_id', 'is_vip', 'is_hot',
@@ -139,6 +139,16 @@ class PageController extends Controller
         $goodPriceRealEstate->limit(200);
         $goodPriceRealEstate = $goodPriceRealEstate->get();
 
+        $vipRealEstates  =   RealEstate::select('id', 'title', 'slug', 'short_description', 'code',
+            'area_of_premises', 'area_of_use', 'district_id', 'price', 'unit_id', 'is_vip', 'is_hot',
+            'post_date', 'images','district_id', 'province_id', 'direction_id')
+            ->where('is_hot', '<>', 1)
+            ->where('is_vip', 1)
+            ->where('post_date', '<=', Carbon::now())
+//            ->where('hot_expire_at', '<=', Carbon::now())
+            ->where('web_id', $this->web_id)->orderBy('post_date','DESC');
+        $vipRealEstates = $vipRealEstates->take(10)->get();
+
         $freeRealEstates = RealEstate::select('id', 'title', 'short_description', 'slug', 'code',
             'area_of_premises', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date')
             ->where('is_hot', '<>', 1)
@@ -162,7 +172,7 @@ class PageController extends Controller
         $rangePrices = $this->rangePriceService->getRangePriceByCat($firstCat->id);
 
 
-        return v('pages.home', [
+        return v('pages.home-1', [
             'hotRealEstates' => $hotRealEstates,
             'goodPriceRealEstate' => $goodPriceRealEstate,
             'freeRealEstates' => $freeRealEstates,
@@ -173,7 +183,8 @@ class PageController extends Controller
             'streets' => $this->streets,
             'directions' => $this->directions,
             'rangePrices' => $rangePrices,
-            'menuData' => $this->menuFE
+            'menuData' => $this->menuFE,
+            'vipRealEstates' => $vipRealEstates
         ]);
     }
     public function index()
