@@ -148,6 +148,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
         Efriandika\LaravelSettings\SettingsServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -211,7 +212,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Settings'  => Efriandika\LaravelSettings\Facades\Settings::class,
-
+        'Image' => Intervention\Image\Facades\Image::class,
     ],
 
 ];
