@@ -73,4 +73,7 @@ class User extends Authenticatable
 
         static::addGlobalScope(new WebScope);
     }
+    public function avatar(){
+        return $this->userinfo?$this->userinfo->avatar():asset('/images/default-avatar.png');
+    }
 }
