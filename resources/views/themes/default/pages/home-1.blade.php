@@ -16,24 +16,14 @@
 @section('content')
     @include(theme(TRUE).'.includes.header-1')
     <div class="content-body">
-        <section class="slider">
+        <section class="slider container">
             <div class="flexslider">
                 <ul class="slides">
-                    <li>
-                        <img src="{{ asset('images/slider/8226anhbia1.gif') }}" />
-                    </li>
-                    <li>
-                        <img src="{{ asset('images/slider/9742anhbia4.gif') }}" />
-                    </li>
-                    <li>
-                        <img src="{{ asset('images/slider/7070anhbia5.gif') }}" />
-                    </li>
-                    <li>
-                        <img src="{{ asset('images/slider/8292anhbia6.gif') }}" />
-                    </li>
-                    <li>
-                        <img src="{{ asset('images/slider/3691anhbia7.gif') }}" />
-                    </li>
+                    @foreach(\App\Banner::where('location', 0)->get() as $item)
+                        <li>
+                            <a href="{{$item->url?$item->url:'#a'}}"><img src="http://{{env('DOMAIN_BACKEND','recbook.net')}}{{$item->image}}" /></a>
+                        </li>
+                    @endforeach
                 </ul>
             </div>
         </section>
@@ -172,7 +162,7 @@
         </section>
         <div class="container adv_box adv_home_hot">
             @foreach(\App\Banner::where('location', 1)->get() as $item)
-            <a class="col-md-12" href="{{$item->url?$item->url:'#a'}}">
+            <a class="" href="{{$item->url?$item->url:'#a'}}">
                 <img src="http://{{env('DOMAIN_BACKEND','recbook.net')}}{{$item->image}}" alt="{{$item->note}}">
             </a>
             @endforeach
@@ -180,7 +170,7 @@
         <section class="good_price">
             <div class="container">
                 <div class="row two_cols">
-                    <div class="col-xs-12 col-md-9 col_left">
+                    <div class="col-xs-12 col-md-9 col_left no-padding-left">
                         <div class="left_box">
                             <p class="title_box">
                                 <strong>TIN GIÁ HẤP DẪN</strong>
@@ -202,7 +192,7 @@
                                             <div class="col-xs-12  re_item2 good_price_item">
                                                 @php
                                                     $itemClass = '';
-                                                    if($item->is_hot && $item->is_vip) {
+                                                    if($item->is_hot) {
                                                         $itemClass = '_vip_hot';
                                                     }
                                                     if($item->is_vip && !$item->is_hot) {
@@ -352,7 +342,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xs-12 col-md-3 col_right">
+                    <div class="col-xs-12 col-md-3 col_right no-padding-right">
                     @include(theme(TRUE).'.includes.vip-slide')
                     </div>
                 </div>
@@ -361,7 +351,7 @@
         <section class="free_price">
             <div class="container">
                 <div class="row margin-0">
-                    <div class="col-xs-12">
+                    <div class="">
                         <div class="free_price_box">
                             <p class="title_box1">
                                 <strong>{{ trans('home.free_real_estate') }}</strong>
@@ -515,6 +505,34 @@
             </div>
         </section>
     </div>
+    <section class="addition_info">
+        <div class="container">
+            <div class="row  three_cols">
+                <div class="col-xs-12 col-sm-12 three_i brokers">
+
+                    <p class="title_col">
+                        <a href="#"><i class="fa fa-users"></i> NHÀ MÔI GIỚI</a>
+                    </p>
+                    <div class="content col-xs-12 no-padding-left no-padding-right broker_slider">
+                        @foreach($agencies as $agency)
+                            <div class="col-xs-4 broker-item">
+                                <div class="col-md-3" style="padding: 0">
+                                    <a href="{{asset('user/'.$agency->id)}}">
+                                        <img class="img-responsive b_img" src="{{$agency->avatar()}}" alt="">
+                                    </a>
+                                </div>
+                                <div class="col-md-9">
+                                    <b class="name"><a href="{{asset('user/'.$agency->id)}}">{{$agency->userinfo?$agency->userinfo->full_name:$agency->name}}</a></b>
+                                    <p class="phone">{{$agency->userinfo?$agency->userinfo->phone:$agency->phone}}</p>
+                                    <p class="des">{{$agency->userinfo?$agency->userinfo->description:''}}</p>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
     @include(theme(TRUE).'.includes.footer')
 
     <link rel="stylesheet" href="{{ asset('css/main-1.css') }}"/>

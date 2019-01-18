@@ -25,7 +25,9 @@ class FormUserInfoRequest extends FormRequest
     public function rules()
     {
         return [
-            'full_name'  =>  'required',
+            'full_name'  =>  [
+                Rule::unique('user_info')->ignore(request('id')),
+                'required'],
             'company'  =>  'required',
             'identification'  =>  'required',
             'phone'  =>  'required',
@@ -38,7 +40,8 @@ class FormUserInfoRequest extends FormRequest
     public function messages()
     {
         return [
-            'full_name.required'  =>  'Vui lòng điền họ têb',
+            'full_name.required'  =>  'Vui lòng điền họ tên',
+            'full_name.unique'  =>  'Tên này đã tồn tại, vui lòng đặt tên khác!',
             'company.required'  =>  'Vui lòng điền nơi làm việc',
             'identification.required'  =>  'Vui lòng điền số chứng minh/mã số thuế',
             'phone.required'  =>  'Vui lòng điền số điện thoại',

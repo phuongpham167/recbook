@@ -21,4 +21,5 @@ return [
     'submit'    =>  'Gửi',
     'setvip'   =>  'Up Vip',
     'sethot'   =>  'Up Hot',
+    'up'   =>  'Up Tin',
 ];
