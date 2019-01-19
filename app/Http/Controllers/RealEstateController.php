@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Account;
 use App\DataTables\RealEstatesDataTable;
 use App\Http\Requests\HotVipRequest;
 use App\Http\Requests\RealEstateRequest;
 use App\Menu;
 use App\RealEstate;
 use App\Receipt;
+use App\ReceiptType;
 use App\Services\BlockService;
 use App\Services\ConstructionTypeService;
 use App\Services\DirectionService;
@@ -198,6 +200,11 @@ class RealEstateController extends Controller
                     }
                     if($dt->approved)
                         $manage .= '  ' . a('bat-dong-san/up', 'id=' . $dt->id, trans('g.up'), ['class' => 'btn btn-xs btn-info']);
+                    if($dt->sold == 1)
+                        $manage .= a('real-estate/sold','id='.$dt->id,trans('g.sold'), ['class'=>'btn btn-xs btn-default btn-is-disabled']);
+                    else
+                        $manage .= a('real-estate/sold','id='.$dt->id,trans('g.sold'), ['class'=>'btn btn-xs btn-info'],'#',
+                            "return bootbox.confirm('".trans('system.sold_confirm')."', function(result){if(result==true){window.location.replace('".asset('real-estate/sold?id='.$dt->id)."')}})");
                 }
                 else
                     $manage = trans('system.expired');
@@ -254,6 +261,7 @@ class RealEstateController extends Controller
 
     public function store(RealEstateRequest $request)
     {
+//        dd($request->all());
         $result = $this->service->store($request->all());
         if($result) {
             set_notice(trans('real-estate.message.createSuccess'), 'success');
@@ -423,7 +431,16 @@ class RealEstateController extends Controller
             $data->save();
 
             $receipt = new Receipt();
-
+            $account = Account::where('web_id',get_web_id())->where('default',1)->first();
+            $receipt->account_id   =   $account->id;
+            $receipt->code   =   $account->code.time();
+            $receipt->type   =   ReceiptType::where('web_id',get_web_id())->where('read_only',1)->first()->type;
+            $receipt->receipt_types_id   =   ReceiptType::where('web_id',get_web_id())->where('read_only',1)->first()->id;
+            $receipt->value   =   floor (($data->price * $data->commission_percent) / 100);
+            $receipt->target_user_id   =   auth()->user()->id;
+            $receipt->time   =   Carbon::now();
+            $receipt->web_id   =   auth()->user()->web_id;
+            $receipt->user_id   =   auth()->user()->id;
 
             set_notice(trans('real-estate.message.updateSuccess'), 'success');
             return redirect()->back();

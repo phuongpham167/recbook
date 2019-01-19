@@ -209,8 +209,10 @@
   .list-hot .item {
     width: 20%;
     padding-left: 0;
+    padding-right: 5px;
   }
   .list-hot .item:nth-child(5n+5) {
     padding-right: 0;
   }
 }
+

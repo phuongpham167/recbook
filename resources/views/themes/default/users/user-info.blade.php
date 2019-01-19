@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="{{ asset('common-css/left-menu.css') }}" />
     <link rel="stylesheet" href="{{asset('common-css/magnific-popup.css')}}" />
     <link rel="stylesheet" href="{{asset('plugins/toastr/toastr.min.css')}}" />
+    <link rel="stylesheet" href="{{ asset('css/manage-real-estate.css') }}"/>
     <link rel="stylesheet" href="{{ asset('css/user-info.css') }}"/>
 @endpush
 @php
@@ -161,6 +162,8 @@
                                                                                 <i class="fa fa-circle"></i>
                                                                                 <i class="fa fa-circle"></i>
                                                                             </button>
+                                                                            <button type="button" name="add_new" id="add-new-re" class="_btn bg_red pull-right"><i class="fa fa-plus"></i> &nbsp;&nbsp;ĐĂNG TIN
+                                                                            </button>
                                                                         </div>
                                                                     </div>
                                                                     <div class="collapse" id="list-cl">
@@ -197,12 +200,12 @@
                                                                                         <option value="4">Đăng trên web đã đăng ký</option>
                                                                                     </select>
                                                                                 </div>
-                                                                                <div class="col-xs-12 col-sm-6">
-                                                                                    <div class="pull-right">
-                                                                                        <button type="button" name="add_new" id="add-new-re" class="_btn bg_red"><i class="fa fa-plus"></i> &nbsp;&nbsp;ĐĂNG TIN
-                                                                                        </button>
-                                                                                    </div>
-                                                                                </div>
+                                                                                {{--<div class="col-xs-12 col-sm-6">--}}
+                                                                                    {{--<div class="pull-right">--}}
+                                                                                        {{--<button type="button" name="add_new" id="add-new-re" class="_btn bg_red"><i class="fa fa-plus"></i> &nbsp;&nbsp;ĐĂNG TIN--}}
+                                                                                        {{--</button>--}}
+                                                                                    {{--</div>--}}
+                                                                                {{--</div>--}}
                                                                             </div>
 
                                                                         </div>
@@ -379,23 +382,6 @@
                 </div>
             </div>
 
-        </div>
-        {{-- modal post tin --}}
-        <div id="postReModal" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" onclick="closemd()">&times;</button>
-                        <h4 class="modal-title">Đăng tin mới</h4>
-                    </div>
-                    <div class="modal-body">
-                        {{--@include(theme(TRUE).'.includes.create-re')--}}
-                    </div>
-                </div>
-
-            </div>
         </div>
     </div>
     {{-- Include footer --}}
@@ -697,26 +683,31 @@
         /*---------------- end change cover -----------------*/
 
         /*---------------- handle upload images  re -----------------*/
-        let formDataReImages = false;
-        function readMultipleURL(input, target) {
-            console.log(input.files);
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-
-                reader.onload = function(e) {
-                    $(target).attr('src', e.target.result);
-                };
-
-                reader.readAsDataURL(input.files[0]);
-            }
-            if ( target == '.avatar' ) {
-                formDataAv = new FormData();
-                formDataAv.append('avatar', input.files[0]);
-            }
-            if (target == '.cover') {
-                formDataCover = new FormData();
-                formDataCover.append('cover', input.files[0]);
-            }
+        const root = location.protocol + '//' + location.host;
+        $('#choose-image').click( function (event) {
+                $('#images').click();
+        });
+        $('#images').on('change', function () {
+           var i = 0, len = this.files.length, reader, file;
+           for ( ; i < len; i++) {
+               file = this.files[i];
+               if (!!file.type.match(/image.*/)) {
+                   reader = new FileReader();
+                   reader.onloadend = function(e) {
+                       showSelectedImg(e.target.result);
+                   };
+                   reader.readAsDataURL(file);
+               }
+           }
+        });
+        function showSelectedImg(src) {
+            const htmlMarkup = '<div class="col-xs-4 item-img-preview"><img src="' + src + '" class="img-responsive"/>'
+                + '<div class=""><input type="hidden" name="images[]" value="' + src + '" class="form-control" />'
+                + '<label>{{ trans("real-estate.formCreateLabel.alt-text") }}</label>'
+                + '<input type="text" name="alt[]" class="form-control" /></div>'
+                + '<a class="img-preview-btn-remove" onclick="removeImgPreview(this)"><i class="fa fa-trash" aria-hidden="true"></i></a>'
+                + '</div>';
+            $('.img-preview').append(htmlMarkup);
         }
         /*---------------- end handle upload images  re -----------------*/
     </script>

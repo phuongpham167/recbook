@@ -11,6 +11,7 @@ use App\Customer;
 use App\RealEstate;
 use App\WebsiteConfig;
 use Illuminate\Support\Facades\DB;
+use Image;
 
 class RealEstateService
 {
@@ -31,6 +32,7 @@ class RealEstateService
 
     public function store($input)
     {
+        $root = \Request::root();
         $slug = to_slug($input['title']);
 
         $imagesVal = [];
@@ -38,8 +40,15 @@ class RealEstateService
             $images = $input['images'];
             $alt = $input['alt'];
             foreach ($images as $key => $image) {
+                $png_url = rand() . '_' . time().".png";
+                $path = public_path().'/storage/uploads/' . $png_url;
+                $thumbPath = public_path().'/storage/thumbs/' . $png_url;
+                $watermark_logo = public_path().'/images/watermark_logo.png';
+
+                $originImg = Image::make(file_get_contents($image))->insert($watermark_logo, 'bottom', 10, 10)->save($path);
+                $thumbnail = $originImg->resize(122, 91)->save($thumbPath);
                 $imagesVal[] = [
-                    'link' => $image,
+                    'link' => $root . '/storage/uploads/' . $png_url,
                     'alt' => $alt[$key]
                 ];
             }

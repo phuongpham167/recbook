@@ -47,6 +47,7 @@ class PageController extends Controller
     protected $blockService;
     protected $constructionTypeService;
     protected $unitService;
+    protected $agencies;
 
     public function __construct(
         PageService $pageService,
@@ -94,6 +95,9 @@ class PageController extends Controller
         $this->streets = $this->streetService->getListDropDown();
         $this->directions = $this->directionService->getListDropDown();
         $this->projects = $this->projectService->getListDropDown();
+        $this->agencies =   User::whereHas('group', function($q){
+            $q->where('is_agency', 1);
+        })->inRandomOrder()->take(10)->get();
     }
 
     public function index1()
@@ -129,7 +133,6 @@ class PageController extends Controller
                 $q->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
                     ->orWhere('post_date', '>=', Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->subDays(Settings('system_changenametime'))->format('m/d/Y H:i A')));
             })
-            ->where('is_vip', 1)
             ->where('post_date', '<=', Carbon::now())
             ->where('web_id', $this->web_id)
             ->orderBy('post_date', 'desc');
@@ -189,7 +192,8 @@ class PageController extends Controller
             'directions' => $this->directions,
             'rangePrices' => $rangePrices,
             'menuData' => $this->menuFE,
-            'vipRealEstates' => $vipRealEstates
+            'vipRealEstates' => $vipRealEstates,
+            'agencies'  =>  $this->agencies
         ]);
     }
     public function index()
