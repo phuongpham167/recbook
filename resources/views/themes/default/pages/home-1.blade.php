@@ -27,6 +27,33 @@
                 </ul>
             </div>
         </section>
+        <div class="container" style="margin-top: 20px">
+            <div class="row  three_cols">
+                <div class="col-xs-12 col-sm-12 three_i brokers">
+
+                    <p class="title_col">
+                        <a href="#"><i class="fa fa-users"></i> Dự án nổi bật</a>
+                    </p>
+                    <div class="content col-xs-12 no-padding-left no-padding-right broker_slider">
+                        <div class="col-md-4" style="border: 1px dotted #ccc">
+                            @foreach(\App\Banner::where('location', 1)->where('province_id', 0)->get() as $item)
+                                {!! $item->content !!}
+                            @endforeach
+                        </div>
+                        <div class="col-md-4" style="border: 1px dotted #ccc">
+                            @foreach(\App\Banner::where('location', 2)->where('province_id', 0)->get() as $item)
+                                {!! $item->content !!}
+                            @endforeach
+                        </div>
+                        <div class="col-md-4" style="border: 1px dotted #ccc">
+                            @foreach(\App\Banner::where('location', 3)->where('province_id', 0)->get() as $item)
+                                {!! $item->content !!}
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         {{--<div class="smart-search hidden-xs">--}}
             {{--<div class="container search-wrap">--}}
                 {{--<div class="search-content search_slide">--}}
@@ -160,13 +187,35 @@
                 </div>
             </div>
         </section>
-        <div class="container adv_box adv_home_hot">
-            @foreach(\App\Banner::where('location', 1)->get() as $item)
-            <a class="" href="{{$item->url?$item->url:'#a'}}">
-                <img src="http://{{env('DOMAIN_BACKEND','recbook.net')}}{{$item->image}}" alt="{{$item->note}}">
-            </a>
-            @endforeach
-        </div>
+
+        <section class="addition_info">
+            <div class="container">
+                <div class="row  three_cols">
+                    <div class="col-xs-12 col-sm-12 three_i brokers">
+
+                        <p class="title_col">
+                            <a href="#"><i class="fa fa-users"></i> NHÀ MÔI GIỚI</a>
+                        </p>
+                        <div class="content col-xs-12 no-padding-left no-padding-right broker_slider">
+                            @foreach($agencies as $agency)
+                                <div class="col-xs-4 broker-item">
+                                    <div class="col-md-3" style="padding: 0">
+                                        <a href="{{asset('user/'.$agency->id)}}">
+                                            <img class="img-responsive b_img" src="{{$agency->avatar()}}" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <b class="name"><a href="{{asset('user/'.$agency->id)}}">{{$agency->userinfo?$agency->userinfo->full_name:$agency->name}}</a></b>
+                                        <p class="phone">{{$agency->userinfo?$agency->userinfo->phone:$agency->phone}}</p>
+                                        <p class="des">{{$agency->userinfo?$agency->userinfo->description:''}}</p>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
         <section class="good_price">
             <div class="container">
                 <div class="row two_cols">
@@ -187,7 +236,7 @@
                                     </form>
                                 </div>
                                 <div class="row body_top_box">
-                                    @foreach($goodPriceRealEstate as $item)
+                                    @foreach($goodPriceRealEstateVip as $item)
                                         <div class="col-xs-12 col-sm-6 col-md-6  good_price_item_wrap">
                                             <div class="col-xs-12  re_item2 good_price_item">
                                                 @php
@@ -236,102 +285,104 @@
 
                                         </div>
                                     @endforeach
-                                    {{--<div class="col-xs-12 col-sm-6  good_price_item_wrap">--}}
-                                    {{--<div class="col-xs-12  re_item2 good_price_item">--}}
-                                    {{--<div class="row _vip">--}}
-                                    {{--<div class="col-xs-5 lgp_item">--}}
-                                    {{--<a href="#">--}}
-                                    {{--<img src="http://nhadathaiphong.vn/images/attachment/thumb/565610.jpg" alt="Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng">--}}
-                                    {{--</a>--}}
-                                    {{--<div class="code_row">HP-36845</div>--}}
-                                    {{--</div>--}}
+                                    @foreach($goodPriceRealEstateHot as $item)
+                                        <div class="col-xs-12 col-sm-6 col-md-6  good_price_item_wrap">
+                                            <div class="col-xs-12  re_item2 good_price_item">
+                                                @php
+                                                    $itemClass = '';
+                                                    if($item->is_hot) {
+                                                        $itemClass = '_vip_hot';
+                                                    }
+                                                    if($item->is_vip && !$item->is_hot) {
+                                                        $itemClass = '_vip';
+                                                    }
 
-                                    {{--<div class="col-xs-7 rgp_item">--}}
-                                    {{--<h3>--}}
-                                    {{--<a href="#">Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng--}}
-                                    {{--</a>--}}
-                                    {{--<span></span>--}}
-                                    {{--</h3>--}}
-                                    {{--<div>Nhà xây 4 tầng kiên cố, chắc chắn, thiết kế hiện đại, ngõ rộng 4m, sân cổng riêng--}}
-                                    {{--biệt, gần trường, chợ, hướng Tây, an ninh tốt, sổ đỏ chính chủ--}}
-                                    {{--</div>--}}
-                                    {{--<p>--}}
-                                    {{--<strong>DTMB:</strong> 57.7 m2 - <strong>Giá:</strong>--}}
-                                    {{--<span>--}}
-                                    {{--1.87 tỷ VND--}}
-                                    {{--</span>--}}
-                                    {{--</p>--}}
-                                    {{--</div>--}}
-                                    {{--</div>--}}
-                                    {{--<div class="icon_viphot">--}}
-                                    {{--<img src="{{ asset('images/vip2.gif') }}" alt="Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng">--}}
-                                    {{--</div>--}}
-                                    {{--</div>--}}
+                                                    $images = $item->images ? json_decode($item->images) : [];
+                                                    $imgThumbnail = $images ? $images[0]->link : '/images/default_real_estate_image.jpg';
+                                                    $imgAlt = $images ? $images[0]->alt : $item->title;
+                                                @endphp
+                                                <div class="row {{$itemClass}}">
+                                                    <div class="col-xs-5 lgp_item">
+                                                        <a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">
+                                                            <img src="{{ asset($imgThumbnail) }}" alt="{{ $imgAlt }}">
+                                                        </a>
+                                                        <div class="code_row">{{$item->code}}</div>
+                                                    </div>
 
-                                    {{--</div>--}}
-                                    {{--<div class="col-xs-12 col-sm-6  good_price_item_wrap">--}}
-                                    {{--<div class="col-xs-12  re_item2 good_price_item">--}}
-                                    {{--<div class="row _vip_hot">--}}
-                                    {{--<div class="col-xs-5 lgp_item">--}}
-                                    {{--<a href="#">--}}
-                                    {{--<img src="http://nhadathaiphong.vn/images/attachment/thumb/4951.jpg" alt="Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng">--}}
-                                    {{--</a>											<div class="code_row">HP-36845</div>--}}
-                                    {{--</div>--}}
+                                                    <div class="col-xs-7 rgp_item">
+                                                        <h3>
+                                                            <a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">{{ $item->title }}
+                                                            </a>
+                                                            <span></span>
+                                                        </h3>
+                                                        <div>{{ $item->short_description }}
+                                                        </div>
+                                                        <p>
+                                                            <strong>DTMB:</strong> {{$item->area_of_premises ? $item->area_of_premises . 'm2' : '0m2'}} - <strong>Giá:</strong>
+                                                            <span>
+                                                            {{$item->price}} {{$item->unit ? $item->unit->name : 'VND'}}
+                                                        </span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                @if($item->is_vip)
+                                                    <div class="icon_viphot">
+                                                        <img src="{{ asset('images/vip2.gif') }}" alt="Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng">
+                                                    </div>
+                                                @endif
+                                            </div>
 
-                                    {{--<div class="col-xs-7 rgp_item">--}}
-                                    {{--<h3>--}}
-                                    {{--<a href="#">Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng--}}
-                                    {{--</a>--}}
-                                    {{--<span></span>--}}
-                                    {{--</h3>--}}
-                                    {{--<div>Nhà xây 4 tầng kiên cố, chắc chắn, thiết kế hiện đại, ngõ rộng 4m, sân cổng riêng--}}
-                                    {{--biệt, gần trường, chợ, hướng Tây, an ninh tốt, sổ đỏ chính chủ--}}
-                                    {{--</div>--}}
-                                    {{--<p>--}}
-                                    {{--<strong>DTMB:</strong> 57.7 m2 - <strong>Giá:</strong>--}}
-                                    {{--<span>--}}
-                                    {{--1.87 tỷ VND--}}
-                                    {{--</span>--}}
-                                    {{--</p>--}}
-                                    {{--</div>--}}
-                                    {{--</div>--}}
+                                        </div>
+                                    @endforeach
+                                    @foreach($goodPriceRealEstateNormal as $item)
+                                        <div class="col-xs-12 col-sm-6 col-md-6  good_price_item_wrap">
+                                            <div class="col-xs-12  re_item2 good_price_item">
+                                                @php
+                                                    $itemClass = '';
+                                                    if($item->is_hot) {
+                                                        $itemClass = '_vip_hot';
+                                                    }
+                                                    if($item->is_vip && !$item->is_hot) {
+                                                        $itemClass = '_vip';
+                                                    }
 
-                                    {{--<div class="icon_viphot">--}}
-                                    {{--<img src="{{ asset('images/vip2.gif') }}" alt="Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng">--}}
-                                    {{--</div>--}}
-                                    {{--</div>--}}
-                                    {{--</div>--}}
-                                    {{----}}
-                                    {{--<div class="col-xs-12 col-sm-6  good_price_item_wrap">--}}
-                                    {{--<div class="col-xs-12  re_item2 good_price_item">--}}
-                                    {{--<div class="row">--}}
-                                    {{--<div class="col-xs-5 lgp_item">--}}
-                                    {{--<a href="#">--}}
-                                    {{--<img src="http://nhadathaiphong.vn/images/attachment/thumb/28489.jpg" alt="Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng">--}}
-                                    {{--</a>											<div class="code_row">HP-36845</div>--}}
-                                    {{--</div>--}}
+                                                    $images = $item->images ? json_decode($item->images) : [];
+                                                    $imgThumbnail = $images ? $images[0]->link : '/images/default_real_estate_image.jpg';
+                                                    $imgAlt = $images ? $images[0]->alt : $item->title;
+                                                @endphp
+                                                <div class="row {{$itemClass}}">
+                                                    <div class="col-xs-5 lgp_item">
+                                                        <a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">
+                                                            <img src="{{ asset($imgThumbnail) }}" alt="{{ $imgAlt }}">
+                                                        </a>
+                                                        <div class="code_row">{{$item->code}}</div>
+                                                    </div>
 
-                                    {{--<div class="col-xs-7 rgp_item">--}}
-                                    {{--<h3><a href="#">Cho thuê nhà số 9 Đoạn Xá, Đông Hải 1, Hải An, Hải Phòng</a>--}}
-                                    {{--<span></span>--}}
-                                    {{--</h3>--}}
-                                    {{--<div>Nhà 1.5 tầng xây độc lập,  sạch sẽ về ở ngay, ngõ rộng 2,2m, khu dân cư đông đúc,--}}
-                                    {{--gần trường, chợ, bệnh viện, hướng Đông Nam, sổ hồng chính chủ--}}
-                                    {{--</div>--}}
-                                    {{--<p>--}}
-                                    {{--<strong>DTMB:</strong> 57.7 m2 - <strong>Giá:</strong>--}}
-                                    {{--<span>--}}
-                                    {{--1.87 tỷ VND--}}
-                                    {{--</span>--}}
-                                    {{--</p>--}}
-                                    {{--</div>--}}
-                                    {{--</div>--}}
+                                                    <div class="col-xs-7 rgp_item">
+                                                        <h3>
+                                                            <a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">{{ $item->title }}
+                                                            </a>
+                                                            <span></span>
+                                                        </h3>
+                                                        <div>{{ $item->short_description }}
+                                                        </div>
+                                                        <p>
+                                                            <strong>DTMB:</strong> {{$item->area_of_premises ? $item->area_of_premises . 'm2' : '0m2'}} - <strong>Giá:</strong>
+                                                            <span>
+                                                            {{$item->price}} {{$item->unit ? $item->unit->name : 'VND'}}
+                                                        </span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                @if($item->is_vip)
+                                                    <div class="icon_viphot">
+                                                        <img src="{{ asset('images/vip2.gif') }}" alt="Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng">
+                                                    </div>
+                                                @endif
+                                            </div>
 
-                                    {{--<div class="icon_viphot">--}}
-                                    {{--<img src="{{ asset('images/vip2.gif') }}" alt="Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng">--}}
-                                    {{--</div>--}}
-                                    {{--</div>--}}
-                                    {{--</div>--}}
+                                        </div>
+                                    @endforeach
                                     <div class="col-xs-12" style="border-bottom: 0; margin-bottom: 0; padding-bottom: 0; margin-top: 15px;">
                                         @php
                                             $cat = $categories[0];
@@ -344,10 +395,26 @@
                     </div>
                     <div class="col-xs-12 col-md-3 col_right no-padding-right">
                     @include(theme(TRUE).'.includes.vip-slide')
+                        <div class="adv_box">
+                            @foreach(\App\Banner::where('location', 4)->where('province_id', 0)->get() as $item)
+                                @if($item->type==1)
+                                    <a href="{{$item->url}}" style="margin-bottom: 5px"><img src="http://{{env('DOMAIN_BACKEND', 'recbook.net')}}/{{$item->image}}" alt="{{$item->note}}"></a>
+                                @else
+                                    {!! $item->content !!}
+                                @endif
+                            @endforeach
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
+        <div class="container adv_box adv_home_hot">
+            @foreach(\App\Banner::where('location', 5)->where('province_id', 0)->get() as $item)
+            <a class="" href="{{$item->url}}">
+                <img src="http://{{env('DOMAIN_BACKEND', 'recbook.net')}}/{{$item->image}}" alt="{{$item->note}}">
+            </a>
+            @endforeach
+        </div>
         <section class="free_price">
             <div class="container">
                 <div class="row margin-0">
@@ -391,112 +458,6 @@
                                             </div>
                                         </div>
                                     @endforeach
-                                    {{--                                    @for ($i=0; $i<1; $i++)--}}
-                                    {{--<div class="col-xs-12 col-sm-4  free_price_item_wrap">--}}
-                                    {{--<div class="col-xs-12 re_item2 free_price_item">--}}
-                                    {{--<div class="row">--}}
-                                    {{--<div class="col-xs-5 lgp_item">--}}
-                                    {{--<a href="#">--}}
-                                    {{--<img src="http://nhadathaiphong.vn/images/attachment/thumb/28489.jpg" alt="Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng">--}}
-                                    {{--</a>											<div class="code_row">HP-36845</div>--}}
-                                    {{--</div>--}}
-
-                                    {{--<div class="col-xs-7 rgp_item">--}}
-                                    {{--<h3><a href="#">Cho thuê nhà số 9 Đoạn Xá, Đông Hải 1, Hải An, Hải Phòng</a>--}}
-                                    {{--<span></span>--}}
-                                    {{--</h3>--}}
-                                    {{--<div>Nhà 1.5 tầng xây độc lập,  sạch sẽ về ở ngay, ngõ rộng 2,2m, khu dân cư đông đúc,--}}
-                                    {{--gần trường, chợ, bệnh viện, hướng Đông Nam, sổ hồng chính chủ--}}
-                                    {{--</div>--}}
-                                    {{--<p>--}}
-                                    {{--<strong>DTMB:</strong> 57.7 m2 - <strong>Giá:</strong>--}}
-                                    {{--<span>--}}
-                                    {{--1.87 tỷ VND--}}
-                                    {{--</span>--}}
-                                    {{--</p>--}}
-                                    {{--</div>--}}
-                                    {{--</div>--}}
-                                    {{--</div>--}}
-                                    {{--</div>--}}
-                                    {{--<div class="col-xs-12 col-sm-4  free_price_item_wrap">--}}
-                                    {{--<div class="col-xs-12 re_item2 free_price_item">--}}
-                                    {{--<div class="row">--}}
-                                    {{--<div class="col-xs-5 lgp_item">--}}
-                                    {{--<a href="#">--}}
-                                    {{--<img src="http://nhadathaiphong.vn/images/attachment/thumb/568z106.jpg" alt="Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng">--}}
-                                    {{--</a>											<div class="code_row">HP-36845</div>--}}
-                                    {{--</div>--}}
-
-                                    {{--<div class="col-xs-7 rgp_item">--}}
-                                    {{--<h3><a href="#">Cho thuê nhà số 9 Đoạn Xá, Đông Hải 1, Hải An, Hải Phòng</a>--}}
-                                    {{--<span></span>--}}
-                                    {{--</h3>--}}
-                                    {{--<div>Nhà 1.5 tầng xây độc lập,  sạch sẽ về ở ngay, ngõ rộng 2,2m, khu dân cư đông đúc,--}}
-                                    {{--gần trường, chợ, bệnh viện, hướng Đông Nam, sổ hồng chính chủ--}}
-                                    {{--</div>--}}
-                                    {{--<p>--}}
-                                    {{--<strong>DTMB:</strong> 57.7 m2 - <strong>Giá:</strong>--}}
-                                    {{--<span>--}}
-                                    {{--1.87 tỷ VND--}}
-                                    {{--</span>--}}
-                                    {{--</p>--}}
-                                    {{--</div>--}}
-                                    {{--</div>--}}
-                                    {{--</div>--}}
-                                    {{--</div>--}}
-                                    {{--<div class="col-xs-12 col-sm-4  free_price_item_wrap">--}}
-                                    {{--<div class="col-xs-12 re_item2 free_price_item">--}}
-                                    {{--<div class="row">--}}
-                                    {{--<div class="col-xs-5 lgp_item">--}}
-                                    {{--<a href="#">--}}
-                                    {{--<img src="http://nhadathaiphong.vn/images/attachment/thumb/2960486327MHT3.jpg" alt="Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng">--}}
-                                    {{--</a>											<div class="code_row">HP-36845</div>--}}
-                                    {{--</div>--}}
-
-                                    {{--<div class="col-xs-7 rgp_item">--}}
-                                    {{--<h3><a href="#">Cho thuê nhà số 9 Đoạn Xá, Đông Hải 1, Hải An, Hải Phòng</a>--}}
-                                    {{--<span></span>--}}
-                                    {{--</h3>--}}
-                                    {{--<div>Nhà 1.5 tầng xây độc lập,  sạch sẽ về ở ngay, ngõ rộng 2,2m, khu dân cư đông đúc,--}}
-                                    {{--gần trường, chợ, bệnh viện, hướng Đông Nam, sổ hồng chính chủ--}}
-                                    {{--</div>--}}
-                                    {{--<p>--}}
-                                    {{--<strong>DTMB:</strong> 57.7 m2 - <strong>Giá:</strong>--}}
-                                    {{--<span>--}}
-                                    {{--1.87 tỷ VND--}}
-                                    {{--</span>--}}
-                                    {{--</p>--}}
-                                    {{--</div>--}}
-                                    {{--</div>--}}
-                                    {{--</div>--}}
-                                    {{--</div>--}}
-                                    {{--<div class="col-xs-12 col-sm-4  free_price_item_wrap">--}}
-                                    {{--<div class="col-xs-12 re_item2 free_price_item">--}}
-                                    {{--<div class="row">--}}
-                                    {{--<div class="col-xs-5 lgp_item">--}}
-                                    {{--<a href="#">--}}
-                                    {{--<img src="http://nhadathaiphong.vn/images/attachment/thumb/4592d597efe08641661f3f50.jpg" alt="Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng">--}}
-                                    {{--</a>											<div class="code_row">HP-36845</div>--}}
-                                    {{--</div>--}}
-
-                                    {{--<div class="col-xs-7 rgp_item">--}}
-                                    {{--<h3><a href="#">Cho thuê nhà số 9 Đoạn Xá, Đông Hải 1, Hải An, Hải Phòng</a>--}}
-                                    {{--<span></span>--}}
-                                    {{--</h3>--}}
-                                    {{--<div>Nhà 1.5 tầng xây độc lập,  sạch sẽ về ở ngay, ngõ rộng 2,2m, khu dân cư đông đúc,--}}
-                                    {{--gần trường, chợ, bệnh viện, hướng Đông Nam, sổ hồng chính chủ--}}
-                                    {{--</div>--}}
-                                    {{--<p>--}}
-                                    {{--<strong>DTMB:</strong> 57.7 m2 - <strong>Giá:</strong>--}}
-                                    {{--<span>--}}
-                                    {{--1.87 tỷ VND--}}
-                                    {{--</span>--}}
-                                    {{--</p>--}}
-                                    {{--</div>--}}
-                                    {{--</div>--}}
-                                    {{--</div>--}}
-                                    {{--</div>--}}
-                                    {{--@endfor--}}
                                 </div>
                             </div>
                         </div>
@@ -505,34 +466,7 @@
             </div>
         </section>
     </div>
-    <section class="addition_info">
-        <div class="container">
-            <div class="row  three_cols">
-                <div class="col-xs-12 col-sm-12 three_i brokers">
 
-                    <p class="title_col">
-                        <a href="#"><i class="fa fa-users"></i> NHÀ MÔI GIỚI</a>
-                    </p>
-                    <div class="content col-xs-12 no-padding-left no-padding-right broker_slider">
-                        @foreach($agencies as $agency)
-                            <div class="col-xs-4 broker-item">
-                                <div class="col-md-3" style="padding: 0">
-                                    <a href="{{asset('user/'.$agency->id)}}">
-                                        <img class="img-responsive b_img" src="{{$agency->avatar()}}" alt="">
-                                    </a>
-                                </div>
-                                <div class="col-md-9">
-                                    <b class="name"><a href="{{asset('user/'.$agency->id)}}">{{$agency->userinfo?$agency->userinfo->full_name:$agency->name}}</a></b>
-                                    <p class="phone">{{$agency->userinfo?$agency->userinfo->phone:$agency->phone}}</p>
-                                    <p class="des">{{$agency->userinfo?$agency->userinfo->description:''}}</p>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
     @include(theme(TRUE).'.includes.footer')
 
     <link rel="stylesheet" href="{{ asset('css/main-1.css') }}"/>

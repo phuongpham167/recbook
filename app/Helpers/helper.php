@@ -1,6 +1,7 @@
 <?php
 
 use App\Friend;
+use App\ShowingCfg;
 use App\WebsiteConfig;
 
 /**
@@ -5204,4 +5205,11 @@ function zip($source, $destination)
 
 function uploadFtp($sourceFolder, $destinationFolder){
     $dir    =   Storage::disk('ftp')->allDirectories();
+}
+function get_config($key, $default= null){
+    $data   =   ShowingCfg::where('key', $key)->first();
+    if(!empty($data))
+        return $data->value;
+    else
+        return $default;
 }
