@@ -32,7 +32,7 @@
                     <p class="title_boxM"><strong><i class="fa fa-file-pdf-o"></i> Cập nhật thông tin</strong></p>
                     <div>
                         <div class="_form">
-                            <form id="dangnhap-form" method="post">
+                            <form id="dangnhap-form" method="post" enctype="multipart/form-data">
                                 {{csrf_field()}}
                                 <div id="dangnhap-form_es_" class="errorSummary" style="display:none"><p>Xin hãy sửa lại những lỗi nhập liệu sau:</p>
                                     <ul><li>dummy</li></ul></div>							<div class="row">
@@ -116,6 +116,50 @@
                                             </dd>
                                         </dl>
                                     </div>
+                                    @if(empty(auth()->user()->userinfo->certificate))
+                                        <div class="col-xs-12">
+                                            <dl>
+                                                <dt class="txt_right">Chứng chỉ </dt>
+                                                <dd>
+                                                    <input type="file" class="_required" name="certificate" id="certificate">
+                                                </dd>
+                                            </dl>
+                                        </div>
+                                        <div class="col-xs-12">
+                                            <dl>
+                                                <dt class="txt_right"></dt>
+                                                <dd>
+                                                    <em>Lưu ý: Chỉ cho phép tải các file có đuôi định dạng: jpeg, jpg, bmp, png</em>
+                                                </dd>
+                                            </dl>
+                                        </div>
+                                    @else
+                                        <div class="col-xs-12">
+                                            <dl>
+                                                <dt class="txt_right"></dt>
+                                                <dd>
+                                                    <a href='{{asset(auth()->user()->userinfo->certificate)}}' target='_blank' class='btn btn-info btn-xs'><i
+                                                                class='fa fa-eye'></i> Xem chứng chỉ</a>
+                                                </dd>
+                                            </dl>
+                                        </div>
+                                        <div class="col-xs-12">
+                                            <dl>
+                                                <dt class="txt_right">Cập nhật chứng chỉ </dt>
+                                                <dd>
+                                                    <input type="file" class="_required" name="certificate" id="certificate">
+                                                </dd>
+                                            </dl>
+                                        </div>
+                                        <div class="col-xs-12">
+                                            <dl>
+                                                <dt class="txt_right"></dt>
+                                                <dd>
+                                                    <em>Lưu ý: Chỉ cho phép tải các file có đuôi định dạng: jpeg, jpg, bmp, png</em>
+                                                </dd>
+                                            </dl>
+                                        </div>
+                                    @endif
 
                                     <div class="col-xs-12">
                                         <dl>

@@ -10,7 +10,12 @@
 
 @push('style')
     <link rel="stylesheet" href="{{ asset('css/theme.css') }}" />
-
+    <style>
+        .btn-is-disabled {
+            pointer-events: none; /* Disables the button completely. Better than just cursor: default; */
+            color: #ccc !important;
+        }
+    </style>
 @endpush
 
 @section('content')

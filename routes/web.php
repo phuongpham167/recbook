@@ -92,6 +92,7 @@ Route::group(['middleware'=>'auth'], function(){
         Route::get('/setvip', 'RealEstateController@setVip');
         Route::get('/sethot', 'RealEstateController@setHot');
         Route::get('/up', 'RealEstateController@upPost');
+        Route::get('/da-ban', 'RealEstateController@sold');
 
     });
 

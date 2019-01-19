@@ -26,8 +26,9 @@ class FormUserInfoRequest extends FormRequest
     {
         return [
             'full_name'  =>  [
-                Rule::unique('user_info')->ignore(request('id')),
+                Rule::unique('user_info')->ignore(auth()->user()->userinfo->id),
                 'required'],
+            'certificate' => 'mimes:jpeg,bmp,png,jpg',
             'company'  =>  'required',
             'identification'  =>  'required',
             'phone'  =>  'required',
@@ -48,6 +49,7 @@ class FormUserInfoRequest extends FormRequest
             'province_id.required'  =>  'Vui lòng chọn tỉnh/thành',
             'address.required'  =>  'Vui lòng điền địa chỉ',
             'description.required'  =>  'Vui lòng điền mô tả',
+            'certificate.mimes' => 'File chứng chỉ phải có định dạng là: jpeg, bmp, png, jpg'
         ];
     }
 }
