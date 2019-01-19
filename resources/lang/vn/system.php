@@ -84,5 +84,7 @@ return [
     'set_hot_success'   =>  'Đăng ký tin hot ',
     'not_enough_info'   =>  'Bạn chưa điền đầy đủ thông tin!',
     'up_post_success'   =>  'Up tin thành công!',
-    'expired'   =>  'Đã hết hạn!'
+    'expired'   =>  'Đã hết hạn!',
+    'sold_confirm'   =>  'Xác nhận đã bán?',
+    'receive_commission'   =>  'Phần trăm hoa hồng',
 ];

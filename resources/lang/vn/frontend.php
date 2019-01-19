@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'index' =>  'Danh sách frontend đơn vị',
+    'index' =>  'Danh sách website đã tạo',
     'id'    =>  'id',
     'title'  =>  'Tiêu đề frontend',
     'domain'  =>  'Tên miền',
@@ -24,5 +24,6 @@ return [
     'administrator' =>  'Người quản trị',
     'backend_domain'    =>  'Tên miền backend',
     'frontend_domain'   =>  'Tên miền Frontend',
-    'sub_backend_domain'    =>  'Tên miền con cho backend'
+    'sub_backend_domain'    =>  'Tên miền con cho backend',
+    'ended_at'    =>  'Trạng thái'
 ];

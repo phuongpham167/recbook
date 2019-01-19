@@ -44,9 +44,23 @@ class FrontendController extends Controller
             ->editColumn('domain', function($frontend){
                 return "<a href='http://{$frontend->domain}' target='_blank'>{$frontend->domain} <i class='fa fa-external-link'></i></a>";
             })
+            ->addColumn('ended_at', function($frontend) {
+                $return = '';
+                if($frontend->ended_at < Carbon::now())
+                    $return.= "<a class='btn btn-xs btn-danger'><i class='fa fa-times'></i> Đã hết hạn</a>";
+                elseif($frontend->ended_at < Carbon::now()->addDays(1))
+                    $return.= "<a class='btn btn-xs btn-danger'><i class='fa fa-clock-o'></i> Hạn còn 1 ngày</a>";
+                elseif($frontend->ended_at < Carbon::now()->addDays(7))
+                    $return.= "<a class='btn btn-xs btn-danger'><i class='fa fa-clock-o'></i> Hạn còn dưới 7 ngày</a>";
+                elseif($frontend->ended_at < Carbon::now()->addDays(30))
+                    $return.= "<a class='btn btn-xs btn-danger'><i class='fa fa-clock-o'></i> Hạn còn dưới 30 ngày</a>";
+                else
+                    $return .= "<a class='btn btn-xs btn-info'><i class='fa fa-check'></i> Hoạt động</a>";
+                return $return;
+            })
             ->addColumn('manage', function($frontend) {
-                return a('frontend/del', 'id='.$frontend->id,trans('g.delete'), ['class'=>'btn btn-xs btn-danger'],'#',"return bootbox.confirm('".trans('system.delete_confirm')."', function(result){if(result==true){window.location.replace('".asset('frontend/del?id='.$frontend->id)."')}})").'  '.a('frontend/edit','id='.$frontend->id,trans('g.edit'), ['class'=>'btn btn-xs btn-default']).'  '.a('frontend_web/'.$frontend->id,'','Chỉnh sửa', ['class'=>'btn btn-xs btn-default']);
-            })->rawColumns(['domain','manage']);
+                return a('frontend/del', 'id='.$frontend->id,trans('g.delete'), ['class'=>'btn btn-xs btn-danger'],'#',"return bootbox.confirm('".trans('system.delete_confirm')."', function(result){if(result==true){window.location.replace('".asset('frontend/del?id='.$frontend->id)."')}})").'  '.a('frontend/edit','id='.$frontend->id,trans('g.edit'), ['class'=>'btn btn-xs btn-default']).'  '.a('frontend_web/'.$frontend->id,'','Sửa giao diện', ['class'=>'btn btn-xs btn-default']);
+            })->rawColumns(['domain','manage','ended_at']);
 
 //        if(get_web_id() == 1) {
 //            $result = $result->addColumn('web_id', function(Branch $branch) {

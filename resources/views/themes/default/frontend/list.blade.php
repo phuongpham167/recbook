@@ -40,6 +40,7 @@
                                     <th>{{trans('frontend.title')}}</th>
                                     <th>{{trans('frontend.domain')}}</th>
                                     <th>{{trans('frontend.theme')}}</th>
+                                    <th>{{trans('frontend.ended_at')}}</th>
                                     <th>{{trans('g.manage')}}</th>
                                 </tr>
                                 </thead>
@@ -69,6 +70,7 @@
                     {data: 'title', name: 'title'},
                     {data: 'domain', name: 'domain'},
                     {data: 'theme', name: 'theme'},
+                    {data: 'ended_at', name: 'ended_at'},
                     {data: 'manage', name: 'manage', sortable: false, searchable: false}
                 ]
             });

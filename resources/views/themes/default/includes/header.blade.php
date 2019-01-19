@@ -38,7 +38,7 @@
                     <li class=""><a href="{{ route('register') }}"><i class="fa fa-user-plus"></i> ĐĂNG KÝ</a></li>
                 @else
                     <li class=""><a href="{{ route('recharge') }}"><i class="fa fa-credit-card"></i> <strong>Số dư: {{auth()->user()->credits}}</strong></li>
-                    <li class=""><a href="{{ route('info') }}"><i class="fa fa-user"></i> <strong>{{auth()->user()->name}}</strong></li>
+                    <li class=""><a href="{{route('user.info', [\Auth::user()->id])}}"><i class="fa fa-user"></i> <strong>{{auth()->user()->name}}</strong></li>
                     <li class=""><a href="{{ route('logout') }}"><i class="fa fa-sign-out"></i> ĐĂNG XUẤT</li>
                 @endif
             </ul>
