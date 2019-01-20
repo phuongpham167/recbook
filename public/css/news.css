@@ -61,6 +61,19 @@
     color: #888;
 }
 
+.list_news dl dd span.info {
+    font-size: 11px;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+    color: #888;
+    display: block;
+    padding-left: 15px;
+}
+
+.list_news dl dd span.info a {
+    color: #888;
+}
+
 .list_news dl dd p {
     line-height: 1.4em;
 }
