@@ -119,6 +119,13 @@ Route::group(['middleware'=>'auth'], function(){
     Route::get('danh-sach-loi-moi-ket-ban', ['as' => 'friend.request.list', 'uses' => 'FriendController@listFriendRequest']);
     Route::get('them-ban-be/{id}', ['as'=> 'friend.request', 'uses' => 'FriendController@friendRequest']);
     Route::get('xac-nhan-ban-be/{id}', ['as'=> 'friend.confirm.request', 'uses' => 'FriendController@confirmFriendRequest']);
+
+    /*
+     * ajax route
+     * */
+    Route::group(['prefix' => 'ajax'], function() {
+        Route::get('/get-detail-re/{id}', ['as' => 'ajax.getDetailRe', 'uses' => 'RealEstateController@getDetailRe']);
+    });
 });
 
 /*

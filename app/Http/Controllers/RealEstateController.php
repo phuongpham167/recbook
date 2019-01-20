@@ -409,4 +409,34 @@ class RealEstateController extends Controller
             set_notice(trans('system.not_exist'), 'warning');
         return redirect()->back();
     }
+    public function getDetailRe($id) {
+        if ($id) {
+            $re = RealEstate::find($id);
+            if ($re) {
+                $user = auth()->user();
+                $uProvince = $user->userinfo->province_id;
+                $districts = $this->districtService->getDistrictByProvince($uProvince);
+                $reCategories = $this->reCategoryService->getListDropDown();
+                return response()->json([
+                    'success' => true,
+                    'message' => '',
+                    'data' => [
+                        're' => $re,
+                        'districts' => $districts,
+                        'categories' => $reCategories
+                    ]
+                ]);
+            }
+            return response()->json([
+                'success' => false,
+                'message' => '',
+                'data' => []
+            ]);
+        }
+        return response()->json([
+            'success' => false,
+            'message' => '',
+            'data' => []
+        ]);
+    }
 }

@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{{ asset('common-css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('common-css/font-awesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('common-css/jquery.bxslider.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/loader.css') }}">
     {{--<link rel="stylesheet" href="{{ asset('css/theme.css') }}" />--}}
     <link rel="stylesheet" href="{{ asset('css/main.css') }}"/>
     @stack('style')
@@ -15,13 +16,14 @@
 <body>
 
     @yield('content')
-
+    <div class="loading"></div>
     {{--<script src="{{ asset('js/jquery.min.js') }}"></script>--}}
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
     <script type="text/javascript" src='http://maps.googleapis.com/maps/api/js?sensor=false&key=AIzaSyAxgnRkMsWPSqlxOz_kLga0hJ4eG2l0Vmo'></script>
     <script src="{{asset('plugins/moment-develop/min/moment.min.js')}}"></script>
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/jquery.bxslider.js') }}"></script>
+    <script src="{{ asset('js/main.js') }}"></script>
 {{--    <script src="{{asset('plugins/jquery-locationpicker-plugin-master/dist/locationpicker.jquery.min.js')}}"></script>--}}
     <script>
         $(document).ready(function() {
