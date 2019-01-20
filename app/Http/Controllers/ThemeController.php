@@ -25,7 +25,7 @@ class ThemeController extends Controller
                 'id'    =>  $item->id,
                 'name'  =>  $item->name,
                 'category'  =>  ThemeCategory::find($item->theme_category_id)->name,
-                'price'  =>  $item->price,
+                'price'  =>  number_format($item->price),
                 'currency'  =>  Currency::where('default',1)->first()->icon,
                 'folder'  =>  $item->folder,
             ];

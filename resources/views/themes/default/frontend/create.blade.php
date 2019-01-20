@@ -91,24 +91,24 @@
                                                         </h4>
                                                         <div class="desc">
                                                             <span>Giá</span>
-                                                            <h3>@if($item->price != 0) {{number_format($item->price)}} @else @endif</h3>
+                                                            <h3>@if($item->price != 0) {{number_format($item->price)}} {{\App\Currency::where('default',1)->first()->icon}} @else Miễn phí @endif</h3>
                                                         </div>
                                                         <div class="book-now-c">
-                                                            <a class="btn-theme" data-theme="BDS-01" href="#a">Chọn</a>
+                                                            <a class="btn-theme" data-theme="{{$item->folder}}" href="#a">Chọn</a>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="slide-hover">
                                                     <div class="text-wrap">
-                                                        <p>Chủ đề Bất động sản 01</p>
-                                                        <h4>Bất động sản 01
+                                                        <p>{{\App\ThemeCategory::find($item->theme_category_id)->name}}</p>
+                                                        <h4>{{$item->name}}
                                                         </h4>
                                                         <div class="desc">
                                                             <span>Giá</span>
-                                                            <h3>Free</h3>
+                                                            <h3>@if($item->price != 0) {{number_format($item->price)}} {{\App\Currency::where('default',1)->first()->icon}} @else Miễn phí @endif</h3>
                                                         </div>
                                                         <div class="book-now-c">
-                                                            <a class="btn-theme" data-theme="BDS-01" href="#a">Chọn</a>
+                                                            <a class="btn-theme" data-theme="{{$item->folder}}" href="#a">Chọn</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -135,7 +135,6 @@
 
 @push('js')
     <script>
-
         $(document).ready(function () {
             $('#theme_category_id').change(function(){
                 var id= $(this).val();
@@ -148,7 +147,7 @@
                         if (item.price == 0)
                             var price = 'Miễn phí';
                         else
-                            var price = (item.price).toFixed(0).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                            var price = item.price +' '+ item.currency;
                         $("#theme_list").append('<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 deal deal-block">\n' +
                             '                                            <div class="item-slide">\n' +
                             '                                                <div class="box-img">\n' +
@@ -159,7 +158,7 @@
                             '                                                        </h4>\n' +
                             '                                                        <div class="desc">\n' +
                             '                                                            <span>Giá</span>\n' +
-                            '                                                            <h3> '+price+' '+ item.currency+'</h3>\n' +
+                            '                                                            <h3> '+price+'</h3>\n' +
                             '                                                        </div>\n' +
                             '                                                        <div class="book-now-c">\n' +
                             '                                                            <a class="btn-theme" data-theme="'+item.folder+'" href="#a">Chọn</a>\n' +
