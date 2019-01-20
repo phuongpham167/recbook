@@ -72,105 +72,52 @@
 
                                 <input type="text" name="theme" id="input-theme" hidden>
                                 <div class="container">
-                                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 deal deal-block">
-                                        <div class="item-slide">
-                                            <div class="box-img">
-                                                <img src="{{asset('images/themes/BDS-01.jpg')}}"
-                                                     alt="dasdas"/>
-                                                <div class="text-wrap">
-                                                    <h4>Bất động sản 01
-                                                    </h4>
-                                                    <div class="desc">
-                                                        <span>Giá</span>
-                                                        <h3>Free</h3>
-                                                    </div>
-                                                    <div class="book-now-c">
-                                                        <a class="btn-theme" data-theme="BDS-01" href="#a">Chọn</a>
+                                    <div class="dropdown">
+                                        <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Dropdown trigger
+                                            <span class="caret"></span>
+                                        </button>
+                                        @foreach(\App\ThemeCategory::all() as $item)
+                                            <ul class="dropdown-menu" aria-labelledby="dLabel">
+                                                {{$item->name}}
+                                            </ul>
+                                        @endforeach
+                                    </div>
+                                    @foreach(\App\Themes::all() as $item)
+                                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 deal deal-block">
+                                            <div class="item-slide">
+                                                <div class="box-img">
+                                                    <img src="{{asset('images/themes/'.$item->folder.'.jpg')}}"
+                                                         alt=""/>
+                                                    <div class="text-wrap">
+                                                        <h4>{{$item->name}}
+                                                        </h4>
+                                                        <div class="desc">
+                                                            <span>Giá</span>
+                                                            <h3>@if($item->price != 0) {{number_format($item->price).' '.\App\Currency::where('default',1)->first()->icon}} @else Miễn phí @endif</h3>
+                                                        </div>
+                                                        <div class="book-now-c">
+                                                            <a class="btn-theme" data-theme="{{$item->folder}}" href="#a">Chọn</a>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="slide-hover">
-                                                <div class="text-wrap">
-                                                    <p>Chủ đề Bất động sản 01</p>
-                                                    <h4>Bất động sản 01
-                                                    </h4>
-                                                    <div class="desc">
-                                                        <span>Giá</span>
-                                                        <h3>Free</h3>
-                                                    </div>
-                                                    <div class="book-now-c">
-                                                        <a class="btn-theme" data-theme="BDS-01" href="#a">Chọn</a>
+                                                <div class="slide-hover">
+                                                    <div class="text-wrap">
+                                                        <p>Danh mục {{$item->theme_category_id?\App\ThemeCategory::find($item->theme_category_id)->name:''}}</p>
+                                                        <h4>{{$item->name}}
+                                                        </h4>
+                                                        <div class="desc">
+                                                            <span>Giá</span>
+                                                            <h3>@if($item->price != 0) {{number_format($item->price).' '.\App\Currency::where('default',1)->first()->icon}} @else Miễn phí @endif</h3>
+                                                        </div>
+                                                        <div class="book-now-c">
+                                                            <a class="btn-theme" data-theme="{{$item->folder}}" href="#a">Chọn</a>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 deal deal-block">
-                                        <div class="item-slide">
-                                            <div class="box-img">
-                                                <img src="{{asset('images/themes/BDS-02.jpg')}}"
-                                                     alt="dasdas"/>
-                                                <div class="text-wrap">
-                                                    <h4>Bất động sản 02
-                                                    </h4>
-                                                    <div class="desc">
-                                                        <span>Giá</span>
-                                                        <h3>Free</h3>
-                                                    </div>
-                                                    <div class="book-now-c">
-                                                        <a class="btn-theme" data-theme="BDS-02" href="#a">Chọn</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="slide-hover">
-                                                <div class="text-wrap">
-                                                    <p>Chủ đề Bất động sản 02</p>
-                                                    <h4>Bất động sản 02
-                                                    </h4>
-                                                    <div class="desc">
-                                                        <span>Giá</span>
-                                                        <h3>Free</h3>
-                                                    </div>
-                                                    <div class="book-now-c">
-                                                        <a class="btn-theme" data-theme="BDS-02" href="#a">Chọn</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 deal deal-block">
-                                        <div class="item-slide">
-                                            <div class="box-img">
-                                                <img src="{{asset('images/themes/BDS-03.jpg')}}"
-                                                     alt="dasdas"/>
-                                                <div class="text-wrap">
-                                                    <h4>Bất động sản 03
-                                                    </h4>
-                                                    <div class="desc">
-                                                        <span>Giá</span>
-                                                        <h3>Free</h3>
-                                                    </div>
-                                                    <div class="book-now-c">
-                                                        <a class="btn-theme" data-theme="BDS-03" href="#a">Chọn</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="slide-hover">
-                                                <div class="text-wrap">
-                                                    <p>Chủ đề Bất động sản 03</p>
-                                                    <h4>Bất động sản 03
-                                                    </h4>
-                                                    <div class="desc">
-                                                        <span>Giá</span>
-                                                        <h3>Free</h3>
-                                                    </div>
-                                                    <div class="book-now-c">
-                                                        <a class="btn-theme" data-theme="BDS-03" href="#a">Chọn</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    @endforeach
                                 </div>
                             </section>
                         </dl>
@@ -190,9 +137,8 @@
 @endsection
 
 @push('js')
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <script>
+
         $(document).ready(function () {
             $('#list').click(function (event) {
                 event.preventDefault();
@@ -203,6 +149,7 @@
                 $('#products .item').removeClass('list-group-item');
                 $('#products .item').addClass('grid-group-item');
             });
+            $('.dropdown-toggle').dropdown();
         });
 
         $('.item-slide').on('click', '.btn-theme', function(){
