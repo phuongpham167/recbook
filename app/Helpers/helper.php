@@ -5213,3 +5213,24 @@ function get_config($key, $default= null){
     else
         return $default;
 }
+function activity($type, $action, $object_id){
+    $user_id    =   auth()->check()?auth()->user()->id:0;
+    $data   =   \App\Activity::where('user_id', $user_id)->where('type', $type)->where('object_id', $object_id)->where('created_at', '>=', Carbon\Carbon::now()->subMinute(5))->where('ip', request()->getClientIp());
+    if(!empty($data->count()) && $user_id!=0){
+        $data   =   $data->first();
+        $data->increment('batch');
+    }
+    else{
+        $data   =   new \App\Activity();
+        $data->type     =   $type;
+        $data->action   =   $action;
+        $data->user_id  =   $user_id;
+        $data->object_id    =   $object_id;
+        $data->created_at   =   Carbon\Carbon::now();
+        $data->batch    =   1;
+        $data->ip   =   request()->getClientIp();
+        $data->save();
+    }
+
+    return true;
+}
