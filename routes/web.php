@@ -53,6 +53,8 @@ Route::post('/quen-mat-khau', ['as' => 'post.forgot_password', 'uses' => 'Authen
 Route::get('/dat-lai-mat-khau', ['as' => 'getPassword', 'uses' => 'AuthenticateController@getPassword']);
 Route::post('/dat-lai-mat-khau', ['as' => 'postPassword', 'uses' => 'AuthenticateController@postPassword']);
 
+Route::post('/theme-category', ['as' => 'themeCategory', 'uses' => 'ThemeController@getTheme']);
+
 Route::group(['middleware'=>'auth'], function(){
     Route::get('/quan-ly-tin-rao', ['as' => 'manage', 'uses' => 'AuthenticateController@getManage']);
     Route::get('/doi-mat-khau', ['as' => 'change_password', 'uses' => 'AuthenticateController@getChangepassword']);
