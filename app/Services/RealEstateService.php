@@ -175,7 +175,125 @@ class RealEstateService
             $realEstate->district_id = $input['district_id'];
             $realEstate->ward_id = $input['ward_id'];
             $realEstate->address = $input['address'];
-            $realEstate->position = $input['position'];
+            $realEstate->position = isset($input['position']) ? $input['position'] : '';
+            $realEstate->street_id = $input['street_id'];
+            $realEstate->direction_id = $input['direction_id'];
+            $realEstate->exhibit_id = $input['exhibit_id'];
+            $realEstate->project_id = $input['project_id'];
+            $realEstate->block_id = $input['block_id'];
+            $realEstate->construction_type_id = $input['construction_type_id'];
+            $realEstate->width = $input['width'];
+            $realEstate->length = $input['length'];
+            $realEstate->bedroom = $input['bedroom'];
+            $realEstate->living_room = $input['living_room'];
+            $realEstate->wc = $input['wc'];
+            $realEstate->area_of_premises = $input['area_of_premises'];
+            $realEstate->area_of_use = $input['area_of_use'];
+            $realEstate->floor = $input['floor'];
+            $realEstate->price = $input['price'];
+            $realEstate->unit_id = $input['unit_id'];
+            $realEstate->range_price_id = $input['range_price_id'];
+            $realEstate->is_deal = isset($input['is_deal']) ? 1 : 0;
+            $realEstate->post_date = $input['post_date'];
+            $realEstate->expire_date = $input['expire_date'];
+            $realEstate->images = json_encode($imagesVal);
+            $realEstate->lat = $lat;
+            $realEstate->long = $long;
+            $realEstate->detail = $input['detail'];
+            $realEstate->is_private = $input['is_private'];
+            $realEstate->updated_by = \Auth::user()->id;
+            $realEstate->web_id = $this->web_id;
+            $realEstate->approved = $approve;
+//            if (isset($input['add_draft'])) {
+//                $realEstate->approved = 0;
+//                $realEstate->draft = 1;
+//            } else {
+//                $realEstate->approved = $this->needApprove ? 0 : 1;
+//                $realEstate->draft = 0;
+//            }
+
+            if($realEstate->save()) {
+                return $realEstate;
+            } else {
+                return false;
+            }
+        }
+        return false;
+
+    }
+
+    public function updateAjax($input)
+    {
+
+//        $phone = $input['contact_phone_number'];
+//        $contactPerson = $input['contact_person'];
+//        $contactAddress = $input['contact_address'];
+//
+//        $customer = $this->checkCustomer($phone, $contactPerson, $contactAddress);
+
+        $root = \Request::root();
+        $slug = to_slug($input['title']);
+
+        $imagesVal = [];
+        if (isset($input['imagesOld'])) {
+            $imagesOld = $input['imagesOld'];
+            $altOld = $input['altOld'];
+            foreach ($imagesOld as $key => $img) {
+                $imagesVal[] = [
+                    'link' => $img,
+                    'alt' => $altOld[$key]
+                ];
+            }
+        }
+        if (isset($input['imagesNew'])) {
+            $imagesNew = $input['imagesNew'];
+            $altNew = $input['altNew'];
+            foreach ($imagesNew as $key => $image) {
+                $png_url = rand() . '_' . time().".png";
+                $path = public_path().'/storage/uploads/' . $png_url;
+                $thumbPath = public_path().'/storage/thumbs/' . $png_url;
+                $watermark_logo = public_path().'/images/watermark_logo.png';
+
+                $originImg = Image::make(file_get_contents($image))->insert($watermark_logo, 'bottom', 10, 10)->save($path);
+                $thumbnail = $originImg->resize(122, 91)->save($thumbPath);
+                $imagesVal[] = [
+                    'link' => $root . '/storage/uploads/' . $png_url,
+                    'alt' => $altNew[$key]
+                ];
+            }
+        }
+
+        $lat = '';
+        $long = '';
+        if($m = $input['map']) {
+            $maps = explode(',', $m);
+            $lat = $maps[0];
+            $long = $maps[1] ? $maps[1] : '';
+        }
+
+        $realEstate = RealEstate::find($input['id']);
+        if ($realEstate) {
+            $approve = $realEstate->draft ? 0 : ( $this->needApprove ? 0 : 1 );
+            if ($input['is_private'] == RealEstate::USER_PAGE || $input['is_private'] == RealEstate::USER_WEB) {
+                $approve = 1;
+            }
+
+            if (!$realEstate->code) {
+                $realEstate->code = config('real-estate.codePrefix') . '-' . $realEstate->id;
+            }
+            $realEstate->title = $input['title'];
+            $realEstate->slug = $slug;
+            $realEstate->short_description = $input['short_description'];
+            $realEstate->contact_person = \Auth::user()->userinfo->full_name;
+            $realEstate->contact_phone_number = \Auth::user()->userinfo->phone;
+            $realEstate->contact_address = \Auth::user()->userinfo->address;
+            $realEstate->re_category_id = isset($input['re_category_id']) ? $input['re_category_id'] : null;
+            $realEstate->re_type_id = isset($input['re_type_id']) ? $input['re_type_id'] : null;
+            $realEstate->province_id = \Auth::user()->userinfo->province_id;
+            $realEstate->district_id = isset($input['district_id']) ? $input['district_id'] : null;
+            $realEstate->ward_id = isset($input['ward_id']) ? $input['ward_id'] : null;
+            $realEstate->address = \Auth::user()->userinfo->address;
+            $realEstate->position = isset($input['position']) ? $input['position'] : '';
             $realEstate->street_id = $input['street_id'];
             $realEstate->direction_id = $input['direction_id'];
             $realEstate->exhibit_id = $input['exhibit_id'];

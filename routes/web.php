@@ -125,6 +125,7 @@ Route::group(['middleware'=>'auth'], function(){
      * */
     Route::group(['prefix' => 'ajax'], function() {
         Route::get('/get-detail-re/{id}', ['as' => 'ajax.getDetailRe', 'uses' => 'RealEstateController@getDetailRe']);
+        Route::post('/update-detail-re/{id}', ['as' => 'ajax.updateDetailRe', 'uses' => 'RealEstateController@updateDetailRe']);
     });
 });
 

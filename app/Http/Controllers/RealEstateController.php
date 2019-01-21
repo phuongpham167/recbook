@@ -253,7 +253,7 @@ class RealEstateController extends Controller
 
     public function store(RealEstateRequest $request)
     {
-//        dd($request->all());
+        dd($request->all());
         $result = $this->service->store($request->all());
         if($result) {
             set_notice(trans('real-estate.message.createSuccess'), 'success');
@@ -424,6 +424,33 @@ class RealEstateController extends Controller
                         're' => $re,
                         'districts' => $districts,
                         'categories' => $reCategories
+                    ]
+                ]);
+            }
+            return response()->json([
+                'success' => false,
+                'message' => '',
+                'data' => []
+            ]);
+        }
+        return response()->json([
+            'success' => false,
+            'message' => '',
+            'data' => []
+        ]);
+    }
+    public function updateDetailRe($id)
+    {
+        if ($id) {
+            dd(request()->all());
+            $re = RealEstate::find($id);
+            if ($re) {
+                $result = $this->service->updateAjax(request()->all());
+                return response()->json([
+                    'success' => true,
+                    'message' => '',
+                    'data' => [
+                        're' => $re
                     ]
                 ]);
             }

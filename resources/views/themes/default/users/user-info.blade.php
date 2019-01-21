@@ -526,31 +526,9 @@
 
         </div>
     </div>
-    {{--modal edit re--}}
-    <div id="modalEditRe" class="modal fade" role="dialog">
-        <div class="modal-dialog">
 
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Sửa tin</h4>
-                </div>
-                <div class="modal-body clearfix">
-                    <div class="form-edit-re">
-                    @include(theme(TRUE).'.includes.edit-re')
-                    </div>
-                </div>
-                <div class="modal-footer clearfix">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
-                    <button type="button" name="update_re" id="update-re" class="_btn bg_red"><i class="fa fa-save"></i> &nbsp;&nbsp;Cập nhật
-                    </button>
-                </div>
-            </div>
+    @include(theme(TRUE).'.includes.edit-re')
 
-        </div>
-    </div>
-    {{--end modal--}}
     {{-- Include footer --}}
     @include(theme(TRUE).'.includes.user-info-footer')
 @endsection
@@ -890,61 +868,6 @@
         //-----------------------------------------------------------------
         //          EDIT REAL ESTATE
         //-----------------------------------------------------------------
-        let editMarkup = '<div class="editing-re">' +
-                '<div clas="row">' +
-                    '<div class="col-xs-12">' +
-                        '<input class="form-control" value="">' +
-                    '</div>' +
-                '</div>' +
-                '<div class="row">' +
-                    '<div class="col-xs-12 col-md-6">' +
-                        '<label>Danh mục</label>' +
-                        '<select class="form-control" id="edit-category">' +
-                            '<option value="">Cần bán</option>' +
-                        '</select>' +
-                    '</div>' +
-                    '<div class="col-xs-12 col-md-6">' +
-                        '<label>Quận/huyện</label>' +
-                        '<select class="form-control" id="edit-district">' +
-                            '<option value="">Cầu đất</option>' +
-                        '</select>' +
-                    '</div>' +
-                '</div>' +
-                '<div class="row">' +
-                    '<div class="col-md-2">' +
-                        'Số tầng' +
-                    '</div>' +
-                    '<div class="col-md-2">' +
-                        '<input class="form-control" value="" id="edit-floor">' +
-                    '</div>' +
-                    '<div class="col-md-2">' +
-                        'Gần' +
-                    '</div>' +
-                    '<div class="col-md-6">' +
-                        '<input class="form-control" value="" id="edit-position">' +
-                    '</div>' +
-                '</div>' +
-                '<div class="row">' +
-                    '<div class="col-md-2">' +
-                        'Phòng ngủ' +
-                    '</div>' +
-                    '<div class="col-md-2">' +
-                        '<input class=form-control" value="" id="edit-bed-room">' +
-                    '</div>' +
-                    '<div class="col-md-2">' +
-                        'Phòng khách' +
-                    '</div>' +
-                    '<div class="col-md-2">' +
-                        '<input class=form-control" value="" id="edit-living-room">' +
-                    '</div>' +
-                    '<div class="col-md-2">' +
-                        'WC' +
-                    '</div>' +
-                    '<div class="col-md-2">' +
-                        '<input class=form-control" value="" id=edit-wc">' +
-                    '</div>' +
-                '</div>' +
-            '</div>';
         $('.edit-re').on('click', function(e) {
             e.preventDefault();
             console.log('re id');
@@ -977,6 +900,7 @@
         });
         function setValueForEditRe(data) {
             const re = data.re;
+            $('#id-edit').val(re.id);
             $('#title-edit').val(re.title);
             $('#detail-edit').val(re.detail).focus().blur();
             if (re.re_category_id) {
@@ -1042,109 +966,10 @@
             }
             $('.img-preview-edit').html(imagesMarkup);
         }
-        function editMarkupHtml(data) {
-            const re = data.re;
-            let categorySelectMarkup = '';
-            for (let cat of data.categories) {
-                const sel = cat.id === re.re_category_id ? 'selected' : '';
-                categorySelectMarkup += '<option value="'+ cat.id +'" ' + sel + '>' + cat.name + '</option>';
-            }
-            let districtSelectMarkup = '';
-            for (let district of data.districts) {
-                const sel = district.id === re.district_id ? 'selected' : '';
-                districtSelectMarkup += '<option value="'+ district.id +'" '+ sel +'>' + district.name + '</option>';
-            }
-            const floor = re.floor ? parseInt(re.floor) : '';
-            const position = re.position ? re.position : '';
-            const bedroom = re.bedroom ? parseInt(re.bedroom) : '';
-            const livingroom = re.living_room ? parseInt(re.living_room) : '';
-            const wc = re.wc ? parseInt(re.wc) : '';
 
-            const imagesOld = $.parseJSON(re.images);
-            let imagesMarkupHtml = '';
-            // if (imagesOld.length) {
-            //     imagesMarkupHtml =
-            // }
-            let editMarkup = '<div class="editing-re">' +
-                '<div class="form-group">' +
-
-                    '<div class="row">' +
-                        '<div class="col-xs-12 col-md-12">' +
-
-                            '<input class="form-control" value="' + re.title + '" id="edit-title">' +
-                        '</div>' +
-                    '</div>' +
-                '</div>' +
-                '<div class="form-group">' +
-                    '<div class="row">' +
-
-                        '<div class="col-xs-12 col-md-6">' +
-                            '<label>Danh mục</label>' +
-                            '<select class="form-control" id="edit-category">' +
-                                categorySelectMarkup +
-                            '</select>' +
-                        '</div>' +
-                        '<div class="col-xs-12 col-md-6">' +
-                            '<label>Quận/huyện</label>' +
-                            '<select class="form-control" id="edit-district">' +
-                                districtSelectMarkup +
-                            '</select>' +
-                        '</div>' +
-                    '</div>' +
-                '</div>' +
-                '<div class="form-group">' +
-                    '<div class="row">' +
-                        '<div class="col-md-4">' +
-                            '<label>Số tầng</label>' +
-                            '<input type="number" class="form-control" value="' + floor + '" id="edit-floor">' +
-
-                        '</div>' +
-                        '<div class="col-md-8">' +
-                            '<label>Gần</label>' +
-                            '<input class="form-control" value="' + position + '" id="edit-position">' +
-                        '</div>' +
-                    '</div>' +
-                '</div>' +
-                '<div class="form-group">' +
-                    '<div class="row">' +
-                            '<div class="col-md-4">' +
-                                '<label>Phòng ngủ</label>' +
-                                '<input type="number" class="form-control" value="' + bedroom + '" id="edit-bed-room">' +
-
-                            '</div>' +
-                            '<div class="col-md-4">' +
-                                '<label>Phòng khách</label>' +
-                                '<input class="form-control" value="' + livingroom + '" id="edit-living-room">' +
-
-                            '</div>' +
-                            '<div class="col-md-4">' +
-                                '<label>WC</label>' +
-                                '<input class="form-control" value="' + wc + '" id=edit-wc">' +
-                            '</div>' +
-                    '</div>' +
-                '</div>' +
-                '<div class="form-group">' +
-                    '<div class="row">' +
-                        '<div class="col-xs-12">' +
-                            '<div class="pull-right">' +
-                                '<button class="btn btn-default btn-cancel-edit-re" onclick="cancelEditRe(this)">Hủy</button>' +
-                                '<button class="_btn bg_red" onclick="updateRe(this)">Lưu</button>' +
-                            '</div>' +
-                        '</div>' +
-                    '</div>' +
-                '</div>' +
-                '<div class="form-group">' +
-                    '' +
-                '</div>' +
-            '</div>';
-            console.log(editMarkup);
-            return editMarkup;
-        }
-        function cancelEditRe(e) {
-
-        }
-        function updateRe(e) {
-
+        function removeImgPreview(e) {
+            console.log(e);
+            $(e).closest('.item-img-preview').remove();
         }
         //-----------------------------------------------------------------
         //          END EDIT REAL ESTATE
