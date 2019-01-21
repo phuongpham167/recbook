@@ -53,6 +53,8 @@ Route::post('/quen-mat-khau', ['as' => 'post.forgot_password', 'uses' => 'Authen
 Route::get('/dat-lai-mat-khau', ['as' => 'getPassword', 'uses' => 'AuthenticateController@getPassword']);
 Route::post('/dat-lai-mat-khau', ['as' => 'postPassword', 'uses' => 'AuthenticateController@postPassword']);
 
+Route::post('/theme-category', ['as' => 'themeCategory', 'uses' => 'ThemeController@getTheme']);
+
 Route::group(['middleware'=>'auth'], function(){
     Route::get('/quan-ly-tin-rao', ['as' => 'manage', 'uses' => 'AuthenticateController@getManage']);
     Route::get('/doi-mat-khau', ['as' => 'change_password', 'uses' => 'AuthenticateController@getChangepassword']);
@@ -120,6 +122,11 @@ Route::group(['middleware'=>'auth'], function(){
     Route::get('danh-sach-loi-moi-ket-ban', ['as' => 'friend.request.list', 'uses' => 'FriendController@listFriendRequest']);
     Route::get('them-ban-be/{id}', ['as'=> 'friend.request', 'uses' => 'FriendController@friendRequest']);
     Route::get('xac-nhan-ban-be/{id}', ['as'=> 'friend.confirm.request', 'uses' => 'FriendController@confirmFriendRequest']);
+
+    Route::group(['prefix'=>'ajax'],function(){
+        Route::get('user', 'AjaxController@ajaxUser');
+        Route::get('street', 'AjaxController@ajaxStreet');
+    });
 });
 
 /*
@@ -132,7 +139,3 @@ Route::get('/project-by-province/{provinceId}', ['as' => 'projectByProvince', 'u
 Route::get('/range-price/list-dropdown/{catId}', ['as' => 'rangePriceByCat', 'uses' => 'RangePriceController@getListDropDown']);
 Route::get('/re-type/list-dropdown/{catId}', ['as' => 'reTypeByCat', 'uses' => 'ReTypeController@getListDropDown']);
 Route::get('/customer-by-phone/{phone}', ['as' => 'customer-by-phone', 'uses' => 'RealEstateController@customerByPhone']);
-
-Route::get('t', function(){
-    echo settings('system_postexpire');
-});
