@@ -9,6 +9,7 @@
 namespace App\Services;
 use App\Customer;
 use App\RealEstate;
+use App\Street;
 use App\WebsiteConfig;
 use Illuminate\Support\Facades\DB;
 use Image;
@@ -68,6 +69,18 @@ class RealEstateService
         if ($input['is_private'] == RealEstate::USER_PAGE || $input['is_private'] == RealEstate::USER_WEB) {
             $approve = 1;
         }
+        
+        if(empty(Street::find($input['street_id'])))
+        {
+            $street = new Street();
+
+            $street->name = $input['street_id'];
+            $street->province_id = $input['province_id'];
+            $street->district_id = $input['district_id'];
+            $street->ward_id = $input['ward_id'];
+            $street->save();
+            $input['street_id'] = $street->id;
+        }
 
         $realEstate = new RealEstate([
             'title' => $input['title'],
@@ -77,11 +90,11 @@ class RealEstateService
             'contact_address' => \Auth::user()->userinfo->address,
             're_category_id' => isset($input['re_category_id']) ? $input['re_category_id'] : null,
             're_type_id' => isset($input['re_type_id']) ? $input['re_type_id'] : null,
-            'province_id' => \Auth::user()->userinfo->province_id,
+            'province_id' => isset($input['province_id']) ? $input['province_id'] : null,
             'district_id' => isset($input['district_id']) ? $input['district_id'] : null,
             'ward_id' => isset($input['ward_id']) ? $input['ward_id'] : null,
             'street_id' => isset($input['street_id']) ? $input['street_id'] : null,
-            'address' => \Auth::user()->userinfo->address,
+            'address' => isset($input['address']) ? $input['address'] : null,
             'position' => isset($input['position']) ? $input['position'] : null,
             'direction_id' => isset($input['direction_id']) ? $input['direction_id'] : null,
             'exhibit_id' => isset($input['exhibit_id']) ? $input['exhibit_id'] : null,
