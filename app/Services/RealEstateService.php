@@ -69,7 +69,7 @@ class RealEstateService
         if ($input['is_private'] == RealEstate::USER_PAGE || $input['is_private'] == RealEstate::USER_WEB) {
             $approve = 1;
         }
-        
+
         if(empty(Street::find($input['street_id'])))
         {
             $street = new Street();
@@ -166,6 +166,18 @@ class RealEstateService
             $long = $maps[1] ? $maps[1] : '';
         }
 
+        if(empty(Street::find($input['street_id'])))
+        {
+            $street = new Street();
+
+            $street->name = $input['street_id'];
+            $street->province_id = $input['province_id'];
+            $street->district_id = $input['district_id'];
+            $street->ward_id = $input['ward_id'];
+            $street->save();
+            $input['street_id'] = $street->id;
+        }
+        
         $realEstate = RealEstate::find($input['id']);
         if ($realEstate) {
             $approve = $realEstate->draft ? 0 : ( $this->needApprove ? 0 : 1 );
