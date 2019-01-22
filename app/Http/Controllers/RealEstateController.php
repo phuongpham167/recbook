@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Account;
 use App\DataTables\RealEstatesDataTable;
 use App\Http\Requests\HotVipRequest;
 use App\Http\Requests\RealEstateRequest;
 use App\Menu;
 use App\RealEstate;
+use App\Receipt;
+use App\ReceiptType;
 use App\Services\BlockService;
 use App\Services\ConstructionTypeService;
 use App\Services\DirectionService;
@@ -104,28 +107,25 @@ class RealEstateController extends Controller
 
         if(!empty(\request('filter'))) {
             if(\request('filter') == 'tin-rao-het-han')
-                $data = $data->where(function($q){
+                $data = $data->where('posted_by',auth()->user()->id)->where(function($q){
                     $q->where('expire_date','<',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
                         ->orWhere('post_date', '<', Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->subDays(Settings('system_changenametime'))->format('m/d/Y H:i A')));
                 });
 
             if(\request('filter') == 'tin-rao-cho-duyet')
-                $data = $data->where('approved','0')->where('draft', 0)->where(function($q){
-                    $q->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
-                        ->orWhere('post_date', '>=', Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->subDays(Settings('system_changenametime'))->format('m/d/Y H:i A')));
-                });
+                $data = $data->where('posted_by',auth()->user()->id)->where('approved','0')->where('draft', 0)->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
+                        ->where('post_date', '>=', Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->subDays(Settings('system_changenametime'))->format('m/d/Y H:i A')));
 
             if(\request('filter') == 'tin-rao-nhap')
-                $data = $data->where('draft','1')->where(function($q){
-                    $q->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
-                        ->orWhere('post_date', '>=', Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->subDays(Settings('system_changenametime'))->format('m/d/Y H:i A')));
-                });
+                $data = $data->where('posted_by',auth()->user()->id)->where('draft','1')->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
+                    ->where('post_date', '>=', Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->subDays(Settings('system_changenametime'))->format('m/d/Y H:i A')));
 
             if(\request('filter') == 'tin-rao-da-xoa')
-                $data = $data->onlyTrashed()->get();
+                $data = $data->where('posted_by',auth()->user()->id)->onlyTrashed()->get();
         }
         else
-            $data = $data->where('approved', 1);
+            $data = $data->where('posted_by',auth()->user()->id)->where('approved', 1)->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
+                ->where('post_date', '>=', Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->subDays(Settings('system_changenametime'))->format('m/d/Y H:i A')));
 
         $start  =   !empty(\request('datefrom'))?Carbon::createFromFormat('d/m/Y',\request('datefrom'))->startOfDay():'';
         $end    =   !empty(\request('dateto'))?Carbon::createFromFormat('d/m/Y',\request('dateto'))->endOfDay():'';
@@ -197,6 +197,11 @@ class RealEstateController extends Controller
                     }
                     if($dt->approved)
                         $manage .= '  ' . a('bat-dong-san/up', 'id=' . $dt->id, trans('g.up'), ['class' => 'btn btn-xs btn-info']);
+                    if($dt->sold == 1)
+                        $manage .= a('#','id='.$dt->id,trans('g.sold'), ['class'=>'btn btn-xs btn-default btn-is-disabled']);
+                    else
+                        $manage .= a('bat-dong-san/da-ban','id='.$dt->id,trans('g.sold'), ['class'=>'btn btn-xs btn-info'],'#',
+                            "return bootbox.confirm('".trans('system.sold_confirm')."', function(result){if(result==true){window.location.replace('".asset('bat-dong-san/da-ban?id='.$dt->id)."')}})");
                 }
                 else
                     $manage = trans('system.expired');
@@ -409,6 +414,7 @@ class RealEstateController extends Controller
             set_notice(trans('system.not_exist'), 'warning');
         return redirect()->back();
     }
+
     public function getDetailRe($id) {
         if ($id) {
             $re = RealEstate::find($id);
@@ -462,5 +468,37 @@ class RealEstateController extends Controller
             'message' => '',
             'data' => []
         ]);
+    }
+
+    public function sold () {
+        $data = RealEstate::find(request('id'));
+
+        if($data->posted_by != auth()->user()->id)
+        {
+            set_notice(trans('real-estate.message.notPermission'), 'warning');
+            return redirect()->back();
+        }
+        if(!empty($data)) {
+            $data->sold = 1;
+            $data->save();
+
+            $receipt = new Receipt();
+            $account = Account::where('web_id',get_web_id())->where('default',1)->first();
+            $receipt->account_id   =   $account->id;
+            $receipt->code   =   $account->code.time();
+            $receipt->type   =   ReceiptType::where('web_id',get_web_id())->where('read_only',1)->first()->type;
+            $receipt->receipt_types_id   =   ReceiptType::where('web_id',get_web_id())->where('read_only',1)->first()->id;
+            $receipt->value   =   floor (($data->price * $data->commission_percent) / 100);
+            $receipt->target_user_id   =   auth()->user()->id;
+            $receipt->time   =   Carbon::now();
+            $receipt->web_id   =   auth()->user()->web_id;
+            $receipt->user_id   =   auth()->user()->id;
+            $receipt->save();
+
+            set_notice(trans('real-estate.message.updateSuccess'), 'success');
+            return redirect()->back();
+        }
+        set_notice(trans('real-estate.message.error'), 'warning');
+        return redirect()->back();
     }
 }

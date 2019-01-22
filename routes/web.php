@@ -53,6 +53,8 @@ Route::post('/quen-mat-khau', ['as' => 'post.forgot_password', 'uses' => 'Authen
 Route::get('/dat-lai-mat-khau', ['as' => 'getPassword', 'uses' => 'AuthenticateController@getPassword']);
 Route::post('/dat-lai-mat-khau', ['as' => 'postPassword', 'uses' => 'AuthenticateController@postPassword']);
 
+Route::post('/theme-category', ['as' => 'themeCategory', 'uses' => 'ThemeController@getTheme']);
+
 Route::group(['middleware'=>'auth'], function(){
     Route::get('/quan-ly-tin-rao', ['as' => 'manage', 'uses' => 'AuthenticateController@getManage']);
     Route::get('/doi-mat-khau', ['as' => 'change_password', 'uses' => 'AuthenticateController@getChangepassword']);
@@ -92,6 +94,7 @@ Route::group(['middleware'=>'auth'], function(){
         Route::get('/setvip', 'RealEstateController@setVip');
         Route::get('/sethot', 'RealEstateController@setHot');
         Route::get('/up', 'RealEstateController@upPost');
+        Route::get('/da-ban', 'RealEstateController@sold');
 
     });
 
@@ -126,6 +129,8 @@ Route::group(['middleware'=>'auth'], function(){
     Route::group(['prefix' => 'ajax'], function() {
         Route::get('/get-detail-re/{id}', ['as' => 'ajax.getDetailRe', 'uses' => 'RealEstateController@getDetailRe']);
         Route::post('/update-detail-re/{id}', ['as' => 'ajax.updateDetailRe', 'uses' => 'RealEstateController@updateDetailRe']);
+        Route::get('user', 'AjaxController@ajaxUser');
+        Route::get('street', 'AjaxController@ajaxStreet');
     });
 });
 
@@ -139,7 +144,3 @@ Route::get('/project-by-province/{provinceId}', ['as' => 'projectByProvince', 'u
 Route::get('/range-price/list-dropdown/{catId}', ['as' => 'rangePriceByCat', 'uses' => 'RangePriceController@getListDropDown']);
 Route::get('/re-type/list-dropdown/{catId}', ['as' => 'reTypeByCat', 'uses' => 'ReTypeController@getListDropDown']);
 Route::get('/customer-by-phone/{phone}', ['as' => 'customer-by-phone', 'uses' => 'RealEstateController@customerByPhone']);
-
-Route::get('t', function(){
-    echo settings('system_postexpire');
-});

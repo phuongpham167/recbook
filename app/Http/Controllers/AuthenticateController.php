@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use \DataTables;
+use Illuminate\Support\Facades\Storage;
 use Sabberworm\CSS\Settings;
 
 
@@ -145,6 +146,12 @@ class AuthenticateController extends Controller
         $userInfo->address    =   $request->address;
         $userInfo->website    =   $request->website;
         $userInfo->description    =   $request->description;
+        if(!empty($request->certificate))    {
+            if(!empty($userInfo->certificate))
+                Storage::disk('public_path')->delete($userInfo->certificate);
+            $request->certificate->move(public_path('uploads/certificate/'.$userInfo->id), $request->certificate->getClientOriginalName());
+            $userInfo->certificate    =   'uploads/certificate/'.$userInfo->id.'/'.$request->certificate->getClientOriginalName();
+        }
         $userInfo->save();
 //        event_log('Sửa thành viên '.auth()->user()->name.' id '.auth()->user()->id);
         set_notice(trans('system.edit_success'), 'success');

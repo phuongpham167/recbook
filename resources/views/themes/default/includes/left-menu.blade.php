@@ -4,19 +4,17 @@
     <div>
         <ul>
             <li><a href="/bat-dong-san/tao-moi"><i class="fa fa-angle-double-right"></i> Đăng mới tin rao</a></li>
-            <li><a href="/bat-dong-san/"><i class="fa fa-angle-double-right"></i> Danh sách tin rao</a> <span>({{\App\RealEstate::where('approved', 1)->where('draft','0')->where('posted_by', \Auth::user()->id)->count()}})</span></li>
+            <li><a href="/bat-dong-san/"><i class="fa fa-angle-double-right"></i> Danh sách tin rao</a> <span>({{\App\RealEstate::where('approved', 1)->where('draft','0')->where('expire_date','>=',Carbon\Carbon::createFromFormat('m/d/Y H:i A', Carbon\Carbon::now()->format('m/d/Y H:i A')))
+                        ->Where('post_date', '>=', Carbon\Carbon::createFromFormat('m/d/Y H:i A', Carbon\Carbon::now()->subDays(Settings('system_changenametime'))->format('m/d/Y H:i A')))->where('posted_by', \Auth::user()->id)->count()}})</span></li>
             <li><a href="/bat-dong-san/tin-rao-het-han"><i class="fa fa-angle-double-right"></i> Tin rao hết hạn</a> <span>({{\App\RealEstate::where(function($q){
                     $q->where('expire_date','<',Carbon\Carbon::createFromFormat('m/d/Y H:i A', Carbon\Carbon::now()->format('m/d/Y H:i A')))
                         ->orWhere('post_date', '<', Carbon\Carbon::createFromFormat('m/d/Y H:i A', Carbon\Carbon::now()->subDays(Settings('system_changenametime'))->format('m/d/Y H:i A')));
                 })->where('posted_by', \Auth::user()->id)->count()}})</span></li>
-            <li><a href="/bat-dong-san/tin-rao-cho-duyet"><i class="fa fa-angle-double-right"></i> Tin rao chờ duyệt</a> <span>({{\App\RealEstate::where('approved','0')->where('draft', 0)->where(function($q){
-                    $q->where('expire_date','>=',Carbon\Carbon::createFromFormat('m/d/Y H:i A', Carbon\Carbon::now()->format('m/d/Y H:i A')))
-                        ->orWhere('post_date', '>=', Carbon\Carbon::createFromFormat('m/d/Y H:i A', Carbon\Carbon::now()->subDays(Settings('system_changenametime'))->format('m/d/Y H:i A')));
-                })->where('posted_by', \Auth::user()->id)->count()}})</span></li>
-            <li><a href="/bat-dong-san/tin-rao-nhap"><i class="fa fa-angle-double-right"></i> Tin rao nháp</a> <span>({{\App\RealEstate::where('draft','1')->where(function($q){
-                    $q->where('expire_date','>=',Carbon\Carbon::createFromFormat('m/d/Y H:i A', Carbon\Carbon::now()->format('m/d/Y H:i A')))
-                        ->orWhere('post_date', '>=', Carbon\Carbon::createFromFormat('m/d/Y H:i A', Carbon\Carbon::now()->subDays(Settings('system_changenametime'))->format('m/d/Y H:i A')));
-                })->where('posted_by', \Auth::user()->id)->count()}})</span></li>
+            <li><a href="/bat-dong-san/tin-rao-cho-duyet"><i class="fa fa-angle-double-right"></i> Tin rao chờ duyệt</a> <span>({{\App\RealEstate::where('approved','0')->where('draft', 0)->where('expire_date','>=',Carbon\Carbon::createFromFormat('m/d/Y H:i A', Carbon\Carbon::now()->format('m/d/Y H:i A')))
+                        ->Where('post_date', '>=', Carbon\Carbon::createFromFormat('m/d/Y H:i A', Carbon\Carbon::now()->subDays(Settings('system_changenametime'))->format('m/d/Y H:i A')))->where('posted_by', \Auth::user()->id)->count()}})</span>
+            </li>
+            <li><a href="/bat-dong-san/tin-rao-nhap"><i class="fa fa-angle-double-right"></i> Tin rao nháp</a> <span>({{\App\RealEstate::where('draft','1')->where('expire_date','>=',Carbon\Carbon::createFromFormat('m/d/Y H:i A', Carbon\Carbon::now()->format('m/d/Y H:i A')))
+                        ->Where('post_date', '>=', Carbon\Carbon::createFromFormat('m/d/Y H:i A', Carbon\Carbon::now()->subDays(Settings('system_changenametime'))->format('m/d/Y H:i A')))->where('posted_by', \Auth::user()->id)->count()}})</span></li>
             <li><a href="/bat-dong-san/tin-rao-da-xoa"><i class="fa fa-angle-double-right"></i> Tin rao đã xóa</a> <span>({{\App\RealEstate::onlyTrashed()->where('posted_by', \Auth::user()->id)->count()}})</span></li>
             <li><a href="/lich-su-giao-dich"><i class="fa fa-angle-double-right"></i> Lịch sử giao dịch</a></li>
             <li><a href="/frontend"><i class="fa fa-angle-double-right"></i> Danh sách website</a></li>

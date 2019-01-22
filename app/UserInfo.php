@@ -11,4 +11,11 @@ class UserInfo extends Model
     protected $fillable = [
         'user_id', 'company', 'identification', 'phone', 'address', 'website'
     ];
+    public function avatar(){
+        if(!empty($this->avatar)){
+            return $this->avatar;
+        }else{
+            return asset('/images/default-avatar.png');
+        }
+    }
 }
