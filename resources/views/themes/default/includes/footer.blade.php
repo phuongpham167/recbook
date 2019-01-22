@@ -24,22 +24,22 @@
             <div class="col-xs-12 col-sm-8">
                 <div class="col-xs-6">
                     <a href="#">
-                        <img src="{{ asset('images/logo.png') }}" class="img-responsive"/>
+                        <img src="{{ asset('images/logo.png') }}" class="img-responsive" style="width: 50%"/>
                     </a>
                 </div>
                 <div class="col-xs-6">
                     <a href="#">
-                        <img src="{{ asset('images/logo.png') }}" class="img-responsive"/>
+                        <img src="{{ asset('images/logo.png') }}" class="img-responsive" style="width: 50%"/>
                     </a>
                 </div>
                 <div class="col-xs-6">
                     <a href="#">
-                        <img src="{{ asset('images/logo.png') }}" class="img-responsive"/>
+                        <img src="{{ asset('images/logo.png') }}" class="img-responsive" style="width: 50%"/>
                     </a>
                 </div>
                 <div class="col-xs-6">
                     <a href="#">
-                        <img src="{{ asset('images/logo.png') }}" class="img-responsive"/>
+                        <img src="{{ asset('images/logo.png') }}" class="img-responsive" style="width: 50%"/>
                     </a>
                 </div>
             </div>

@@ -30,7 +30,7 @@
         <div class="row">
             <div class="left col-xs-12 col-sm-4">
                 <a href="{{ route('home') }}">
-                    <img src="{{ asset('images/logo.png') }}" class="img-responsive" alt=""/>
+                    <img src="{{ asset('images/logo.png') }}" class="img-responsive" alt="" style="max-height: 128px"/>
                 </a>
             </div>
             <div class="right col-sm-8 hidden-xs">
