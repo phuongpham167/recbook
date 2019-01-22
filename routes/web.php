@@ -100,7 +100,7 @@ Route::group(['middleware'=>'auth'], function(){
 
     Route::group(['prefix' => 'du-an'], function () {
         Route::get('', ['as' => 'freelancerList', 'uses' => 'FreelancerController@index']);
-//        Route::get('/chi-tiet/{id}/{slug}', ['as' => 'freelancerDetail', 'uses' => 'FreelancerController@show']);
+        Route::get('/chi-tiet/{id}/{slug}', ['as' => 'freelancerDetail', 'uses' => 'FreelancerController@show']);
 //        Route::post('luu/{id?}', ['as'=>'freelancerCreate', 'uses'=>'FreelancerController@store']);
 //        Route::post('dat-gia', ['as'=>'freelancerDeal', 'uses'=>'FreelancerController@deal']);
 //        Route::post('chon', ['as'=>'freelancerChoosen', 'uses'=>'FreelancerController@choosen']);
