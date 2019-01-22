@@ -258,7 +258,6 @@ class RealEstateController extends Controller
 
     public function store(RealEstateRequest $request)
     {
-        dd($request->all());
         $result = $this->service->store($request->all());
         if($result) {
             set_notice(trans('real-estate.message.createSuccess'), 'success');
@@ -457,7 +456,7 @@ class RealEstateController extends Controller
         if ($result) {
             return response()->json([
                 'success' => true,
-                'message' => '',
+                'message' => 'Cập nhật thành công',
                 'data' => [
                     're' => $result
                 ]
@@ -465,7 +464,7 @@ class RealEstateController extends Controller
         }
         return response()->json([
             'success' => false,
-            'message' => '',
+            'message' => 'Có lỗi xảy ra. vui lòng thử lại',
             'data' => []
         ]);
     }

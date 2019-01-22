@@ -19,6 +19,17 @@
     </div>
 </div>
 <div class="form-group collapse collapse1" id="addressSelect">
+    <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.province')}} </label>
+    <div class="col-sm-4">
+        <select class="form-control" id="province" name="province_id" onchange="changeProvince(this)"
+                value="{{ old('province_id') }}">
+            <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
+            @foreach($provinces as $province)
+                <option value="{{$province->id}}" {{auth()->user() && auth()->user()->userinfo->province_id == $province->id ? 'selected' : ''}}>{{$province->name}}</option>
+            @endforeach
+        </select>
+        <p class="text-red error"></p>
+    </div>
     <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.district')}} </label>
     <div class="col-sm-4">
         <select class="form-control" id="district" name="district_id" onchange="changeDistrict(this)"
@@ -44,6 +55,28 @@
             <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
         </select>
         <p class="text-red error"></p>
+    </div>
+</div>
+<div class="form-group collapse collapse1" id="contactInfo">
+    <div class="row form-group">
+        <div class="col-xs-12">
+            <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.contactPerson')}}</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" name="contact_person" value="{{ old('contact_person') ? old('contact_person') : auth()->user()->userinfo->full_name }}">
+            </div>
+            <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.contactPhone')}}</label>
+            <div class="col-sm-4">
+                <input type="tel" class="form-control" name="contact_phone_number" value="{{ old('contact_phone_number') ? old('contact_phone_number') : auth()->user()->userinfo->phone }}">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.contactAddress')}}</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="contact_address" value="{{ old('contact_address') ? old('contact_address') : auth()->user()->userinfo->address }}">
+            </div>
+        </div>
     </div>
 </div>
 <div class="form-group collapse collapse1" id="nearBy">
@@ -205,6 +238,7 @@
             console.log($(e).val());
             let catId = $(e).val();
 
+            showLoader();
             $.ajax({
                 url: "/re-type/list-dropdown/" + catId,
                 method: 'GET',
@@ -220,6 +254,7 @@
                     if (html) {
                         $('#re-type').html(html);
                     }
+                    hideLoader();
                 }
             });
 
@@ -243,7 +278,7 @@
         function changeProvince(e) {
             console.log($(e).val());
             let provinceId = $(e).val();
-
+            showLoader();
             $.ajax({
                 url: '/district-by-province/' + provinceId,
                 method: 'GET',
@@ -259,6 +294,7 @@
                     if (html) {
                         $('#district').html(html);
                     }
+                    hideLoader();
                 }
             });
 
@@ -284,7 +320,7 @@
         function changeDistrict(e) {
             console.log($(e).val());
             let districtId = $(e).val();
-
+            showLoader();
             $.ajax({
                 url: '/ward-by-district/' + districtId,
                 method: 'GET',
@@ -300,6 +336,7 @@
                     if (html) {
                         $('#ward').html(html);
                     }
+                    hideLoader();
                 }
             });
         }
@@ -307,7 +344,7 @@
         function changeWard(e) {
             console.log($(e).val());
             let wardId = $(e).val();
-
+            showLoader();
             $.ajax({
                 url: '/street-by-ward/' + wardId,
                 method: 'GET',
@@ -323,6 +360,7 @@
                     if (html) {
                         $('#street').html(html);
                     }
+                    hideLoader();
                 }
             });
         }

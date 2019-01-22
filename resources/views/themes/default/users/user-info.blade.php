@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="{{asset('plugins/toastr/toastr.min.css')}}"/>
     <link rel="stylesheet" href="{{ asset('css/manage-real-estate.css') }}"/>
     <link rel="stylesheet" href="{{ asset('css/user-info.css') }}"/>
+    <link rel="stylesheet" href="{{asset('plugins/loopj-jquery-tokeninput/styles/token-input.css')}}" />
+    <link rel="stylesheet" href="{{asset('plugins/loopj-jquery-tokeninput/styles/token-input-bootstrap3.css')}}" />
 @endpush
 @php
     //dd($listFriends);
@@ -195,7 +197,7 @@
                                                                             </button>
                                                                             <button type="button"
                                                                                     class="btn btn-default btn-collapse"
-                                                                                    data-target="#nearBy">Gần
+                                                                                    data-target="#contactInfo">Liên hệ
                                                                             </button>
                                                                             <button type="button"
                                                                                     class="btn btn-default btn-collapse-second"
@@ -538,6 +540,7 @@
 @push('js')
     <script src="{{asset('js/jquery.magnific-popup.min.js')}}"></script>
     <script src="{{asset('plugins/toastr/toastr.min.js')}}"></script>
+    <script src="{{asset('plugins/loopj-jquery-tokeninput/src/jquery.tokeninput.js')}}"></script>
     <script>
         $(document).ready(function () {
             $('.popup-gallery').each(function () {
@@ -567,6 +570,28 @@
             $('#btn-hold').on('click', function () {
                 $('#postReModal').modal('show');
             });
+        });
+        $('#street').tokenInput(function(){
+            return "{{asset('/ajax/street')}}?province_id="+$("#province").val()+"&district_id="+$("#district").val()+"&ward_id="+$("#ward").val();
+        }, {
+            theme: "bootstrap",
+            queryParam: "term",
+            zindex  :   1005,
+            tokenLimit  :   1,
+            onAdd   :   function(r){
+                $('#method').val(r.method);
+            }
+        });
+        $('#street-edit').tokenInput(function(){
+            return "{{asset('/ajax/street')}}?province_id="+$("#province-edit").val()+"&district_id="+$("#district-edit").val()+"&ward_id="+$("#ward-edit").val();
+        }, {
+            theme: "bootstrap",
+            queryParam: "term",
+            zindex  :   1005,
+            tokenLimit  :   1,
+            onAdd   :   function(r){
+                $('#method').val(r.method);
+            }
         });
         $(document).on('click', '.panel-heading span.clickable', function (e) {
             var $this = $(this);
@@ -788,6 +813,7 @@
 
         function acceptChangeCv() {
             if (formDataCover) {
+                showLoader();
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': '{{csrf_token()}}'
@@ -819,6 +845,9 @@
                             toastr.error(mes);
                         });
                         // toastr.error(err.message);
+                    },
+                    complete: function () {
+                        hideLoader();
                     }
                 });
             }
@@ -920,6 +949,9 @@
             if (re.street_id) {
                 $('#street-edit').val(re.street_id);
             }
+            $('#contact-person-edit').val(re.contact_person);
+            $('#contact-phone-edit').val(re.contact_phone_number);
+            $('#contact-address-edit').val(re.contact_address);
             if (re.position) {
                 $('#position-edit').val(re.position);
             }

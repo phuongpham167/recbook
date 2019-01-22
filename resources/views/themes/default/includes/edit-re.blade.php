@@ -53,6 +53,16 @@
                         </div>
                     </div>
                     <div class="form-group clearfix collapse" id="addressSelectEdit">
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.province')}} </label>
+                        <div class="col-sm-4">
+                            <select class="form-control" id="province-edit" name="province_id_edit" onchange="changeProvince(this)">
+                                <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
+                                @foreach($provinces as $province)
+                                    <option value="{{$province->id}}" {{auth()->user() && auth()->user()->userinfo->province_id == $province->id ? 'selected' : ''}}>{{$province->name}}</option>
+                                @endforeach
+                            </select>
+                            <p class="text-red error"></p>
+                        </div>
                         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.district')}} </label>
                         <div class="col-sm-4">
                             <select class="form-control" id="district-edit" name="district_id_edit"
@@ -81,7 +91,28 @@
                             <p class="text-red error"></p>
                         </div>
                     </div>
-
+                    <div class="form-group clearfix collapse" id="contactInfoEdit">
+                        <div class="row form-group">
+                            <div class="col-xs-12">
+                                <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.contactPerson')}}</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" name="contact_person" id="contact-person-edit">
+                                </div>
+                                <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.contactPhone')}}</label>
+                                <div class="col-sm-4">
+                                    <input type="tel" class="form-control" name="contact_phone_number" id="contact-phone-edit">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.contactAddress')}}</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="contact_address" id="contact-address-edit">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="form-group clearfix collapse" id="nearByEdit">
                         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.position')}}</label>
@@ -233,8 +264,14 @@
                             <button type="button" class="btn btn-default btn-collapse" data-target="#addressSelectEdit">
                                 <i class="fa fa-road" aria-hidden="true"></i> Khu vực
                             </button>
+                            <button type="button" class="btn btn-default btn-collapse" data-target="#contactInfoEdit">Liên hệ
+                            </button>
                             <button type="button" class="btn btn-default btn-collapse" data-target="#nearByEdit">Gần
                             </button>
+                        </div>
+                    </div>
+                    <div class="form-group clearfix">
+                        <div class="col-xs-12">
                             <button type="button" class="btn btn-default btn-collapse"
                                     data-target="#directionSelectEdit">Hướng
                             </button>
@@ -247,6 +284,11 @@
                             <button type="button" class="btn btn-default btn-collapse" data-target="#roomEdit"><i
                                     class="fa fa-bed" aria-hidden="true"></i> Phòng
                             </button>
+
+                        </div>
+                    </div>
+                    <div class="form-group clearfix">
+                        <div class="col-xs-12">
                             <button type="button" class="btn btn-default btn-collapse" data-target="#areaEdit"><i
                                     class="fa fa-area-chart" aria-hidden="true"></i> Diện tích
                             </button>
@@ -259,6 +301,11 @@
                             <button type="button" class="btn btn-default btn-collapse" data-target="#mapSelectEdit"><i
                                     class="fa fa-map-marker"></i> Vị ví
                             </button>
+
+                        </div>
+                    </div>
+                    <div class="form-group clearfix">
+                        <div class="col-xs-12">
                             <button type="button" class="btn btn-default btn-collapse" data-target="#imageSelectEdit"><i
                                     class="fa fa-picture-o"></i> Hình ảnh
                             </button>
@@ -300,6 +347,7 @@
 
 @push('js')
     <script>
+
         $(function () {
             //------------------------------------------------------------
             // COLLAPSE CONTENT
@@ -455,6 +503,8 @@
 
             let reTypeId = $('#re-type-edit').val();
 
+            let provinceId = $('#province-edit').val();
+
             let districtId = $('#district-edit').val();
 
             let wardId = $('#ward-edit').val();
@@ -511,6 +561,7 @@
             formDataEdit.append('detail', detail);
             formDataEdit.append('re_category_id', reCatId);
             formDataEdit.append('re_type_id', reTypeId);
+            formDataEdit.append('province_id', provinceId);
             formDataEdit.append('district_id', districtId);
             formDataEdit.append('ward_id', wardId);
             formDataEdit.append('street_id', streetId);

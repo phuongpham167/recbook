@@ -36,6 +36,15 @@ class RealEstateService
         $root = \Request::root();
         $slug = to_slug($input['title']);
 
+        $phone = isset($input['contact_phone_number']) ? $input['contact_phone_number'] : '';
+        $contactPerson = isset($input['contact_person']) ? $input['contact_person'] : '';
+        $contactAddress = isset($input['contact_address']) ? $input['contact_address'] : '';
+
+        $customer = null;
+        if ($phone) {
+            $customer = $this->checkCustomer($phone, $contactPerson, $contactAddress);
+        }
+
         $imagesVal = [];
         if (isset($input['images'])) {
             $images = $input['images'];
@@ -85,9 +94,9 @@ class RealEstateService
         $realEstate = new RealEstate([
             'title' => $input['title'],
             'slug' => $slug,
-            'contact_person' => \Auth::user()->userinfo->full_name,
-            'contact_phone_number' => \Auth::user()->userinfo->phone,
-            'contact_address' => \Auth::user()->userinfo->address,
+            'contact_person' => $contactPerson,
+            'contact_phone_number' => $phone,
+            'contact_address' => $contactAddress,
             're_category_id' => isset($input['re_category_id']) ? $input['re_category_id'] : null,
             're_type_id' => isset($input['re_type_id']) ? $input['re_type_id'] : null,
             'province_id' => isset($input['province_id']) ? $input['province_id'] : null,
@@ -120,6 +129,7 @@ class RealEstateService
             'long' => $long,
             'detail' => isset($input['detail']) ? $input['detail'] : null,
             'is_private' => $input['is_private'],
+            'customer_id' => $customer ? $customer->id : null,
             'posted_by' => \Auth::user()->id,
             'updated_by' => \Auth::user()->id,
             'web_id' => $this->web_id,
@@ -250,11 +260,14 @@ class RealEstateService
     public function updateAjax($input)
     {
 
-//        $phone = $input['contact_phone_number'];
-//        $contactPerson = $input['contact_person'];
-//        $contactAddress = $input['contact_address'];
-//
-//        $customer = $this->checkCustomer($phone, $contactPerson, $contactAddress);
+        $phone = isset($input['contact_phone_number']) ? $input['contact_phone_number'] : '';
+        $contactPerson = isset($input['contact_person']) ? $input['contact_person'] : '';
+        $contactAddress = isset($input['contact_address']) ? $input['contact_address'] : '';
+
+        $customer = null;
+        if ($phone) {
+            $customer = $this->checkCustomer($phone, $contactPerson, $contactAddress);
+        }
 
         $root = \Request::root();
         $slug = to_slug($input['title']);
@@ -296,6 +309,19 @@ class RealEstateService
             $long = $maps[1] ? $maps[1] : '';
         }
 
+        if($input['street_id']) {
+            if (empty(Street::find($input['street_id']))) {
+                $street = new Street();
+
+                $street->name = $input['street_id'];
+                $street->province_id = $input['province_id'];
+                $street->district_id = $input['district_id'];
+                $street->ward_id = $input['ward_id'];
+                $street->save();
+                $input['street_id'] = $street->id;
+            }
+        }
+
         $realEstate = RealEstate::find($input['id']);
         if ($realEstate) {
             $approve = $realEstate->draft ? 0 : ( $this->needApprove ? 0 : 1 );
@@ -308,9 +334,9 @@ class RealEstateService
             }
             $realEstate->title = $input['title'];
             $realEstate->slug = $slug;
-            $realEstate->contact_person = \Auth::user()->userinfo->full_name;
-            $realEstate->contact_phone_number = \Auth::user()->userinfo->phone;
-            $realEstate->contact_address = \Auth::user()->userinfo->address;
+            $realEstate->contact_person = $contactPerson;
+            $realEstate->contact_phone_number = $phone;
+            $realEstate->contact_address = $contactAddress;
             $realEstate->re_category_id = isset($input['re_category_id']) ? $input['re_category_id'] : null;
             $realEstate->re_type_id = isset($input['re_type_id']) ? $input['re_type_id'] : null;
             $realEstate->province_id = \Auth::user()->userinfo->province_id;
@@ -343,6 +369,7 @@ class RealEstateService
             $realEstate->long = $long;
             $realEstate->detail = isset($input['detail']) ? $input['detail'] : null;
             $realEstate->is_private = $input['is_private'];
+            $realEstate->customer_id = $customer ? $customer->id : null;
             $realEstate->updated_by = \Auth::user()->id;
             $realEstate->web_id = $this->web_id;
             $realEstate->approved = $approve;
@@ -400,7 +427,7 @@ class RealEstateService
         $customer = Customer::where('phone', $phone)->first();
         if (!$customer) {
             $customer = new Customer([
-                'name' => $contactPerson,
+                'name' => $contactPerson ? $contactPerson : 'Khách lẻ',
                 'phone' => $phone,
                 'address' => $contactAddress
             ]);
