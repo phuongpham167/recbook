@@ -367,20 +367,22 @@
                                             @if((\Auth::user() && \Auth::user()->id == $data->id)|| $isFriend)
                                                 @foreach($listRe as $re)
                                                     <div class="col-xs-12">
-                                                        <div class="panel panel-default">
+                                                        <div class="panel panel-default" id="{{$re->id}}">
                                                             <div class="panel-heading clearfix">
                                                                 <div class="col-xs-12 col-md-8 left no-padding-left">
                                                                     <p>
-                                                                        <a href="{{ route('detail-real-estate', ['slug' => $re->slug . '-' . $re->id]) }}">
+                                                                        <a href="{{ route('detail-real-estate', ['slug' => $re->slug . '-' . $re->id]) }}" class="title">
                                                                             {{$re->title}}
                                                                         </a>
                                                                     </p>
-                                                                    @if($re->price)
-                                                                        <p class="price">Giá: {{$re->price}}</p>
-                                                                    @endif
+                                                                    <p class="price">
+                                                                        @if($re->price)
+                                                                            Giá: <span class="price-val">{{$re->price}}</span>
+                                                                        @endif
+                                                                    </p>
                                                                 </div>
                                                                 <div
-                                                                    class="col-xs-12 col-md-2 pull-right no-padding-right">
+                                                                    class="col-xs-12 col-md-2 pull-right no-padding-right map-link">
                                                                     @if($re->lat && $re->long)
                                                                         <a href="https://www.google.com/maps/search/?api=1&query={{$re->lat}},{{$re->long}}"
                                                                            target="_blank">Xem bản đồ</a>
@@ -394,9 +396,6 @@
                                                                 </div>
                                                             </div>
                                                             <div class="panel-body">
-                                                                <div class="edit-re-wrap">
-
-                                                                </div>
                                                                 <div class="detail-item-re-wrap">
                                                                     <div class="row">
                                                                         <div class="district-wrap">
@@ -428,7 +427,7 @@
                                                                         <div class="category-wrap">
                                                                             @if($re->reCategory)
                                                                                 <div
-                                                                                    class="col-xs-12 col-md-3">{{$re->reCategory ? $re->reCategory->name : ''}}</div>
+                                                                                    class="col-xs-12 col-md-3"><span class="category-val">{{$re->reCategory ? $re->reCategory->name : ''}}</span></div>
                                                                             @endif
                                                                         </div>
                                                                         <div class="room-wrap">
@@ -595,7 +594,7 @@
 
             if (!title || !detail) {
                 if (!title) {
-                    console.log('title empty');
+                    // console.log('title empty');
                     $('#title').parent().find('.error').html('Nhập tiêu đề tin');
                 } else {
                     $('#title').parent().find('.error').html('');
@@ -667,7 +666,7 @@
                 //     $('#expire-date').parent().find('.error').html('');
                 // }
                 if (!detail) {
-                    console.log('detail empty');
+                    // console.log('detail empty');
                     $('textarea#detail').parent().find('.error').html('Nhập nội dung chi tiết');
                 } else {
                     $('textarea#detail').parent().find('.error').html('');
@@ -703,20 +702,20 @@
         let curCover = $('.cover').attr('src');
         let formDataAv = false;
         let formDataCover = false;
-        console.log('current avatar');
-        console.log(curAvatar);
+        // console.log('current avatar');
+        // console.log(curAvatar);
         $('.btn-change-av').click(function () {
             $('#avatar-change').trigger('click');
         });
         $('#avatar-change').on('change', function () {
-            console.log('new avatar');
-            console.log($(this).val());
+            // console.log('new avatar');
+            // console.log($(this).val());
             readSingleURL(this, '.avatar');
             $('.cfr-change-av').css('display', 'block');
         });
 
         function readSingleURL(input, target) {
-            console.log(input.files);
+            // console.log(input.files);
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
 
@@ -750,15 +749,15 @@
                     processData: false,
                     contentType: false,
                     success: function (res) {
-                        console.log('success change av');
-                        console.log(res);
+                        // console.log('success change av');
+                        // console.log(res);
                         toastr.success(res.message);
                         $('.avatar').attr('src', res.uploaded_image);
                         $('.cfr-change-av').css('display', 'none');
                     },
                     error: function (err) {
-                        console.log('err change av');
-                        console.log(err);
+                        // console.log('err change av');
+                        // console.log(err);
                         toastr.error(err.message);
                     }
                 });
@@ -777,8 +776,8 @@
             $('#cover-change').trigger('click');
         });
         $('#cover-change').on('change', function () {
-            console.log('new cover');
-            console.log($(this).val());
+            // console.log('new cover');
+            // console.log($(this).val());
             readSingleURL(this, '.cover');
             $('.cover').removeClass('hidden');
             $('.cfr-change-cv').css('display', 'block');
@@ -798,8 +797,8 @@
                     processData: false,
                     contentType: false,
                     success: function (res) {
-                        console.log('success change cover');
-                        console.log(res);
+                        // console.log('success change cover');
+                        // console.log(res);
                         if (res.success) {
                             toastr.success(res.message);
                             $('.cover').attr('src', res.uploaded_image);
@@ -811,8 +810,8 @@
                         }
                     },
                     error: function (err) {
-                        console.log('err change cover');
-                        console.log(err);
+                        // console.log('err change cover');
+                        // console.log(err);
                         err.message.each(mes => {
                             toastr.error(mes);
                         });
@@ -870,18 +869,18 @@
         //-----------------------------------------------------------------
         $('.edit-re').on('click', function(e) {
             e.preventDefault();
-            console.log('re id');
-            console.log($(this).data('reid'));
+            // console.log('re id');
+            // console.log($(this).data('reid'));
             let id = $(this).data('reid');
             const panelWarp = $(this).parent().parent().parent();
-            console.log(panelWarp);
+            // console.log(panelWarp);
             showLoader();
             $.ajax({
                url: '/ajax/get-detail-re/' + id,
                method: 'GET',
                 success: function (data) {
-                    console.log('get re success');
-                    console.log(data.data);
+                    // console.log('get re success');
+                    // console.log(data.data);
                     if (data.success) {
                         let result = data.data;
                         let images = $.parseJSON(result.re.images);
@@ -894,7 +893,7 @@
                     hideLoader();
                 },
                 error: function (err) {
-                    console.log(err);
+                    // console.log(err);
                 }
             });
         });
@@ -968,7 +967,6 @@
         }
 
         function removeImgPreview(e) {
-            console.log(e);
             $(e).closest('.item-img-preview').remove();
         }
         //-----------------------------------------------------------------

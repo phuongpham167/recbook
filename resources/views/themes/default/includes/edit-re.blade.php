@@ -306,14 +306,14 @@
             //------------------------------------------------------------
             $('.btn-collapse').on('click', function () {
                 let targetId = $(this).data('target');
-                console.log(targetId);
+                // console.log(targetId);
                 let has = $(targetId).hasClass('in') ? 'yes' : 'no';
-                console.log(has);
+                // console.log(has);
                 if ($(targetId).hasClass('in')) {
-                    console.log('opening');
+                    // console.log('opening');
                     $('.form-edit-re .collapse').collapse('hide');
                 } else {
-                    console.log('close');
+                    // console.log('close');
                     $('.form-edit-re .collapse').collapse('hide');
                     $(targetId).collapse('show');
                 }
@@ -330,8 +330,8 @@
                 url: "/re-type/list-dropdown/" + catId,
                 method: 'GET',
                 success: function (result) {
-                    console.log('success');
-                    console.log(result);
+                    // console.log('success');
+                    // console.log(result);
                     let html = '';
                     if (result) {
                         for (let r of result) {
@@ -346,15 +346,15 @@
         }
 
         function changeDistrictEdit(e) {
-            console.log($(e).val());
+            // console.log($(e).val());
             let districtId = $(e).val();
 
             $.ajax({
                 url: '/ward-by-district/' + districtId,
                 method: 'GET',
                 success: function (result) {
-                    console.log('success');
-                    console.log(result);
+                    // console.log('success');
+                    // console.log(result);
                     let html = '<option value="">{{trans('real-estate.selectFirstOpt')}}</option>';
                     if (result) {
                         for (let r of result) {
@@ -369,15 +369,15 @@
         }
 
         function changeWardEdit(e) {
-            console.log($(e).val());
+            // console.log($(e).val());
             let wardId = $(e).val();
 
             $.ajax({
                 url: '/street-by-ward/' + wardId,
                 method: 'GET',
                 success: function (result) {
-                    console.log('success');
-                    console.log(result);
+                    // console.log('success');
+                    // console.log(result);
                     let html = '';
                     if (result) {
                         for (let r of result) {
@@ -433,6 +433,24 @@
             let title = $('#title-edit').val();
             let detail = $('#detail-edit').val();
 
+            if (!title || !detail) {
+                if (!title) {
+                    // console.log('title empty');
+                    $('#title-edit').parent().find('.error').html('Nhập tiêu đề tin');
+                } else {
+                    $('#title-edit').parent().find('.error').html('');
+                }
+
+                if (!detail) {
+                    // console.log('detail empty');
+                    $('textarea#detail-edit').parent().find('.error').html('Nhập nội dung chi tiết');
+                } else {
+                    $('textarea#detail-edit').parent().find('.error').html('');
+                }
+
+                return;
+            }
+
             let reCatId = $('#re-category-edit').val();
 
             let reTypeId = $('#re-type-edit').val();
@@ -465,7 +483,9 @@
 
             let price = $('#price-edit').val();
 
-            let isDeal = $('#is-deal-edit').val();
+            let isDeal = $('#is-deal-edit').is(":checked") ? 1 : 0;
+
+            let map = $('#map-edit').val();
 
             let isPrivate = $('#is-private-edit').val();
 
@@ -506,6 +526,7 @@
             formDataEdit.append('floor', floor);
             formDataEdit.append('price', price);
             formDataEdit.append('is_deal', isDeal);
+            formDataEdit.append('map', map);
             formDataEdit.append('is_private', isPrivate);
 
             showLoader();
@@ -521,28 +542,140 @@
                 processData: false,
                 contentType: false,
                 success: function (res) {
-                    console.log('success change cover');
-                    console.log(res);
+                    // console.log('success change cover');
+                    // console.log(res);
                     if (res.success) {
                         toastr.success(res.message);
-                        $('.cover').attr('src', res.uploaded_image);
-                        $('.cfr-change-cv').css('display', 'none');
+                        const re = res.data.re;
+                        displayValueAfterUpdate(re);
+                        $('#modalEditRe').modal('hide');
                     } else {
                         toastr.error(res.message);
-                        // $('.cover').attr('src', res.uploaded_image);
-                        // $('.cfr-change-cv').css('display', 'none');
                     }
                     hideLoader();
                 },
                 error: function (err) {
-                    console.log('err change cover');
-                    console.log(err);
+                    // console.log('err change cover');
+                    // console.log(err);
                     err.message.each(mes => {
                         toastr.error(mes);
                     });
                     // toastr.error(err.message);
                 }
             });
+        }
+
+        function displayValueAfterUpdate(data) {
+            let panelRe = $('#'+data.id);
+
+            let titleDOM = panelRe.find('.title');
+            titleDOM.attr('href', '/tin/' + data.slug + '-' + data.id);
+            titleDOM.text(data.title);
+
+            let priceDOM = panelRe.find('.price');
+            if (priceDOM.html()) {
+                if (data.price) {
+                    priceDOM.find('.price-val').text(data.price);
+                } else {
+                    priceDOM.html('');
+                }
+            } else {
+                if (data.price) {
+                    priceDOM.html('Giá: <span class="price-val">' + data.price + '</span>');
+                }
+            }
+
+            let districtDOM = panelRe.find('.district-wrap');
+            const district = data.district;
+            if (districtDOM.html()) {
+                if (district) {
+                    districtDOM.find('.district-val').text(district.name);
+                } else {
+                    districtDOM.html('');
+                }
+            } else {
+                if (district) {
+                    districtDOM.html('<div class="col-xs-12 col-md-4 ">Khu vực: <span class="district-val">' + district.name + '</span></div>');
+                }
+            }
+
+            let floorDOM = panelRe.find('.floor-wrap');
+            if (floorDOM.html()) {
+                if (data.floor) {
+                    floorDOM.find('.floor-val').text(data.floor);
+                } else {
+                    floorDOM.html('');
+                }
+            } else {
+                if (data.floor) {
+                    floorDOM.html('<div class="col-xs-12 col-md-2 ">Số tầng: <span class="floor-val">' + data.floor + '<span></div>');
+                }
+            }
+
+            let positionDOM = panelRe.find('.position-wrap');
+            if (positionDOM.html()) {
+                if (data.position) {
+                    positionDOM.find('.position-val').text(data.position);
+                } else {
+                    positionDOM.html('');
+                }
+            } else {
+                if (data.position) {
+                    positionDOM.html('<div class="col-xs-12 col-md-6 ">Gần: <span class="position-val">' + data.position + '<span></div>');
+                }
+            }
+
+            let categoryDOM = panelRe.find('.category-wrap');
+            const category = data.re_category;
+            if (categoryDOM.html()) {
+                if (category) {
+                    categoryDOM.find('.category-val').text(category.name);
+                } else {
+                    categoryDOM.html('');
+                }
+            } else {
+                if (category) {
+                    categoryDOM.html('<div class="col-xs-12 col-md-3 "><span class="category-val">' + category.name + '</span></div>');
+                }
+            }
+
+            let roomDOM = panelRe.find('.room-wrap');
+            if (roomDOM.html()) {
+                let markup = '<div class="col-xs-12 col-md-9">';
+                if (data.bedroom) {
+                    markup += 'Phòng ngủ: ' + data.bedroom;
+                }
+                if (data.bedroom && data.living_room) {
+                    markup += ', ';
+                }
+                if (data.living_room) {
+                    markup += 'Phòng khách: ' + data.living_room
+                }
+                if (data.living_room && data.wc) {
+                    markup += ', ';
+                }
+                if (data.wc) {
+                    markup += 'WC: ' + data.wc
+                }
+                markup += '</div>';
+
+                roomDOM.html(markup);
+            }
+
+            let imagesDOM = panelRe.find('.images-wrap');
+            const imgDf = {
+                'link' : '/images/default_real_estate_image.jpg',
+                'alt' : data.title,
+                'thumb': '/images/default_thumb.jpg'
+            };
+            let images = $.parseJSON(data.images);
+            images = images.length ? images : [imgDf];
+            let imgMarkup = '';
+            for (let image of images) {
+                const alt = image.alt ? image.alt : data.title;
+                imgMarkup += '<a href="' + image.link + '" title="' + alt + '" class="pg-item"><img src="' + image.link + '" width="122" height="91"></a>';
+            }
+            imagesDOM.html(imgMarkup);
         }
     </script>
 @endpush

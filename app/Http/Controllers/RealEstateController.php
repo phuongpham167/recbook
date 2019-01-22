@@ -441,23 +441,20 @@ class RealEstateController extends Controller
     }
     public function updateDetailRe($id)
     {
+        $result = false;
         if ($id) {
-            dd(request()->all());
             $re = RealEstate::find($id);
             if ($re) {
                 $result = $this->service->updateAjax(request()->all());
-                return response()->json([
-                    'success' => true,
-                    'message' => '',
-                    'data' => [
-                        're' => $re
-                    ]
-                ]);
             }
+        }
+        if ($result) {
             return response()->json([
-                'success' => false,
+                'success' => true,
                 'message' => '',
-                'data' => []
+                'data' => [
+                    're' => $result
+                ]
             ]);
         }
         return response()->json([
