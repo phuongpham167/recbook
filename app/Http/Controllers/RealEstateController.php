@@ -258,7 +258,7 @@ class RealEstateController extends Controller
 
     public function store(RealEstateRequest $request)
     {
-//        dd($request->all());
+        dd($request->all());
         $result = $this->service->store($request->all());
         if($result) {
             set_notice(trans('real-estate.message.createSuccess'), 'success');
@@ -413,6 +413,61 @@ class RealEstateController extends Controller
         }else
             set_notice(trans('system.not_exist'), 'warning');
         return redirect()->back();
+    }
+
+    public function getDetailRe($id) {
+        if ($id) {
+            $re = RealEstate::find($id);
+            if ($re) {
+                $user = auth()->user();
+                $uProvince = $user->userinfo->province_id;
+                $districts = $this->districtService->getDistrictByProvince($uProvince);
+                $reCategories = $this->reCategoryService->getListDropDown();
+                return response()->json([
+                    'success' => true,
+                    'message' => '',
+                    'data' => [
+                        're' => $re,
+                        'districts' => $districts,
+                        'categories' => $reCategories
+                    ]
+                ]);
+            }
+            return response()->json([
+                'success' => false,
+                'message' => '',
+                'data' => []
+            ]);
+        }
+        return response()->json([
+            'success' => false,
+            'message' => '',
+            'data' => []
+        ]);
+    }
+    public function updateDetailRe($id)
+    {
+        $result = false;
+        if ($id) {
+            $re = RealEstate::find($id);
+            if ($re) {
+                $result = $this->service->updateAjax(request()->all());
+            }
+        }
+        if ($result) {
+            return response()->json([
+                'success' => true,
+                'message' => '',
+                'data' => [
+                    're' => $result
+                ]
+            ]);
+        }
+        return response()->json([
+            'success' => false,
+            'message' => '',
+            'data' => []
+        ]);
     }
 
     public function sold () {

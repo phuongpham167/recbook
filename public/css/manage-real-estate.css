@@ -10,25 +10,30 @@
   border-radius: 0px;
 }
 
-.img-preview {
+.img-preview,
+.img-preview-edit {
   margin-top: 10px;
 }
 
-.img-preview .item-img-preview {
+.img-preview .item-img-preview,
+.img-preview-edit .item-img-preview {
   margin-top: 10px;
   position: relative;
 }
 
-.img-preview .item-img-preview img {
+.img-preview .item-img-preview img,
+.img-preview-edit .item-img-preview img {
   height: 150px;
   margin: 0 auto;
 }
 
-.img-preview .item-img-preview label {
+.img-preview .item-img-preview label,
+.img-preview-edit .item-img-preview label {
   padding-top: 5px;
 }
 
-.img-preview .item-img-preview .img-preview-btn-remove {
+.img-preview .item-img-preview .img-preview-btn-remove,
+.img-preview-edit .item-img-preview .img-preview-btn-remove {
   color: red;
   cursor: pointer;
   position: absolute;

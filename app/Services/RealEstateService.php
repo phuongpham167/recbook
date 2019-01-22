@@ -200,7 +200,7 @@ class RealEstateService
             $realEstate->district_id = $input['district_id'];
             $realEstate->ward_id = $input['ward_id'];
             $realEstate->address = $input['address'];
-            $realEstate->position = $input['position'];
+            $realEstate->position = isset($input['position']) ? $input['position'] : '';
             $realEstate->street_id = $input['street_id'];
             $realEstate->direction_id = $input['direction_id'];
             $realEstate->exhibit_id = $input['exhibit_id'];
@@ -239,6 +239,123 @@ class RealEstateService
 
             if($realEstate->save()) {
                 return $realEstate;
+            } else {
+                return false;
+            }
+        }
+        return false;
+
+    }
+
+    public function updateAjax($input)
+    {
+
+//        $phone = $input['contact_phone_number'];
+//        $contactPerson = $input['contact_person'];
+//        $contactAddress = $input['contact_address'];
+//
+//        $customer = $this->checkCustomer($phone, $contactPerson, $contactAddress);
+
+        $root = \Request::root();
+        $slug = to_slug($input['title']);
+
+        $imagesVal = [];
+        if (isset($input['imagesOld'])) {
+            $imagesOld = $input['imagesOld'];
+            $altOld = $input['altOld'];
+            foreach ($imagesOld as $key => $img) {
+                $imagesVal[] = [
+                    'link' => $img,
+                    'alt' => $altOld[$key]
+                ];
+            }
+        }
+        if (isset($input['imagesNew'])) {
+            $imagesNew = $input['imagesNew'];
+            $altNew = $input['altNew'];
+            foreach ($imagesNew as $key => $image) {
+                $png_url = rand() . '_' . time().".png";
+                $path = public_path().'/storage/uploads/' . $png_url;
+                $thumbPath = public_path().'/storage/thumbs/' . $png_url;
+                $watermark_logo = public_path().'/images/watermark_logo.png';
+
+                $originImg = Image::make(file_get_contents($image))->insert($watermark_logo, 'bottom', 10, 10)->save($path);
+                $thumbnail = $originImg->resize(122, 91)->save($thumbPath);
+                $imagesVal[] = [
+                    'link' => $root . '/storage/uploads/' . $png_url,
+                    'alt' => $altNew[$key]
+                ];
+            }
+        }
+
+        $lat = '';
+        $long = '';
+        if($m = $input['map']) {
+            $maps = explode(',', $m);
+            $lat = $maps[0];
+            $long = $maps[1] ? $maps[1] : '';
+        }
+
+        $realEstate = RealEstate::find($input['id']);
+        if ($realEstate) {
+            $approve = $realEstate->draft ? 0 : ( $this->needApprove ? 0 : 1 );
+            if ($input['is_private'] == RealEstate::USER_PAGE || $input['is_private'] == RealEstate::USER_WEB) {
+                $approve = 1;
+            }
+
+            if (!$realEstate->code) {
+                $realEstate->code = config('real-estate.codePrefix') . '-' . $realEstate->id;
+            }
+            $realEstate->title = $input['title'];
+            $realEstate->slug = $slug;
+            $realEstate->contact_person = \Auth::user()->userinfo->full_name;
+            $realEstate->contact_phone_number = \Auth::user()->userinfo->phone;
+            $realEstate->contact_address = \Auth::user()->userinfo->address;
+            $realEstate->re_category_id = isset($input['re_category_id']) ? $input['re_category_id'] : null;
+            $realEstate->re_type_id = isset($input['re_type_id']) ? $input['re_type_id'] : null;
+            $realEstate->province_id = \Auth::user()->userinfo->province_id;
+            $realEstate->district_id = isset($input['district_id']) ? $input['district_id'] : null;
+            $realEstate->ward_id = isset($input['ward_id']) ? $input['ward_id'] : null;
+            $realEstate->street_id = isset($input['street_id']) ? $input['street_id'] : null;
+            $realEstate->address = \Auth::user()->userinfo->address;
+            $realEstate->position = isset($input['position']) ? $input['position'] : '';
+            $realEstate->direction_id = isset($input['direction_id']) ? $input['direction_id'] : null;
+            $realEstate->exhibit_id = isset($input['exhibit_id']) ? $input['exhibit_id'] : null;
+            $realEstate->project_id = isset($input['project_id']) ? $input['project_id'] : null;
+            $realEstate->block_id = isset($input['block_id']) ? $input['block_id'] : null;
+            $realEstate->construction_type_id = isset($input['construction_type_id']) ? $input['construction_type_id'] : null;
+            $realEstate->width = isset($input['width']) ? $input['width'] : null;
+            $realEstate->length = isset($input['length']) ? $input['length'] : null;
+            $realEstate->bedroom = isset($input['bedroom']) ? $input['bedroom']  : null;
+            $realEstate->living_room = isset($input['living_room']) ? $input['living_room'] : null;
+            $realEstate->wc = isset($input['wc'])  ?$input['wc'] : null;
+            $realEstate->area_of_premises = isset($input['area_of_premises']) ? $input['area_of_premises'] : null;
+            $realEstate->area_of_use = isset($input['area_of_use']) ? $input['area_of_use'] : null;
+            $realEstate->floor = isset($input['floor']) ? $input['floor'] : null;
+            $realEstate->price = isset($input['price']) ? $input['price'] : null;
+            $realEstate->unit_id = isset($input['unit_id']) ? $input['unit_id'] : null;
+            $realEstate->range_price_id = isset($input['range_price_id']) ? $input['range_price_id'] : null;
+            $realEstate->is_deal = isset($input['is_deal']) ? ( $input['is_deal'] ? 1 : 0 ) : 0;
+            $realEstate->post_date = isset($input['post_date']) ? $input['post_date'] : null;
+            $realEstate->expire_date = isset($input['expire_date']) ? $input['expire_date'] : null;
+            $realEstate->images = json_encode($imagesVal);
+            $realEstate->lat = $lat;
+            $realEstate->long = $long;
+            $realEstate->detail = isset($input['detail']) ? $input['detail'] : null;
+            $realEstate->is_private = $input['is_private'];
+            $realEstate->updated_by = \Auth::user()->id;
+            $realEstate->web_id = $this->web_id;
+            $realEstate->approved = $approve;
+//            if (isset($input['add_draft'])) {
+//                $realEstate->approved = 0;
+//                $realEstate->draft = 1;
+//            } else {
+//                $realEstate->approved = $this->needApprove ? 0 : 1;
+//                $realEstate->draft = 0;
+//            }
+
+            if($realEstate->save()) {
+                return RealEstate::with(['district', 'reCategory'])->find($input['id']);
             } else {
                 return false;
             }
