@@ -312,3 +312,8 @@
   margin-top: 15px;
 }
 
+.btn-cancel-edit-re {
+  border-radius: 0;
+  margin-right: 10px;
+}
+
