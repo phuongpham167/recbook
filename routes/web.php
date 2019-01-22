@@ -123,7 +123,12 @@ Route::group(['middleware'=>'auth'], function(){
     Route::get('them-ban-be/{id}', ['as'=> 'friend.request', 'uses' => 'FriendController@friendRequest']);
     Route::get('xac-nhan-ban-be/{id}', ['as'=> 'friend.confirm.request', 'uses' => 'FriendController@confirmFriendRequest']);
 
-    Route::group(['prefix'=>'ajax'],function(){
+    /*
+     * ajax route
+     * */
+    Route::group(['prefix' => 'ajax'], function() {
+        Route::get('/get-detail-re/{id}', ['as' => 'ajax.getDetailRe', 'uses' => 'RealEstateController@getDetailRe']);
+        Route::post('/update-detail-re/{id}', ['as' => 'ajax.updateDetailRe', 'uses' => 'RealEstateController@updateDetailRe']);
         Route::get('user', 'AjaxController@ajaxUser');
         Route::get('street', 'AjaxController@ajaxStreet');
     });
