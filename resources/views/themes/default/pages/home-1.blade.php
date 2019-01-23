@@ -16,44 +16,26 @@
 @section('content')
     @include(theme(TRUE).'.includes.header-1')
     <div class="content-body">
-        <section class="slider container">
-            <div class="flexslider">
-                <ul class="slides">
-                    @foreach(\App\Banner::where('location', 0)->get() as $item)
-                        <li>
-                            <a href="{{$item->url?$item->url:'#a'}}"><img src="http://{{env('DOMAIN_BACKEND','recbook.net')}}{{$item->image}}" /></a>
-                        </li>
-                    @endforeach
-                </ul>
+        <section class="slider container" style="margin-top: 20px">
+            <div class="col-md-4">
+                @foreach(ads_display(1) as $item)
+                    {!! $item->content !!}
+                @endforeach
             </div>
-        </section>
-        <div class="container" style="margin-top: 20px">
-            <div class="row  three_cols">
-                <div class="col-xs-12 col-sm-12 three_i brokers">
-
-                    <p class="title_col">
-                        <a href="#"><i class="fa fa-users"></i> Dự án nổi bật</a>
-                    </p>
-                    <div class="content col-xs-12 no-padding-left no-padding-right broker_slider">
-                        <div class="col-md-4" style="border: 1px dotted #ccc">
-                            @foreach(\App\Banner::where('location', 1)->where('province_id', 0)->get() as $item)
-                                {!! $item->content !!}
-                            @endforeach
-                        </div>
-                        <div class="col-md-4" style="border: 1px dotted #ccc">
-                            @foreach(\App\Banner::where('location', 2)->where('province_id', 0)->get() as $item)
-                                {!! $item->content !!}
-                            @endforeach
-                        </div>
-                        <div class="col-md-4" style="border: 1px dotted #ccc">
-                            @foreach(\App\Banner::where('location', 3)->where('province_id', 0)->get() as $item)
-                                {!! $item->content !!}
-                            @endforeach
-                        </div>
-                    </div>
+            <div class="col-md-8 no-padding-left no-padding-right">
+                <div class="flexslider">
+                    <ul class="slides">
+                        @foreach(\App\Banner::where('location', 0)->get() as $item)
+                            <li>
+                                <a href="{{$item->url?$item->url:'#a'}}"><img src="http://{{env('DOMAIN_BACKEND','recbook.net')}}{{$item->image}}" height="300" /></a>
+                            </li>
+                        @endforeach
+                    </ul>
                 </div>
             </div>
-        </div>
+
+        </section>
+
         {{--<div class="smart-search hidden-xs">--}}
             {{--<div class="container search-wrap">--}}
                 {{--<div class="search-content search_slide">--}}
