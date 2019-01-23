@@ -51,22 +51,20 @@
     </div>
     <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.street')}} </label>
     <div class="col-sm-4">
-        <select class="form-control" id="street" name="street_id" value="{{ old('street_id') }}">
-            <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
-        </select>
+        <input type="text" class="form-control" id="street" name="street_id">
         <p class="text-red error"></p>
     </div>
 </div>
 <div class="form-group collapse collapse1" id="contactInfo">
     <div class="row form-group">
         <div class="col-xs-12">
-            <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.contactPerson')}}</label>
-            <div class="col-sm-4">
-                <input type="text" class="form-control" name="contact_person" value="{{ old('contact_person') ? old('contact_person') : auth()->user()->userinfo->full_name }}">
-            </div>
             <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.contactPhone')}}</label>
             <div class="col-sm-4">
-                <input type="tel" class="form-control" name="contact_phone_number" value="{{ old('contact_phone_number') ? old('contact_phone_number') : auth()->user()->userinfo->phone }}">
+                <input type="tel" class="form-control" id="contact_phone_number" name="contact_phone_number" value="{{ old('contact_phone_number') ? old('contact_phone_number') : auth()->user()->userinfo->phone }}">
+            </div>
+            <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.contactPerson')}}</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="contact_person" name="contact_person" value="{{ old('contact_person') ? old('contact_person') : auth()->user()->userinfo->full_name }}">
             </div>
         </div>
     </div>
@@ -74,7 +72,7 @@
         <div class="col-xs-12">
             <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.contactAddress')}}</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" name="contact_address" value="{{ old('contact_address') ? old('contact_address') : auth()->user()->userinfo->address }}">
+                <input type="text" class="form-control" id="contact_address" name="contact_address" value="{{ old('contact_address') ? old('contact_address') : auth()->user()->userinfo->address }}">
             </div>
         </div>
     </div>
@@ -212,6 +210,31 @@
     <script src="{{asset('plugins/ckeditor-4/ckeditor.js')}}"></script>
     <script>
         $(function () {
+            $('#contact_phone_number').keyup(function() {
+                emptyContactInfo();
+
+                let phone = $(this).val();
+                if (phone.length > 9) {
+                    $.ajax({
+                        url: "/customer-by-phone/" + phone,
+                        method: 'GET',
+                        success: function (result) {
+                            console.log('success');
+                            console.log(result);
+                            if (!jQuery.isEmptyObject(result)) {
+                                $('#contact_person').val(result.name);
+                                $('#contact_address').val(result.address);
+                            } else {
+                                emptyContactInfo();
+                            }
+                        }
+                    });
+                }
+            });
+            function emptyContactInfo() {
+                $('#contact_person').val('');
+                $('#contact_address').val('');
+            }
             //------------------------------------------------------------
             // COLLAPSE CONTENT
             //------------------------------------------------------------

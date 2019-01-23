@@ -79,16 +79,22 @@ class RealEstateService
             $approve = 1;
         }
 
-        if(empty(Street::find($input['street_id'])))
-        {
-            $street = new Street();
+        $streetId = isset($input['street_id']) ? $input['street_id'] : '';
+        $provinceId = isset($input['province_id']) ? $input['province_id'] : '';
+        $districtId = isset($input['district_id']) ? $input['district_id'] : '';
+        $wardId = isset($input['ward_id']) ? $input['ward_id'] : '';
+        if ($provinceId && $districtId && $wardId && $streetId) {
+            if(empty(Street::find($input['street_id'])))
+            {
+                $street = new Street();
 
-            $street->name = $input['street_id'];
-            $street->province_id = $input['province_id'];
-            $street->district_id = $input['district_id'];
-            $street->ward_id = $input['ward_id'];
-            $street->save();
-            $input['street_id'] = $street->id;
+                $street->name = $input['street_id'];
+                $street->province_id = $input['province_id'];
+                $street->district_id = $input['district_id'];
+                $street->ward_id = $input['ward_id'];
+                $street->save();
+                $input['street_id'] = $street->id;
+            }
         }
 
         $realEstate = new RealEstate([
@@ -309,7 +315,11 @@ class RealEstateService
             $long = $maps[1] ? $maps[1] : '';
         }
 
-        if($input['street_id']) {
+        $streetId = isset($input['street_id']) ? $input['street_id'] : '';
+        $provinceId = isset($input['province_id']) ? $input['province_id'] : '';
+        $districtId = isset($input['district_id']) ? $input['district_id'] : '';
+        $wardId = isset($input['ward_id']) ? $input['ward_id'] : '';
+        if ($provinceId && $districtId && $wardId && $streetId) {
             if (empty(Street::find($input['street_id']))) {
                 $street = new Street();
 
@@ -339,11 +349,11 @@ class RealEstateService
             $realEstate->contact_address = $contactAddress;
             $realEstate->re_category_id = isset($input['re_category_id']) ? $input['re_category_id'] : null;
             $realEstate->re_type_id = isset($input['re_type_id']) ? $input['re_type_id'] : null;
-            $realEstate->province_id = \Auth::user()->userinfo->province_id;
+            $realEstate->province_id = isset($input['province_id']) ? $input['province_id'] : null;
             $realEstate->district_id = isset($input['district_id']) ? $input['district_id'] : null;
             $realEstate->ward_id = isset($input['ward_id']) ? $input['ward_id'] : null;
             $realEstate->street_id = isset($input['street_id']) ? $input['street_id'] : null;
-            $realEstate->address = \Auth::user()->userinfo->address;
+            $realEstate->address = isset($input['address']) ? $input['address'] : null;
             $realEstate->position = isset($input['position']) ? $input['position'] : '';
             $realEstate->direction_id = isset($input['direction_id']) ? $input['direction_id'] : null;
             $realEstate->exhibit_id = isset($input['exhibit_id']) ? $input['exhibit_id'] : null;

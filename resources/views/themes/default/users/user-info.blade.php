@@ -591,7 +591,10 @@
             tokenLimit  :   1,
             onAdd   :   function(r){
                 $('#method').val(r.method);
-            }
+            },
+            prePopulate: [
+                {id: $('#street-id-hidden').val(), name: $('#street-name-hidden').val()}
+            ]
         });
         $(document).on('click', '.panel-heading span.clickable', function (e) {
             var $this = $(this);
@@ -940,6 +943,9 @@
             if(re.re_type_id) {
                 $('#re-type-edit').val(re.re_type_id);
             }
+            if (re.province_id) {
+                $('#province-edit').val(re.province_id);
+            }
             if (re.district_id) {
                 $('#district-edit').val(re.district_id);
             }
@@ -948,6 +954,12 @@
             }
             if (re.street_id) {
                 $('#street-edit').val(re.street_id);
+            }
+            if (re.street_id) {
+                $('#street-id-hidden').val(re.street_id);
+            }
+            if (re.street) {
+                $('#street-name-hidden').val(re.street.name);
             }
             $('#contact-person-edit').val(re.contact_person);
             $('#contact-phone-edit').val(re.contact_phone_number);

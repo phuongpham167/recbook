@@ -416,7 +416,7 @@ class RealEstateController extends Controller
 
     public function getDetailRe($id) {
         if ($id) {
-            $re = RealEstate::find($id);
+            $re = RealEstate::with('street')->find($id);
             if ($re) {
                 $user = auth()->user();
                 $uProvince = $user->userinfo->province_id;

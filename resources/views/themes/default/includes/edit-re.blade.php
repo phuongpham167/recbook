@@ -85,22 +85,22 @@
                         </div>
                         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.street')}} </label>
                         <div class="col-sm-4">
-                            <select class="form-control" id="street-edit" name="street_id_edit">
-                                <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
-                            </select>
+                            <input type="text" class="form-control" id="street-edit" name="street_id_edit">
+                            <input type="text" class="hidden" id="street-id-hidden" />
+                            <input type="text" class="hidden" id="street-name-hidden" />
                             <p class="text-red error"></p>
                         </div>
                     </div>
                     <div class="form-group clearfix collapse" id="contactInfoEdit">
                         <div class="row form-group">
                             <div class="col-xs-12">
-                                <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.contactPerson')}}</label>
-                                <div class="col-sm-4">
-                                    <input type="text" class="form-control" name="contact_person" id="contact-person-edit">
-                                </div>
                                 <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.contactPhone')}}</label>
                                 <div class="col-sm-4">
                                     <input type="tel" class="form-control" name="contact_phone_number" id="contact-phone-edit">
+                                </div>
+                                <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.contactPerson')}}</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" name="contact_person" id="contact-person-edit">
                                 </div>
                             </div>
                         </div>
@@ -349,6 +349,31 @@
     <script>
 
         $(function () {
+            $('#contact-phone-edit').keyup(function() {
+                emptyContactInfoEdit();
+
+                let phone = $(this).val();
+                if (phone.length > 9) {
+                    $.ajax({
+                        url: "/customer-by-phone/" + phone,
+                        method: 'GET',
+                        success: function (result) {
+                            console.log('success');
+                            console.log(result);
+                            if (!jQuery.isEmptyObject(result)) {
+                                $('#contact-person-edit').val(result.name);
+                                $('#contact-address-edit').val(result.address);
+                            } else {
+                                emptyContactInfoEdit();
+                            }
+                        }
+                    });
+                }
+            });
+            function emptyContactInfoEdit() {
+                $('#contact-person-edit').val('');
+                $('#contact-address-edit').val('');
+            }
             //------------------------------------------------------------
             // COLLAPSE CONTENT
             //------------------------------------------------------------
