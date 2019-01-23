@@ -212,6 +212,7 @@
                             <i class="fa fa-star" style="color: #ccc"></i>
                         @endif
                     @endfor</p>
+                    <a class="btn btn-success"><i class="fa fa-check"></i> Chọn chào giá này</a>
             </div>
             <div class="col-md-6">
                 <div class="profile-job-left-bottom">
