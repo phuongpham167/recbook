@@ -1,3 +1,6 @@
+@php
+    \Carbon\Carbon::setLocale('vi');
+@endphp
 <nav class="navbar navbar-inverse main-menu main-menu-user-info">
     <div class="container">
         <div class="navbar-header">
@@ -57,44 +60,27 @@
                         </a>
                         <ul class="dropdown-menu message_dropdown">
                             <li class="header">Bạn có {{$unseen_message}} tin nhắn chưa đọc</li>
-                            <li>
-                                <!-- inner menu: contains the actual data -->
-                                <ul>
-                                    @foreach(\App\Conversation::orderBy('created_at', 'desc')->where(function ($q) {
-                                        $q->where('user1',auth()->user()->id)->orWhere('user2',auth()->user()->id);
-                                    })->whereHas('messages', function ($q) {$q->where('is_read',0);})->get() as $item)
-                                        <li>
-                                            <div class="row">
-                                                <div class="col-md-3">
-                                                    <a href="#a"><img width="50px" height="50px" src="/images/default-avatar.png" class="img-circle" alt="User Image"></a>
-                                                </div>
-                                                <div class="col-md-9">
-                                                    <p><a class="notice_dropdown" href="{{asset('conversation').'/'.$item->id}}">
-                                                            <?php $message =  \App\Message::orderBy('created_at', 'asc')->where('is_read',0)->take(1)->first();
-                                                                    $time = \Carbon\Carbon::now()->diffInSeconds($message->created_at);
-                                                                    if($time < 60)
-                                                                        $type = 'giây';
-                                                                    else if($time < 3600){
-                                                                        $type = 'phút';
-                                                                        $time /= 60;
-                                                                    }
-                                                                    else if($time < 86400) {
-                                                                        $type = 'giờ';
-                                                                        $time /= 3600;
-                                                                    }
-                                                                    else {
-                                                                        $type = 'ngày';
-                                                                        $time /= 86400;
-                                                                    }
-                                                            ?>
-                                                            {{\App\User::find($message->user_id)->name}}<small class="pull-right" style="margin-right: 15px; color: #cacaca"> <i class="fa fa-clock-o"></i> {{(int)$time.' '.$type.' trước'}}</small><p>{{$message->text}}</p>
-                                                    </a></p>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            </li>
+
+                            @foreach(\App\Conversation::orderBy('created_at', 'desc')->where(function ($q) {
+                                $q->where('user1',auth()->user()->id)->orWhere('user2',auth()->user()->id);
+                            })->whereHas('messages', function ($q) {$q->where('is_read',0);})->get() as $item)
+                                <li class="row" style="border-bottom: 1px solid #dddfe2;">
+                                    <a role="button" class="notice_dropdown" style="padding: 0 !important; display: block" href="{{asset('conversation').'/'.$item->id}}">
+                                        <div class="pull-left">
+                                            <img width="50px" src="/images/default-avatar.png" class="img-circle" alt="User Image">
+                                        </div>
+                                        <div class="pull-left" style="margin-left: 10px; display: block; width: 80%">
+                                            <p>
+                                                <?php $message =  \App\Message::orderBy('created_at', 'asc')->where('is_read',0)->take(1)->first();
+                                                ?>
+                                                {{\App\User::find($message->user_id)->name}}
+                                                <small class="pull-right" style="margin-right: 10px; color: #cacaca"> <i class="fa fa-clock-o"></i> {{Carbon\Carbon::parse($message->created_at)->diffForHumans(\Carbon\Carbon::now())}}</small>
+                                            </p>
+                                            <span style="font-size: 12px">{{trim_text($message->text,40)}}</span>
+                                        </div>
+                                    </a>
+                                </li>
+                            @endforeach
                             <li class="footer"><a style="color: black" href="{{asset('tin-nhan')}}">Xem tất cả tin nhắn</a></li>
                         </ul>
                         {{--<ul class="dropdown-menu">--}}
