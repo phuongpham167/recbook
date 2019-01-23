@@ -14,15 +14,12 @@
     <link rel="stylesheet" href="{{ asset('css/news.css') }}"/>
     <link rel="stylesheet" href="{{ asset('common-css/left-menu.css') }}"/>
     <link rel="stylesheet" href="{{asset('common-css/magnific-popup.css')}}"/>
-    <link rel="stylesheet" href="{{asset('plugins/toastr/toastr.min.css')}}"/>
-    <link rel="stylesheet" href="{{ asset('css/manage-real-estate.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('css/user-info.css') }}"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet"/>
     <style>
         .freelancer_tab {
             margin-bottom: 0px;
             margin-top: 0;
-            background: #e40b00;
+            background: #0c4da2;
             color: #fff;
             font-weight: 600;
             font-size: 13px;
@@ -72,14 +69,14 @@
                 @include(theme(TRUE).'.includes.message')
                 <div>
                     <ul class="nav nav-tabs">
-                        <li role="presentation" class="active"><a class="freelancer_tab"
+                        <li role="presentation" @if(url()->current() == asset('du-an/tu-van-bat-dong-san') || url()->current() == asset('du-an')) class="active" @endif><a class="freelancer_tab"
                                                                   href="/du-an/tu-van-bat-dong-san">Tư vấn bất động
                                 sản</a></li>
-                        <li role="presentation"><a class="freelancer_tab" href="/du-an/tu-van-tai-chinh">Tư vấn tài
+                        <li role="presentation" @if(url()->current() == asset('du-an/tu-van-tai-chinh')) class="active" @endif><a class="freelancer_tab" href="/du-an/tu-van-tai-chinh">Tư vấn tài
                                 chính</a></li>
-                        <li role="presentation"><a class="freelancer_tab" href="/du-an/tu-van-thiet-ke">Tư vấn thiết
+                        <li role="presentation" @if(url()->current() == asset('du-an/tu-van-thiet-ke')) class="active" @endif><a class="freelancer_tab" href="/du-an/tu-van-thiet-ke">Tư vấn thiết
                                 kế</a></li>
-                        <li role="presentation"><a class="freelancer_tab" href="/du-an/tu-van-phong-thuy">Tư vấn phong
+                        <li role="presentation" @if(url()->current() == asset('du-an/tu-van-phong-thuy')) class="active" @endif><a class="freelancer_tab" href="/du-an/tu-van-phong-thuy">Tư vấn phong
                                 thủy</a></li>
                         <li role="presentation"><a class="freelancer_tab btn-add" href="#a"><i class="fa fa-plus"
                                                                                                aria-hidden="true"></i>
@@ -90,26 +87,26 @@
                         <div class="list_news">
                             @foreach($data as $item)
                                 <dl>
-                                    <dt class="text-center">
-                                        <a href="#a"><img width="110" height="110"
+                                    <dt class="text-center" style="width: 150px; height: 150px">
+                                        <img width="100%" height="100%"
                                                           src="{{\App\User::find($item->user_id)->userinfo->avatar()?\App\User::find($item->user_id)->userinfo->avatar():asset('/images/default-avatar.png')}}"
-                                                          alt=""></a>
-                                        <p>{{\App\User::find($item->user_id)->userinfo->full_name}}</p>
+                                                          alt="">
+                                        <p style="margin-top: 10px">{{\App\User::find($item->user_id)->userinfo->full_name}}</p>
                                     </dt>
-                                    <dd>
-                                        <h3><a href="#a">{{$item->title}}</a></h3>
-                                        <span class="info">Đánh giá: <i class="fa fa-star" aria-hidden="true"></i><i
-                                                class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star"
-                                                                                             aria-hidden="true"></i><i
-                                                class="fa fa-star-half-o" aria-hidden="true"></i><i class="fa fa-star-o"
-                                                                                                    aria-hidden="true"></i></span>
+                                    <dd style="margin-left: 180px">
+                                        <h3><a style="text-transform: uppercase; color: #0c4da2; font-size: 18px" href="#a">{{$item->title}}</a></h3>
+                                        <span class="info">Đánh giá: <span style="color: gold"><i class="fa fa-star" aria-hidden="true"></i><i
+                                                    class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star"
+                                                                                                 aria-hidden="true"></i><i
+                                                    class="fa fa-star-half-o" aria-hidden="true"></i><i class="fa fa-star-o"
+                                                                                                        aria-hidden="true"></i></span></span>
                                         <span
-                                            class="info">Ngân sách: {{number_format($item->budget)}} {{\App\Currency::where("default",1)->first()->icon}}</span>
+                                            class="info">Ngân sách: <span style="font-weight: bold">{{number_format($item->budget)}} {{\App\Currency::where("default",1)->first()->icon}}</span></span>
                                         <span
-                                            class="info">Khu vực: {{\App\Province::find($item->province_id)->name}}</span>
+                                            class="info">Khu vực: <span style="font-weight: bold">{{\App\Province::find($item->province_id)->name}}</span></span>
                                         <span
-                                            class="info">Thời hạn: {{\Carbon\Carbon::parse($item->end_at)->format('d/m/Y')}}</span>
-                                        <p class="tablet-lg">{{$item->short_description}}...</p>
+                                            class="info">Thời hạn: <span style="font-weight: bold">{{\Carbon\Carbon::parse($item->end_at)->format('d/m/Y')}}</span></span>
+                                        <p style="font-size: 15px" class="tablet-lg">{{trim_text($item->description,200)}} <a href="#a" style="color: #0c4da2; font-size: 15px"><em>Xem thêm</em></a></p>
                                         <button href="#" class="btn btn-success pull-right">Chào giá</button>
                                     </dd>
                                 </dl>
