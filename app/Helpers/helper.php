@@ -5272,3 +5272,14 @@ function trim_text($input, $length, $ellipses = true, $strip_html = true) {
 
     return $trimmed_text;
 }
+
+function ads_display($location){
+    $province   =   auth()->user()->userinfo?auth()->user()->userinfo->province_id:0;
+    $banner =   \App\Banner::where('location', $location)->where('province_id', $province);
+    if($banner->count() == 0){
+        $banner =   \App\Banner::where('location', $location)->where('province_id', 0)->get();
+    }else
+        $banner =   $banner->get();
+
+    return $banner;
+}
