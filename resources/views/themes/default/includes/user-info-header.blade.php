@@ -50,9 +50,13 @@
                     <li class="dropdown">
                         {{--<a href="{{ route('chat') }}" title="Tin nhắn"><i class="fa fa-comment" aria-hidden="true"></i></a>--}}
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true" title="Tin nhắn"><i class="fa fa-comment" aria-hidden="true"></i>
+                            <?php $unseen_message = \App\Conversation::whereHas('messages', function ($q) {$q->where('is_read',0);})->count() ?>
+                            @if( $unseen_message!= 0)
+                                <span class="label label-success">{{$unseen_message}}</span>
+                            @endif
                         </a>
                         <ul class="dropdown-menu message_dropdown">
-                            <li class="header">Bạn có {{\App\Conversation::whereHas('messages', function ($q) {$q->where('is_read',0);})->count()}} tin nhắn chưa đọc</li>
+                            <li class="header">Bạn có {{$unseen_message}} tin nhắn chưa đọc</li>
                             <li>
                                 <!-- inner menu: contains the actual data -->
                                 <ul>
