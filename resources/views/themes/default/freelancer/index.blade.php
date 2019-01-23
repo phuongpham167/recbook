@@ -78,7 +78,7 @@
                                 kế</a></li>
                         <li role="presentation" @if(url()->current() == asset('du-an/tu-van-phong-thuy')) class="active" @endif><a class="freelancer_tab" href="/du-an/tu-van-phong-thuy">Tư vấn phong
                                 thủy</a></li>
-                        <li role="presentation"><a class="freelancer_tab btn-add" href="#a"><i class="fa fa-plus"
+                        <li role="presentation" class="pull-right"><a class="btn-add" style="background: #2db964; color: white" href="#a"><i class="fa fa-plus"
                                                                                                aria-hidden="true"></i>
                                 Đăng dự án</a></li>
                     </ul>
@@ -94,7 +94,7 @@
                                         <p style="margin-top: 10px">{{\App\User::find($item->user_id)->userinfo->full_name}}</p>
                                     </dt>
                                     <dd style="margin-left: 180px">
-                                        <h3><a style="text-transform: uppercase; color: #0c4da2; font-size: 18px" href="#a">{{$item->title}}</a></h3>
+                                        <h3><a style="text-transform: uppercase; color: #0c4da2; font-size: 18px" href="{{route('freelancerDetail', ['id'=>$item->id, 'slug'=>to_slug($item->title)])}}">{{$item->title}}</a></h3>
                                         <span class="info">Đánh giá: <span style="color: gold"><i class="fa fa-star" aria-hidden="true"></i><i
                                                     class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star"
                                                                                                  aria-hidden="true"></i><i
@@ -106,7 +106,7 @@
                                             class="info">Khu vực: <span style="font-weight: bold">{{\App\Province::find($item->province_id)->name}}</span></span>
                                         <span
                                             class="info">Thời hạn: <span style="font-weight: bold">{{\Carbon\Carbon::parse($item->end_at)->format('d/m/Y')}}</span></span>
-                                        <p style="font-size: 15px" class="tablet-lg">{{trim_text($item->description,200)}} <a href="#a" style="color: #0c4da2; font-size: 15px"><em>Xem thêm</em></a></p>
+                                        <p style="font-size: 15px" class="tablet-lg">{{trim_text($item->description,200)}} <a href="{{route('freelancerDetail', ['id'=>$item->id, 'slug'=>to_slug($item->title)])}}" style="color: #0c4da2; font-size: 15px"><em>Xem thêm</em></a></p>
                                         <button href="#" class="btn btn-success pull-right">Chào giá</button>
                                     </dd>
                                 </dl>

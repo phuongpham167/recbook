@@ -132,6 +132,6 @@
         text-align: center;
         font-size: 9px;
         padding: 2px 3px;
-        line-height: .9; 
+        line-height: .9;
    }
 </style>
