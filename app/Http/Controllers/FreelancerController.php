@@ -55,6 +55,17 @@ class FreelancerController extends Controller
             'menuData'  =>  $this->menuFE
         ]);
     }
+    public function show($id, $slug)
+    {
+        $data = Freelancer::find($id);
+        if (!empty($data)) {
+            return v('freelancer.show', [
+                'data' => $data,
+                'categories' => $this->flcategories,
+                'menuData' => $this->menuFE
+            ]);
+        }
+    }
 
     public function postCreate(CreateFreelancerRequest $request)
     {

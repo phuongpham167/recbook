@@ -99,6 +99,8 @@ Route::group(['middleware'=>'auth'], function(){
     });
 
     Route::group(['prefix' => 'du-an'], function () {
+        Route::get('', ['as' => 'freelancerList', 'uses' => 'FreelancerController@index']);
+        Route::get('/chi-tiet/{id}/{slug}', ['as' => 'freelancerDetail', 'uses' => 'FreelancerController@show']);
         Route::get('/{filter?}', ['as' => 'freelancerList', 'uses' => 'FreelancerController@index'])->where('filter', 'tu-van-bat-dong-san|tu-van-tai-chinh|tu-van-thiet-ke|tu-van-phong-thuy');
         Route::post('/tao-moi', ['as' => 'freelancerCreate', 'uses' => 'FreelancerController@postCreate']);
 //        Route::get('/chi-tiet/{id}/{slug}', ['as' => 'freelancerDetail', 'uses' => 'FreelancerController@show']);
