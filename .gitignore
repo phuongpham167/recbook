@@ -19,3 +19,4 @@ storage
 /public/thumbs
 /public/frontend_web
 package-lock\.json
+.htaccess
