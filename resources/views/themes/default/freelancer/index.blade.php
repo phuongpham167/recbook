@@ -110,7 +110,7 @@
                                         <span
                                             class="info">Thời hạn: {{\Carbon\Carbon::parse($item->end_at)->format('d/m/Y')}}</span>
                                         <p class="tablet-lg">{{$item->short_description}}...</p>
-                                        <button href="{{route('freelancerDetail', ['id'=>$item->id, 'slug'=>to_slug($item->title)])}}" class="btn btn-success pull-right">Chào giá</button>
+                                        <a href="{{route('freelancerDetail', ['id'=>$item->id, 'slug'=>to_slug($item->title)])}}" class="btn btn-success pull-right">Chào giá</a>
                                     </dd>
                                 </dl>
                             @endforeach
