@@ -76,4 +76,10 @@ class User extends Authenticatable
     public function avatar(){
         return $this->userinfo?$this->userinfo->avatar():asset('/images/default-avatar.png');
     }
+    public function owner(){
+        return $this->hasMany(Freelancer::class);
+    }
+    public function owner_rate(){
+        return lam_tron($this->owner()->average('rate'));
+    }
 }

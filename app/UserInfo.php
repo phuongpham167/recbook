@@ -18,4 +18,7 @@ class UserInfo extends Model
             return asset('/images/default-avatar.png');
         }
     }
+    public function province(){
+        return $this->belongsTo(Province::class);
+    }
 }
