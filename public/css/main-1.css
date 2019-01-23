@@ -92,7 +92,7 @@ button {
 }
 
 .top_page .user-action a i {
-    color: #e40b00;
+    color: #0c4da2;
     margin-right: 5px;
 }
 
@@ -100,7 +100,7 @@ button {
 
 .banner-header .left a {
     display: inline-block;
-    margin: 15px 0;
+    /*margin: 15px 0;*/
 }
 
 .banner-header .right a {
@@ -113,7 +113,7 @@ button {
 }
 
 .main-menu {
-    background: #e40b00;
+    background: #0c4da2;
     border: none;
     border-radius: 0;
     margin-bottom: 0;
@@ -134,7 +134,7 @@ button {
 
 .main-menu .main-menu-list ul li ul {
     width: 260px;
-    background: #e40b00;
+    background: #0c4da2;
     border: none;
     border-radius: 0;
     -webkit-box-shadow: none;
@@ -190,7 +190,7 @@ button {
 
 .main-menu .main-menu-list .menu-search button i {
     background: #e9e9e9;
-    color: #e40b00;
+    color: #0c4da2;
     cursor: pointer;
     display: block;
     font-size: 16px;
@@ -333,7 +333,7 @@ button {
 }
 
 .menu-footer {
-    background-color: #e40b00;
+    background-color: #0c4da2;
     clear: both;
     margin-top: 15px;
 }
@@ -456,13 +456,13 @@ button {
 }
 
 .list-re-item .re-item .price .lprice i {
-    color: #e40b00;
+    color: #0c4da2;
     margin-right: 2px;
 }
 
 .list-re-item .re-item .price .rprice {
     text-align: center;
-    background: #e40b00;
+    background: #0c4da2;
     line-height: 30px;
     color: #fff;
     padding: 0;
@@ -474,11 +474,11 @@ button {
 }
 
 .list-re-item .hot a {
-    color: #e40b00 !important;
+    color: #0c4da2 !important;
 }
 
 .list-re-item .vip a {
-    color: #e40b00 !important;
+    color: #0c4da2 !important;
 }
 
 .code_row {
@@ -504,7 +504,7 @@ button {
 }
 
 .title_box strong {
-    border-bottom: 2px solid #e40b00;
+    border-bottom: 2px solid #0c4da2;
     display: inline-block;
     font-size: 20px;
     line-height: 32px;
@@ -567,7 +567,7 @@ button {
     text-align: center;
     cursor: pointer;
     display: block;
-    color: #e40b00;
+    color: #0c4da2;
     background: #e9e9e9;
     font-size: 16px;
 }
@@ -698,7 +698,7 @@ p.more {
 
 p.more a {
     display: inline-block;
-    background: #e40b00;
+    background: #0c4da2;
     color: #fff;
     padding: 8px 20px;
     text-transform: uppercase;
@@ -767,7 +767,7 @@ p.more a {
 }
 
 .vip_box > div dl dd span {
-    color: #e40b00;
+    color: #0c4da2;
     font-weight: 600;
 }
 
@@ -792,7 +792,7 @@ p.more a {
 }
 
 .three_cols .three_i .title_col {
-    background: #e40b00;
+    background: #0c4da2;
     color: #fff;
     line-height: 45px;
     text-indent: 15px;
@@ -833,7 +833,7 @@ p.more a {
     line-height: 50px;
     font-weight: 600;
     padding-left: 15px;
-    border-left: 15px solid #e40b00;
+    border-left: 15px solid #0c4da2;
 }
 
 /*
@@ -842,7 +842,7 @@ p.more a {
 
 .title-short-section {
     background: #f8f8f8;
-    color: #e40b00;
+    color: #0c4da2;
     font-size: 17px;
     font-weight: 600;
     padding: 10px;

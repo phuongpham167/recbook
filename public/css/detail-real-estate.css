@@ -9,7 +9,7 @@ ul li {
 
 .detail-content-wrap .detail-content .title,
 .detail-content-wrap .detail-content .title-second {
-  color: #e40b00;
+  color: #0c4da2;
   font-size: 20px;
   text-transform: uppercase;
   font-weight: 600;
@@ -24,7 +24,7 @@ ul li {
 .detail-content-wrap .detail-content .brief_detail__right .price,
 .detail-content-wrap .detail-content .brief_detail__right .is_deal {
   font-size: 20px;
-  color: #e40b00;
+  color: #0c4da2;
 }
 
 .detail-content-wrap .detail-content .brief_detail__right .price {
