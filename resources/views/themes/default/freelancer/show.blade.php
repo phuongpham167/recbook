@@ -191,6 +191,7 @@
         </div>
         <div class="col-md-12 chao-gia">
             @include(theme(TRUE).'.includes.message')
+            @if($data->status == 'opem')
             <form method="post" action="{{route('freelancerDeal', ['id'=>$data->id])}}">
                 {{csrf_field()}}
                 <h3 style="border-bottom: 1px dotted #333">Thông tin chào giá</h3>
@@ -240,7 +241,11 @@
                     </div>
                 </div>
             </form>
-
+            @else
+                <div class="jumbotron" style="padding: 14px; margin-top: 10px">
+                    Người đăng đã chọn được người thực hiện dự án này!
+                </div>
+            @endif
         </div>
         <div class="col-md-12 row" style="background: #f7f7f7; border-radius: 4px; margin-top: 20px; padding: 8px 5px">
                 <div class="col-md-2">
