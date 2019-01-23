@@ -22,7 +22,7 @@
         .freelancer_tab {
             margin-bottom: 0px;
             margin-top: 0;
-            background: #e40b00;
+            background: #0c4da2;
             color: #fff;
             font-weight: 600;
             font-size: 13px;
@@ -91,13 +91,13 @@
                             @foreach($data as $item)
                                 <dl>
                                     <dt class="text-center">
-                                        <a href="#a"><img width="110" height="110"
+                                        <a href="{{route('freelancerDetail', ['id'=>$item->id, 'slug'=>to_slug($item->title)])}}"><img width="110" height="110"
                                                           src="{{\App\User::find($item->user_id)->userinfo->avatar()?\App\User::find($item->user_id)->userinfo->avatar():asset('/images/default-avatar.png')}}"
                                                           alt=""></a>
                                         <p>{{\App\User::find($item->user_id)->userinfo->full_name}}</p>
                                     </dt>
                                     <dd>
-                                        <h3><a href="#a">{{$item->title}}</a></h3>
+                                        <h3><a href="{{route('freelancerDetail', ['id'=>$item->id, 'slug'=>to_slug($item->title)])}}">{{$item->title}}</a></h3>
                                         <span class="info">Đánh giá: <i class="fa fa-star" aria-hidden="true"></i><i
                                                 class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star"
                                                                                              aria-hidden="true"></i><i
@@ -110,7 +110,7 @@
                                         <span
                                             class="info">Thời hạn: {{\Carbon\Carbon::parse($item->end_at)->format('d/m/Y')}}</span>
                                         <p class="tablet-lg">{{$item->short_description}}...</p>
-                                        <button href="#" class="btn btn-success pull-right">Chào giá</button>
+                                        <button href="{{route('freelancerDetail', ['id'=>$item->id, 'slug'=>to_slug($item->title)])}}" class="btn btn-success pull-right">Chào giá</button>
                                     </dd>
                                 </dl>
                             @endforeach
