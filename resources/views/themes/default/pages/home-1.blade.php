@@ -11,6 +11,21 @@
 @push('style')
     <link rel="stylesheet" href="{{ asset('common-css/flexslider.css') }}"/>
     <link rel="stylesheet" href="{{ asset('css/home-1.css') }}"/>
+    <style>
+        .btn:focus, .btn:active, button:focus, button:active {
+            outline: none !important;
+            box-shadow: none !important;
+        }
+
+        #image-gallery .modal-footer{
+            display: block;
+        }
+
+        .thumb{
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+    </style>
 @endpush
 
 @section('content')
@@ -505,109 +520,41 @@
                             </p>
                             <div class="row">
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                                    <div class="col-lg-5 col-md-4 col-xs-6 thumb">
                                         <a class="thumbnail" href="#" data-image-id="" data-toggle="modal" data-title=""
-                                           data-image="https://images.pexels.com/photos/853168/pexels-photo-853168.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+                                           data-image="http://batdongsanvinpearl.com/wp-content/uploads/2017/05/Thecentury.jpg"
                                            data-target="#image-gallery">
                                             <img class="img-thumbnail"
-                                                 src="https://images.pexels.com/photos/853168/pexels-photo-853168.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+                                                 src="http://batdongsanvinpearl.com/wp-content/uploads/2017/05/Thecentury.jpg"
                                                  alt="Another alt text">
                                         </a>
                                     </div>
-                                    <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                                    <div class="col-lg-5 col-md-4 col-xs-6 thumb">
                                         <a class="thumbnail" href="#" data-image-id="" data-toggle="modal" data-title=""
-                                           data-image="https://images.pexels.com/photos/158971/pexels-photo-158971.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+                                           data-image="https://vneconomy.mediacdn.vn/zoom/700_400/2018/6/14/anh-3-1528966957938203670716-99-0-818-1280-crop-15289669682791572174433.jpg"
                                            data-target="#image-gallery">
                                             <img class="img-thumbnail"
-                                                 src="https://images.pexels.com/photos/158971/pexels-photo-158971.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+                                                 src="https://vneconomy.mediacdn.vn/zoom/700_400/2018/6/14/anh-3-1528966957938203670716-99-0-818-1280-crop-15289669682791572174433.jpg"
                                                  alt="Another alt text">
                                         </a>
                                     </div>
-
-                                    <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-5 col-md-4 col-xs-6 thumb">
                                         <a class="thumbnail" href="#" data-image-id="" data-toggle="modal" data-title=""
-                                           data-image="https://images.pexels.com/photos/305070/pexels-photo-305070.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+                                           data-image="https://znews-photo.zadn.vn/w860/Uploaded/Wagtrb/2016_09_13/vin_hom_tan_cang.jpg"
                                            data-target="#image-gallery">
                                             <img class="img-thumbnail"
-                                                 src="https://images.pexels.com/photos/305070/pexels-photo-305070.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+                                                 src="https://znews-photo.zadn.vn/w860/Uploaded/Wagtrb/2016_09_13/vin_hom_tan_cang.jpg"
                                                  alt="Another alt text">
                                         </a>
                                     </div>
-                                    <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                                    <div class="col-lg-5 col-md-4 col-xs-6 thumb">
                                         <a class="thumbnail" href="#" data-image-id="" data-toggle="modal" data-title="Test1"
-                                           data-image="https://images.pexels.com/photos/853168/pexels-photo-853168.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+                                           data-image="http://varisme.org.vn/wp-content/uploads/2018/04/angia_xcwg-862x464.jpg"
                                            data-target="#image-gallery">
                                             <img class="img-thumbnail"
-                                                 src="https://images.pexels.com/photos/853168/pexels-photo-853168.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-                                                 alt="Another alt text">
-                                        </a>
-                                    </div>
-                                    <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                                        <a class="thumbnail" href="#" data-image-id="" data-toggle="modal" data-title="Im so nice"
-                                           data-image="https://images.pexels.com/photos/158971/pexels-photo-158971.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-                                           data-target="#image-gallery">
-                                            <img class="img-thumbnail"
-                                                 src="https://images.pexels.com/photos/158971/pexels-photo-158971.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-                                                 alt="Another alt text">
-                                        </a>
-                                    </div>
-
-
-
-                                    <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                                        <a class="thumbnail" href="#" data-image-id="" data-toggle="modal" data-title="Im so nice"
-                                           data-image="https://images.pexels.com/photos/305070/pexels-photo-305070.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-                                           data-target="#image-gallery">
-                                            <img class="img-thumbnail"
-                                                 src="https://images.pexels.com/photos/305070/pexels-photo-305070.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-                                                 alt="Another alt text">
-                                        </a>
-                                    </div>
-                                    <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                                        <a class="thumbnail" href="#" data-image-id="" data-toggle="modal" data-title="Im so nice"
-                                           data-image="https://images.pexels.com/photos/853168/pexels-photo-853168.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-                                           data-target="#image-gallery">
-                                            <img class="img-thumbnail"
-                                                 src="https://images.pexels.com/photos/853168/pexels-photo-853168.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-                                                 alt="Another alt text">
-                                        </a>
-                                    </div>
-                                    <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                                        <a class="thumbnail" href="#" data-image-id="" data-toggle="modal" data-title="Im so nice"
-                                           data-image="https://images.pexels.com/photos/158971/pexels-photo-158971.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-                                           data-target="#image-gallery">
-                                            <img class="img-thumbnail"
-                                                 src="https://images.pexels.com/photos/158971/pexels-photo-158971.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-                                                 alt="Another alt text">
-                                        </a>
-                                    </div>
-
-
-
-                                    <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                                        <a class="thumbnail" href="#" data-image-id="" data-toggle="modal" data-title="Im so nice"
-                                           data-image="https://images.pexels.com/photos/305070/pexels-photo-305070.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-                                           data-target="#image-gallery">
-                                            <img class="img-thumbnail"
-                                                 src="https://images.pexels.com/photos/305070/pexels-photo-305070.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-                                                 alt="Another alt text">
-                                        </a>
-                                    </div>
-                                    <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                                        <a class="thumbnail" href="#" data-image-id="" data-toggle="modal" data-title="Im so nice"
-                                           data-image="https://images.pexels.com/photos/853168/pexels-photo-853168.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-                                           data-target="#image-gallery">
-                                            <img class="img-thumbnail"
-                                                 src="https://images.pexels.com/photos/853168/pexels-photo-853168.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-                                                 alt="Another alt text">
-                                        </a>
-                                    </div>
-                                    <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                                        <a class="thumbnail" href="#" data-image-id="" data-toggle="modal" data-title="Im so nice"
-                                           data-image="https://images.pexels.com/photos/158971/pexels-photo-158971.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-                                           data-target="#image-gallery">
-                                            <img class="img-thumbnail"
-                                                 src="https://images.pexels.com/photos/158971/pexels-photo-158971.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+                                                 src="http://varisme.org.vn/wp-content/uploads/2018/04/angia_xcwg-862x464.jpg"
                                                  alt="Another alt text">
                                         </a>
                                     </div>
@@ -615,7 +562,7 @@
 
 
                                 <div class="modal fade" id="image-gallery" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-lg">
+                                    <div class="modal-dialog modal-lg" style="margin-top: 90px">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h4 class="modal-title" id="image-gallery-title"></h4>
@@ -625,7 +572,7 @@
                                             <div class="modal-body">
                                                 <img id="image-gallery-image" class="img-responsive col-md-12" src="">
                                             </div>
-                                            <div class="modal-footer">
+                                            <div class="modal-footer" style="margin-top: 570px">
                                                 <button type="button" class="btn btn-secondary float-left" id="show-previous-image"><i class="fa fa-arrow-left"></i>
                                                 </button>
 
@@ -715,6 +662,99 @@
             moveSlides: 1,
             pager: false
         });
+
+        let modalId = $('#image-gallery');
+
+        $(document)
+            .ready(function () {
+
+                loadGallery(true, 'a.thumbnail');
+
+                //This function disables buttons when needed
+                function disableButtons(counter_max, counter_current) {
+                    $('#show-previous-image, #show-next-image')
+                        .show();
+                    if (counter_max === counter_current) {
+                        $('#show-next-image')
+                            .hide();
+                    } else if (counter_current === 1) {
+                        $('#show-previous-image')
+                            .hide();
+                    }
+                }
+
+                /**
+                 *
+                 * @param setIDs        Sets IDs when DOM is loaded. If using a PHP counter, set to false.
+                 * @param setClickAttr  Sets the attribute for the click handler.
+                 */
+
+                function loadGallery(setIDs, setClickAttr) {
+                    let current_image,
+                        selector,
+                        counter = 0;
+
+                    $('#show-next-image, #show-previous-image')
+                        .click(function () {
+                            if ($(this)
+                                    .attr('id') === 'show-previous-image') {
+                                current_image--;
+                            } else {
+                                current_image++;
+                            }
+
+                            selector = $('[data-image-id="' + current_image + '"]');
+                            updateGallery(selector);
+                        });
+
+                    function updateGallery(selector) {
+                        let $sel = selector;
+                        current_image = $sel.data('image-id');
+                        $('#image-gallery-title')
+                            .text($sel.data('title'));
+                        $('#image-gallery-image')
+                            .attr('src', $sel.data('image'));
+                        disableButtons(counter, $sel.data('image-id'));
+                    }
+
+                    if (setIDs == true) {
+                        $('[data-image-id]')
+                            .each(function () {
+                                counter++;
+                                $(this)
+                                    .attr('data-image-id', counter);
+                            });
+                    }
+                    $(setClickAttr)
+                        .on('click', function () {
+                            updateGallery($(this));
+                        });
+                }
+            });
+
+        // build key actions
+        $(document)
+            .keydown(function (e) {
+                switch (e.which) {
+                    case 37: // left
+                        if ((modalId.data('bs.modal') || {})._isShown && $('#show-previous-image').is(":visible")) {
+                            $('#show-previous-image')
+                                .click();
+                        }
+                        break;
+
+                    case 39: // right
+                        if ((modalId.data('bs.modal') || {})._isShown && $('#show-next-image').is(":visible")) {
+                            $('#show-next-image')
+                                .click();
+                        }
+                        break;
+
+                    default:
+                        return; // exit this handler for other keys
+                }
+                e.preventDefault(); // prevent the default action (scroll / move caret)
+            });
 
     </script>
 @endpush
