@@ -125,4 +125,13 @@
         white-space: nowrap;
         border-bottom: 1px solid #f4f4f4;
    }
+   .label {
+        position: absolute;
+        top: 9px;
+        right: 7px;
+        text-align: center;
+        font-size: 9px;
+        padding: 2px 3px;
+        line-height: .9; 
+   }
 </style>
