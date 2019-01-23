@@ -52,22 +52,38 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true" title="Tin nhắn"><i class="fa fa-comment" aria-hidden="true"></i>
                         </a>
                         <ul class="dropdown-menu message_dropdown">
-                            <li class="header">You have 4 messages</li>
+                            <li class="header">Bạn có {{\App\Conversation::whereHas('messages', function ($q) {$q->where('is_read',0);})->count()}} tin nhắn chưa đọc</li>
                             <li>
                                 <!-- inner menu: contains the actual data -->
                                 <ul>
                                     @foreach(\App\Conversation::orderBy('created_at', 'desc')->where(function ($q) {
                                         $q->where('user1',auth()->user()->id)->orWhere('user2',auth()->user()->id);
-                                    })->take(5)->get() as $item)
+                                    })->whereHas('messages', function ($q) {$q->where('is_read',0);})->get() as $item)
                                         <li>
                                             <div class="row">
                                                 <div class="col-md-3">
                                                     <a href="#a"><img width="50px" height="50px" src="/images/default-avatar.png" class="img-circle" alt="User Image"></a>
                                                 </div>
                                                 <div class="col-md-9">
-                                                    <p><a class="notice_dropdown" href="#a">
-                                                            <?php $message =  \App\Message::orderBy('created_at', 'desc')->take(1)->first()?>
-                                                            {{\App\User::find($message->user_id)->name}}<small style=" color: #cacaca"> <i class="fa fa-clock-o"></i> 5 mins</small><p>{{$message->text}}</p>
+                                                    <p><a class="notice_dropdown" href="{{asset('conversation').'/'.$item->id}}">
+                                                            <?php $message =  \App\Message::orderBy('created_at', 'asc')->where('is_read',0)->take(1)->first();
+                                                                    $time = \Carbon\Carbon::now()->diffInSeconds($message->created_at);
+                                                                    if($time < 60)
+                                                                        $type = 'giây';
+                                                                    else if($time < 3600){
+                                                                        $type = 'phút';
+                                                                        $time /= 60;
+                                                                    }
+                                                                    else if($time < 86400) {
+                                                                        $type = 'giờ';
+                                                                        $time /= 3600;
+                                                                    }
+                                                                    else {
+                                                                        $type = 'ngày';
+                                                                        $time /= 86400;
+                                                                    }
+                                                            ?>
+                                                            {{\App\User::find($message->user_id)->name}}<small class="pull-right" style="margin-right: 15px; color: #cacaca"> <i class="fa fa-clock-o"></i> {{(int)$time.' '.$type.' trước'}}</small><p>{{$message->text}}</p>
                                                     </a></p>
                                                 </div>
                                             </div>
@@ -75,7 +91,7 @@
                                     @endforeach
                                 </ul>
                             </li>
-                            <li class="footer"><a href="#">See All Messages</a></li>
+                            <li class="footer"><a style="color: black" href="{{asset('tin-nhan')}}">Xem tất cả tin nhắn</a></li>
                         </ul>
                         {{--<ul class="dropdown-menu">--}}
                         {{--</ul>--}}
