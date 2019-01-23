@@ -154,9 +154,16 @@ button {
   padding: 2px 11px 0 15px;
 }
 
+.main-menu .main-menu-list .dropdown1 {
+  color: black;
+  font-size: 13px;
+  line-height: 40px;
+  padding: 2px 11px 0 15px;
+}
+
 .main-menu .main-menu-list ul li ul {
   width: 260px;
-  background: #e40b00;
+  background: #ececec;
   border: none;
   border-radius: 0;
   -webkit-box-shadow: none;

@@ -43,12 +43,84 @@
                                 <li><a>{{$authFriendRequest->fuser1->userinfo->full_name}}</a> <a href="{{route('friend.confirm.request', [$authFriendRequest->fuser1->id])}}" class="btn btn-primary pull-right btn-accept-rq"><i class="fa fa-plus"></i> Chấp nhận</a></li>
                                 @endforeach
                             @else
-                                <li><a>Không có lời mời kết bạn nào</a></li>
+                                <li><a class="dropdown1">Không có lời mời kết bạn nào</a></li>
                             @endif
                         </ul>
                     </li>
                     <li class="dropdown">
-                        <a href="{{ route('chat') }}" title="Tin nhắn"><i class="fa fa-comment" aria-hidden="true"></i></a>
+                        {{--<a href="{{ route('chat') }}" title="Tin nhắn"><i class="fa fa-comment" aria-hidden="true"></i></a>--}}
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true" title="Tin nhắn"><i class="fa fa-comment" aria-hidden="true"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="header">You have 4 messages</li>
+                            <li>
+                                <!-- inner menu: contains the actual data -->
+                                <ul>
+                                    <li><!-- start message -->
+                                        <a class="dropdown1" href="#">
+                                            <div class="pull-left">
+                                                <img width="50px" height="50px" src="/images/default-avatar.png" class="img-circle" alt="User Image">
+                                            </div>
+                                            <h4>
+                                                Support Team
+                                                <small><i class="fa fa-clock-o"></i> 5 mins</small>
+                                            </h4>
+                                            <p>Why not buy a new awesome theme?</p>
+                                        </a>
+                                    </li>
+                                    <!-- end message -->
+                                    <li>
+                                        <a class="dropdown1" href="#">
+                                            <div class="pull-left">
+                                                <img width="50px" height="50px" src="/images/default-avatar.png" class="img-circle" alt="User Image">
+                                            </div>
+                                            <h4>
+                                                AdminLTE Design Team
+                                                <small><i class="fa fa-clock-o"></i> 2 hours</small>
+                                            </h4>
+                                            <p>Why not buy a new awesome theme?</p>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown1" href="#">
+                                            <div class="pull-left">
+                                                <img width="50px" height="50px" src="/images/default-avatar.png" class="img-circle" alt="User Image">
+                                            </div>
+                                            <h4>
+                                                Developers
+                                                <small><i class="fa fa-clock-o"></i> Today</small>
+                                            </h4>
+                                            <p>Why not buy a new awesome theme?</p>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown1" href="#">
+                                            <div class="pull-left">
+                                                <img width="50px" height="50px" src="/images/default-avatar.png" class="img-circle" alt="User Image">
+                                            </div>
+                                            <h4>
+                                                Sales Department
+                                                <small><i class="fa fa-clock-o"></i> Yesterday</small>
+                                            </h4>
+                                            <p>Why not buy a new awesome theme?</p>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown1" href="#">
+                                            <div class="pull-left">
+                                                <img width="50px" height="50px" src="/images/default-avatar.png" class="img-circle" alt="User Image">
+                                            </div>
+                                            <h4>
+                                                Reviewers
+                                                <small><i class="fa fa-clock-o"></i> 2 days</small>
+                                            </h4>
+                                            <p>Why not buy a new awesome theme?</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="footer"><a href="#">See All Messages</a></li>
+                        </ul>
                         {{--<ul class="dropdown-menu">--}}
                         {{--</ul>--}}
                     </li>
@@ -67,3 +139,21 @@
         </div>
     </div>
 </nav>
+<style>
+   .dropdown-menu>li .menu>li>a {
+        margin: 0;
+        padding: 10px 10px;
+    }
+    .dropdown-menu>li .menu>li>a, .dropdown-menu>li .menu>li>a, .dropdown-menu>li .menu>li>a {
+        display: block;
+        white-space: nowrap;
+        border-bottom: 1px solid #f4f4f4;
+    }
+    .dropdown-menu>li h4 p{
+        padding: 0;
+        margin: -35px 0 0 60px;
+        color: #444444;
+        font-size: 15px;
+        position: relative;
+    }
+</style>
