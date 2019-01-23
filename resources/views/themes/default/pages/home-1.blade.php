@@ -17,7 +17,10 @@
     @include(theme(TRUE).'.includes.header-1')
     <div class="content-body">
         <section class="slider container" style="margin-top: 20px">
-            <div class="col-md-4">
+            <div class="col-md-4"  style="
+    background: #000;
+    height: 274px;
+">
                 @foreach(ads_display(1) as $item)
                     {!! $item->content !!}
                 @endforeach
