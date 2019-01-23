@@ -82,4 +82,10 @@ class User extends Authenticatable
     public function owner_rate(){
         return lam_tron($this->owner()->average('rate'));
     }
+    public function dealer(){
+        return $this->hasMany(FLDeal::class);
+    }
+    public function dealer_rate(){
+        return lam_tron($this->dealer()->average('rate'));
+    }
 }
