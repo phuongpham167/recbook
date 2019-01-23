@@ -55,6 +55,62 @@
         .profile-job-left-bottom .skill {
             margin-top: 15px;
         }
+        .profile.choosen{
+            box-shadow: 6px 9px 11px 0px rgba(0, 0, 0, 0.2);
+            border: 1px solid #e4e;
+        }
+        .ribbon {
+            width: 150px;
+            height: 150px;
+            overflow: hidden;
+            position: absolute;
+            z-index: 999;
+        }
+        .ribbon::before,
+        .ribbon::after {
+            position: absolute;
+            z-index: -1;
+            content: '';
+            display: block;
+            border: 5px solid #2980b9;
+        }
+        .ribbon span {
+            position: absolute;
+            display: block;
+            width: 225px;
+            padding: 15px 0;
+            background-color: #3498db;
+            box-shadow: 0 5px 10px rgba(0,0,0,.1);
+            color: #fff;
+            font: 700 18px/1 'Lato', sans-serif;
+            text-shadow: 0 1px 1px rgba(0,0,0,.2);
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        /* top left*/
+        .ribbon-top-left {
+            top: -10px;
+            left: -10px;
+        }
+        .ribbon-top-left::before,
+        .ribbon-top-left::after {
+            border-top-color: transparent;
+            border-left-color: transparent;
+        }
+        .ribbon-top-left::before {
+            top: 0;
+            right: 0;
+        }
+        .ribbon-top-left::after {
+            bottom: 0;
+            left: 0;
+        }
+        .ribbon-top-left span {
+            right: -25px;
+            top: 30px;
+            transform: rotate(-45deg);
+        }
     </style>
 @endpush
 
@@ -135,6 +191,7 @@
         </div>
         <div class="col-md-12 chao-gia">
             @include(theme(TRUE).'.includes.message')
+            @if($data->status == 'opem')
             <form method="post" action="{{route('freelancerDeal', ['id'=>$data->id])}}">
                 {{csrf_field()}}
                 <h3 style="border-bottom: 1px dotted #333">Thông tin chào giá</h3>
@@ -184,40 +241,50 @@
                     </div>
                 </div>
             </form>
-
+            @else
+                <div class="jumbotron" style="padding: 14px; margin-top: 10px">
+                    Người đăng đã chọn được người thực hiện dự án này!
+                </div>
+            @endif
         </div>
         <div class="col-md-12 row" style="background: #f7f7f7; border-radius: 4px; margin-top: 20px; padding: 8px 5px">
                 <div class="col-md-2">
                     <h5>Chào giá: <strong>{{$data->deals()->count()}}</strong></h5>
                 </div>
                 <div class="col-md-6">
-                    <h5>Thấp nhất: <strong>{{$data->deals()->min('price')}}</strong> |
-                    Trung bình: <strong>{{$data->deals()->average('price')}}</strong> |
-                    Cao nhất: <strong>{{$data->deals()->max('price')}}</strong></h5>
+                    <h5>Thấp nhất: <strong>{{number_format($data->deals()->min('price'))}}</strong> |
+                    Trung bình: <strong>{{number_format(round($data->deals()->average('price')))}}</strong> |
+                    Cao nhất: <strong>{{number_format($data->deals()->max('price'))}}</strong></h5>
                 </div>
                 <div class="col-md-4 text-right">
                     <h5>Trung bình: <strong>{{round($data->deals()->average('days'))}} ngày</strong></h5>
                 </div>
         </div>
         @foreach($data->deals()->orderBy('created_at', 'DESC')->get() as $item)
-        <div class="col-md-12 profile" style="margin-top: 20px">
+        <div class="col-md-12 profile @if($item->is_choosen == 1) choosen @endif" style="margin-top: 20px">
+            @if($item->is_choosen == 1)
+                <div class="ribbon ribbon-top-left"><span>Được chọn</span></div>
+            @endif
             <div class="col-md-2">
-                <img src="{{$data->user?$data->user->avatar():''}}" class="img-responsive"/>
-                <p class="rateStar" style="text-align: center">@for($i=1;$i<6;$i++)
-                        @if($data->user->owner_rate()>=$i)
+                <img src="{{$item->dealer()->first()?$item->dealer()->first()->avatar():''}}" class="img-responsive"/>
+                <p class="rateStar" style="text-align: center">
+                    @for($i=1;$i<6;$i++)
+                        @if($item->dealer()->first()->dealer_rate()>=$i)
                             <i class="fa fa-star"></i>
-                        @elseif($i-$data->user->owner_rate() == 0.5)
+                        @elseif($i-$item->dealer()->first()->dealer_rate() == 0.5)
                             <i class="fa fa-star-half-o"></i>
                         @else
                             <i class="fa fa-star" style="color: #ccc"></i>
                         @endif
                     @endfor</p>
-                    <a class="btn btn-success"><i class="fa fa-check"></i> Chọn chào giá này</a>
+                @if(auth()->user()->id == $data->user_id && $data->status == 'open')
+                    <a class="btn btn-success" href="{{route('freelancerChoosen', ['fl_id'=>$data->id, 'deal_id'=>$item->id])}}"><i class="fa fa-check"></i> Chọn chào giá này</a>
+                @endif
             </div>
             <div class="col-md-6">
                 <div class="profile-job-left-bottom">
                     <h3 class="title">
-                        <a href="/freelancer/lam-trong-duc" title="">
+                        <a href="{{asset('user/'.$item->user_id)}}" title="">
                             {{$item->dealer()->first()->userinfo?$item->dealer()->first()->userinfo->full_name:$item->dealer()->first()->name}} </a>
                     </h3>
                     <div class="work-title">{{$item->dealer()->first()?$item->dealer()->first()->group->name:''}}</div>
@@ -247,7 +314,7 @@
                     </tr>
                     <tr>
                         <td>Thu nhập</td>
-                        <th>{{\App\FLDeal::where('user_id', $item->user_id)->where('is_choosen', 1)->whereNotNull('finished_at')->sum('price')}}</th>
+                        <th>{{number_format(\App\FLDeal::where('user_id', $item->user_id)->where('is_choosen', 1)->whereNotNull('finished_at')->sum('price'))}}</th>
                     </tr>
                 </table>
             </div>
