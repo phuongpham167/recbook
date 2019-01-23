@@ -13,7 +13,7 @@
 Route::get( '/gui-mail', function(){
 
 });
-Route::get('/', 'PageController@index')->name('home');
+Route::get('/', 'PageController@index1')->name('home');
 Route::get('/home', ['as'=>'Home1', 'uses'=>'PageController@index1']);
 Route::get('/danh-muc/{tag}', ['as' => 'danh-muc', 'uses' => 'PageController@getDanhmuc']);
 Route::get('/tim-kiem', ['as' => 'search' , 'uses' => 'PageController@search']);
@@ -100,6 +100,9 @@ Route::group(['middleware'=>'auth'], function(){
 
     Route::group(['prefix' => 'du-an'], function () {
         Route::get('', ['as' => 'freelancerList', 'uses' => 'FreelancerController@index']);
+        Route::get('/chi-tiet/{id}/{slug}', ['as' => 'freelancerDetail', 'uses' => 'FreelancerController@show']);
+        Route::get('/{filter?}', ['as' => 'freelancerList', 'uses' => 'FreelancerController@index'])->where('filter', 'tu-van-bat-dong-san|tu-van-tai-chinh|tu-van-thiet-ke|tu-van-phong-thuy');
+        Route::post('/tao-moi', ['as' => 'freelancerCreate', 'uses' => 'FreelancerController@postCreate']);
 //        Route::get('/chi-tiet/{id}/{slug}', ['as' => 'freelancerDetail', 'uses' => 'FreelancerController@show']);
 //        Route::post('luu/{id?}', ['as'=>'freelancerCreate', 'uses'=>'FreelancerController@store']);
 //        Route::post('dat-gia', ['as'=>'freelancerDeal', 'uses'=>'FreelancerController@deal']);
@@ -132,6 +135,8 @@ Route::group(['middleware'=>'auth'], function(){
         Route::get('user', 'AjaxController@ajaxUser');
         Route::get('street', 'AjaxController@ajaxStreet');
     });
+
+    Route::post('search-area', 'AreaController@searchArea');
 });
 
 /*

@@ -5234,3 +5234,18 @@ function activity($type, $action, $object_id){
 
     return true;
 }
+function lam_tron($so)
+{
+    $thap_phan = $so - (int)$so;
+
+    if ($thap_phan < 0.3)
+        $thap_phan = 0;
+    elseif ($thap_phan >= 0.3 && $thap_phan <= 0.5)
+        $thap_phan = 0.5;
+    elseif ($thap_phan > 0.5)
+        $thap_phan = 1;
+
+    $so = (int)$so + $thap_phan;
+
+    return $so;
+}
