@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\FLCategory;
+use App\FLDeal;
 use App\Freelancer;
 use App\Http\Requests\CreateFreelancerRequest;
 use App\Menu;
@@ -97,6 +98,28 @@ class FreelancerController extends Controller
         $data->save();
 //        event_log('Tạo dự án mới id '.$data->id);
         set_notice(trans('freelancer.add_success'), 'success');
+        return redirect()->back();
+    }
+    public function deal($id){
+        $data   =   Freelancer::where('end_at', '>=', Carbon::now())->whereNotIn('status', ['finished','ended','processing'])->where('id', $id);
+        if(!empty($data->count())){
+            $data   =   $data->first();
+            $deal   =   new FLDeal();
+            $deal->freelancer_id    =   $data->id;
+            $deal->user_id  =   auth()->user()->id;
+            $deal->selfIntro    =   request('selfIntro');
+            $deal->road =   request('road');
+            $deal->price    =   request('price');
+            $deal->is_vip   =   0;
+            $deal->is_choosen   =   0;
+            $deal->days =   request('days');
+            $deal->finished_at  =   null;
+            $deal->created_at   =   Carbon::now();
+            $deal->save();
+            set_notice('Đặt giá thành công!', 'success');
+
+        }
+        else set_notice('Tin đăng không tồn tại hoặc đã hết hạn!', 'warning');
         return redirect()->back();
     }
 }
