@@ -523,7 +523,7 @@
                                     <div role="tabpanel" class="tab-pane" id="finance">
                                         <table class="table">
                                             <tr>
-                                                <th>Tiêu đề</th>
+                                                <th width="50%">Tiêu đề</th>
                                                 <th>Ngân sách</th>
                                                 <th>Mở chào giá đến</th>
                                                 <th>Chào giá</th>
@@ -541,14 +541,14 @@
                                     <div role="tabpanel" class="tab-pane" id="design">
                                         <table class="table">
                                             <tr>
-                                                <th>Tiêu đề</th>
+                                                <th width="50%">Tiêu đề</th>
                                                 <th>Ngân sách</th>
                                                 <th>Mở chào giá đến</th>
                                                 <th>Chào giá</th>
                                             </tr>
                                             @foreach($freelancer['design'] as $item)
                                                 <tr>
-                                                    <td><a href="{{route('freelancerDetail', ['id'=>$item->id, 'slug'=>to_slug($item->title)])}}"><strong>{{$item->title}}</strong></a></td>
+                                                    <td width="50%"><a href="{{route('freelancerDetail', ['id'=>$item->id, 'slug'=>to_slug($item->title)])}}"><strong>{{$item->title}}</strong></a></td>
                                                     <td><a href="{{route('freelancerDetail', ['id'=>$item->id, 'slug'=>to_slug($item->title)])}}">{{convert_number_to_words($item->budget)}}</a></td>
                                                     <td><a href="{{route('freelancerDetail', ['id'=>$item->id, 'slug'=>to_slug($item->title)])}}">{{Carbon\Carbon::parse($item->end_at)->diffForHumans(\Carbon\Carbon::now())}}</a></td>
                                                     <td><a href="{{route('freelancerDetail', ['id'=>$item->id, 'slug'=>to_slug($item->title)])}}">{{$item->deals()->count()}}</a></td>
@@ -559,7 +559,7 @@
                                     <div role="tabpanel" class="tab-pane" id="phongthuy">
                                         <table class="table">
                                             <tr>
-                                                <th>Tiêu đề</th>
+                                                <th width="50%">Tiêu đề</th>
                                                 <th>Ngân sách</th>
                                                 <th>Mở chào giá đến</th>
                                                 <th>Chào giá</th>
