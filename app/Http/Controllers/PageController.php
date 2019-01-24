@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Freelancer;
 use App\Friend;
 use App\MappingMenuFE;
 use App\Menu;
@@ -199,7 +200,11 @@ class PageController extends Controller
         $reTypes = $this->reTypeService->getReTypeByCat($firstCat->id);
         $rangePrices = $this->rangePriceService->getRangePriceByCat($firstCat->id);
 
-
+        $freelancer_re    =   Freelancer::where('status', 'open')->where('category_id', 1)->get();
+        $freelancer_finance    =   Freelancer::where('status', 'open')->where('category_id', 2)->get();
+        $freelancer_design    =   Freelancer::where('status', 'open')->where('category_id', 3)->get();
+        $freelancer_phongthuy    =   Freelancer::where('status', 'open')->where('category_id', 4)->get();
+        Carbon::setLocale('vi');
         return v('pages.home-1', [
             'hotRealEstates' => $hotRealEstates,
             'goodPriceRealEstateNormal' => $goodPriceRealEstateNormal,
@@ -215,7 +220,13 @@ class PageController extends Controller
             'rangePrices' => $rangePrices,
             'menuData' => $this->menuFE,
             'vipRealEstates' => $vipRealEstates,
-            'agencies'  =>  $this->agencies
+            'agencies'  =>  $this->agencies,
+            'freelancer' => [
+                're' => $freelancer_re,
+                'finance' => $freelancer_finance,
+                'design' => $freelancer_design,
+                'phongthuy' => $freelancer_phongthuy
+            ]
         ]);
     }
     public function index()
