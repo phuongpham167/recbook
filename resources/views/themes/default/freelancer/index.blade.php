@@ -141,7 +141,7 @@
                             @endif
                             {{--<textarea class="form-control" placeholder="Bán nhà ..." id="title-hold"></textarea>--}}
 
-                            <div class="form-group">
+                            <div class="form-group clearfix">
                                 <div class="col-sm-12">
                                     <input type="text" class="form-control"
                                            name="title" id="title"
@@ -150,7 +150,7 @@
                                     <p class="text-red error"></p>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group clearfix">
                                 <div class="col-sm-12">
                                     <textarea name="description"
                                               rows="3"
