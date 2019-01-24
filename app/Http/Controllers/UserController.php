@@ -252,7 +252,7 @@ class UserController extends Controller
             /*-----------end save cover to user ----------*/
 
             return response()->json([
-                'message'   => 'Change avatar successfully',
+                'message'   => 'Change cover successfully',
                 'uploaded_image' => $uploadedCv,
                 'class_name'  => 'alert-success',
                 'success' => true

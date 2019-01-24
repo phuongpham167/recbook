@@ -98,6 +98,10 @@ class RealEstate extends Model
     {
         return $this->belongsTo('App\District');
     }
+    public function street()
+    {
+        return $this->belongsTo('App\Street');
+    }
     public function unit()
     {
         return $this->belongsTo('App\Unit');
