@@ -826,6 +826,8 @@ class PageController extends Controller
 //                $authFriendRequestLists = Friend::where('user2', $authUser->id)->where('confirmed', 0)->get();
 //                dd($authFriendRequestLists);
 
+                $joinedFreeLances = $this->service->getJoinedFreelance($user->id);
+
                 return v('users.user-info', [
                     'data' => $user,
                     'vipRealEstates' => $this->vipRealEstates,
@@ -845,6 +847,7 @@ class PageController extends Controller
                     'listFriends' => $listFriends,
                     'districtByUProvince' => $districtByUProvince,
                     'projectByUProvince' => $projectByUProvince,
+                    'joinedFreeLances' => $joinedFreeLances,
                     'menuData' => $this->menuFE
                 ]);
             }

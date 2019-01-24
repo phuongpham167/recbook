@@ -17,6 +17,14 @@
     <link rel="stylesheet" href="{{ asset('css/user-info.css') }}"/>
     <link rel="stylesheet" href="{{asset('plugins/loopj-jquery-tokeninput/styles/token-input.css')}}" />
     <link rel="stylesheet" href="{{asset('plugins/loopj-jquery-tokeninput/styles/token-input-bootstrap3.css')}}" />
+    <style type="text/css">
+        .token-input-dropdown-bootstrap3 {
+            z-index: 11001 !important;
+        }
+        .token-input-dropdown-bootstrap {
+            z-index: 11001 !important;
+        }
+    </style>
 @endpush
 @php
     //dd($listFriends);
@@ -535,8 +543,9 @@
                                     @if ((\Auth::user() && \Auth::user()->id  == $data->id)|| $isFriend)
                                         <p class="title-short-section">Dự án tham gia</p>
                                         <div class="joined-project border-block">
-
-                                            {{--<a href="#">Bán nhà số 34/65 Bạch Đằng</a>--}}
+                                            @foreach($joinedFreeLances as $joinedFreeLance)
+                                                <a href="{{route('freelancerDetail', ['id'=>$joinedFreeLance->freelancer->id, 'slug'=>to_slug($joinedFreeLance->freelancer->title)])}}" class="" >{{$joinedFreeLance->freelancer->title}}</a>
+                                            @endforeach
                                         </div>
                                     @endif
                                 </div>
@@ -611,9 +620,6 @@
             queryParam: "term",
             zindex  :   9999,
             tokenLimit  :   1,
-            onAdd   :   function(r){
-                $('#method').val(r.method);
-            },
             prePopulate: [
                 {id: $('#street-id-hidden').val(), name: $('#street-name-hidden').val()}
             ]
