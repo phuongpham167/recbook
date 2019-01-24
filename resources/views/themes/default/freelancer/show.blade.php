@@ -191,7 +191,7 @@
         </div>
         <div class="col-md-12 chao-gia">
             @include(theme(TRUE).'.includes.message')
-            @if($data->status == 'opem')
+            @if($data->status == 'open')
             <form method="post" action="{{route('freelancerDeal', ['id'=>$data->id])}}">
                 {{csrf_field()}}
                 <h3 style="border-bottom: 1px dotted #333">Thông tin chào giá</h3>
@@ -288,18 +288,36 @@
                             {{$item->dealer()->first()->userinfo?$item->dealer()->first()->userinfo->full_name:$item->dealer()->first()->name}} </a>
                     </h3>
                     <div class="work-title">{{$item->dealer()->first()?$item->dealer()->first()->group->name:''}}</div>
-
-
                     <div class="skill">
                         <label>Giới thiệu:</label>
                         <div class="list-skill">
                             {{$item->dealer()->first()->userinfo?$item->dealer()->first()->userinfo->description:''}}
                         </div>
                     </div>
+                    @if(auth()->user()->id == $data->user_id)
+                        <div class="skill">
+                            <label>Người chào giá tự giới thiệu:</label>
+                            <div class="list-skill">
+                                {{$item->selfIntro}}
+                            </div>
+                        </div>
+                        <div class="skill">
+                            <label>Đề xuất bước thực hiện:</label>
+                            <div class="list-skill">
+                                {{$item->road}}
+                            </div>
+                        </div>
+                    @endif
                 </div>
             </div>
             <div class="col-md-4">
                 <table class="table" style="margin-top: 10px">
+                    @if(auth()->user()->id == $data->user_id)
+                    <tr>
+                        <td>Giá đề xuất</td>
+                        <th>{{convert_number_to_words($item->price)}}</th>
+                    </tr>
+                    @endif
                     <tr>
                         <td>Đến từ</td>
                         <th>{{$item->dealer->userinfo->province?$item->dealer->userinfo->province->name:''}}</th>

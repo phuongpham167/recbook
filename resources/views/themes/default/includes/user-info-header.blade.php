@@ -53,17 +53,17 @@
                     <li class="dropdown">
                         {{--<a href="{{ route('chat') }}" title="Tin nhắn"><i class="fa fa-comment" aria-hidden="true"></i></a>--}}
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true" title="Tin nhắn"><i class="fa fa-comment" aria-hidden="true"></i>
-                            <?php $unseen_message = \App\Conversation::whereHas('messages', function ($q) {$q->where('is_read',0);})->count() ?>
-                            @if( $unseen_message!= 0)
-                                <span class="label label-success">{{$unseen_message}}</span>
+                            <?php $unseen_conversation = \App\Conversation::whereHas('messages', function ($q) {$q->where('user_id','<>',auth()->user()->id)->where('is_read',0);})->count() ?>
+                            @if( $unseen_conversation!= 0)
+                                <span class="label label-success">{{$unseen_conversation}}</span>
                             @endif
                         </a>
                         <ul class="dropdown-menu message_dropdown">
-                            <li class="header">Bạn có {{$unseen_message}} tin nhắn chưa đọc</li>
+                            <li class="header">Bạn có {{$unseen_conversation}} tin nhắn chưa đọc</li>
 
                             @foreach(\App\Conversation::orderBy('created_at', 'desc')->where(function ($q) {
                                 $q->where('user1',auth()->user()->id)->orWhere('user2',auth()->user()->id);
-                            })->whereHas('messages', function ($q) {$q->where('is_read',0);})->get() as $item)
+                            })->whereHas('messages', function ($q) {$q->where('user_id','<>',auth()->user()->id)->where('is_read',0);})->get() as $item)
                                 <li class="row" style="border-bottom: 1px solid #dddfe2;">
                                     <a role="button" class="notice_dropdown" style="padding: 0 !important; display: block" href="{{asset('conversation').'/'.$item->id}}">
                                         <div class="pull-left">
@@ -71,12 +71,13 @@
                                         </div>
                                         <div class="pull-left" style="margin-left: 10px; display: block; width: 80%">
                                             <p>
-                                                <?php $message =  \App\Message::orderBy('created_at', 'asc')->where('is_read',0)->take(1)->first();
+                                                <?php
+                                                    $unseen_message =  \App\Message::orderBy('created_at', 'asc')->where('conversation_id',$item->id)->where('user_id','<>',auth()->user()->id)->where('is_read',0)->take(1)->first();
                                                 ?>
-                                                {{\App\User::find($message->user_id)->name}}
-                                                <small class="pull-right" style="margin-right: 10px; color: #cacaca"> <i class="fa fa-clock-o"></i> {{Carbon\Carbon::parse($message->created_at)->diffForHumans(\Carbon\Carbon::now())}}</small>
+                                                {{\App\User::find($unseen_message->user_id)->name}}
+                                                <small class="pull-right" style="margin-right: 10px; color: #cacaca"> <i class="fa fa-clock-o"></i> {{Carbon\Carbon::parse($unseen_message->created_at)->diffForHumans(\Carbon\Carbon::now())}}</small>
                                             </p>
-                                            <span style="font-size: 12px">{{trim_text($message->text,40)}}</span>
+                                            <span style="font-size: 12px">{{trim_text($unseen_message->text,40)}}</span>
                                         </div>
                                     </a>
                                 </li>
