@@ -191,7 +191,7 @@
         </div>
         <div class="col-md-12 chao-gia">
             @include(theme(TRUE).'.includes.message')
-            @if($data->status == 'opem')
+            @if($data->status == 'open')
             <form method="post" action="{{route('freelancerDeal', ['id'=>$data->id])}}">
                 {{csrf_field()}}
                 <h3 style="border-bottom: 1px dotted #333">Thông tin chào giá</h3>
