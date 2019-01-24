@@ -128,7 +128,7 @@ button {
     font-size: 13px;
     line-height: 40px;
     text-transform: uppercase;
-    padding: 5px 17px 2px 8px;
+    padding: 0 12px 2px 8px;
 
 }
 
@@ -155,7 +155,6 @@ button {
 
 .main-menu .main-menu-list .menu-search {
     float: left;
-    margin-top: 10px;
     width: 100%;
 }
 

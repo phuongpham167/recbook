@@ -73,6 +73,7 @@
                         <li class=""><a href="{{ route('danh-muc', ['tag' => $md->path]) }}"> {{ $md->name }}</a></li>
                     @endif
                 @endforeach
+                <li class=""><a href="{{ route('freelancerList') }}"> Yêu cầu dịch vụ</a></li>
                 <li class=""><a href="{{ route('contact') }}"> {{ trans('menu.contact') }}</a></li>
                 <li class=""><a href="{{ route('get.create-real-estate') }}">{{ trans('menu.create_real_estate') }}</a></li>
             </ul>

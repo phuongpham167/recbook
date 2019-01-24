@@ -505,7 +505,7 @@
                                     <div role="tabpanel" class="tab-pane active" id="realestate">
                                         <table class="table">
                                             <tr>
-                                                <th>Tiêu đề</th>
+                                                <th width="50%">Tiêu đề</th>
                                                 <th>Ngân sách</th>
                                                 <th>Mở chào giá đến</th>
                                                 <th>Chào giá</th>
@@ -523,7 +523,7 @@
                                     <div role="tabpanel" class="tab-pane" id="finance">
                                         <table class="table">
                                             <tr>
-                                                <th>Tiêu đề</th>
+                                                <th width="50%">Tiêu đề</th>
                                                 <th>Ngân sách</th>
                                                 <th>Mở chào giá đến</th>
                                                 <th>Chào giá</th>
@@ -541,7 +541,7 @@
                                     <div role="tabpanel" class="tab-pane" id="design">
                                         <table class="table">
                                             <tr>
-                                                <th>Tiêu đề</th>
+                                                <th width="50%">Tiêu đề</th>
                                                 <th>Ngân sách</th>
                                                 <th>Mở chào giá đến</th>
                                                 <th>Chào giá</th>
@@ -559,7 +559,7 @@
                                     <div role="tabpanel" class="tab-pane" id="phongthuy">
                                         <table class="table">
                                             <tr>
-                                                <th>Tiêu đề</th>
+                                                <th width="50%">Tiêu đề</th>
                                                 <th>Ngân sách</th>
                                                 <th>Mở chào giá đến</th>
                                                 <th>Chào giá</th>

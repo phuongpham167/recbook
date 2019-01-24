@@ -99,11 +99,8 @@ Route::group(['middleware'=>'auth'], function(){
     });
 
     Route::group(['prefix' => 'du-an'], function () {
-        Route::get('/', ['as' => 'freelancerList', 'uses' => 'FreelancerController@index']);
         Route::get('quan-ly-du-an/{filter?}', ['as' => 'freelancerList', 'uses' => 'FreelancerController@list'])->where('filter', 'da-dang|da-chao-gia|da-tham-gia');
         Route::get('quan-ly-du-an/data', ['as' => 'freelancerData', 'uses' => 'FreelancerController@data']);
-        Route::get('/chi-tiet/{id}/{slug}', ['as' => 'freelancerDetail', 'uses' => 'FreelancerController@show']);
-        Route::get('/{filter?}', ['as' => 'freelancerList', 'uses' => 'FreelancerController@index'])->where('filter', 'tu-van-bat-dong-san|tu-van-tai-chinh|tu-van-thiet-ke|tu-van-phong-thuy');
         Route::post('/tao-moi', ['as' => 'freelancerCreate', 'uses' => 'FreelancerController@postCreate']);
 //        Route::get('/chi-tiet/{id}/{slug}', ['as' => 'freelancerDetail', 'uses' => 'FreelancerController@show']);
 //        Route::post('luu/{id?}', ['as'=>'freelancerCreate', 'uses'=>'FreelancerController@store']);
@@ -142,7 +139,11 @@ Route::group(['middleware'=>'auth'], function(){
 
     Route::post('search-area', 'AreaController@searchArea');
 });
-
+Route::group(['prefix' => 'du-an'], function () {
+    Route::get('/', ['as' => 'freelancerList', 'uses' => 'FreelancerController@index']);
+    Route::get('/chi-tiet/{id}/{slug}', ['as' => 'freelancerDetail', 'uses' => 'FreelancerController@show']);
+    Route::get('/{filter?}', ['as' => 'freelancerList', 'uses' => 'FreelancerController@index'])->where('filter', 'tu-van-bat-dong-san|tu-van-tai-chinh|tu-van-thiet-ke|tu-van-phong-thuy');
+});
 /*
  * Route for master data
  * */
