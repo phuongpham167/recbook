@@ -104,7 +104,7 @@ class FreelancerController extends Controller
                     if($dt->status != 'ended' && $dt->status != 'finished'){
                         $manage .=   a('du-an/dong', 'id='.$dt->id,trans('g.close'), ['class'=>'btn btn-xs btn-danger'],'#',"return bootbox.confirm('".trans('system.close_confirm')."', function(result){if(result==true){window.location.replace('".asset('du-an/dong?id='.$dt->id)."')}})");
                         if(!empty($deal)){
-                            if(($dt->status == 'processing' || $dt->status='pending')  && empty($deal->rate) && empty($deal->review)) {
+                            if(($dt->status == 'processing' || $dt->status=='pending')  && empty($deal->rate) && empty($deal->review)) {
                                 $manage .=' '. a('#a', '', trans('g.done'), ['class' => 'btn btn-xs btn-default btn-done', 'id' => $deal->id, 'data-type' => '0']);
                             }
                         }
@@ -115,9 +115,13 @@ class FreelancerController extends Controller
                         $manage = 'Đã hoàn thành';
                 }
                 if(\request('filter') == 'da-tham-gia') {
-                    if(($dt->status == 'processing' || $dt->status='pending') && empty($dt->rate) && empty($dt->review)) {
+                    if(($dt->status == 'processing' || $dt->status=='pending') && empty($dt->rate) && empty($dt->review)) {
                         $manage .= a('#a', '', trans('g.done'), ['class' => 'btn btn-xs btn-default btn-done', 'id' => $dt->id, 'data-type' => '1']);
                     }
+                    else if($dt->status == 'ended')
+                        $manage = 'Đã đóng';
+                    else if($dt->status == 'finished')
+                        $manage = 'Đã hoàn thành';
                 }
 
                 return $manage;
