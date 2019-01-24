@@ -175,6 +175,7 @@ button {
   border-radius: 0;
   -webkit-box-shadow: none;
           box-shadow: none;
+  background: #0c4da2;
 }
 
 .main-menu .main-menu-list ul li ul li a {
