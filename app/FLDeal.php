@@ -10,4 +10,7 @@ class FLDeal extends Model
     public function dealer(){
         return $this->belongsTo(User::class, 'user_id');
     }
+    public function freelancer(){
+        return $this->belongsTo(Freelancer::class, 'freelancer_id');
+    }
 }

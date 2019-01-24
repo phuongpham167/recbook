@@ -535,8 +535,9 @@
                                     @if ((\Auth::user() && \Auth::user()->id  == $data->id)|| $isFriend)
                                         <p class="title-short-section">Dự án tham gia</p>
                                         <div class="joined-project border-block">
-
-                                            {{--<a href="#">Bán nhà số 34/65 Bạch Đằng</a>--}}
+                                            @foreach($joinedFreeLances as $joinedFreeLance)
+                                                <a href="{{route('freelancerDetail', ['id'=>$joinedFreeLance->freelancer->id, 'slug'=>to_slug($joinedFreeLance->freelancer->title)])}}" class="" >{{$joinedFreeLance->freelancer->title}}</a>
+                                            @endforeach
                                         </div>
                                     @endif
                                 </div>
