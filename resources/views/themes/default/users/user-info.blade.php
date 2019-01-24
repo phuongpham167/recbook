@@ -126,7 +126,7 @@
                                             <div class="success-project border-block">
                                                 {{--<a href="#">Bán nhà số 44/54 Bạch Đằng</a>--}}
                                             </div>
-                                            <p class="title-short-section">Dự án đã đăng ký</p>
+                                            <p class="title-short-section">Dự án đã đăng</p>
                                             <div class="registered-project border-block">
                                                 @foreach(\App\Freelancer::orderBy('created_at', 'desc')->where('user_id',auth()->user()->id)->take(15)->get() as $freelancer)
                                                     <a href="{{route('freelancerDetail', ['id'=>$freelancer->id, 'slug'=>to_slug($freelancer->title)])}}" style="text-transform: capitalize; margin: 5px;  color: #555; border-bottom: 1px #dadada dotted; display: block">
