@@ -156,7 +156,7 @@ button {
   color: black;
   font-size: 13px;
   line-height: 40px;
-  padding: 2px 11px 0 15px;
+  padding: 2px 11px 0 0;
 }
 
 .message_dropdown {
