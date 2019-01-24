@@ -86,5 +86,6 @@ return [
     'up_post_success'   =>  'Up tin thành công!',
     'expired'   =>  'Đã hết hạn!',
     'sold_confirm'   =>  'Xác nhận đã bán?',
+    'close_confirm'   =>  'Xác nhận đóng dự án?',
     'receive_commission'   =>  'Phần trăm hoa hồng',
 ];

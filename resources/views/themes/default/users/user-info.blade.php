@@ -134,25 +134,25 @@
                                             <div class="success-project border-block">
                                                 {{--<a href="#">Bán nhà số 44/54 Bạch Đằng</a>--}}
                                             </div>
-                                            <p class="title-short-section">Dự án đã đăng</p>
-                                            <div class="registered-project border-block">
-                                                @foreach(\App\Freelancer::orderBy('created_at', 'desc')->where('user_id',auth()->user()->id)->take(15)->get() as $freelancer)
-                                                    <a href="{{route('freelancerDetail', ['id'=>$freelancer->id, 'slug'=>to_slug($freelancer->title)])}}" style="text-transform: capitalize; margin: 5px;  color: #555; border-bottom: 1px #dadada dotted; display: block">
-                                                        <p style="font-size: 12px; font-weight: 600">{{$freelancer->title}}</p>
-                                                        <p>{{$freelancer->address}}</p>
-                                                    </a>
-                                                @endforeach
-                                            </div>
-                                            <p class="title-short-section">Dự án đã chào giá</p>
-                                            <div class="offred-project border-block">
-                                                @foreach(\App\Freelancer::orderBy('created_at', 'desc')->whereHas('deals', function ($q) {$q->where('user_id',auth()->user()->id);})->take(15)->get() as $freelancer)
-                                                    <a href="{{route('freelancerDetail', ['id'=>$freelancer->id, 'slug'=>to_slug($freelancer->title)])}}" style="text-transform: capitalize; margin: 5px;  color: #555; border-bottom: 1px #dadada dotted; display: block">
-                                                        <p style="font-size: 12px; font-weight: 600">{{$freelancer->title}}</p>
-                                                        <p>{{$freelancer->address}}</p>
-                                                    </a>
-                                                @endforeach
-                                            </div>
                                         @endif
+                                        {{--<p class="title-short-section">Dự án đã đăng</p>--}}
+                                        {{--<div class="registered-project border-block">--}}
+                                            {{--@foreach(\App\Freelancer::orderBy('created_at', 'desc')->where('user_id',auth()->user()->id)->take(15)->get() as $freelancer)--}}
+                                                {{--<a href="{{route('freelancerDetail', ['id'=>$freelancer->id, 'slug'=>to_slug($freelancer->title)])}}" style="text-transform: capitalize; margin: 5px;  color: #555; border-bottom: 1px #dadada dotted; display: block">--}}
+                                                    {{--<p style="font-size: 12px; font-weight: 600">{{$freelancer->title}}</p>--}}
+                                                    {{--<p>{{$freelancer->address}}</p>--}}
+                                                {{--</a>--}}
+                                            {{--@endforeach--}}
+                                        {{--</div>--}}
+                                        {{--<p class="title-short-section">Dự án đã chào giá</p>--}}
+                                        {{--<div class="offred-project border-block">--}}
+                                            {{--@foreach(\App\Freelancer::orderBy('created_at', 'desc')->whereHas('deals', function ($q) {$q->where('user_id',auth()->user()->id);})->take(15)->get() as $freelancer)--}}
+                                                {{--<a href="{{route('freelancerDetail', ['id'=>$freelancer->id, 'slug'=>to_slug($freelancer->title)])}}" style="text-transform: capitalize; margin: 5px;  color: #555; border-bottom: 1px #dadada dotted; display: block">--}}
+                                                    {{--<p style="font-size: 12px; font-weight: 600">{{$freelancer->title}}</p>--}}
+                                                    {{--<p>{{$freelancer->address}}</p>--}}
+                                                {{--</a>--}}
+                                            {{--@endforeach--}}
+                                        {{--</div>--}}
                                     </div>
                                     <div class="col-xs-12 col-md-8">
                                         <div class="row">
@@ -543,8 +543,9 @@
                                     @if ((\Auth::user() && \Auth::user()->id  == $data->id)|| $isFriend)
                                         <p class="title-short-section">Dự án tham gia</p>
                                         <div class="joined-project border-block">
-
-                                            {{--<a href="#">Bán nhà số 34/65 Bạch Đằng</a>--}}
+                                            @foreach($joinedFreeLances as $joinedFreeLance)
+                                                <a href="{{route('freelancerDetail', ['id'=>$joinedFreeLance->freelancer->id, 'slug'=>to_slug($joinedFreeLance->freelancer->title)])}}" class="" >{{$joinedFreeLance->freelancer->title}}</a>
+                                            @endforeach
                                         </div>
                                     @endif
                                 </div>

@@ -5,7 +5,7 @@
             <select class="form-control" id="re-category" name="category_id" onchange="changeReCategory(this)"
                     value="{{ old('re_category_id') }}">
                 <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
-                @foreach(\App\FreelancerCategory::all() as $item)
+                @foreach(\App\FLCategory::all() as $item)
                     <option value="{{$item->id}}">{{$item->name}}</option>
                 @endforeach
             </select>

@@ -9,11 +9,17 @@
 namespace App\Services;
 
 
+use App\FLDeal;
 use App\RealEstate;
 use Carbon\Carbon;
 
 class PageService
 {
+    public function getJoinedFreelance($userId)
+    {
+        $result = FLDeal::where('user_id', $userId)->whereNotNull('finished_at')->where('is_choosen', 1)->get();
+        return $result;
+    }
     public function getListBelowDetailPage($type, $excludeIds, $item)
     {
         if ($type == RealEstate::same_search) {

@@ -18,6 +18,9 @@
             <li><a href="/bat-dong-san/tin-rao-da-xoa"><i class="fa fa-angle-double-right"></i> Tin rao đã xóa</a> <span>({{\App\RealEstate::onlyTrashed()->where('posted_by', \Auth::user()->id)->count()}})</span></li>
             <li><a href="/lich-su-giao-dich"><i class="fa fa-angle-double-right"></i> Lịch sử giao dịch</a></li>
             <li><a href="/frontend"><i class="fa fa-angle-double-right"></i> Danh sách website</a></li>
+            <li><a href="/du-an/quan-ly-du-an/da-dang"><i class="fa fa-angle-double-right"></i> Dự án đã đăng</a></li>
+            <li><a href="/du-an/quan-ly-du-an/da-chao-gia"><i class="fa fa-angle-double-right"></i> Dự án đã chào giá</a></li>
+            <li><a href="/du-an/quan-ly-du-an/da-tham-gia"><i class="fa fa-angle-double-right"></i> Dự án đã tham gia</a></li>
         </ul>
     </div>
 </div>
