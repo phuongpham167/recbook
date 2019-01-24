@@ -258,7 +258,6 @@ class RealEstateController extends Controller
 
     public function store(RealEstateRequest $request)
     {
-        dd($request->all());
         $result = $this->service->store($request->all());
         if($result) {
             set_notice(trans('real-estate.message.createSuccess'), 'success');
@@ -417,19 +416,29 @@ class RealEstateController extends Controller
 
     public function getDetailRe($id) {
         if ($id) {
-            $re = RealEstate::find($id);
+            $re = RealEstate::with('street')->find($id);
             if ($re) {
                 $user = auth()->user();
                 $uProvince = $user->userinfo->province_id;
                 $districts = $this->districtService->getDistrictByProvince($uProvince);
                 $reCategories = $this->reCategoryService->getListDropDown();
+                $districtsByProvince = [];
+                if ($re->province_id) {
+                    $districtsByProvince = $this->districtService->getDistrictByProvince($re->province_id);
+                }
+                $wardsByDistrict = [];
+                if ($re->district_id) {
+                    $wardsByDistrict = $this->wardService->getWardByDistrict($re->district_id);
+                }
                 return response()->json([
                     'success' => true,
                     'message' => '',
                     'data' => [
                         're' => $re,
                         'districts' => $districts,
-                        'categories' => $reCategories
+                        'categories' => $reCategories,
+                        'districtsByProvince' => $districtsByProvince,
+                        'wardsByDistrict' => $wardsByDistrict
                     ]
                 ]);
             }
@@ -457,7 +466,7 @@ class RealEstateController extends Controller
         if ($result) {
             return response()->json([
                 'success' => true,
-                'message' => '',
+                'message' => 'Cập nhật thành công',
                 'data' => [
                     're' => $result
                 ]
@@ -465,7 +474,7 @@ class RealEstateController extends Controller
         }
         return response()->json([
             'success' => false,
-            'message' => '',
+            'message' => 'Có lỗi xảy ra. vui lòng thử lại',
             'data' => []
         ]);
     }

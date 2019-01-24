@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="{{asset('plugins/toastr/toastr.min.css')}}"/>
     <link rel="stylesheet" href="{{ asset('css/manage-real-estate.css') }}"/>
     <link rel="stylesheet" href="{{ asset('css/user-info.css') }}"/>
+    <link rel="stylesheet" href="{{asset('plugins/loopj-jquery-tokeninput/styles/token-input.css')}}" />
+    <link rel="stylesheet" href="{{asset('plugins/loopj-jquery-tokeninput/styles/token-input-bootstrap3.css')}}" />
 @endpush
 @php
     //dd($listFriends);
@@ -195,7 +197,7 @@
                                                                             </button>
                                                                             <button type="button"
                                                                                     class="btn btn-default btn-collapse"
-                                                                                    data-target="#nearBy">Gần
+                                                                                    data-target="#priceSelect">Giá
                                                                             </button>
                                                                             <button type="button"
                                                                                     class="btn btn-default btn-collapse-second"
@@ -218,6 +220,10 @@
                                                                             <div class="col-xs-12">
                                                                                 <button type="button"
                                                                                         class="btn btn-default btn-collapse"
+                                                                                        data-target="#contactInfo">Liên hệ
+                                                                                </button>
+                                                                                <button type="button"
+                                                                                        class="btn btn-default btn-collapse"
                                                                                         data-target="#nearBy">Gần
                                                                                 </button>
                                                                                 <button type="button"
@@ -230,15 +236,16 @@
                                                                                         data-target="#exhibitSelect">
                                                                                     Giấy tờ
                                                                                 </button>
+
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <div class="col-xs-12">
                                                                                 <button type="button"
                                                                                         class="btn btn-default btn-collapse"
                                                                                         data-target="#projectSelect">Dự
                                                                                     án
                                                                                 </button>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="form-group">
-                                                                            <div class="col-xs-12">
                                                                                 <button type="button"
                                                                                         class="btn btn-default btn-collapse"
                                                                                         data-target="#room"><i
@@ -257,10 +264,7 @@
                                                                                         data-target="#floorSelect">Số
                                                                                     tầng
                                                                                 </button>
-                                                                                <button type="button"
-                                                                                        class="btn btn-default btn-collapse"
-                                                                                        data-target="#priceSelect">Giá
-                                                                                </button>
+
                                                                             </div>
                                                                         </div>
                                                                         <div class="form-group">
@@ -538,8 +542,11 @@
 @push('js')
     <script src="{{asset('js/jquery.magnific-popup.min.js')}}"></script>
     <script src="{{asset('plugins/toastr/toastr.min.js')}}"></script>
+    <script src="{{asset('plugins/loopj-jquery-tokeninput/src/jquery.tokeninput.js')}}"></script>
     <script>
+        showLoader();
         $(document).ready(function () {
+            hideLoader();
             $('.popup-gallery').each(function () {
                 $(this).magnificPopup({
                     delegate: 'a',
@@ -567,6 +574,31 @@
             $('#btn-hold').on('click', function () {
                 $('#postReModal').modal('show');
             });
+        });
+        $('#street').tokenInput(function(){
+            return "{{asset('/ajax/street')}}?province_id="+$("#province").val()+"&district_id="+$("#district").val()+"&ward_id="+$("#ward").val();
+        }, {
+            theme: "bootstrap",
+            queryParam: "term",
+            zindex  :   1005,
+            tokenLimit  :   1,
+            onAdd   :   function(r){
+                $('#method').val(r.method);
+            }
+        });
+        $('#street-edit').tokenInput(function(){
+            return "{{asset('/ajax/street')}}?province_id="+$("#province-edit").val()+"&district_id="+$("#district-edit").val()+"&ward_id="+$("#ward-edit").val();
+        }, {
+            theme: "bootstrap",
+            queryParam: "term",
+            zindex  :   9999,
+            tokenLimit  :   1,
+            onAdd   :   function(r){
+                $('#method').val(r.method);
+            },
+            prePopulate: [
+                {id: $('#street-id-hidden').val(), name: $('#street-name-hidden').val()}
+            ]
         });
         $(document).on('click', '.panel-heading span.clickable', function (e) {
             var $this = $(this);
@@ -788,6 +820,7 @@
 
         function acceptChangeCv() {
             if (formDataCover) {
+                showLoader();
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': '{{csrf_token()}}'
@@ -819,6 +852,9 @@
                             toastr.error(mes);
                         });
                         // toastr.error(err.message);
+                    },
+                    complete: function () {
+                        hideLoader();
                     }
                 });
             }
@@ -902,6 +938,28 @@
         });
         function setValueForEditRe(data) {
             const re = data.re;
+            const districtsByProvince = data.districtsByProvince;
+            if (districtsByProvince.length) {
+                let html = '<option value="">{{trans('real-estate.selectFirstOpt')}}</option>';
+                for (let r of districtsByProvince) {
+                    html += '<option value="' + r.id + '">' + r.name + '</option>';
+                }
+
+                if (html) {
+                    $('#district-edit').html(html);
+                }
+            }
+            const wardsByDistrict = data.wardsByDistrict;
+            if (wardsByDistrict.length) {
+                let html = '<option value="">{{trans('real-estate.selectFirstOpt')}}</option>';
+                for (let r of wardsByDistrict) {
+                    html += '<option value="' + r.id + '">' + r.name + '</option>';
+                }
+
+                if (html) {
+                    $('#ward-edit').html(html);
+                }
+            }
             $('#id-edit').val(re.id);
             $('#title-edit').val(re.title);
             $('#detail-edit').val(re.detail).focus().blur();
@@ -910,6 +968,9 @@
             }
             if(re.re_type_id) {
                 $('#re-type-edit').val(re.re_type_id);
+            }
+            if (re.province_id) {
+                $('#province-edit').val(re.province_id);
             }
             if (re.district_id) {
                 $('#district-edit').val(re.district_id);
@@ -920,6 +981,15 @@
             if (re.street_id) {
                 $('#street-edit').val(re.street_id);
             }
+            if (re.street_id) {
+                $('#street-id-hidden').val(re.street_id);
+            }
+            if (re.street) {
+                $('#street-name-hidden').val(re.street.name);
+            }
+            $('#contact-person-edit').val(re.contact_person);
+            $('#contact-phone-edit').val(re.contact_phone_number);
+            $('#contact-address-edit').val(re.contact_address);
             if (re.position) {
                 $('#position-edit').val(re.position);
             }
