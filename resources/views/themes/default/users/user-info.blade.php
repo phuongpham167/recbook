@@ -197,7 +197,7 @@
                                                                             </button>
                                                                             <button type="button"
                                                                                     class="btn btn-default btn-collapse"
-                                                                                    data-target="#contactInfo">Liên hệ
+                                                                                    data-target="#priceSelect">Giá
                                                                             </button>
                                                                             <button type="button"
                                                                                     class="btn btn-default btn-collapse-second"
@@ -220,6 +220,10 @@
                                                                             <div class="col-xs-12">
                                                                                 <button type="button"
                                                                                         class="btn btn-default btn-collapse"
+                                                                                        data-target="#contactInfo">Liên hệ
+                                                                                </button>
+                                                                                <button type="button"
+                                                                                        class="btn btn-default btn-collapse"
                                                                                         data-target="#nearBy">Gần
                                                                                 </button>
                                                                                 <button type="button"
@@ -232,15 +236,16 @@
                                                                                         data-target="#exhibitSelect">
                                                                                     Giấy tờ
                                                                                 </button>
+
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <div class="col-xs-12">
                                                                                 <button type="button"
                                                                                         class="btn btn-default btn-collapse"
                                                                                         data-target="#projectSelect">Dự
                                                                                     án
                                                                                 </button>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="form-group">
-                                                                            <div class="col-xs-12">
                                                                                 <button type="button"
                                                                                         class="btn btn-default btn-collapse"
                                                                                         data-target="#room"><i
@@ -259,10 +264,7 @@
                                                                                         data-target="#floorSelect">Số
                                                                                     tầng
                                                                                 </button>
-                                                                                <button type="button"
-                                                                                        class="btn btn-default btn-collapse"
-                                                                                        data-target="#priceSelect">Giá
-                                                                                </button>
+
                                                                             </div>
                                                                         </div>
                                                                         <div class="form-group">
@@ -542,7 +544,9 @@
     <script src="{{asset('plugins/toastr/toastr.min.js')}}"></script>
     <script src="{{asset('plugins/loopj-jquery-tokeninput/src/jquery.tokeninput.js')}}"></script>
     <script>
+        showLoader();
         $(document).ready(function () {
+            hideLoader();
             $('.popup-gallery').each(function () {
                 $(this).magnificPopup({
                     delegate: 'a',
@@ -587,7 +591,7 @@
         }, {
             theme: "bootstrap",
             queryParam: "term",
-            zindex  :   1005,
+            zindex  :   9999,
             tokenLimit  :   1,
             onAdd   :   function(r){
                 $('#method').val(r.method);
@@ -934,6 +938,28 @@
         });
         function setValueForEditRe(data) {
             const re = data.re;
+            const districtsByProvince = data.districtsByProvince;
+            if (districtsByProvince.length) {
+                let html = '<option value="">{{trans('real-estate.selectFirstOpt')}}</option>';
+                for (let r of districtsByProvince) {
+                    html += '<option value="' + r.id + '">' + r.name + '</option>';
+                }
+
+                if (html) {
+                    $('#district-edit').html(html);
+                }
+            }
+            const wardsByDistrict = data.wardsByDistrict;
+            if (wardsByDistrict.length) {
+                let html = '<option value="">{{trans('real-estate.selectFirstOpt')}}</option>';
+                for (let r of wardsByDistrict) {
+                    html += '<option value="' + r.id + '">' + r.name + '</option>';
+                }
+
+                if (html) {
+                    $('#ward-edit').html(html);
+                }
+            }
             $('#id-edit').val(re.id);
             $('#title-edit').val(re.title);
             $('#detail-edit').val(re.detail).focus().blur();

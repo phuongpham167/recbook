@@ -51,7 +51,7 @@
     </div>
     <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.street')}} </label>
     <div class="col-sm-4">
-        <input type="text" class="form-control" id="street" name="street_id">
+        <input type="text" class="form-control" id="street" name="street_id" autocomplete="off">
         <p class="text-red error"></p>
     </div>
 </div>

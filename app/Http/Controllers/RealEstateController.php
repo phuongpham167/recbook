@@ -422,13 +422,23 @@ class RealEstateController extends Controller
                 $uProvince = $user->userinfo->province_id;
                 $districts = $this->districtService->getDistrictByProvince($uProvince);
                 $reCategories = $this->reCategoryService->getListDropDown();
+                $districtsByProvince = [];
+                if ($re->province_id) {
+                    $districtsByProvince = $this->districtService->getDistrictByProvince($re->province_id);
+                }
+                $wardsByDistrict = [];
+                if ($re->district_id) {
+                    $wardsByDistrict = $this->wardService->getWardByDistrict($re->district_id);
+                }
                 return response()->json([
                     'success' => true,
                     'message' => '',
                     'data' => [
                         're' => $re,
                         'districts' => $districts,
-                        'categories' => $reCategories
+                        'categories' => $reCategories,
+                        'districtsByProvince' => $districtsByProvince,
+                        'wardsByDistrict' => $wardsByDistrict
                     ]
                 ]);
             }

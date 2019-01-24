@@ -69,9 +69,6 @@
                                     onchange="changeDistrictEdit(this)"
                             >
                                 <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
-                                @foreach($districtByUProvince as $d)
-                                    <option value="{{$d->id}}">{{$d->name}}</option>
-                                @endforeach
                             </select>
                             <p class="text-red error"></p>
                         </div>
@@ -85,12 +82,13 @@
                         </div>
                         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.street')}} </label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" id="street-edit" name="street_id_edit">
-                            <input type="text" class="hidden" id="street-id-hidden" />
-                            <input type="text" class="hidden" id="street-name-hidden" />
+                            <input type="text" class="form-control" id="street-edit" name="street_id_edit" autocomplete="off">
+
                             <p class="text-red error"></p>
                         </div>
                     </div>
+                    <input type="text" class="hidden" id="street-id-hidden" value=""/>
+                    <input type="text" class="hidden" id="street-name-hidden" value=""/>
                     <div class="form-group clearfix collapse" id="contactInfoEdit">
                         <div class="row form-group">
                             <div class="col-xs-12">
@@ -264,14 +262,17 @@
                             <button type="button" class="btn btn-default btn-collapse" data-target="#addressSelectEdit">
                                 <i class="fa fa-road" aria-hidden="true"></i> Khu vực
                             </button>
-                            <button type="button" class="btn btn-default btn-collapse" data-target="#contactInfoEdit">Liên hệ
+                            <button type="button" class="btn btn-default btn-collapse" data-target="#priceSelectEdit">
+                                Giá
                             </button>
-                            <button type="button" class="btn btn-default btn-collapse" data-target="#nearByEdit">Gần
+                            <button type="button" class="btn btn-default btn-collapse" data-target="#contactInfoEdit">Liên hệ
                             </button>
                         </div>
                     </div>
                     <div class="form-group clearfix">
                         <div class="col-xs-12">
+                            <button type="button" class="btn btn-default btn-collapse" data-target="#nearByEdit">Gần
+                            </button>
                             <button type="button" class="btn btn-default btn-collapse"
                                     data-target="#directionSelectEdit">Hướng
                             </button>
@@ -281,23 +282,20 @@
                             <button type="button" class="btn btn-default btn-collapse" data-target="#projectSelectEdit">
                                 Dự án
                             </button>
-                            <button type="button" class="btn btn-default btn-collapse" data-target="#roomEdit"><i
-                                    class="fa fa-bed" aria-hidden="true"></i> Phòng
-                            </button>
-
                         </div>
                     </div>
                     <div class="form-group clearfix">
                         <div class="col-xs-12">
+                            <button type="button" class="btn btn-default btn-collapse" data-target="#roomEdit"><i
+                                    class="fa fa-bed" aria-hidden="true"></i> Phòng
+                            </button>
                             <button type="button" class="btn btn-default btn-collapse" data-target="#areaEdit"><i
                                     class="fa fa-area-chart" aria-hidden="true"></i> Diện tích
                             </button>
                             <button type="button" class="btn btn-default btn-collapse" data-target="#floorSelectEdit">Số
                                 tầng
                             </button>
-                            <button type="button" class="btn btn-default btn-collapse" data-target="#priceSelectEdit">
-                                Giá
-                            </button>
+
                             <button type="button" class="btn btn-default btn-collapse" data-target="#mapSelectEdit"><i
                                     class="fa fa-map-marker"></i> Vị ví
                             </button>
@@ -536,6 +534,10 @@
 
             let streetId = $('#street-edit').val();
 
+            let contactPhone = $('#contact-phone-edit').val();
+            let contactPerson = $('#contact-person-edit').val();
+            let contactAddress = $('#contact-address-edit').val();
+
             let position = $('#position-edit').val();
 
             let directionId = $('#direction-edit').val();
@@ -590,6 +592,9 @@
             formDataEdit.append('district_id', districtId);
             formDataEdit.append('ward_id', wardId);
             formDataEdit.append('street_id', streetId);
+            formDataEdit.append('contact_person', contactPerson);
+            formDataEdit.append('contact_phone_number', contactPhone);
+            formDataEdit.append('contact_address', contactAddress);
             formDataEdit.append('position', position);
             formDataEdit.append('direction_id', directionId);
             formDataEdit.append('exhibit_id', exhibitId);
