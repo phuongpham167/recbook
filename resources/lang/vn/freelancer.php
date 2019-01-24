@@ -30,7 +30,7 @@ return [
     'end_at'  =>  'Ngày kết thúc',
     'end_atFrom'  =>  'Kết thúc từ ngày',
     'end_atTo'  =>  'Kết thúc đến ngày',
-    'finish_at'  =>  'Ngày hoàn thành',
+    'finish_at'  =>  'Ngày cần hoàn thành',
     'finish_atFrom'  =>  'Hoàn thành từ ngày',
     'finish_atTo'  =>  'Hoàn thành đến ngày',
     'width'  =>  'Dài',

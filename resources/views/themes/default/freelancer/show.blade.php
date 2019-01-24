@@ -24,6 +24,93 @@
             width: 30%;
             color: #aaa;
         }
+        .chao-gia {
+            -webkit-box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.2);
+            box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.2);
+            background: #f7f7f7;
+            margin-top: 20px;
+            padding: 30px;
+        }
+        .rateStar{
+            font-size: 14px;
+            color: #0c4da2;
+        }
+        .job_show .detail .bid-freelancer .profile-job-left-bottom .title {
+            margin-bottom: 10px;
+            line-height: 20px;
+            margin-top: 0px;
+            font-family: 'Open Sans', sans-serif;
+        }
+        .profile-job-left-bottom .title a {
+            font-size: 16px;
+            font-weight: 600;
+            display: inline-block;
+            font-family: 'Open Sans', sans-serif;
+        }
+        .profile-job-left .work-title {
+            line-height: 1.3em;
+            color: #999;
+            margin-bottom: 10px;
+        }
+        .profile-job-left-bottom .skill {
+            margin-top: 15px;
+        }
+        .profile.choosen{
+            box-shadow: 6px 9px 11px 0px rgba(0, 0, 0, 0.2);
+            border: 1px solid #e4e;
+        }
+        .ribbon {
+            width: 150px;
+            height: 150px;
+            overflow: hidden;
+            position: absolute;
+            z-index: 999;
+        }
+        .ribbon::before,
+        .ribbon::after {
+            position: absolute;
+            z-index: -1;
+            content: '';
+            display: block;
+            border: 5px solid #2980b9;
+        }
+        .ribbon span {
+            position: absolute;
+            display: block;
+            width: 225px;
+            padding: 15px 0;
+            background-color: #3498db;
+            box-shadow: 0 5px 10px rgba(0,0,0,.1);
+            color: #fff;
+            font: 700 18px/1 'Lato', sans-serif;
+            text-shadow: 0 1px 1px rgba(0,0,0,.2);
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        /* top left*/
+        .ribbon-top-left {
+            top: -10px;
+            left: -10px;
+        }
+        .ribbon-top-left::before,
+        .ribbon-top-left::after {
+            border-top-color: transparent;
+            border-left-color: transparent;
+        }
+        .ribbon-top-left::before {
+            top: 0;
+            right: 0;
+        }
+        .ribbon-top-left::after {
+            bottom: 0;
+            left: 0;
+        }
+        .ribbon-top-left span {
+            right: -25px;
+            top: 30px;
+            transform: rotate(-45deg);
+        }
     </style>
 @endpush
 
@@ -38,7 +125,16 @@
             <li><a href="#">{{$data->category->name}}</a></li>
         </ol>
         <div class="col-md-7">
-
+            <h3>{{$data->title}}</h3>
+            <div class="jumbotron" style="padding: 14px; margin-top: 10px">
+                {{$data->short_description}}
+            </div>
+            <div class="freelancer-detail">
+                {{$data->description}}
+            </div>
+            <div class="jumbotron" style="padding: 14px; margin-top: 10px">
+                <b>Ghi chú: </b>{{$data->note}}
+            </div>
         </div>
         <div class="col-md-4 col-md-offset-1">
             <div class="profile">
@@ -70,7 +166,7 @@
                         <th>
                             <h5 style="padding: 4px 0">{{$data->user->userinfo?$data->user->userinfo->full_name:$data->user->name}}</h5>
                             <p style="padding: 4px 0">{{$data->user?$data->user->group->name:''}}</p>
-                            <p>@for($i=1;$i<6;$i++)
+                            <p class="rateStar">@for($i=1;$i<6;$i++)
                                     @if($data->user->owner_rate()>=$i)
                                         <i class="fa fa-star"></i>
                                     @elseif($i-$data->user->owner_rate() == 0.5)
@@ -93,8 +189,145 @@
                 </table>
             </div>
         </div>
-    </div>
+        <div class="col-md-12 chao-gia">
+            @include(theme(TRUE).'.includes.message')
+            @if($data->status == 'opem')
+            <form method="post" action="{{route('freelancerDeal', ['id'=>$data->id])}}">
+                {{csrf_field()}}
+                <h3 style="border-bottom: 1px dotted #333">Thông tin chào giá</h3>
+                <hr/>
+                <div class="col-md-5 col-sm-12">
+                    <div class="block-amount-detail">
+                        <div class="form-group">
+                            <label>Chi phí đề xuất *</label>
+                            <input type="text" class="form-control" id="price" name="price" />
+                        </div>
+                        <div class="form-group">
+                            <label>Dự kiến hoàn thành trong *</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="days" placeholder="thời gian tới lúc hoàn thiện"
+                                       aria-describedby="basic-addon2">
+                                <span class="input-group-addon" id="basic-addon2">ngày</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-7 col-sm-12">
+                    <div class="form-group">
+                        <label>1.Bạn có những kinh nghiệm và kỹ năng nào phù hợp với dự án này? *</label>
+                        <textarea type="text" class="form-control" id="selfIntro" name="selfIntro" rows="5"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>2.Bạn dự định thực hiện dự án này như thế nào? *</label>
+                        <textarea type="text" class="form-control" id="road" name="road" rows="5"></textarea>
+                    </div>
+                    <h5>THÔNG TIN LIÊN HỆ</h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-addon" id="basic-addon1"><i class="fa fa-user"></i></span>
+                                <span class="form-control disabled">{{auth()->user()->userinfo?auth()->user()->userinfo->full_name:''}}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-addon" id="basic-addon1"><i class="fa fa-phone-square"></i></span>
+                                <span class="form-control disabled">{{auth()->user()->userinfo?auth()->user()->userinfo->phone:''}}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-12" style="margin: 15px 0">
+                            <button type="submit" class="btn btn-primary" style="width: 100%">Gửi chào giá</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            @else
+                <div class="jumbotron" style="padding: 14px; margin-top: 10px">
+                    Người đăng đã chọn được người thực hiện dự án này!
+                </div>
+            @endif
+        </div>
+        <div class="col-md-12 row" style="background: #f7f7f7; border-radius: 4px; margin-top: 20px; padding: 8px 5px">
+                <div class="col-md-2">
+                    <h5>Chào giá: <strong>{{$data->deals()->count()}}</strong></h5>
+                </div>
+                <div class="col-md-6">
+                    <h5>Thấp nhất: <strong>{{number_format($data->deals()->min('price'))}}</strong> |
+                    Trung bình: <strong>{{number_format(round($data->deals()->average('price')))}}</strong> |
+                    Cao nhất: <strong>{{number_format($data->deals()->max('price'))}}</strong></h5>
+                </div>
+                <div class="col-md-4 text-right">
+                    <h5>Trung bình: <strong>{{round($data->deals()->average('days'))}} ngày</strong></h5>
+                </div>
+        </div>
+        @foreach($data->deals()->orderBy('created_at', 'DESC')->get() as $item)
+        <div class="col-md-12 profile @if($item->is_choosen == 1) choosen @endif" style="margin-top: 20px">
+            @if($item->is_choosen == 1)
+                <div class="ribbon ribbon-top-left"><span>Được chọn</span></div>
+            @endif
+            <div class="col-md-2">
+                <img src="{{$item->dealer()->first()?$item->dealer()->first()->avatar():''}}" class="img-responsive"/>
+                <p class="rateStar" style="text-align: center">
+                    @for($i=1;$i<6;$i++)
+                        @if($item->dealer()->first()->dealer_rate()>=$i)
+                            <i class="fa fa-star"></i>
+                        @elseif($i-$item->dealer()->first()->dealer_rate() == 0.5)
+                            <i class="fa fa-star-half-o"></i>
+                        @else
+                            <i class="fa fa-star" style="color: #ccc"></i>
+                        @endif
+                    @endfor</p>
+                @if(auth()->user()->id == $data->user_id && $data->status == 'open')
+                    <a class="btn btn-success" href="{{route('freelancerChoosen', ['fl_id'=>$data->id, 'deal_id'=>$item->id])}}"><i class="fa fa-check"></i> Chọn chào giá này</a>
+                @endif
+            </div>
+            <div class="col-md-6">
+                <div class="profile-job-left-bottom">
+                    <h3 class="title">
+                        <a href="{{asset('user/'.$item->user_id)}}" title="">
+                            {{$item->dealer()->first()->userinfo?$item->dealer()->first()->userinfo->full_name:$item->dealer()->first()->name}} </a>
+                    </h3>
+                    <div class="work-title">{{$item->dealer()->first()?$item->dealer()->first()->group->name:''}}</div>
 
+
+                    <div class="skill">
+                        <label>Giới thiệu:</label>
+                        <div class="list-skill">
+                            {{$item->dealer()->first()->userinfo?$item->dealer()->first()->userinfo->description:''}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <table class="table" style="margin-top: 10px">
+                    <tr>
+                        <td>Đến từ</td>
+                        <th>{{$item->dealer->userinfo->province?$item->dealer->userinfo->province->name:''}}</th>
+                    </tr>
+                    <tr>
+                        <td>Ngày gia nhập</td>
+                        <th>{{Carbon\Carbon::parse($item->dealer->created_at)->format('d/m/Y')}}</th>
+                    </tr>
+                    <tr>
+                        <td>Việc đã làm</td>
+                        <th>{{\App\FLDeal::where('user_id', $item->user_id)->where('is_choosen', 1)->whereNotNull('finished_at')->count()}}</th>
+                    </tr>
+                    <tr>
+                        <td>Thu nhập</td>
+                        <th>{{number_format(\App\FLDeal::where('user_id', $item->user_id)->where('is_choosen', 1)->whereNotNull('finished_at')->sum('price'))}}</th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        @endforeach
+    </div>
+    <div class="container" style="margin-top: 30px">
+        @foreach(\App\Banner::where('location', 5)->get() as $item)
+            <img src="http://{{env('DOMAIN_BACKEND','recbook.net')}}{{$item->image}}" alt="{{$item->note}}" style="
+    width: 100%;
+">
+        @endforeach
+    </div>
     @include(theme(TRUE).'.includes.footer')
 @endsection
 

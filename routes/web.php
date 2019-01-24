@@ -105,8 +105,8 @@ Route::group(['middleware'=>'auth'], function(){
         Route::post('/tao-moi', ['as' => 'freelancerCreate', 'uses' => 'FreelancerController@postCreate']);
 //        Route::get('/chi-tiet/{id}/{slug}', ['as' => 'freelancerDetail', 'uses' => 'FreelancerController@show']);
 //        Route::post('luu/{id?}', ['as'=>'freelancerCreate', 'uses'=>'FreelancerController@store']);
-//        Route::post('dat-gia', ['as'=>'freelancerDeal', 'uses'=>'FreelancerController@deal']);
-//        Route::post('chon', ['as'=>'freelancerChoosen', 'uses'=>'FreelancerController@choosen']);
+        Route::post('dat-gia/{id}', ['as'=>'freelancerDeal', 'uses'=>'FreelancerController@deal']);
+        Route::get('chon/{fl_id}/{deal_id}', ['as'=>'freelancerChoosen', 'uses'=>'FreelancerController@choosen']);
 //        Route::post('ket-thuc', ['as'=>'freelancerFinish', 'uses'=>'FreelancerController@finish']);
     });
 
@@ -149,3 +149,8 @@ Route::get('/project-by-province/{provinceId}', ['as' => 'projectByProvince', 'u
 Route::get('/range-price/list-dropdown/{catId}', ['as' => 'rangePriceByCat', 'uses' => 'RangePriceController@getListDropDown']);
 Route::get('/re-type/list-dropdown/{catId}', ['as' => 'reTypeByCat', 'uses' => 'ReTypeController@getListDropDown']);
 Route::get('/customer-by-phone/{phone}', ['as' => 'customer-by-phone', 'uses' => 'RealEstateController@customerByPhone']);
+
+Route::get('/test', function (){
+    echo url()->current();
+});
+

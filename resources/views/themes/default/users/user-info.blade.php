@@ -499,7 +499,7 @@
                             <div class="row">
                                 <div class="col-xs-12">
                                     @if ((\Auth::user() && \Auth::user()->id  == $data->id)|| $isFriend)
-                                        <p class="title-short-section">Bạn bè</p>
+                                        <p class="title-short-section" style="margin-top: 16px;">Bạn bè</p>
                                         <div class="list-friend border-block">
                                             @foreach($listFriends as $friend)
                                                 @php

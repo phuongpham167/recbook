@@ -1,3 +1,6 @@
+@php
+    \Carbon\Carbon::setLocale('vi');
+@endphp
 <nav class="navbar navbar-inverse main-menu main-menu-user-info">
     <div class="container">
         <div class="navbar-header">
@@ -43,12 +46,43 @@
                                 <li><a>{{$authFriendRequest->fuser1->userinfo->full_name}}</a> <a href="{{route('friend.confirm.request', [$authFriendRequest->fuser1->id])}}" class="btn btn-primary pull-right btn-accept-rq"><i class="fa fa-plus"></i> Chấp nhận</a></li>
                                 @endforeach
                             @else
-                                <li><a>Không có lời mời kết bạn nào</a></li>
+                                <li><a class="notice_dropdown">Không có lời mời kết bạn nào</a></li>
                             @endif
                         </ul>
                     </li>
                     <li class="dropdown">
-                        <a href="{{ route('chat') }}" title="Tin nhắn"><i class="fa fa-comment" aria-hidden="true"></i></a>
+                        {{--<a href="{{ route('chat') }}" title="Tin nhắn"><i class="fa fa-comment" aria-hidden="true"></i></a>--}}
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true" title="Tin nhắn"><i class="fa fa-comment" aria-hidden="true"></i>
+                            <?php $unseen_message = \App\Conversation::whereHas('messages', function ($q) {$q->where('is_read',0);})->count() ?>
+                            @if( $unseen_message!= 0)
+                                <span class="label label-success">{{$unseen_message}}</span>
+                            @endif
+                        </a>
+                        <ul class="dropdown-menu message_dropdown">
+                            <li class="header">Bạn có {{$unseen_message}} tin nhắn chưa đọc</li>
+
+                            @foreach(\App\Conversation::orderBy('created_at', 'desc')->where(function ($q) {
+                                $q->where('user1',auth()->user()->id)->orWhere('user2',auth()->user()->id);
+                            })->whereHas('messages', function ($q) {$q->where('is_read',0);})->get() as $item)
+                                <li class="row" style="border-bottom: 1px solid #dddfe2;">
+                                    <a role="button" class="notice_dropdown" style="padding: 0 !important; display: block" href="{{asset('conversation').'/'.$item->id}}">
+                                        <div class="pull-left">
+                                            <img width="50px" src="/images/default-avatar.png" class="img-circle" alt="User Image">
+                                        </div>
+                                        <div class="pull-left" style="margin-left: 10px; display: block; width: 80%">
+                                            <p>
+                                                <?php $message =  \App\Message::orderBy('created_at', 'asc')->where('is_read',0)->take(1)->first();
+                                                ?>
+                                                {{\App\User::find($message->user_id)->name}}
+                                                <small class="pull-right" style="margin-right: 10px; color: #cacaca"> <i class="fa fa-clock-o"></i> {{Carbon\Carbon::parse($message->created_at)->diffForHumans(\Carbon\Carbon::now())}}</small>
+                                            </p>
+                                            <span style="font-size: 12px">{{trim_text($message->text,40)}}</span>
+                                        </div>
+                                    </a>
+                                </li>
+                            @endforeach
+                            <li class="footer"><a style="color: black" href="{{asset('tin-nhan')}}">Xem tất cả tin nhắn</a></li>
+                        </ul>
                         {{--<ul class="dropdown-menu">--}}
                         {{--</ul>--}}
                     </li>
@@ -67,3 +101,23 @@
         </div>
     </div>
 </nav>
+<style>
+   .dropdown-menu>li{
+        margin: 0;
+        padding: 10px 10px;
+   }
+   .dropdown-menu>li .menu>li>a, .dropdown-menu>li .menu>li>a, .dropdown-menu>li .menu>li>a {
+        display: block;
+        white-space: nowrap;
+        border-bottom: 1px solid #f4f4f4;
+   }
+   .label {
+        position: absolute;
+        top: 9px;
+        right: 7px;
+        text-align: center;
+        font-size: 9px;
+        padding: 2px 3px;
+        line-height: .9;
+   }
+</style>
