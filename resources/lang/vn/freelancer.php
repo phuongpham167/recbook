@@ -39,4 +39,6 @@ return [
     'floor'  =>  'Số tầng',
     'add_success'  =>  'Thêm dự án mới thành công!',
     'edit_success'  =>  'Sửa dự án thành công!',
+    'close_success'  =>  'Đóng dự án thành công!',
+    'close_fail'  =>  'Đóng dự án thất bại!',
 ];

@@ -23,4 +23,6 @@ return [
     'sethot'   =>  'Up Hot',
     'up'   =>  'Up Tin',
     'sold'   =>  'Đã bán',
+    'close'   =>  'Đóng dự án',
+    'done'   =>  'Đã làm xong',
 ];
