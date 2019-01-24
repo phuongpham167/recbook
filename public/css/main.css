@@ -203,14 +203,17 @@ button {
   font-size: 12px;
 }
 
-.main-menu .main-menu-list .menu-search input {
+.main-menu .main-menu-list .menu-search input, .main-menu .main-menu-list .menu-search select {
   border-radius: 0;
   border: none;
   -webkit-box-shadow: none;
-          box-shadow: none;
+  box-shadow: none;
   font-style: italic;
   height: 30px;
-  width: 170px;
+  width: 105px;
+  border-right: 1px dotted #000;
+  border-right-style: dashed;
+  float: left;
 }
 
 @media screen and (max-width: 767px) {
