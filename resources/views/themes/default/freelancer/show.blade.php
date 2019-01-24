@@ -121,7 +121,7 @@
 @endphp
     <div class="container">
         <ol class="breadcrumb" style="margin: 20px 0">
-            <li><a>Dự án</a></li>
+            <li><a href="{{asset('du-an')}}">Dự án</a></li>
             <li><a href="#">{{$data->category->name}}</a></li>
         </ol>
         <div class="col-md-7">

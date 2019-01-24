@@ -74,7 +74,7 @@
                                                 <?php
                                                     $unseen_message =  \App\Message::orderBy('created_at', 'asc')->where('conversation_id',$item->id)->where('user_id','<>',auth()->user()->id)->where('is_read',0)->take(1)->first();
                                                 ?>
-                                                {{\App\User::find($unseen_message->user_id)->name}}
+                                                {{\App\User::find($unseen_message->user_id)?\App\User::find($unseen_message->user_id)->name:$unseen_message->user_id}}
                                                 <small class="pull-right" style="margin-right: 10px; color: #cacaca"> <i class="fa fa-clock-o"></i> {{Carbon\Carbon::parse($unseen_message->created_at)->diffForHumans(\Carbon\Carbon::now())}}</small>
                                             </p>
                                             <span style="font-size: 12px">{{trim_text($unseen_message->text,40)}}</span>
