@@ -313,7 +313,7 @@
                                                                         <div class="col-xs-12">
                                                                             <div class="row">
                                                                                 <div class="col-xs-12 col-sm-6">
-                                                                                    <select class="form-control"
+                                                                                    <select class="form-control hidden"
                                                                                             id="is-private"
                                                                                             name="is_private"
                                                                                             value="{{ old('is_private') }}">
