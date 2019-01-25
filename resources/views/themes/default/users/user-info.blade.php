@@ -469,6 +469,11 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="row">
+                                                                        <div class="col-xs-12 detail-item-wrap">
+                                                                            {!! $re->detail !!}
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
                                                                         @php
                                                                             $imgDf = [
                                                                                 'link' => '/images/default_real_estate_image.jpg',
