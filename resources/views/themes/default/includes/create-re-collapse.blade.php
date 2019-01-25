@@ -209,6 +209,20 @@
     {{--<script src="{{asset('plugins/bootstrap-datetimepicker-master/build/js/bootstrap-datetimepicker.min.js')}}"></script>--}}
     <script src="{{asset('plugins/ckeditor-4/ckeditor.js')}}"></script>
     <script>
+        function initMap() {
+            var myLatLng = {lat: -25.363, lng: 131.044};
+
+            var map = new google.maps.Map(document.getElementById('map-view'), {
+                zoom: 4,
+                center: myLatLng
+            });
+
+            var marker = new google.maps.Marker({
+                position: myLatLng,
+                map: map,
+                title: 'Hello World!'
+            });
+        }
         $(function () {
             $('#contact_phone_number').keyup(function() {
                 emptyContactInfo();
@@ -389,4 +403,5 @@
         }
 
     </script>
+    <script type="text/javascript" src='https://maps.googleapis.com/maps/api/js?sensor=false&key=AIzaSyAxgnRkMsWPSqlxOz_kLga0hJ4eG2l0Vmo&callback=initMap'></script>
 @endpush

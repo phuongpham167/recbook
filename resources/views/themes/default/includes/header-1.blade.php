@@ -15,7 +15,7 @@
                 @else
                     <p class="pull-right">
                         <a href="{{ route('recharge') }}"><i class="fa fa-credit-card"></i> <strong>Số dư: {{auth()->user()->credits}}</strong></a>
-                        <a href="{{ route('info') }}"><i class="fa fa-user"></i> <strong>{{auth()->user()->name}}</strong></a>
+                        <a href="{{route('user.info', [auth()->user()->id])}}"><i class="fa fa-user"></i> <strong>{{auth()->user()->name}}</strong></a>
                         <a href="{{ route('logout') }}"><i class="fa fa-sign-out"></i> ĐĂNG XUẤT</a>
                     </p>
                 @endif
@@ -74,8 +74,8 @@
                     @endif
                 @endforeach
                 <li class=""><a href="{{ route('freelancerList') }}"> Yêu cầu dịch vụ</a></li>
-                <li class=""><a href="{{ route('contact') }}"> {{ trans('menu.contact') }}</a></li>
-                <li class=""><a href="{{ route('get.create-real-estate') }}">{{ trans('menu.create_real_estate') }}</a></li>
+                {{--<li class=""><a href="{{ route('contact') }}"> {{ trans('menu.contact') }}</a></li>--}}
+                {{--<li class=""><a href="{{ route('get.create-real-estate') }}">{{ trans('menu.create_real_estate') }}</a></li>--}}
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <form class="menu-search" action="{{route('smart-search')}}" method="get">

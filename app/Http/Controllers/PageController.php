@@ -795,7 +795,7 @@ class PageController extends Controller
                 /*
                  * get all post of user
                  * */
-                $query = RealEstate::select('id', 'title', 'slug', 'code', 're_category_id', 'contact_phone_number', 'district_id', 'floor', 'position', 'bedroom', 'living_room',
+                $query = RealEstate::select('id', 'title', 'detail', 'slug', 'code', 're_category_id', 'contact_phone_number', 'district_id', 'floor', 'position', 'bedroom', 'living_room',
                     'wc', 'lat', 'long', 'area_of_premises', 'area_of_use', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date');
                 $query1 = clone $query;
                 $query1->where('posted_by', $id);
