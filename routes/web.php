@@ -95,7 +95,6 @@ Route::group(['middleware'=>'auth'], function(){
         Route::get('/sethot', 'RealEstateController@setHot');
         Route::get('/up', 'RealEstateController@upPost');
         Route::get('/da-ban', 'RealEstateController@sold');
-
     });
 
     Route::group(['prefix' => 'du-an'], function () {

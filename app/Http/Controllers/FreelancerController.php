@@ -114,6 +114,14 @@ class FreelancerController extends Controller
                     else if($dt->status == 'finished')
                         $manage = 'Đã hoàn thành';
                 }
+                if(\request('filter') == 'da-chao-gia') {
+                    if($dt->status == 'processing' || $dt->status=='pending')
+                        $manage = 'Đang xử lý';
+                    else if($dt->status == 'ended')
+                        $manage = 'Đã đóng';
+                    else if($dt->status == 'finished')
+                        $manage = 'Đã hoàn thành';
+                }
                 if(\request('filter') == 'da-tham-gia') {
                     if(($dt->status == 'processing' || $dt->status=='pending') && empty($dt->rate) && empty($dt->review)) {
                         $manage .= a('#a', '', trans('g.done'), ['class' => 'btn btn-xs btn-default btn-done', 'id' => $dt->id, 'data-type' => '1']);

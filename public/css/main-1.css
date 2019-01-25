@@ -164,6 +164,7 @@ button {
 
 .main-menu .main-menu-list .menu-search #ip-kw {
     font-size: 12px;
+    width: 200px;
 }
 
 .main-menu .main-menu-list .menu-search input, .main-menu .main-menu-list .menu-search select {
