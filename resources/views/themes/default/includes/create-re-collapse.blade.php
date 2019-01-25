@@ -185,7 +185,7 @@
 <div class="form-group collapse collapse1" id="mapSelect">
     <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.map')}}</label>
     <div class="col-sm-10">
-        <input type="text" class="form-control" name="map" id="map" value="{{ old('map') }}"/>
+        <input type="text" class="form-control" name="map" id="map" value="{{ old('map') }}" readonly/>
         <span class="help-block"><i>{{trans('real-estate.formCreateLabel.mapHelpBlock')}}</i></span>
     </div>
     <div class="col-sm-12">
@@ -210,18 +210,28 @@
     <script src="{{asset('plugins/ckeditor-4/ckeditor.js')}}"></script>
     <script>
         function initMap() {
-            var myLatLng = {lat: -25.363, lng: 131.044};
+            let uLat = '{{auth()->user()->userinfo->province->lat}}';
+            let uLong = '{{auth()->user()->userinfo->province->long}}';
+            var myLatLng = {lat: parseFloat(uLat), lng: parseFloat(uLong)};
 
             var map = new google.maps.Map(document.getElementById('map-view'), {
-                zoom: 4,
+                zoom: 10,
                 center: myLatLng
             });
 
             var marker = new google.maps.Marker({
                 position: myLatLng,
                 map: map,
+                draggable:true,
                 title: 'Hello World!'
             });
+            // marker.addListener('drag', handleEvent);
+            marker.addListener('dragend', handleEvent);
+        }
+        function handleEvent(event) {
+            // console.log(event.latLng.lat());
+            // console.log(event.latLng.lng());
+            $('#map').val(event.latLng.lat() + ',' + event.latLng.lng());
         }
         $(function () {
             $('#contact_phone_number').keyup(function() {

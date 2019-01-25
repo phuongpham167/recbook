@@ -158,11 +158,11 @@ class RealEstateController extends Controller
             })->addColumn('manage', function($dt) {
                 $manage = null;
 
+                $manage =   a('bat-dong-san/xoa', 'id='.$dt->id,trans('g.delete'), ['class'=>'btn btn-xs btn-danger'],'#',"return bootbox.confirm('".trans('system.delete_confirm')."', function(result){if(result==true){window.location.replace('".asset('bat-dong-san/xoa?id='.$dt->id)."')}})");
+
+                $manage .= '  ' . a('bat-dong-san/sua', 'id=' . $dt->id, trans('g.edit'), ['class' => 'btn btn-xs btn-default']);
+                $manage .= '  ' . a('#a', '', trans('g.renewed'), ['class' => 'btn btn-xs btn-primary btn-renewed', 'id' => $dt->id]);
                 if($dt->expire_date >= Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')) && $dt->post_date >= Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->subDays(get_config('expireRealEstate', 30))->format('m/d/Y H:i A'))) {
-                    $manage =   a('bat-dong-san/xoa', 'id='.$dt->id,trans('g.delete'), ['class'=>'btn btn-xs btn-danger'],'#',"return bootbox.confirm('".trans('system.delete_confirm')."', function(result){if(result==true){window.location.replace('".asset('bat-dong-san/xoa?id='.$dt->id)."')}})");
-                    if(!$dt->approved) {
-                        $manage .= '  ' . a('bat-dong-san/sua', 'id=' . $dt->id, trans('g.edit'), ['class' => 'btn btn-xs btn-default']);
-                    }
 
                     if(\request('filter') == 'tin-rao-nhap')
                         $manage .=   '  '.a('bat-dong-san/dang-bai', 'id='.$dt->id,trans('g.post'), ['class'=>'btn btn-xs btn-info']);
@@ -203,8 +203,9 @@ class RealEstateController extends Controller
                         $manage .= a('bat-dong-san/da-ban','id='.$dt->id,trans('g.sold'), ['class'=>'btn btn-xs btn-info'],'#',
                             "return bootbox.confirm('".trans('system.sold_confirm')."', function(result){if(result==true){window.location.replace('".asset('bat-dong-san/da-ban?id='.$dt->id)."')}})");
                 }
-                else
-                    $manage = trans('system.expired');
+                else {
+                    $manage .= '<br>'. trans('system.expired');
+                }
 
                 return $manage;
             })->rawColumns(['manage','title']);
@@ -308,6 +309,20 @@ class RealEstateController extends Controller
                 return redirect()->back();
             }
             set_notice(trans('real-estate.message.error'), 'error');
+            return redirect()->back()->withInput();
+        }
+        set_notice(trans('real-estate.message.error'), 'error');
+        return redirect('realEstateList');
+    }
+
+    public function renewed()
+    {
+        $data = RealEstate::find(\request('id'));
+
+        if ($data) {
+            $data->expire_date = Carbon::createFromFormat('Y-m-d', $data->expire_date)->addDays(\request('days'));
+            $data->save();
+            set_notice(trans('real-estate.message.renewed_success'), 'success');
             return redirect()->back()->withInput();
         }
         set_notice(trans('real-estate.message.error'), 'error');

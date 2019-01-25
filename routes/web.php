@@ -95,6 +95,7 @@ Route::group(['middleware'=>'auth'], function(){
         Route::get('/sethot', 'RealEstateController@setHot');
         Route::get('/up', 'RealEstateController@upPost');
         Route::get('/da-ban', 'RealEstateController@sold');
+        Route::post('/gia-han', 'RealEstateController@renewed');
     });
 
     Route::group(['prefix' => 'du-an'], function () {
@@ -154,6 +155,9 @@ Route::get('/project-by-province/{provinceId}', ['as' => 'projectByProvince', 'u
 Route::get('/range-price/list-dropdown/{catId}', ['as' => 'rangePriceByCat', 'uses' => 'RangePriceController@getListDropDown']);
 Route::get('/re-type/list-dropdown/{catId}', ['as' => 'reTypeByCat', 'uses' => 'ReTypeController@getListDropDown']);
 Route::get('/customer-by-phone/{phone}', ['as' => 'customer-by-phone', 'uses' => 'RealEstateController@customerByPhone']);
+
+Route::get('404', ['as' => '404', 'uses' => 'ErrorController@notfound']);
+Route::get('500', ['as' => '500', 'uses' => 'ErrorController@fatal']);
 
 Route::get('/test', function (){
     echo url()->current();
