@@ -192,6 +192,7 @@
         <div class="col-md-12 chao-gia">
             @include(theme(TRUE).'.includes.message')
             @if($data->status == 'open')
+                @if(auth()->check())
             <form method="post" action="{{route('freelancerDeal', ['id'=>$data->id])}}">
                 {{csrf_field()}}
                 <h3 style="border-bottom: 1px dotted #333">Thông tin chào giá</h3>
@@ -241,6 +242,12 @@
                     </div>
                 </div>
             </form>
+                @else
+                    <p class="alert-title">Thông báo</p>
+                    <p>Để chào giá, hãy <a
+                                href="{{route('login')}}">Đăng nhập</a> hoặc <a
+                                href="{{route('register')}}">Đăng ký</a>.</p>
+                @endif
             @else
                 <div class="jumbotron" style="padding: 14px; margin-top: 10px">
                     Người đăng đã chọn được người thực hiện dự án này!
@@ -277,7 +284,7 @@
                             <i class="fa fa-star" style="color: #ccc"></i>
                         @endif
                     @endfor</p>
-                @if(auth()->user()->id == $data->user_id && $data->status == 'open')
+                @if(auth()->check() && auth()->user()->id == $data->user_id && $data->status == 'open')
                     <a class="btn btn-success" href="{{route('freelancerChoosen', ['fl_id'=>$data->id, 'deal_id'=>$item->id])}}"><i class="fa fa-check"></i> Chọn chào giá này</a>
                 @endif
             </div>
@@ -294,7 +301,7 @@
                             {{$item->dealer()->first()->userinfo?$item->dealer()->first()->userinfo->description:''}}
                         </div>
                     </div>
-                    @if(auth()->user()->id == $data->user_id)
+                    @if(auth()->check() && auth()->user()->id == $data->user_id)
                         <div class="skill">
                             <label>Người chào giá tự giới thiệu:</label>
                             <div class="list-skill">
@@ -312,7 +319,7 @@
             </div>
             <div class="col-md-4">
                 <table class="table" style="margin-top: 10px">
-                    @if(auth()->user()->id == $data->user_id)
+                    @if(auth()->check() && auth()->user()->id == $data->user_id)
                     <tr>
                         <td>Giá đề xuất</td>
                         <th>{{convert_number_to_words($item->price)}}</th>

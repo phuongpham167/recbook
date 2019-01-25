@@ -73,12 +73,31 @@
                         <li class=""><a href="{{ route('danh-muc', ['tag' => $md->path]) }}"> {{ $md->name }}</a></li>
                     @endif
                 @endforeach
+                <li class=""><a href="{{ route('freelancerList') }}"> Yêu cầu dịch vụ</a></li>
                 <li class=""><a href="{{ route('contact') }}"> {{ trans('menu.contact') }}</a></li>
                 <li class=""><a href="{{ route('get.create-real-estate') }}">{{ trans('menu.create_real_estate') }}</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <form class="menu-search" action="{{route('search')}}" method="get">
+                <form class="menu-search" action="{{route('smart-search')}}" method="get">
                     <div class="pull-right wrap">
+                        <select class="form-control" name="Search[cat_id]">
+                            <option value="">Loại BĐS</option>
+                            @foreach(\App\ReCategory::get() as $item)
+                                <option value="{{$item->id}}">{{$item->name}}</option>
+                            @endforeach
+                        </select>
+                        <select class="form-control" name="Search[direction_id]">
+                            <option value="">Hướng</option>
+                            @foreach(\App\Direction::get() as $item)
+                                <option value="{{$item->id}}">{{$item->name}}</option>
+                            @endforeach
+                        </select>
+                        <select class="form-control" name="Search[range_price_id]">
+                            <option value="0">Giá</option>
+                            @foreach(\App\RangePrice::get() as $item)
+                                <option value="{{$item->id}}">{{$item->name}}</option>
+                            @endforeach
+                        </select>
                         <input id="ip-kw" name="txtkeyword" class="form-control pull-left" type="text" placeholder="{{trans('system.searchPlaceholder')}}">
                         <button type="submit" class="pull-left"><i class="fa fa-search"></i></button>
                     </div>

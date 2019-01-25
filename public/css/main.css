@@ -149,14 +149,14 @@ button {
   font-size: 13px;
   line-height: 40px;
   text-transform: uppercase;
-  padding: 2px 11px 0 15px;
+  padding: 2px 4px 0 13px;
 }
 
 .main-menu .main-menu-list {
   color: black;
   font-size: 13px;
   line-height: 40px;
-  padding: 2px 11px 0 15px;
+  padding: 2px 11px 0 0;
 }
 
 .message_dropdown {
@@ -175,6 +175,7 @@ button {
   border-radius: 0;
   -webkit-box-shadow: none;
           box-shadow: none;
+  background: #0c4da2;
 }
 
 .main-menu .main-menu-list ul li ul li a {
@@ -203,14 +204,17 @@ button {
   font-size: 12px;
 }
 
-.main-menu .main-menu-list .menu-search input {
+.main-menu .main-menu-list .menu-search input, .main-menu .main-menu-list .menu-search select {
   border-radius: 0;
   border: none;
   -webkit-box-shadow: none;
-          box-shadow: none;
+  box-shadow: none;
   font-style: italic;
   height: 30px;
-  width: 170px;
+  width: 105px;
+  border-right: 1px dotted #000;
+  border-right-style: dashed;
+  float: left;
 }
 
 @media screen and (max-width: 767px) {

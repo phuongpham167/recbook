@@ -46,6 +46,7 @@
             <div class="col-xs-3 left">
                 <p class="title-short-section">Giới thiệu</p>
                 <div class="u-description border-block">
+                    @if(auth()->check())
                     <p class=" text-center">Làm việc tại: {{ auth()->user()->userinfo->company }}</p>
                     <p class=" text-center">Đánh giá: 87/100 điểm</p>
                     @if((\Auth::user() && \Auth::user()->id  ==  auth()->user()->id))
@@ -53,6 +54,12 @@
                         <p class=" text-center">Nhóm tài khoản: <strong>{{auth()->user()->group->name}}</strong></p>
                     @endif
                     <p class="user-desc">{{  auth()->user()->userinfo->description }}</p>
+                    @else
+                        <p class="alert-title">Thông báo</p>
+                        <p>Để chào giá, hãy <a
+                                    href="{{route('login')}}">Đăng nhập</a> hoặc <a
+                                    href="{{route('register')}}">Đăng ký</a>.</p>
+                    @endif
                 </div>
                 <p class="title-short-section">Tin tức</p>
                 <div class="u-description border-block">
@@ -78,9 +85,11 @@
                                 kế</a></li>
                         <li role="presentation" @if(url()->current() == asset('du-an/tu-van-phong-thuy')) class="active" @endif><a class="freelancer_tab" href="/du-an/tu-van-phong-thuy">Tư vấn phong
                                 thủy</a></li>
+                        @if(auth()->check())
                         <li role="presentation" class="pull-right"><a class="btn-add" style="background: #2db964; color: white" href="#a"><i class="fa fa-plus"
                                                                                                aria-hidden="true"></i>
                                 Đăng dự án</a></li>
+                        @endif
                     </ul>
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs nav-justified">
@@ -141,7 +150,7 @@
                             @endif
                             {{--<textarea class="form-control" placeholder="Bán nhà ..." id="title-hold"></textarea>--}}
 
-                            <div class="form-group">
+                            <div class="form-group clearfix">
                                 <div class="col-sm-12">
                                     <input type="text" class="form-control"
                                            name="title" id="title"
@@ -150,7 +159,7 @@
                                     <p class="text-red error"></p>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group clearfix">
                                 <div class="col-sm-12">
                                     <textarea name="description"
                                               rows="3"
