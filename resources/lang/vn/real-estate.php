@@ -76,6 +76,7 @@ return [
         'error' => 'Error',
         'post_limit' => 'Đã hết số lượt đăng tin cho phép, hãy nâng cấp nhóm thành viên để đăng nhiều tin hơn!',
         'up_limit' => 'Đã hết số lượt up tin cho phép, hãy nâng cấp nhóm thành viên để up nhiều tin hơn!',
+        'renewed_success' => 'Gia hạn thành công!',
     ],
     'list' => [
         'pageTitle' => 'Danh sách tin BĐS',
