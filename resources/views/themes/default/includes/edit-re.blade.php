@@ -313,7 +313,7 @@
                         <label class="col-sm-2 control-label">Đăng lên</label>
 
                         <div class="col-sm-4">
-                            <select class="form-control" id="is-private-edit" name="is_private"
+                            <select class="form-control hidden" id="is-private-edit" name="is_private"
                                     value="{{ old('is_private') }}">
                                 <option value="1">Đăng trên trang cá nhân</option>
                                 <option value="2">Đăng trên web cá nhân</option>
