@@ -3,7 +3,7 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-8 welcome-text hidden-xs">
-                <p>{{\Efriandika\LaravelSettings\Facades\Settings::get('header')}}</p>
+                <p>{{get_config('homeHeader', 'CHÀO MỪNG QUÝ KHÁCH ĐẾN VỚI RECBOOK.VN - HOTLINE: 0989.186.179')}}</p>
             </div>
 
             <div class="col-xs-12 col-sm-4 user-action">
