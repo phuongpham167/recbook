@@ -47,13 +47,13 @@
                 <p class="title-short-section">Giới thiệu</p>
                 <div class="u-description border-block">
                     @if(auth()->check())
-                    <p class=" text-center">Làm việc tại: {{ auth()->user()->userinfo->company }}</p>
+                    <p class=" text-center">Làm việc tại: {{ auth()->user()->userinfo->company?auth()->user()->userinfo->company:'' }}</p>
                     <p class=" text-center">Đánh giá: 87/100 điểm</p>
                     @if((\Auth::user() && \Auth::user()->id  ==  auth()->user()->id))
                         <p class=" text-center">Số dư: <strong>{{auth()->user()->credits}}</strong></p>
                         <p class=" text-center">Nhóm tài khoản: <strong>{{auth()->user()->group->name}}</strong></p>
                     @endif
-                    <p class="user-desc">{{  auth()->user()->userinfo->description }}</p>
+                    <p class="user-desc">{{  auth()->user()->userinfo->description?auth()->user()->userinfo->description:'' }}</p>
                     @else
                         <p class="alert-title">Thông báo</p>
                         <p>Để chào giá, hãy <a
@@ -98,9 +98,9 @@
                                 <dl>
                                     <dt class="text-center" style="width: 150px; height: 150px">
                                         <img width="100%" height="100%"
-                                                          src="{{\App\User::find($item->user_id)->userinfo->avatar()?\App\User::find($item->user_id)->userinfo->avatar():asset('/images/default-avatar.png')}}"
+                                                          src="{{(\App\User::find($item->user_id)->userinfo->avatar())?(\App\User::find($item->user_id)->userinfo->avatar()):asset('/images/default-avatar.png')}}"
                                                           alt="">
-                                        <p style="margin-top: 10px">{{\App\User::find($item->user_id)->userinfo->full_name}}</p>
+                                        <p style="margin-top: 10px">{{(\App\User::find($item->user_id)->userinfo->full_name)?(\App\User::find($item->user_id)->userinfo->full_name) : ''}}</p>
                                     </dt>
                                     <dd style="margin-left: 180px">
                                         <h3><a style="text-transform: uppercase; color: #0c4da2; font-size: 18px" href="{{route('freelancerDetail', ['id'=>$item->id, 'slug'=>to_slug($item->title)])}}">{{$item->title}}</a></h3>
