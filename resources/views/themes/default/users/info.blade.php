@@ -10,7 +10,13 @@
 
 @push('style')
     <link rel="stylesheet" href="{{ asset('css/theme.css') }}" />
-
+    <link rel="stylesheet" href="{{asset('plugins/loopj-jquery-tokeninput/styles/token-input.css')}}" />
+    <link rel="stylesheet" href="{{asset('plugins/loopj-jquery-tokeninput/styles/token-input-bootstrap3.css')}}" />
+    <style type="text/css">
+        #token-input-subcribes {
+            border: none;
+        }
+    </style>
 @endpush
 
 @section('content')
@@ -116,6 +122,15 @@
                                             </dd>
                                         </dl>
                                     </div>
+                                    <div class="col-xs-12">
+                                        <dl>
+                                            <dt class="txt_right">Tỉnh, thành quan tâm:</dt>
+                                            <dd>
+                                                <input type="text" name="subcribes" id="subcribes" />
+                                            </dd>
+                                        </dl>
+                                    </div>
+
                                     @if(empty(auth()->user()->userinfo->certificate))
                                         <div class="col-xs-12">
                                             <dl>
@@ -190,6 +205,21 @@
     @include(theme(TRUE).'.includes.footer')
 @endsection
 
-@section('js')
-
-@endsection
+@push('js')
+    <script src="{{asset('plugins/loopj-jquery-tokeninput/src/jquery.tokeninput.js')}}"></script>
+    <script>
+        $(document).ready(function(){
+            $('#subcribes').tokenInput('{{route('ajaxProvince')}}', {
+                theme: "bootstrap",
+                queryParam: "term",
+                zindex  :   1005,
+                preventDuplicates : true,
+                prePopulate : [
+                    @foreach(auth()->user()->subcribes()->get() as $item)
+                    {id: '{{$item->id}}', 'name': '{{$item->name}}'},
+                    @endforeach
+                ]
+            });
+        });
+    </script>
+@endpush

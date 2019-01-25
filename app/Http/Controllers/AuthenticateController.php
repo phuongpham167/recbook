@@ -153,6 +153,9 @@ class AuthenticateController extends Controller
             $userInfo->certificate    =   'uploads/certificate/'.$userInfo->id.'/'.$request->certificate->getClientOriginalName();
         }
         $userInfo->save();
+        if(!empty($request->subcribes)){
+            auth()->user()->subcribes()->sync(explode(',',$request->subcribes));
+        }
 //        event_log('Sửa thành viên '.auth()->user()->name.' id '.auth()->user()->id);
         set_notice(trans('system.edit_success'), 'success');
 
