@@ -230,11 +230,11 @@
                     <div class="form-group clearfix collapse" id="mapSelectEdit">
                         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.map')}}</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="map_edit" id="map-edit"/>
+                            <input type="text" class="form-control" name="map_edit" id="map-edit" readonly/>
                             <span class="help-block"><i>{{trans('real-estate.formCreateLabel.mapHelpBlock')}}</i></span>
                         </div>
                         <div class="col-sm-12">
-                            <div id="map-view" style="width: 100%; height: 250px;"></div>
+                            <div id="map-view-edit" style="width: 100%; height: 250px;"></div>
                         </div>
                     </div>
                     <div class="form-group clearfix collapse" id="imageSelectEdit">
@@ -757,6 +757,39 @@
                 imgMarkup += '<a href="' + image.link + '" title="' + alt + '" class="pg-item"><img src="' + image.link + '" width="122" height="91"></a>';
             }
             imagesDOM.html(imgMarkup);
+        }
+
+        $('#modalEditRe').on('hidden.bs.modal', function () {
+            $('#is-edit').val('add');
+        });
+
+        function initMapEdit(lat, long) {
+            let uLat = '{{auth()->user()->userinfo->province->lat}}';
+            let uLong = '{{auth()->user()->userinfo->province->long}}';
+            var myLatLng = {lat: parseFloat(uLat), lng: parseFloat(uLong)};
+            if (lat && long) {
+                myLatLng = {lat: parseFloat(lat), lng: parseFloat(long)};
+            }
+
+            var map = new google.maps.Map(document.getElementById('map-view-edit'), {
+                zoom: 10,
+                center: myLatLng
+            });
+
+            var marker = new google.maps.Marker({
+                position: myLatLng,
+                map: map,
+                draggable:true,
+                title: 'Hello World!'
+            });
+            // marker.addListener('drag', handleEvent);
+            marker.addListener('dragend', handleEventMapEdit);
+        }
+        function handleEventMapEdit(event) {
+            // console.log('map edit here');
+            // console.log(event.latLng.lat());
+            // console.log(event.latLng.lng());
+            $('#map-edit').val(event.latLng.lat() + ',' + event.latLng.lng());
         }
     </script>
 @endpush
