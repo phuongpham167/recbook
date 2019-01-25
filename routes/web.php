@@ -135,6 +135,7 @@ Route::group(['middleware'=>'auth'], function(){
         Route::post('/update-detail-re/{id}', ['as' => 'ajax.updateDetailRe', 'uses' => 'RealEstateController@updateDetailRe']);
         Route::get('user', 'AjaxController@ajaxUser');
         Route::get('street', 'AjaxController@ajaxStreet');
+        Route::get('province', 'AjaxController@ajaxProvince')->name('ajaxProvince');
     });
 
     Route::post('search-area', 'AreaController@searchArea');
