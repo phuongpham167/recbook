@@ -3,7 +3,7 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-8 welcome-text hidden-xs">
-                <p>chào mừng quý khách đến với đô thị group - hotline: <span>0989.186.179</span></p>
+                <p>{{get_config('homeHeader', 'CHÀO MỪNG QUÝ KHÁCH ĐẾN VỚI RECBOOK.VN - HOTLINE: 0989.186.179')}}</p>
             </div>
 
             <div class="col-xs-12 col-sm-4 user-action">
@@ -74,8 +74,6 @@
                     @endif
                 @endforeach
                 <li class=""><a href="{{ route('freelancerList') }}"> Yêu cầu dịch vụ</a></li>
-                <li class=""><a href="{{ route('contact') }}"> {{ trans('menu.contact') }}</a></li>
-                <li class=""><a href="{{ route('get.create-real-estate') }}">{{ trans('menu.create_real_estate') }}</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <form class="menu-search" action="{{route('smart-search')}}" method="get">
@@ -98,7 +96,7 @@
                                 <option value="{{$item->id}}">{{$item->name}}</option>
                             @endforeach
                         </select>
-                        <input id="ip-kw" name="txtkeyword" class="form-control pull-left" type="text" placeholder="{{trans('system.searchPlaceholder')}}">
+                        <input id="ip-kw" name="txtkeyword" class="form-control pull-left" type="text" placeholder="{{trans('system.searchPlaceholder')}}" style="width: 200px" />
                         <button type="submit" class="pull-left"><i class="fa fa-search"></i></button>
                     </div>
                 </form>
