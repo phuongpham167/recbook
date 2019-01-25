@@ -3,7 +3,7 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-8 welcome-text hidden-xs">
-                <p>chào mừng quý khách đến với đô thị group - hotline: <span>0989.186.179</span></p>
+                <p>{{\Efriandika\LaravelSettings\Facades\Settings::get('header')}}</p>
             </div>
 
             <div class="col-xs-12 col-sm-4 user-action">
