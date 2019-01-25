@@ -418,11 +418,11 @@
                                                                     class="col-xs-12 col-md-2 pull-right no-padding-right map-link">
                                                                     @if($re->lat && $re->long)
                                                                         <a href="https://www.google.com/maps/search/?api=1&query={{$re->lat}},{{$re->long}}"
-                                                                           target="_blank">Xem bản đồ</a>
+                                                                           target="_blank" style="text-decoration: none;">Xem bản đồ</a>
                                                                     @endif
                                                                     @if (\Auth::user() && \Auth::user()->id == $data->id)
                                                                         {{--                                                                        <a href="{{route('get.edit-real-estate', ['id' => $re->id])}}" ><i class="fa fa-pencil-square-o"></i> Sửa tin</a>--}}
-                                                                        <a class="edit-re" data-reid="{{$re->id}}"><i
+                                                                        <a class="edit-re" data-reid="{{$re->id}}" style="cursor:pointer;text-decoration: none;"><i
                                                                                 class="fa fa-pencil-square-o"></i> Sửa
                                                                             tin</a>
                                                                     @endif
@@ -564,7 +564,7 @@
 
         </div>
     </div>
-
+    <input type="hidden" id="is-edit" value="add"/>
     @include(theme(TRUE).'.includes.edit-re')
 
     {{-- Include footer --}}
@@ -956,6 +956,8 @@
                         // $(panelWarp).find('.detail-item-re-wrap').css('display', 'none');
                         // $(panelWarp).find('.edit-re-wrap').html(editHtml);
                         setValueForEditRe(result);
+                        $('#is-edit').val('edit');
+                        initMapEdit(result.re.lat, result.re.long);
                         $('#modalEditRe').modal('show');
                     }
                     hideLoader();
@@ -1054,6 +1056,9 @@
             }
             if (re.is_deal) {
                 $('#is-deal-edit').prop('checked', true);
+            }
+            if (re.lat && re.long) {
+                $('#map-edit').val(re.lat + ',' + re.long);
             }
             const images = $.parseJSON(re.images);
             let imagesMarkup = '';
