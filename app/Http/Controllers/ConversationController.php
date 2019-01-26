@@ -113,6 +113,6 @@ class ConversationController extends Controller
                 'menuData' => $this->menuFE
             ]);
 
-        return redirect()->back();
+        return view('errors.403')->with('message', 'Bạn không tham gia cuộc hội thoại này, vui lòng thử lại!');
     }
 }
