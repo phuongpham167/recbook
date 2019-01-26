@@ -28,7 +28,15 @@
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-md-12">
-                                    {{($conversation->user1()->first()->id==Auth::user()->id)?$conversation->user2()->first()->name:$conversation->user1()->first()->name}}
+                                    <?php
+                                    if(!empty($conversation->user1()->first()) && $conversation->user1()->first()->id == auth()->user()->id){
+                                        $name   =   $conversation->user2()->first()?$conversation->user2()->first()->name:'Người dùng Recbook';
+                                    }
+                                    else {
+                                        $name   =   $conversation->user1()->first()?$conversation->user1()->first()->name:'Người dùng Recbook';
+                                    }
+                                    ?>
+                                    {{$name}}
                                 </div>
                             </div>
                         </div>

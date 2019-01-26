@@ -33,7 +33,7 @@
                             <img class="img-responsive header-avatar" src="{{$avatar}}" > <span class="header-name">{{auth()->user()->userinfo->full_name}}</span>
                         </a>
                     </li>
-                    <li class="home-link"><a href="{{ route('home') }}" style="text-transform: capitalize">{{ trans('header.navbar-item.home') }}</a></li>
+                    <li ><a href="{{ route('home') }}" style="text-transform: capitalize">{{ trans('header.navbar-item.home') }}</a></li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#" title="Lời mời kết bạn"><i class="fa fa-users" aria-hidden="true"></i></a>
                         <ul class="dropdown-menu friend-request-list">
@@ -43,10 +43,10 @@
                             @endphp
                             @if(count($authFriendRequestLists) > 0)
                                 @foreach($authFriendRequestLists as $authFriendRequest)
-                                <li><a>{{$authFriendRequest->fuser1->userinfo->full_name}}</a> <a href="{{route('friend.confirm.request', [$authFriendRequest->fuser1->id])}}" class="btn btn-primary pull-right btn-accept-rq"><i class="fa fa-plus"></i> Chấp nhận</a></li>
+                                <li><a style="color: #fff !important;">{{$authFriendRequest->fuser1->userinfo->full_name}}</a> <a href="{{route('friend.confirm.request', [$authFriendRequest->fuser1->id])}}" class="btn btn-primary pull-right btn-accept-rq"><i class="fa fa-plus"></i> Chấp nhận</a></li>
                                 @endforeach
                             @else
-                                <li><a class="notice_dropdown">Không có lời mời kết bạn nào</a></li>
+                                <li><a class="notice_dropdown" style=" color: #fff !important;">Không có lời mời kết bạn nào</a></li>
                             @endif
                         </ul>
                     </li>
@@ -59,7 +59,7 @@
                             @endif
                         </a>
                         <ul class="dropdown-menu message_dropdown">
-                            <li class="header">Bạn có {{$unseen_conversation}} tin nhắn chưa đọc</li>
+                            <li class="header" style="color: #fff !important;">Bạn có {{$unseen_conversation}} tin nhắn chưa đọc</li>
 
                             @foreach(\App\Conversation::orderBy('created_at', 'desc')->where(function ($q) {
                                 $q->where('user1',auth()->user()->id)->orWhere('user2',auth()->user()->id);
@@ -82,7 +82,7 @@
                                     </a>
                                 </li>
                             @endforeach
-                            <li class="footer"><a style="color: black" href="{{asset('tin-nhan')}}">Xem tất cả tin nhắn</a></li>
+                            <li class="footer"><a href="{{asset('tin-nhan')}}">Xem tất cả tin nhắn</a></li>
                         </ul>
                         {{--<ul class="dropdown-menu">--}}
                         {{--</ul>--}}
