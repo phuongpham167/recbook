@@ -283,7 +283,7 @@
                                                 </div>
                                                 @if($item->is_vip)
                                                     <div class="icon_viphot">
-                                                        <img src="{{ asset('images/vip2.gif') }}" alt="Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng">
+                                                        <img src="{{ asset('images/vip2.gif') }}" alt="">
                                                     </div>
                                                 @endif
                                             </div>
@@ -420,7 +420,7 @@
             </a>
             @endforeach
         </div>
-        <section class="free_price">
+        <section class="free_price" style="    margin-top: 20px;">
             <div class="container">
                 <div class="row margin-0">
                     <div class="">
