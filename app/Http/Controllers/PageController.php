@@ -183,7 +183,7 @@ class PageController extends Controller
             'area_of_premises', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date')
             ->where('is_hot', '<>', 1)
             ->where('is_vip', '<>', 1)
-            ->where('web_id', $this->web_id);
+            ->where('web_id', $this->web_id)->where('is_public', 1);
 
         $freeRealEstates = $freeRealEstates
             ->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
@@ -306,7 +306,7 @@ class PageController extends Controller
             })
             ->where('is_hot', '<>', 1)
             ->where('is_vip', '<>', 1)
-            ->where('web_id', $this->web_id);
+            ->where('web_id', $this->web_id)->where('is_public', 1);
 
 //        $freeRealEstates = $this->checkRegisterDate($freeRealEstates);
         $freeRealEstates->limit(40);
@@ -497,7 +497,8 @@ class PageController extends Controller
             })
             ->where('post_date', '<=', Carbon::now())
             ->where('web_id', $this->web_id)
-            ->orderBy('post_date', 'desc');
+            ->orderBy('post_date', 'desc')
+            ->where('is_public', 1);
 //        $query = $this->checkRegisterDate($query);
 
         $results = $query->get();
