@@ -53,7 +53,7 @@
                     <li class="dropdown">
                         {{--<a href="{{ route('chat') }}" title="Tin nhắn"><i class="fa fa-comment" aria-hidden="true"></i></a>--}}
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true" title="Tin nhắn"><i class="fa fa-comment" aria-hidden="true"></i>
-                            <?php $unseen_conversation = \App\Conversation::whereHas('messages', function ($q) {$q->where('user_id','<>',auth()->user()->id)->where('is_read',0);})->count() ?>
+                            <?php $unseen_conversation = \App\Conversation::whereHas('messages', function ($q) {$q->where('user_id',auth()->user()->id)->where('is_read',0);})->count() ?>
                             @if( $unseen_conversation!= 0)
                                 <span class="label label-success">{{$unseen_conversation}}</span>
                             @endif
