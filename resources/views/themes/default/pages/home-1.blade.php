@@ -179,7 +179,7 @@
                                         <i class="fa fa-map-marker"></i> {{$item->district->name}}
                                     </div>
                                     <div class="col-xs-12 rprice">
-                                        {{$item->price}} {{$item->unit ? $item->unit->name : 'VND'}}
+                                        {{convert_number_to_words($item->price)}} {{$item->unit ? $item->unit->name : 'VND'}}
                                     </div>
                                 </div>
                             </div>
@@ -272,7 +272,7 @@
                                                         <p>
                                                             <strong>DTMB:</strong> {{$item->area_of_premises ? $item->area_of_premises . 'm2' : '0m2'}} - <strong>Giá:</strong>
                                                             <span>
-                                                                {{$item->price}} {{$item->unit ? $item->unit->name : 'VND'}}
+                                                                {{convert_number_to_words($item->price)}} {{$item->unit ? $item->unit->name : 'VND'}}
                                                             </span>
                                                         </p>
                                                     </div>
@@ -321,7 +321,7 @@
                                                         <p>
                                                             <strong>DTMB:</strong> {{$item->area_of_premises ? $item->area_of_premises . 'm2' : '0m2'}} - <strong>Giá:</strong>
                                                             <span>
-                                                            {{$item->price}} {{$item->unit ? $item->unit->name : 'VND'}}
+                                                            {{convert_number_to_words($item->price)}} {{$item->unit ? $item->unit->name : 'VND'}}
                                                         </span>
                                                         </p>
                                                     </div>
@@ -370,7 +370,7 @@
                                                         <p>
                                                             <strong>DTMB:</strong> {{$item->area_of_premises ? $item->area_of_premises . 'm2' : '0m2'}} - <strong>Giá:</strong>
                                                             <span>
-                                                            {{$item->price}} {{$item->unit ? $item->unit->name : 'VND'}}
+                                                            {{convert_number_to_words($item->price)}} {{$item->unit ? $item->unit->name : 'VND'}}
                                                         </span>
                                                         </p>
                                                     </div>
@@ -451,7 +451,7 @@
                                                         <p>
                                                             <strong>DTMB:</strong> {{$item->area_of_premises ? $item->area_of_premises . 'm2' : '0m2'}} - <strong>Giá:</strong>
                                                             <span>
-                                                            {{$item->price}} {{$item->unit ? $item->unit->name : 'VND'}}
+                                                            {{convert_number_to_words($item->price)}} {{$item->unit ? $item->unit->name : 'VND'}}
                                                         </span>
                                                         </p>
                                                     </div>
