@@ -67,7 +67,8 @@ class RealEstate extends Model
         'link_video',
         'customer_id',
         'slug',
-        'web_id'
+        'web_id',
+        'is_public'
     ];
 
     public function direction()
