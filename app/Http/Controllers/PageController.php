@@ -28,6 +28,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Auth;
+use Illuminate\Support\Facades\Log;
 
 class PageController extends Controller
 {
@@ -311,7 +312,6 @@ class PageController extends Controller
 //        $freeRealEstates = $this->checkRegisterDate($freeRealEstates);
         $freeRealEstates->limit(40);
         $freeRealEstates = $freeRealEstates->get();
-
         /*
          * get lít category
          * */
@@ -488,8 +488,13 @@ class PageController extends Controller
         $query = RealEstate::select('id', 'title', 'short_description', 'slug', 'code', 'district_id',
             'area_of_premises', 'area_of_use', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date')
             ->where(function($q){
-                $q->where('is_hot', '<>', 1)
-                    ->where('is_vip', '<>', 1);
+                $q->where(function($a){
+                    $a->where('is_hot', '<>', 1)
+                        ->orWhereNull('is_hot');
+                })->where(function($a){
+                    $a->where('is_vip', '<>', 1)
+                        ->orWhereNull('is_vip');
+                });
             })
             ->where(function($q){
                 $q->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
