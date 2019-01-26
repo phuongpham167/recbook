@@ -222,19 +222,23 @@
                 <div class="row two_cols">
                     <div class="col-xs-12 col-md-9 col_left no-padding-left">
                         <div class="left_box">
-                            <p class="title_box">
-                                <strong>TIN GIÁ HẤP DẪN</strong>
-                            </p>
+                            <div class="row" style="margin-right: 0; margin-left: 0">
+                                <p class="title_box">
+                                    <strong>TIN GIÁ HẤP DẪN</strong>
+
+                                </p> <form action="{{route('search')}}" method="GET">
+                                    <input placeholder="{{trans('system.searchPlaceholder')}}" autocomplete="off" type="text" value="" name="txtkeyword" id="txtkeyword">
+                                    <button type="submit"><i class="fa fa-search"></i></button>
+                                </form>
+                            </div>
+
                             <div>
                                 <div class="cat_top_box">
                                     @foreach($categories as $category)
                                         <a href="{{'/danh-muc-bds/' . $category->slug . '-c' . $category->id}}">{{$category->name}}</a>
                                     @endforeach
                                     <a href="{{route('tin-vip')}}">Tin VIP</a>
-                                    <form action="{{route('search')}}" method="GET">
-                                        <input placeholder="{{trans('system.searchPlaceholder')}}" autocomplete="off" type="text" value="" name="txtkeyword" id="txtkeyword">
-                                        <button type="submit"><i class="fa fa-search"></i></button>
-                                    </form>
+
                                 </div>
                                 <div class="row body_top_box">
                                     @foreach($goodPriceRealEstateVip as $item)
