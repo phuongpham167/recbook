@@ -35,7 +35,6 @@
                             class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.reCategory')}}</label>
                         <div class="col-sm-4">
                             <select class="form-control" id="re-category-edit" name="re_category_id_edit"
-                                    onchange="changeReCategoryEdit(this)"
                             >
                                 <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
                                 @foreach($reCategories as $reCategory)
@@ -46,10 +45,28 @@
                         </div>
                         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.reType')}}</label>
                         <div class="col-sm-4">
-                            <select class="form-control" id="re-type-edit" name="re_type_id_edit">
+                            <select class="form-control" id="loai-bds-edit" name="loai_bds" onChange="changeLoaiBDSEdit(this)">
                                 <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
+                                <option value="1">Thổ cư</option>
+                                <option value="2">Dự án</option>
                             </select>
                             <p class="text-red error"></p>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 hidden" id="thocu-select-wrap-edit">
+                                <label class="col-sm-2 control-label">Thổ cư</label>
+                                <div class="col-sm-4" id="thocu-select-edit">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 hidden" id="duan-select-wrap-edit">
+                                <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.project')}}</label>
+                                <div class="col-sm-4" id="duan-select-edit">
+
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group clearfix collapse" id="addressSelectEdit">
@@ -145,19 +162,19 @@
                             <p class="text-red error"></p>
                         </div>
                     </div>
-                    <div class="form-group clearfix collapse" id="projectSelectEdit">
+                    {{--<div class="form-group clearfix collapse" id="projectSelectEdit">--}}
 
-                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.project')}} </label>
-                        <div class="col-sm-4">
-                            <select class="form-control" id="project-edit" name="project_id_edit">
-                                <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
-                                @foreach($projectByUProvince as $p)
-                                    <option value="{{$p->id}}">{{$p->name}}</option>
-                                @endforeach
-                            </select>
-                            <p class="text-red error"></p>
-                        </div>
-                    </div>
+                        {{--<label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.project')}} </label>--}}
+                        {{--<div class="col-sm-4">--}}
+                            {{--<select class="form-control" id="project-edit" name="project_id_edit">--}}
+                                {{--<option value="">{{trans('real-estate.selectFirstOpt')}}</option>--}}
+                                {{--@foreach($projectByUProvince as $p)--}}
+                                    {{--<option value="{{$p->id}}">{{$p->name}}</option>--}}
+                                {{--@endforeach--}}
+                            {{--</select>--}}
+                            {{--<p class="text-red error"></p>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
                     <div class="form-group clearfix collapse" id="roomEdit">
                         <div class="row">
                             <div class="col-xs-12">
@@ -256,12 +273,13 @@
                     </div>
                     <div class="form-group clearfix">
                         <div class="col-xs-12">
-                            <button type="button" class="btn btn-default btn-collapse" data-target="#catSelectEdit">Danh
-                                mục
-                            </button>
                             <button type="button" class="btn btn-default btn-collapse" data-target="#addressSelectEdit">
                                 <i class="fa fa-road" aria-hidden="true"></i> Khu vực
                             </button>
+                            <button type="button" class="btn btn-default btn-collapse" data-target="#catSelectEdit">Danh
+                                mục
+                            </button>
+
                             <button type="button" class="btn btn-default btn-collapse" data-target="#priceSelectEdit">
                                 Giá
                             </button>
@@ -279,9 +297,9 @@
                             <button type="button" class="btn btn-default btn-collapse" data-target="#exhibitSelectEdit">
                                 Giấy tờ
                             </button>
-                            <button type="button" class="btn btn-default btn-collapse" data-target="#projectSelectEdit">
-                                Dự án
-                            </button>
+                            {{--<button type="button" class="btn btn-default btn-collapse" data-target="#projectSelectEdit">--}}
+                                {{--Dự án--}}
+                            {{--</button>--}}
                         </div>
                     </div>
                     <div class="form-group clearfix">
@@ -414,6 +432,71 @@
                     }
                 }
             });
+        }
+
+        function changeLoaiBDSEdit(e) {
+            if ( !$('#thocu-select-wrap-edit').hasClass('hidden') ) {
+                $('#thocu-select-wrap-edit').addClass('hidden');
+            }
+            $('#thocu-select-edit').html('');
+
+            if ( !$('#duan-select-wrap-edit').hasClass('hidden') ) {
+                $('#duan-select-wrap-edit').addClass('hidden');
+            }
+            $('#duan-select-edit').html('');
+
+            console.log($(e).val());
+            let loaiBDS = $(e).val();
+
+            showLoader();
+
+            if (loaiBDS == 1) {
+                $.ajax({
+                    url: "/re-type/list-dropdown",
+                    method: 'GET',
+                    success: function (result) {
+                        console.log('success');
+                        console.log(result);
+                        let html = '<select class="form-control" name="re_type_id">';
+                        if (result) {
+                            for (let r of result) {
+                                html += '<option value="' + r.id + '">' + r.name + '</option>';
+                            }
+                        }
+                        html += '</select>';
+                        if (html) {
+                            $('#thocu-select-wrap-edit').removeClass('hidden');
+                            $('#thocu-select-edit').html(html);
+                        }
+                    }
+                });
+            } else if (loaiBDS == 2) {
+                let provinceId = $('#province-edit').val();
+                if (!provinceId) {
+                    provinceId = '{{auth()->user()->userinfo->province_id}}';
+                }
+                provinceId = parseInt(provinceId);
+                $.ajax({
+                    url: '/project-by-province/' + provinceId,
+                    method: 'GET',
+                    success: function (result) {
+                        console.log('success');
+                        console.log(result);
+                        let html = '<select class="form-control" name="project_id">';
+                        if (result) {
+                            for (let r of result) {
+                                html += '<option value="' + r.id + '">' + r.name + '</option>';
+                            }
+                        }
+                        html += '</select>';
+                        if (html) {
+                            $('#duan-select-wrap-edit').removeClass('hidden');
+                            $('#duan-select-edit').html(html);
+                        }
+                    }
+                });
+            }
+            hideLoader();
         }
 
         function changeDistrictEdit(e) {

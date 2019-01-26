@@ -105,6 +105,7 @@ class RealEstateService
             'contact_phone_number' => $phone,
             'contact_address' => $contactAddress,
             're_category_id' => isset($input['re_category_id']) ? $input['re_category_id'] : null,
+            'loai_bds' => isset($input['loai_bds']) ? $input['loai_bds'] : null,
             're_type_id' => isset($input['re_type_id']) ? $input['re_type_id'] : null,
             'province_id' => isset($input['province_id']) ? $input['province_id'] : null,
             'district_id' => isset($input['district_id']) ? $input['district_id'] : null,
@@ -350,6 +351,7 @@ class RealEstateService
             $realEstate->contact_phone_number = $phone;
             $realEstate->contact_address = $contactAddress;
             $realEstate->re_category_id = isset($input['re_category_id']) ? $input['re_category_id'] : null;
+            $realEstate->loai_bds = isset($input['loai_bds']) ? $input['loai_bds'] : null;
             $realEstate->re_type_id = isset($input['re_type_id']) ? $input['re_type_id'] : null;
             $realEstate->province_id = isset($input['province_id']) ? $input['province_id'] : null;
             $realEstate->district_id = isset($input['district_id']) ? $input['district_id'] : null;

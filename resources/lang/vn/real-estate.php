@@ -59,7 +59,7 @@ return [
         'private' => 'Riêng tư',
         'privateInOwnWebsite' => 'Riêng tư trong trang con'
     ],
-    'selectFirstOpt' => 'Vui lòng chọn',
+    'selectFirstOpt' => 'Hãy chọn',
     'ssSelectFirstCat' => 'Loại hình bất động sản',
     'ssSelectFirstType' => 'Nhóm bất động sản',
     'ssSelectFirstProvince' =>'Tất cả tỉnh/thành',

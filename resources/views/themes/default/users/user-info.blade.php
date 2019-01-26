@@ -130,7 +130,7 @@
                                             @include(theme(TRUE).'.includes.left-menu')
                                         @endif
                                         @if ((\Auth::user() && \Auth::user()->id  == $data->id)|| $isFriend)
-                                            <p class="title-short-section">Dự án giao dịch thành công</p>
+                                            <p class="title-short-section">Dự án đã làm</p>
                                             <div class="success-project border-block">
                                                 {{--<a href="#">Bán nhà số 44/54 Bạch Đằng</a>--}}
                                             </div>
@@ -213,13 +213,13 @@
                                                                         <div class="col-xs-12">
                                                                             <button type="button"
                                                                                     class="btn btn-default btn-collapse"
-                                                                                    data-target="#catSelect">Danh mục
-                                                                            </button>
-                                                                            <button type="button"
-                                                                                    class="btn btn-default btn-collapse"
                                                                                     data-target="#addressSelect"><i
                                                                                     class="fa fa-road"
                                                                                     aria-hidden="true"></i> Khu vực
+                                                                            </button>
+                                                                            <button type="button"
+                                                                                    class="btn btn-default btn-collapse"
+                                                                                    data-target="#catSelect">Danh mục
                                                                             </button>
                                                                             <button type="button"
                                                                                     class="btn btn-default btn-collapse"
@@ -267,11 +267,11 @@
                                                                         </div>
                                                                         <div class="form-group">
                                                                             <div class="col-xs-12">
-                                                                                <button type="button"
-                                                                                        class="btn btn-default btn-collapse"
-                                                                                        data-target="#projectSelect">Dự
-                                                                                    án
-                                                                                </button>
+                                                                                {{--<button type="button"--}}
+                                                                                        {{--class="btn btn-default btn-collapse"--}}
+                                                                                        {{--data-target="#projectSelect">Dự--}}
+                                                                                    {{--án--}}
+                                                                                {{--</button>--}}
                                                                                 <button type="button"
                                                                                         class="btn btn-default btn-collapse"
                                                                                         data-target="#room"><i
@@ -565,7 +565,9 @@
         </div>
     </div>
     <input type="hidden" id="is-edit" value="add"/>
-    @include(theme(TRUE).'.includes.edit-re')
+    @if(auth()->user() && \Auth::user()->id == $data->id)
+        @include(theme(TRUE).'.includes.edit-re')
+    @endif
 
     {{-- Include footer --}}
     @include(theme(TRUE).'.includes.user-info-footer')
