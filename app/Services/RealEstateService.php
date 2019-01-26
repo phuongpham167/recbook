@@ -11,6 +11,7 @@ use App\Customer;
 use App\RealEstate;
 use App\Street;
 use App\WebsiteConfig;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Image;
 
@@ -96,7 +97,7 @@ class RealEstateService
                 $input['street_id'] = $street->id;
             }
         }
-
+        $post_date  =   isset($input['post_date']) ? $input['post_date'] : Carbon::now();
         $realEstate = new RealEstate([
             'title' => $input['title'],
             'slug' => $slug,
@@ -128,8 +129,8 @@ class RealEstateService
             'unit_id' => isset($input['unit_id']) ? $input['unit_id'] : null,
             'range_price_id' => isset($input['range_price_id']) ? $input['range_price_id'] : null,
             'is_deal' => isset($input['is_deal']) ? 1 : 0,
-            'post_date' => isset($input['post_date']) ? $input['post_date'] : null,
-            'expire_date' => isset($input['expire_date']) ? $input['expire_date'] : null,
+            'post_date' => $post_date,
+            'expire_date' => Carbon::parse($post_date)->addDays(get_config('expireRealEstate', 30)),
             'images' => json_encode($imagesVal),
             'lat' => $lat,
             'long' => $long,
