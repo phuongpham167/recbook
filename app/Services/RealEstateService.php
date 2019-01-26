@@ -141,6 +141,7 @@ class RealEstateService
             'web_id' => $this->web_id,
             'approve' => $approve,
             'draft' => isset($input['add_draft']) ? 1 : 0,
+            'is_public' =>  1
         ]);
 
         if($realEstate->save()) {
