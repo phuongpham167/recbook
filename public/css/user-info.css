@@ -272,6 +272,7 @@
 
 .list-re .title {
   font-weight: bold;
+  text-transform: uppercase;
 }
 
 .list-re .price-val {
@@ -332,5 +333,9 @@
 .btn-cancel-edit-re {
   border-radius: 0;
   margin-right: 10px;
+}
+
+.text-upper {
+  text-transform: uppercase;
 }
 

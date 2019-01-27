@@ -238,6 +238,7 @@
         }
         .title {
             font-weight: bold;
+            text-transform: uppercase;
         }
         .price-val {
             font-size: 12px;
@@ -297,4 +298,7 @@
 .btn-cancel-edit-re {
     border-radius: 0;
     margin-right: 10px;
+}
+.text-upper {
+    text-transform: uppercase;
 }
