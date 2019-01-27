@@ -410,7 +410,7 @@
                                                                     </p>
                                                                     <p class="price">
                                                                         @if($re->price)
-                                                                            Giá: <span class="price-val">{{ number_format($re->price) }} {{$re->unit ? $re->unit->name : 'VND'}}</span>
+                                                                            <b class="text-red"><span class="text-upper" style="font-size: 12px;">Giá:</span> <span class="price-val">{{ convert_number_to_words($re->price) }}</span> <span style="font-size: 12px;">{{$re->unit ? $re->unit->name : 'VND'}}</span></b>
                                                                         @endif
                                                                     </p>
                                                                 </div>
@@ -430,48 +430,81 @@
                                                             </div>
                                                             <div class="panel-body">
                                                                 <div class="detail-item-re-wrap">
-                                                                    <div class="row">
-                                                                        <div class="district-wrap">
-                                                                            @if($re->district)
-                                                                                <div class="col-xs-12 col-md-4 ">
-                                                                                    Khu vực: <span
-                                                                                        class="district-val">{{$re->district->name}}</span>
-                                                                                </div>
-                                                                            @endif
-                                                                        </div>
-                                                                        <div class="floor-wrap">
-                                                                            @if($re->floor)
-                                                                                <div class="col-xs-12 col-md-2 ">
-                                                                                    Số tầng: <span
-                                                                                        class="floor-val">{{$re->floor}}</span>
-                                                                                </div>
-                                                                            @endif
-                                                                        </div>
-                                                                        <div class="position-wrap">
-                                                                            @if($re->position)
-                                                                                <div class="col-xs-12 col-md-6 ">
-                                                                                    Gần: <span
-                                                                                        class="position-val">{{$re->position}}</span>
-                                                                                </div>
-                                                                            @endif
-                                                                        </div>
+                                                                    <div class="table-responsive">
+                                                                        <table class="table table-bordered">
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td><b class="text-upper">Loại tin: </b><span class="category-val">{!! $re->reCategory ? '<a href="/danh-muc-bds/' . $re->reCategory->slug . '-c' . $re->reCategory->id . '">' . $re->reCategory->name . '</a>' : '-' !!}</span></td>
+                                                                                    <td><b class="text-upper">Số tầng: </b><span class="floor-val">{{$re->floor ? $re->floor : '-'}}</span></td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td><b class="text-upper">Khu vực: </b><span class="district-val">{{$re->district ? $re->district->name : '-'}}</span></td>
+                                                                                    <td class="room-wrap">{!! $re->bedroom ? '<b>Phòng ngủ: </b>' . $re->bedroom : '' !!}{!! ($re->bedroom && $re->living_room) ? ', ' : '' !!}{!! $re->living_room ? '<b>Phòng khách: </b>' . $re->living_room : ''!!}{{ (($re->living_room && $re->wc) || ($re->bedroom && !$re->living_room && $re->wc)) ? ', ' : '' }}{!! $re->wc ? '<b>WC: </b>' . $re->wc : '' !!} @if(!$re->bedroom && !$re->living_room && !$re->wc) - @endif</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td colspan="2"><b class="text-upper">Vị trí: </b><span class="position-val">{{$re->position ? $re->position : '-'}}</span></td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
                                                                     </div>
-                                                                    <div class="row">
-                                                                        <div class="category-wrap">
-                                                                            @if($re->reCategory)
-                                                                                <div
-                                                                                    class="col-xs-12 col-md-3"><span class="category-val">{{$re->reCategory ? $re->reCategory->name : ''}}</span></div>
-                                                                            @endif
-                                                                        </div>
-                                                                        <div class="room-wrap">
-                                                                            <div
-                                                                                class="col-xs-12 col-md-9"> {{$re->bedroom ? 'Phòng ngủ: ' . $re->bedroom : ''}}{{ ($re->bedroom && $re->living_room) ? ', ' : ''}}{{$re->living_room ? 'Phòng khách: ' . $re->living_room : ''}}{{ ($re->living_room && $re->wc) ? ', ' : '' }}{{$re->wc ? 'WC: ' . $re->wc : ''}}</div>
-                                                                        </div>
-                                                                    </div>
+                                                                    {{--<div class="row">--}}
+                                                                        {{--<div class="district-wrap">--}}
+                                                                            {{--@if($re->district)--}}
+                                                                                {{--<div class="col-xs-12 col-md-4 ">--}}
+                                                                                    {{--Khu vực: <span--}}
+                                                                                        {{--class="district-val">{{$re->district->name}}</span>--}}
+                                                                                {{--</div>--}}
+                                                                            {{--@endif--}}
+                                                                        {{--</div>--}}
+                                                                        {{--<div class="floor-wrap">--}}
+                                                                            {{--@if($re->floor)--}}
+                                                                                {{--<div class="col-xs-12 col-md-2 ">--}}
+                                                                                    {{--Số tầng: <span--}}
+                                                                                        {{--class="floor-val">{{$re->floor}}</span>--}}
+                                                                                {{--</div>--}}
+                                                                            {{--@endif--}}
+                                                                        {{--</div>--}}
+                                                                        {{--<div class="position-wrap">--}}
+                                                                            {{--@if($re->position)--}}
+                                                                                {{--<div class="col-xs-12 col-md-6 ">--}}
+                                                                                    {{--Gần: <span--}}
+                                                                                        {{--class="position-val">{{$re->position}}</span>--}}
+                                                                                {{--</div>--}}
+                                                                            {{--@endif--}}
+                                                                        {{--</div>--}}
+                                                                    {{--</div>--}}
+                                                                    {{--<div class="row">--}}
+                                                                        {{--<div class="category-wrap">--}}
+                                                                            {{--@if($re->reCategory)--}}
+                                                                                {{--<div--}}
+                                                                                    {{--class="col-xs-12 col-md-3"><span class="category-val">{{$re->reCategory ? $re->reCategory->name : ''}}</span></div>--}}
+                                                                            {{--@endif--}}
+                                                                        {{--</div>--}}
+                                                                        {{--<div class="room-wrap">--}}
+                                                                            {{--<div--}}
+                                                                                {{--class="col-xs-12 col-md-9"> {{$re->bedroom ? 'Phòng ngủ: ' . $re->bedroom : ''}}{{ ($re->bedroom && $re->living_room) ? ', ' : ''}}{{$re->living_room ? 'Phòng khách: ' . $re->living_room : ''}}{{ ($re->living_room && $re->wc) ? ', ' : '' }}{{$re->wc ? 'WC: ' . $re->wc : ''}}</div>--}}
+                                                                        {{--</div>--}}
+                                                                    {{--</div>--}}
                                                                     <div class="row">
                                                                         <div class="col-xs-12 detail-item-wrap">
-                                                                            {!! $re->detail !!}
+                                                                            <div class="table-responsive">
+                                                                                <table class="table table-bordered">
+                                                                                    <tbody>
+                                                                                        <tr>
+                                                                                            <td><b class="text-upper">Mô tả:</b></td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td class="detail-item-wrap">
+                                                                                                {!! $re->detail !!}
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
                                                                         </div>
+                                                                        {{--<div class="col-xs-12 detail-item-wrap">--}}
+                                                                            {{--{!! $re->detail !!}--}}
+                                                                        {{--</div>--}}
                                                                     </div>
                                                                     <div class="row">
                                                                         @php
