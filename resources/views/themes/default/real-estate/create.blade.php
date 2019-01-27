@@ -232,7 +232,7 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.price')}}</label>
                         <div class="col-sm-2">
-                            <input type="text" class="form-control" name="price" value="{{ old('price') }}"/>
+                            <input type="number" class="form-control" name="price" value="{{ old('price') }}"/>
                         </div>
 
                         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.unit')}}</label>
