@@ -25,6 +25,9 @@
             margin-top: 15px;
             margin-bottom: 15px;
         }
+        iframe  {
+            max-width: 100%;
+        }
     </style>
 @endpush
 
