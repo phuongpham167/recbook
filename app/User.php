@@ -88,4 +88,7 @@ class User extends Authenticatable
     public function dealer_rate(){
         return lam_tron($this->dealer()->average('rate'));
     }
+    public function subcribes(){
+        return $this->belongsToMany(Province::class, 'province_subcribes');
+    }
 }

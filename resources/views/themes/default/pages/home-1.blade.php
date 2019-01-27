@@ -179,7 +179,7 @@
                                         <i class="fa fa-map-marker"></i> {{$item->district->name}}
                                     </div>
                                     <div class="col-xs-12 rprice">
-                                        {{$item->price}} {{$item->unit ? $item->unit->name : 'VND'}}
+                                        {{convert_number_to_words($item->price)}} {{$item->unit ? $item->unit->name : 'VND'}}
                                     </div>
                                 </div>
                             </div>
@@ -222,19 +222,23 @@
                 <div class="row two_cols">
                     <div class="col-xs-12 col-md-9 col_left no-padding-left">
                         <div class="left_box">
-                            <p class="title_box">
-                                <strong>TIN GIÁ HẤP DẪN</strong>
-                            </p>
+                            <div class="row" style="margin-right: 0; margin-left: 0">
+                                <p class="title_box">
+                                    <strong>TIN GIÁ HẤP DẪN</strong>
+
+                                </p> <form action="{{route('search')}}" method="GET">
+                                    <input placeholder="{{trans('system.searchPlaceholder')}}" autocomplete="off" type="text" value="" name="txtkeyword" id="txtkeyword">
+                                    <button type="submit"><i class="fa fa-search"></i></button>
+                                </form>
+                            </div>
+
                             <div>
                                 <div class="cat_top_box">
                                     @foreach($categories as $category)
                                         <a href="{{'/danh-muc-bds/' . $category->slug . '-c' . $category->id}}">{{$category->name}}</a>
                                     @endforeach
                                     <a href="{{route('tin-vip')}}">Tin VIP</a>
-                                    <form action="{{route('search')}}" method="GET">
-                                        <input placeholder="{{trans('system.searchPlaceholder')}}" autocomplete="off" type="text" value="" name="txtkeyword" id="txtkeyword">
-                                        <button type="submit"><i class="fa fa-search"></i></button>
-                                    </form>
+
                                 </div>
                                 <div class="row body_top_box">
                                     @foreach($goodPriceRealEstateVip as $item)
@@ -272,14 +276,14 @@
                                                         <p>
                                                             <strong>DTMB:</strong> {{$item->area_of_premises ? $item->area_of_premises . 'm2' : '0m2'}} - <strong>Giá:</strong>
                                                             <span>
-                                                                {{$item->price}} {{$item->unit ? $item->unit->name : 'VND'}}
+                                                                {{convert_number_to_words($item->price)}} {{$item->unit ? $item->unit->name : 'VND'}}
                                                             </span>
                                                         </p>
                                                     </div>
                                                 </div>
                                                 @if($item->is_vip)
                                                     <div class="icon_viphot">
-                                                        <img src="{{ asset('images/vip2.gif') }}" alt="Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng">
+                                                        <img src="{{ asset('images/vip2.gif') }}" alt="">
                                                     </div>
                                                 @endif
                                             </div>
@@ -321,7 +325,7 @@
                                                         <p>
                                                             <strong>DTMB:</strong> {{$item->area_of_premises ? $item->area_of_premises . 'm2' : '0m2'}} - <strong>Giá:</strong>
                                                             <span>
-                                                            {{$item->price}} {{$item->unit ? $item->unit->name : 'VND'}}
+                                                            {{convert_number_to_words($item->price)}} {{$item->unit ? $item->unit->name : 'VND'}}
                                                         </span>
                                                         </p>
                                                     </div>
@@ -370,7 +374,7 @@
                                                         <p>
                                                             <strong>DTMB:</strong> {{$item->area_of_premises ? $item->area_of_premises . 'm2' : '0m2'}} - <strong>Giá:</strong>
                                                             <span>
-                                                            {{$item->price}} {{$item->unit ? $item->unit->name : 'VND'}}
+                                                            {{convert_number_to_words($item->price)}} {{$item->unit ? $item->unit->name : 'VND'}}
                                                         </span>
                                                         </p>
                                                     </div>
@@ -416,7 +420,7 @@
             </a>
             @endforeach
         </div>
-        <section class="free_price">
+        <section class="free_price" style="    margin-top: 20px;">
             <div class="container">
                 <div class="row margin-0">
                     <div class="">
@@ -451,7 +455,7 @@
                                                         <p>
                                                             <strong>DTMB:</strong> {{$item->area_of_premises ? $item->area_of_premises . 'm2' : '0m2'}} - <strong>Giá:</strong>
                                                             <span>
-                                                            {{$item->price}} {{$item->unit ? $item->unit->name : 'VND'}}
+                                                            {{convert_number_to_words($item->price)}} {{$item->unit ? $item->unit->name : 'VND'}}
                                                         </span>
                                                         </p>
                                                     </div>

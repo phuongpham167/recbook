@@ -11,6 +11,7 @@ use App\Customer;
 use App\RealEstate;
 use App\Street;
 use App\WebsiteConfig;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Image;
 
@@ -96,7 +97,7 @@ class RealEstateService
                 $input['street_id'] = $street->id;
             }
         }
-
+        $post_date  =   isset($input['post_date']) ? $input['post_date'] : Carbon::now();
         $realEstate = new RealEstate([
             'title' => $input['title'],
             'slug' => $slug,
@@ -104,11 +105,12 @@ class RealEstateService
             'contact_phone_number' => $phone,
             'contact_address' => $contactAddress,
             're_category_id' => isset($input['re_category_id']) ? $input['re_category_id'] : null,
+            'loai_bds' => isset($input['loai_bds']) ? $input['loai_bds'] : null,
             're_type_id' => isset($input['re_type_id']) ? $input['re_type_id'] : null,
             'province_id' => isset($input['province_id']) ? $input['province_id'] : null,
-            'district_id' => isset($input['district_id']) ? $input['district_id'] : null,
-            'ward_id' => isset($input['ward_id']) ? $input['ward_id'] : null,
-            'street_id' => isset($input['street_id']) ? $input['street_id'] : null,
+            'district_id' => isset($input['province_id']) ? (isset($input['district_id']) ? $input['district_id'] : null) : null,
+            'ward_id' => (isset($input['province_id']) && isset($input['district_id'])) ? (isset($input['ward_id']) ? $input['ward_id'] : null) : null,
+            'street_id' => ($provinceId && $districtId && $wardId) ? (isset($input['street_id']) ? $input['street_id'] : null) : null,
             'address' => isset($input['address']) ? $input['address'] : null,
             'position' => isset($input['position']) ? $input['position'] : null,
             'direction_id' => isset($input['direction_id']) ? $input['direction_id'] : null,
@@ -128,8 +130,8 @@ class RealEstateService
             'unit_id' => isset($input['unit_id']) ? $input['unit_id'] : null,
             'range_price_id' => isset($input['range_price_id']) ? $input['range_price_id'] : null,
             'is_deal' => isset($input['is_deal']) ? 1 : 0,
-            'post_date' => isset($input['post_date']) ? $input['post_date'] : null,
-            'expire_date' => isset($input['expire_date']) ? $input['expire_date'] : null,
+            'post_date' => $post_date,
+            'expire_date' => Carbon::parse($post_date)->addDays(get_config('expireRealEstate', 30)),
             'images' => json_encode($imagesVal),
             'lat' => $lat,
             'long' => $long,
@@ -141,6 +143,7 @@ class RealEstateService
             'web_id' => $this->web_id,
             'approve' => $approve,
             'draft' => isset($input['add_draft']) ? 1 : 0,
+            'is_public' =>  1
         ]);
 
         if($realEstate->save()) {
@@ -348,11 +351,12 @@ class RealEstateService
             $realEstate->contact_phone_number = $phone;
             $realEstate->contact_address = $contactAddress;
             $realEstate->re_category_id = isset($input['re_category_id']) ? $input['re_category_id'] : null;
+            $realEstate->loai_bds = isset($input['loai_bds']) ? $input['loai_bds'] : null;
             $realEstate->re_type_id = isset($input['re_type_id']) ? $input['re_type_id'] : null;
             $realEstate->province_id = isset($input['province_id']) ? $input['province_id'] : null;
-            $realEstate->district_id = isset($input['district_id']) ? $input['district_id'] : null;
-            $realEstate->ward_id = isset($input['ward_id']) ? $input['ward_id'] : null;
-            $realEstate->street_id = isset($input['street_id']) ? $input['street_id'] : null;
+            $realEstate->district_id = isset($input['province_id']) ? (isset($input['district_id']) ? $input['district_id'] : null) : null;
+            $realEstate->ward_id = (isset($input['province_id']) && isset($input['district_id'])) ? (isset($input['ward_id']) ? $input['ward_id'] : null) : null;
+            $realEstate->street_id = ($provinceId && $districtId && $wardId) ? (isset($input['street_id']) ? $input['street_id'] : null) : null;
             $realEstate->address = isset($input['address']) ? $input['address'] : null;
             $realEstate->position = isset($input['position']) ? $input['position'] : '';
             $realEstate->direction_id = isset($input['direction_id']) ? $input['direction_id'] : null;

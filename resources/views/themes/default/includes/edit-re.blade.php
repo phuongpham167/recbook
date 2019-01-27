@@ -35,7 +35,6 @@
                             class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.reCategory')}}</label>
                         <div class="col-sm-4">
                             <select class="form-control" id="re-category-edit" name="re_category_id_edit"
-                                    onchange="changeReCategoryEdit(this)"
                             >
                                 <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
                                 @foreach($reCategories as $reCategory)
@@ -46,16 +45,34 @@
                         </div>
                         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.reType')}}</label>
                         <div class="col-sm-4">
-                            <select class="form-control" id="re-type-edit" name="re_type_id_edit">
+                            <select class="form-control" id="loai-bds-edit" name="loai_bds" onChange="changeLoaiBDSEdit(this)">
                                 <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
+                                <option value="1">Thổ cư</option>
+                                <option value="2">Dự án</option>
                             </select>
                             <p class="text-red error"></p>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 hidden" id="thocu-select-wrap-edit">
+                                <label class="col-sm-2 control-label">Thổ cư</label>
+                                <div class="col-sm-4" id="thocu-select-edit">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 hidden" id="duan-select-wrap-edit">
+                                <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.project')}}</label>
+                                <div class="col-sm-4" id="duan-select-edit">
+
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group clearfix collapse" id="addressSelectEdit">
                         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.province')}} </label>
                         <div class="col-sm-4">
-                            <select class="form-control" id="province-edit" name="province_id_edit" onchange="changeProvince(this)">
+                            <select class="form-control" id="province-edit" name="province_id_edit" onchange="changeProvinceEdit(this)">
                                 <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
                                 @foreach($provinces as $province)
                                     <option value="{{$province->id}}" {{auth()->user() && auth()->user()->userinfo->province_id == $province->id ? 'selected' : ''}}>{{$province->name}}</option>
@@ -74,8 +91,7 @@
                         </div>
                         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.ward')}} </label>
                         <div class="col-sm-4">
-                            <select class="form-control" id="ward-edit" name="ward_id_edit"
-                                    onchange="changeWardEdit(this)">
+                            <select class="form-control" id="ward-edit" name="ward_id_edit">
                                 <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
                             </select>
                             <p class="text-red error"></p>
@@ -145,19 +161,19 @@
                             <p class="text-red error"></p>
                         </div>
                     </div>
-                    <div class="form-group clearfix collapse" id="projectSelectEdit">
+                    {{--<div class="form-group clearfix collapse" id="projectSelectEdit">--}}
 
-                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.project')}} </label>
-                        <div class="col-sm-4">
-                            <select class="form-control" id="project-edit" name="project_id_edit">
-                                <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
-                                @foreach($projectByUProvince as $p)
-                                    <option value="{{$p->id}}">{{$p->name}}</option>
-                                @endforeach
-                            </select>
-                            <p class="text-red error"></p>
-                        </div>
-                    </div>
+                        {{--<label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.project')}} </label>--}}
+                        {{--<div class="col-sm-4">--}}
+                            {{--<select class="form-control" id="project-edit" name="project_id_edit">--}}
+                                {{--<option value="">{{trans('real-estate.selectFirstOpt')}}</option>--}}
+                                {{--@foreach($projectByUProvince as $p)--}}
+                                    {{--<option value="{{$p->id}}">{{$p->name}}</option>--}}
+                                {{--@endforeach--}}
+                            {{--</select>--}}
+                            {{--<p class="text-red error"></p>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
                     <div class="form-group clearfix collapse" id="roomEdit">
                         <div class="row">
                             <div class="col-xs-12">
@@ -230,11 +246,11 @@
                     <div class="form-group clearfix collapse" id="mapSelectEdit">
                         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.map')}}</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="map_edit" id="map-edit"/>
+                            <input type="text" class="form-control" name="map_edit" id="map-edit" readonly/>
                             <span class="help-block"><i>{{trans('real-estate.formCreateLabel.mapHelpBlock')}}</i></span>
                         </div>
                         <div class="col-sm-12">
-                            <div id="map-view" style="width: 100%; height: 250px;"></div>
+                            <div id="map-view-edit" style="width: 100%; height: 250px;"></div>
                         </div>
                     </div>
                     <div class="form-group clearfix collapse" id="imageSelectEdit">
@@ -256,12 +272,13 @@
                     </div>
                     <div class="form-group clearfix">
                         <div class="col-xs-12">
-                            <button type="button" class="btn btn-default btn-collapse" data-target="#catSelectEdit">Danh
-                                mục
-                            </button>
                             <button type="button" class="btn btn-default btn-collapse" data-target="#addressSelectEdit">
                                 <i class="fa fa-road" aria-hidden="true"></i> Khu vực
                             </button>
+                            <button type="button" class="btn btn-default btn-collapse" data-target="#catSelectEdit">Danh
+                                mục
+                            </button>
+
                             <button type="button" class="btn btn-default btn-collapse" data-target="#priceSelectEdit">
                                 Giá
                             </button>
@@ -279,9 +296,9 @@
                             <button type="button" class="btn btn-default btn-collapse" data-target="#exhibitSelectEdit">
                                 Giấy tờ
                             </button>
-                            <button type="button" class="btn btn-default btn-collapse" data-target="#projectSelectEdit">
-                                Dự án
-                            </button>
+                            {{--<button type="button" class="btn btn-default btn-collapse" data-target="#projectSelectEdit">--}}
+                                {{--Dự án--}}
+                            {{--</button>--}}
                         </div>
                     </div>
                     <div class="form-group clearfix">
@@ -313,7 +330,7 @@
                         <label class="col-sm-2 control-label">Đăng lên</label>
 
                         <div class="col-sm-4">
-                            <select class="form-control" id="is-private-edit" name="is_private"
+                            <select class="form-control hidden" id="is-private-edit" name="is_private"
                                     value="{{ old('is_private') }}">
                                 <option value="1">Đăng trên trang cá nhân</option>
                                 <option value="2">Đăng trên web cá nhân</option>
@@ -416,9 +433,109 @@
             });
         }
 
+        function changeLoaiBDSEdit(e) {
+            if ( !$('#thocu-select-wrap-edit').hasClass('hidden') ) {
+                $('#thocu-select-wrap-edit').addClass('hidden');
+            }
+            $('#thocu-select-edit').html('');
+
+            if ( !$('#duan-select-wrap-edit').hasClass('hidden') ) {
+                $('#duan-select-wrap-edit').addClass('hidden');
+            }
+            $('#duan-select-edit').html('');
+
+            console.log($(e).val());
+            let loaiBDS = $(e).val();
+
+            showLoader();
+
+            if (loaiBDS == 1) {
+                $.ajax({
+                    url: "/re-type/list-dropdown",
+                    method: 'GET',
+                    success: function (result) {
+                        console.log('success');
+                        console.log(result);
+                        let html = '<select class="form-control" name="re_type_id">';
+                        if (result) {
+                            for (let r of result) {
+                                html += '<option value="' + r.id + '">' + r.name + '</option>';
+                            }
+                        }
+                        html += '</select>';
+                        if (html) {
+                            $('#thocu-select-wrap-edit').removeClass('hidden');
+                            $('#thocu-select-edit').html(html);
+                        }
+                    }
+                });
+            } else if (loaiBDS == 2) {
+                let provinceId = $('#province-edit').val();
+                if (!provinceId) {
+                    provinceId = '{{auth()->user()->userinfo->province_id}}';
+                }
+                provinceId = parseInt(provinceId);
+                $.ajax({
+                    url: '/project-by-province/' + provinceId,
+                    method: 'GET',
+                    success: function (result) {
+                        console.log('success');
+                        console.log(result);
+                        let html = '<select class="form-control" name="project_id">';
+                        if (result) {
+                            for (let r of result) {
+                                html += '<option value="' + r.id + '">' + r.name + '</option>';
+                            }
+                        }
+                        html += '</select>';
+                        if (html) {
+                            $('#duan-select-wrap-edit').removeClass('hidden');
+                            $('#duan-select-edit').html(html);
+                        }
+                    }
+                });
+            }
+            hideLoader();
+        }
+
+        function changeProvinceEdit(e) {
+            let provinceId = $(e).val();
+            if (!provinceId) {
+                $('#district-edit').html('<option value="">{{trans('real-estate.selectFirstOpt')}}</option>');
+                $('#ward-edit').html('<option value="">{{trans('real-estate.selectFirstOpt')}}</option>');
+                return;
+            }
+            showLoader();
+            $.ajax({
+                url: '/district-by-province/' + provinceId,
+                method: 'GET',
+                success: function (result) {
+                    console.log('success');
+                    console.log(result);
+                    let html = '<option value="">{{trans('real-estate.selectFirstOpt')}}</option>';
+                    if (result) {
+                        for (let r of result) {
+                            html += '<option value="' + r.id + '">' + r.name + '</option>';
+                        }
+                    }
+                    if (html) {
+                        $('#district-edit').html(html);
+                    }
+                    hideLoader();
+                }
+            });
+
+
+        }
+
         function changeDistrictEdit(e) {
             // console.log($(e).val());
             let districtId = $(e).val();
+
+            if (!districtId) {
+                $('#ward-edit').html('<option value="">{{trans('real-estate.selectFirstOpt')}}</option>');
+                return;
+            }
 
             $.ajax({
                 url: '/ward-by-district/' + districtId,
@@ -524,7 +641,7 @@
 
             let reCatId = $('#re-category-edit').val();
 
-            let reTypeId = $('#re-type-edit').val();
+            let reTypeId = $('#re-type-edit').length ? $('#re-type-edit').val() : '';
 
             let provinceId = $('#province-edit').val();
 
@@ -544,7 +661,7 @@
 
             let exhibitId = $('#exhibit-edit').val();
 
-            let projectId = $('#project-edit').val();
+            let projectId = $('#project-edit').length ? $('#project-edit').val() : '';
 
             let bedroom = $('#bedroom-edit').val();
 
@@ -587,7 +704,9 @@
             formDataEdit.append('title', title);
             formDataEdit.append('detail', detail);
             formDataEdit.append('re_category_id', reCatId);
-            formDataEdit.append('re_type_id', reTypeId);
+            if (reTypeId) {
+                formDataEdit.append('re_type_id', reTypeId);
+            }
             formDataEdit.append('province_id', provinceId);
             formDataEdit.append('district_id', districtId);
             formDataEdit.append('ward_id', wardId);
@@ -598,7 +717,9 @@
             formDataEdit.append('position', position);
             formDataEdit.append('direction_id', directionId);
             formDataEdit.append('exhibit_id', exhibitId);
-            formDataEdit.append('project_id', projectId);
+            if (projectId) {
+                formDataEdit.append('project_id', projectId);
+            }
             formDataEdit.append('bedroom', bedroom);
             formDataEdit.append('living_room', livingroom);
             formDataEdit.append('wc', wc);
@@ -629,6 +750,8 @@
                         toastr.success(res.message);
                         const re = res.data.re;
                         displayValueAfterUpdate(re);
+                        $('#street-id-hidden').val('');
+                        $('#street-name-hidden').val('');
                         $('#modalEditRe').modal('hide');
                     } else {
                         toastr.error(res.message);
@@ -757,6 +880,39 @@
                 imgMarkup += '<a href="' + image.link + '" title="' + alt + '" class="pg-item"><img src="' + image.link + '" width="122" height="91"></a>';
             }
             imagesDOM.html(imgMarkup);
+        }
+
+        $('#modalEditRe').on('hidden.bs.modal', function () {
+            $('#is-edit').val('add');
+        });
+
+        function initMapEdit(lat, long) {
+            let uLat = '{{auth()->user()->userinfo->province->lat}}';
+            let uLong = '{{auth()->user()->userinfo->province->long}}';
+            var myLatLng = {lat: parseFloat(uLat), lng: parseFloat(uLong)};
+            if (lat && long) {
+                myLatLng = {lat: parseFloat(lat), lng: parseFloat(long)};
+            }
+
+            var map = new google.maps.Map(document.getElementById('map-view-edit'), {
+                zoom: 10,
+                center: myLatLng
+            });
+
+            var marker = new google.maps.Marker({
+                position: myLatLng,
+                map: map,
+                draggable:true,
+                title: 'Hello World!'
+            });
+            // marker.addListener('drag', handleEvent);
+            marker.addListener('dragend', handleEventMapEdit);
+        }
+        function handleEventMapEdit(event) {
+            // console.log('map edit here');
+            // console.log(event.latLng.lat());
+            // console.log(event.latLng.lng());
+            $('#map-edit').val(event.latLng.lat() + ',' + event.latLng.lng());
         }
     </script>
 @endpush

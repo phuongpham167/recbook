@@ -1,7 +1,7 @@
 <div class="form-group collapse collapse1" id="catSelect">
     <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.reCategory')}}</label>
     <div class="col-sm-4">
-        <select class="form-control" id="re-category" name="re_category_id" onchange="changeReCategory(this)"
+        <select class="form-control" id="re-category" name="re_category_id"
                 value="{{ old('re_category_id') }}">
             <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
             @foreach($reCategories as $reCategory)
@@ -12,10 +12,28 @@
     </div>
     <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.reType')}}</label>
     <div class="col-sm-4">
-        <select class="form-control" id="re-type" name="re_type_id" value="{{ old('re_type_id') }}">
+        <select class="form-control" id="loai-bds" name="loai_bds" value="{{ old('loai_bds') }}" onChange="changeLoaiBDS(this)">
             <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
+            <option value="1">Thổ cư</option>
+            <option value="2">Dự án</option>
         </select>
         <p class="text-red error"></p>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 hidden" id="thocu-select-wrap">
+            <label class="col-sm-2 control-label">Thổ cư</label>
+            <div class="col-sm-4" id="thocu-select">
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 hidden" id="duan-select-wrap">
+            <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.project')}}</label>
+            <div class="col-sm-4" id="duan-select">
+
+            </div>
+        </div>
     </div>
 </div>
 <div class="form-group collapse collapse1" id="addressSelect">
@@ -43,8 +61,7 @@
     </div>
     <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.ward')}} </label>
     <div class="col-sm-4">
-        <select class="form-control" id="ward" name="ward_id" value="{{ old('ward_id') }}"
-                onchange="changeWard(this)">
+        <select class="form-control" id="ward" name="ward_id" value="{{ old('ward_id') }}">
             <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
         </select>
         <p class="text-red error"></p>
@@ -108,19 +125,19 @@
         <p class="text-red error"></p>
     </div>
 </div>
-<div class="form-group collapse collapse1" id="projectSelect">
+{{--<div class="form-group collapse collapse1" id="projectSelect">--}}
 
-    <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.project')}} </label>
-    <div class="col-sm-4">
-        <select class="form-control" id="project" name="project_id" value="{{ old('project_id') }}">
-            <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
-            @foreach($projectByUProvince as $p)
-                <option value="{{$p->id}}">{{$p->name}}</option>
-            @endforeach
-        </select>
-        <p class="text-red error"></p>
-    </div>
-</div>
+    {{--<label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.project')}} </label>--}}
+    {{--<div class="col-sm-4">--}}
+        {{--<select class="form-control" id="project" name="project_id" value="{{ old('project_id') }}">--}}
+            {{--<option value="">{{trans('real-estate.selectFirstOpt')}}</option>--}}
+            {{--@foreach($projectByUProvince as $p)--}}
+                {{--<option value="{{$p->id}}">{{$p->name}}</option>--}}
+            {{--@endforeach--}}
+        {{--</select>--}}
+        {{--<p class="text-red error"></p>--}}
+    {{--</div>--}}
+{{--</div>--}}
 <div class="form-group collapse collapse1" id="room">
     <div class="row">
         <div class="col-xs-12">
@@ -185,7 +202,7 @@
 <div class="form-group collapse collapse1" id="mapSelect">
     <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.map')}}</label>
     <div class="col-sm-10">
-        <input type="text" class="form-control" name="map" id="map" value="{{ old('map') }}"/>
+        <input type="text" class="form-control" name="map" id="map" value="{{ old('map') }}" readonly/>
         <span class="help-block"><i>{{trans('real-estate.formCreateLabel.mapHelpBlock')}}</i></span>
     </div>
     <div class="col-sm-12">
@@ -210,18 +227,28 @@
     <script src="{{asset('plugins/ckeditor-4/ckeditor.js')}}"></script>
     <script>
         function initMap() {
-            var myLatLng = {lat: -25.363, lng: 131.044};
+            let uLat = '{{auth()->user()->userinfo->province->lat}}';
+            let uLong = '{{auth()->user()->userinfo->province->long}}';
+            var myLatLng = {lat: parseFloat(uLat), lng: parseFloat(uLong)};
 
             var map = new google.maps.Map(document.getElementById('map-view'), {
-                zoom: 4,
+                zoom: 10,
                 center: myLatLng
             });
 
             var marker = new google.maps.Marker({
                 position: myLatLng,
                 map: map,
+                draggable:true,
                 title: 'Hello World!'
             });
+            // marker.addListener('drag', handleEvent);
+            marker.addListener('dragend', handleEvent);
+        }
+        function handleEvent(event) {
+            // console.log(event.latLng.lat());
+            // console.log(event.latLng.lng());
+            $('#map').val(event.latLng.lat() + ',' + event.latLng.lng());
         }
         $(function () {
             $('#contact_phone_number').keyup(function() {
@@ -294,27 +321,84 @@
                     hideLoader();
                 }
             });
+        }
 
-            $.ajax({
-                url: '/range-price/list-dropdown/' + catId,
-                method: 'GET',
-                success: function (result) {
-                    console.log('success');
-                    console.log(result);
-                    let html = '';
-                    if (result) {
-                        for (let r of result) {
-                            html += '<option value="' + r.id + '">' + r.name + '</option>';
+        function changeLoaiBDS(e) {
+            if ( !$('#thocu-select-wrap').hasClass('hidden') ) {
+                $('#thocu-select-wrap').addClass('hidden');
+            }
+            $('#thocu-select').html('');
+
+            if ( !$('#duan-select-wrap').hasClass('hidden') ) {
+                $('#duan-select-wrap').addClass('hidden');
+            }
+            $('#duan-select').html('');
+
+            console.log($(e).val());
+            let loaiBDS = $(e).val();
+
+
+
+            if (loaiBDS == 1) {
+                showLoader();
+                $.ajax({
+                    url: "/re-type/list-dropdown",
+                    method: 'GET',
+                    success: function (result) {
+                        console.log('success');
+                        console.log(result);
+                        let html = '<select class="form-control" name="re_type_id">';
+                        if (result) {
+                            for (let r of result) {
+                                html += '<option value="' + r.id + '">' + r.name + '</option>';
+                            }
+                        }
+                        html += '</select>';
+                        if (html) {
+                            $('#thocu-select-wrap').removeClass('hidden');
+                            $('#thocu-select').html(html);
                         }
                     }
-                    $('#range-price').html(html);
+                });
+            } else if (loaiBDS == 2) {
+                let provinceId = $('#province').val();
+                if (!provinceId) {
+                    provinceId = '{{auth()->user()->userinfo->province_id}}';
                 }
-            });
+                provinceId = parseInt(provinceId);
+                showLoader();
+                $.ajax({
+                    url: '/project-by-province/' + provinceId,
+                    method: 'GET',
+                    success: function (result) {
+                        console.log('success');
+                        console.log(result);
+                        let html = '' +
+                            '<select class="form-control" name="project_id">';
+                        if (result) {
+                            for (let r of result) {
+                                html += '<option value="' + r.id + '">' + r.name + '</option>';
+                            }
+                        }
+                        html += '</select>';
+                        if (html) {
+                            $('#duan-select-wrap').removeClass('hidden');
+                            $('#duan-select').html(html);
+                        }
+                    }
+                });
+            }
+            hideLoader();
         }
 
         function changeProvince(e) {
             console.log($(e).val());
             let provinceId = $(e).val();
+            if (!provinceId) {
+                $('#district').html('<option value="">{{trans('real-estate.selectFirstOpt')}}</option>');
+                $('#ward').html('<option value="">{{trans('real-estate.selectFirstOpt')}}</option>');
+                return;
+            }
             showLoader();
             $.ajax({
                 url: '/district-by-province/' + provinceId,
@@ -335,28 +419,16 @@
                 }
             });
 
-            $.ajax({
-                url: '/project-by-province/' + provinceId,
-                method: 'GET',
-                success: function (result) {
-                    console.log('success');
-                    console.log(result);
-                    let html = '<option value="">{{trans('real-estate.selectFirstOpt')}}</option>';
-                    if (result) {
-                        for (let r of result) {
-                            html += '<option value="' + r.id + '">' + r.name + '</option>';
-                        }
-                    }
-                    if (html) {
-                        $('#project').html(html);
-                    }
-                }
-            });
+
         }
 
         function changeDistrict(e) {
             console.log($(e).val());
             let districtId = $(e).val();
+            if (!districtId) {
+                $('#ward').html('<option value="">{{trans('real-estate.selectFirstOpt')}}</option>');
+                return;
+            }
             showLoader();
             $.ajax({
                 url: '/ward-by-district/' + districtId,

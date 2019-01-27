@@ -131,7 +131,7 @@ class AuthenticateController extends Controller
         $userInfo = auth()->user()->userinfo;
         if($userInfo->full_name != $request->full_name){
             if(!empty($userInfo->changed_name_at)){
-                if(Carbon::now()->diffInDays($userInfo->changed_name_at) < Settings('system_changenametime')){
+                if(Carbon::now()->diffInDays($userInfo->changed_name_at) < get_config('changeNameTime', 6)){
                     set_notice(trans('system.changed_name_error'), 'danger');
                     return redirect()->back();
                 }
@@ -153,6 +153,9 @@ class AuthenticateController extends Controller
             $userInfo->certificate    =   'uploads/certificate/'.$userInfo->id.'/'.$request->certificate->getClientOriginalName();
         }
         $userInfo->save();
+        if(!empty($request->subcribes)){
+            auth()->user()->subcribes()->sync(explode(',',$request->subcribes));
+        }
 //        event_log('Sửa thành viên '.auth()->user()->name.' id '.auth()->user()->id);
         set_notice(trans('system.edit_success'), 'success');
 

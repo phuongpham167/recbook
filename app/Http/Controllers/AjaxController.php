@@ -87,4 +87,15 @@ class AjaxController extends Controller
         }
         return response()->json($result);
     }
+    public function ajaxProvince(){
+        $name   = request()->input('term');
+        $result =   [];
+        foreach(\App\Province::where('name','LIKE',"%{$name}%")->get() as $item){
+            $result[]   =   [
+                'id'    =>  $item->id,
+                'name'  =>  $item->name
+            ];
+        }
+        return response()->json($result);
+    }
 }

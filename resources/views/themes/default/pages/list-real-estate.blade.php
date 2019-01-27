@@ -76,10 +76,10 @@
                                     </div>
                                     <div class="row price">
                                         <div class="col-xs-12 lprice">
-                                            <i class="fa fa-map-marker"></i> {{$item->district->name}}
+                                            <i class="fa fa-map-marker"></i> {{$item->district?$item->district->name:''}}
                                         </div>
                                         <div class="col-xs-12 rprice">
-                                            {{$item->price}} {{$item->unit ? $item->unit->name : 'VND'}}
+                                            {{convert_number_to_words($item->price)}} {{$item->unit ? $item->unit->name : 'VND'}}
                                         </div>
                                     </div>
                                 </div>

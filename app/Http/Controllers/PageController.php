@@ -28,6 +28,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Auth;
+use Illuminate\Support\Facades\Log;
 
 class PageController extends Controller
 {
@@ -183,14 +184,14 @@ class PageController extends Controller
             'area_of_premises', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date')
             ->where('is_hot', '<>', 1)
             ->where('is_vip', '<>', 1)
-            ->where('web_id', $this->web_id);
+            ->where('web_id', $this->web_id)->where('is_public', 1);
 
         $freeRealEstates = $freeRealEstates
             ->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
             ->orWhere('post_date', '>=', Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->subDays(Settings('system_changenametime'))->format('m/d/Y H:i A')));
 
 //        $freeRealEstates = $this->checkRegisterDate($freeRealEstates);
-        $freeRealEstates =  $freeRealEstates->take(get_config('homePublic',8))->get();
+        $freeRealEstates =  $freeRealEstates->orderBy('created_at', 'DESC')->take(get_config('homePublic',8))->get();
 
         /*
          * get lít category
@@ -306,12 +307,11 @@ class PageController extends Controller
             })
             ->where('is_hot', '<>', 1)
             ->where('is_vip', '<>', 1)
-            ->where('web_id', $this->web_id);
+            ->where('web_id', $this->web_id)->where('is_public', 1);
 
 //        $freeRealEstates = $this->checkRegisterDate($freeRealEstates);
         $freeRealEstates->limit(40);
         $freeRealEstates = $freeRealEstates->get();
-
         /*
          * get lít category
          * */
@@ -488,8 +488,13 @@ class PageController extends Controller
         $query = RealEstate::select('id', 'title', 'short_description', 'slug', 'code', 'district_id',
             'area_of_premises', 'area_of_use', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date')
             ->where(function($q){
-                $q->where('is_hot', '<>', 1)
-                    ->where('is_vip', '<>', 1);
+                $q->where(function($a){
+                    $a->where('is_hot', '<>', 1)
+                        ->orWhereNull('is_hot');
+                })->where(function($a){
+                    $a->where('is_vip', '<>', 1)
+                        ->orWhereNull('is_vip');
+                });
             })
             ->where(function($q){
                 $q->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
@@ -497,7 +502,8 @@ class PageController extends Controller
             })
             ->where('post_date', '<=', Carbon::now())
             ->where('web_id', $this->web_id)
-            ->orderBy('post_date', 'desc');
+            ->orderBy('post_date', 'desc')
+            ->where('is_public', 1);
 //        $query = $this->checkRegisterDate($query);
 
         $results = $query->get();
@@ -790,7 +796,7 @@ class PageController extends Controller
                  * */
                 $userProvinceId = $user->userinfo->province_id;
                 $districtByUProvince = $this->districtService->getDistrictByProvince($userProvinceId);
-                $projectByUProvince = $this->projectService->getProjectByProvince($userProvinceId);
+//                $projectByUProvince = $this->projectService->getProjectByProvince($userProvinceId);
 
                 /*
                  * get all post of user
@@ -846,7 +852,7 @@ class PageController extends Controller
                     'listPostedRe' => $listPostedRe,
                     'listFriends' => $listFriends,
                     'districtByUProvince' => $districtByUProvince,
-                    'projectByUProvince' => $projectByUProvince,
+//                    'projectByUProvince' => $projectByUProvince,
                     'joinedFreeLances' => $joinedFreeLances,
                     'menuData' => $this->menuFE
                 ]);

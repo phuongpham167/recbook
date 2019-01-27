@@ -37,6 +37,12 @@ class ReTypeController extends Controller
         return $result->make(true);
     }
 
+    public function getListDropDownNoCat()
+    {
+        $result = $this->service->getListDropDownNoCat();
+        return response()->json($result);
+    }
+
     public function getListDropDown($catId)
     {
         $result = $this->service->getListDropDown($catId);

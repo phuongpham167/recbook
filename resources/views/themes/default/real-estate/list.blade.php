@@ -160,6 +160,40 @@
 
         </div>
     </div>
+    <form method="post" action="{{asset('bat-dong-san/gia-han')}}">
+        {{csrf_field()}}
+        <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content modal-lg">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Gia hạn tin đăng</h4>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="id-re" name="id">
+                        <label class="control-label">Số ngày gia hạn thêm</label>
+                        <select class="form-control" name="days">
+                            <option value="">--Chọn số ngày gia hạn thêm--</option>
+                            <option value="7">7 ngày</option>
+                            <option value="30">30 ngày</option>
+                            <option value="90">90 ngày</option>
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" name="add_new"
+                                id="add-new-re"
+                                class="_btn bg_red pull-right"><i
+                                class="fa fa-plus"></i> &nbsp;&nbsp;ĐĂNG
+                            TIN
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
     <link rel="stylesheet" href="{{asset('plugins/jquery.datatables/css/jquery.dataTables.min.css')}}" />
 
     @include(theme(TRUE).'.includes.footer')
@@ -212,6 +246,13 @@
                     html: true
                 });
             } );
+
+            $('.table').on('click', '.btn-renewed', function(){
+                var id      =   $(this).attr('id');
+
+                $('#id-re').val(id);
+                $('#myModal').modal('show');
+            });
         });
 
     </script>

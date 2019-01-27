@@ -25,4 +25,5 @@ return [
     'sold'   =>  'Đã bán',
     'close'   =>  'Đóng dự án',
     'done'   =>  'Đã làm xong',
+    'renewed'   =>  'Gia hạn',
 ];

@@ -19,6 +19,12 @@ class ReTypeService
         return $list;
     }
 
+    public function getListDropDownNoCat()
+    {
+        $result = ReType::all();
+        return $result;
+    }
+
     public function getListDropDown($catId)
     {
         \Log::info($catId);
