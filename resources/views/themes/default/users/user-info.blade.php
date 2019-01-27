@@ -410,7 +410,7 @@
                                                                     </p>
                                                                     <p class="price">
                                                                         @if($re->price)
-                                                                            Giá: <span class="price-val">{{$re->price}}</span>
+                                                                            Giá: <span class="price-val">{{ number_format($re->price) }} {{$re->unit ? $re->unit->name : 'VND'}}</span>
                                                                         @endif
                                                                     </p>
                                                                 </div>

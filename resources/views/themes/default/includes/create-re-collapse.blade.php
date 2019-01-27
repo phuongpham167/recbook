@@ -188,7 +188,7 @@
 <div class="form-group collapse collapse1" id="priceSelect">
     <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.price')}}</label>
     <div class="col-sm-4">
-        <input type="text" class="form-control" name="price" value="{{ old('price') }}" step="0.01"/>
+        <input type="number" class="form-control" name="price" value="{{ old('price') }}" step="0.01"/>
     </div>
     <div class="col-sm-10 col-sm-offset-2">
         <div class="checkbox">
