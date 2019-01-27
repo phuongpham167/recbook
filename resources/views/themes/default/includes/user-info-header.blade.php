@@ -43,10 +43,10 @@
                             @endphp
                             @if(count($authFriendRequestLists) > 0)
                                 @foreach($authFriendRequestLists as $authFriendRequest)
-                                <li><a style="color: white">{{($authFriendRequest->fuser1->userinfo->full_name)? ($authFriendRequest->fuser1->userinfo->full_name):''}}</a> <a href="{{route('friend.confirm.request', [($authFriendRequest->fuser1->id)?($authFriendRequest->fuser1->id):''])}}" class="btn btn-primary pull-right btn-accept-rq"><i class="fa fa-plus"></i> Chấp nhận</a></li>
+                                <li><a style="color: white !important">{{($authFriendRequest->fuser1->userinfo->full_name)? ($authFriendRequest->fuser1->userinfo->full_name):''}}</a> <a href="{{route('friend.confirm.request', [($authFriendRequest->fuser1->id)?($authFriendRequest->fuser1->id):''])}}" class="btn btn-primary pull-right btn-accept-rq"><i class="fa fa-plus"></i> Chấp nhận</a></li>
                                 @endforeach
                             @else
-                                <li><a class="notice_dropdown" style="color: white">Không có lời mời kết bạn nào</a></li>
+                                <li><a class="notice_dropdown" style="color: white !important">Không có lời mời kết bạn nào</a></li>
                             @endif
                         </ul>
                     </li>
