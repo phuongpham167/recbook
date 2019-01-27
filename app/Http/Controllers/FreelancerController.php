@@ -245,7 +245,7 @@ class FreelancerController extends Controller
             $data->status = 'pending';
         else if($data->status == 'pending') {
             $data->status = 'finished';
-            $data->finished_at = Carbon::now();
+            $data->finish_at = Carbon::now();
         }
         $data->save();
 

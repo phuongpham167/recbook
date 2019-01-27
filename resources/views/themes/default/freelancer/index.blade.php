@@ -104,11 +104,7 @@
                                     </dt>
                                     <dd style="margin-left: 180px">
                                         <h3><a style="text-transform: uppercase; color: #0c4da2; font-size: 18px" href="{{route('freelancerDetail', ['id'=>$item->id, 'slug'=>to_slug($item->title)])}}">{{$item->title}}</a></h3>
-                                        <span class="info">Đánh giá: <span style="color: gold"><i class="fa fa-star" aria-hidden="true"></i><i
-                                                    class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star"
-                                                                                                 aria-hidden="true"></i><i
-                                                    class="fa fa-star-half-o" aria-hidden="true"></i><i class="fa fa-star-o"
-                                                                                                        aria-hidden="true"></i></span></span>
+                                        <span class="info">Đánh giá: <span style="color: gold"><input type="hidden" class="rating" data-readonly value="{{auth()->user()->owner_rate()}}"/></span></span>
                                         <span
                                             class="info">Ngân sách: <span style="font-weight: bold">{{number_format($item->budget)}} {{\App\Currency::where("default",1)->first()->icon}}</span></span>
                                         <span
@@ -116,7 +112,7 @@
                                         <span
                                             class="info">Thời hạn: <span style="font-weight: bold">{{\Carbon\Carbon::parse($item->end_at)->format('d/m/Y')}}</span></span>
                                         <p style="font-size: 15px" class="tablet-lg">{{trim_text($item->description,200)}} <a href="{{route('freelancerDetail', ['id'=>$item->id, 'slug'=>to_slug($item->title)])}}" style="color: #0c4da2; font-size: 15px"><em>Xem thêm</em></a></p>
-                                        <button href="#" class="btn btn-success pull-right">Chào giá</button>
+                                        <a href="{{route('freelancerDetail', ['id'=>$item->id, 'slug'=>to_slug($item->title)])}}" class="btn btn-success pull-right">Chào giá</a>
                                     </dd>
                                 </dl>
                             @endforeach
@@ -284,6 +280,7 @@
 @endsection
 
 @push('js')
+    <script type="text/javascript" src="{{asset('/js/bootstrap-rating.js')}}"></script>
     <script src="{{asset('js/jquery.magnific-popup.min.js')}}"></script>
     <script src="{{asset('plugins/toastr/toastr.min.js')}}"></script>
     <script src="{{asset('plugins/moment-develop/moment.js')}}"></script>
@@ -348,5 +345,57 @@
             $('#postReModal').removeClass('in');
             $('#postReModal').attr('style', 'display: none;');
         }
+
+        $(function () {
+            $('input.check').on('change', function () {
+                alert('Rating: ' + $(this).val());
+            });
+            $('#programmatically-set').click(function () {
+                $('#programmatically-rating').rating('rate', $('#programmatically-value').val());
+            });
+            $('#programmatically-get').click(function () {
+                alert($('#programmatically-rating').rating('rate'));
+            });
+            $('#programmatically-reset').click(function () {
+                $('#programmatically-rating').rating('rate', '');
+            });
+            $('.rating-tooltip').rating({
+                extendSymbol: function (rate) {
+                    $(this).tooltip({
+                        container: 'body',
+                        placement: 'bottom',
+                        title: 'Rate ' + rate
+                    });
+                }
+            });
+            $('.rating-tooltip-manual').rating({
+                extendSymbol: function () {
+                    var title;
+                    $(this).tooltip({
+                        container: 'body',
+                        placement: 'bottom',
+                        trigger: 'manual',
+                        title: function () {
+                            return title;
+                        }
+                    });
+                    $(this).on('rating.rateenter', function (e, rate) {
+                        title = rate;
+                        $(this).tooltip('show');
+                    })
+                        .on('rating.rateleave', function () {
+                            $(this).tooltip('hide');
+                        });
+                }
+            });
+            $('.rating').each(function () {
+                $('<span class="label label-default"></span>')
+                    .text($(this).val() || ' ')
+                    .insertAfter(this);
+            });
+            $('.rating').on('change', function () {
+                $(this).next('.label').text($(this).val());
+            });
+        });
     </script>
 @endpush

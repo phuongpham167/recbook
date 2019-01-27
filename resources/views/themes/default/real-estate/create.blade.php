@@ -199,29 +199,29 @@
                         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.width')}}</label>
 
                         <div class="col-sm-2">
-                            <input type="text" class="form-control" name="width" value="{{ old('width') }}"/>
+                            <input type="number" class="form-control" name="width" value="{{ old('width') }}"/>
                         </div>
                         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.length')}}</label>
 
                         <div class="col-sm-2">
-                            <input type="text" class="form-control" name="length" value="{{ old('length') }}"/>
+                            <input type="number" class="form-control" name="length" value="{{ old('length') }}"/>
                         </div>
                         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.bedroom')}}</label>
 
                         <div class="col-sm-2">
-                            <input type="text" class="form-control" name="bedroom" value="{{ old('bedroom') }}"/>
+                            <input type="number" class="form-control" name="bedroom" value="{{ old('bedroom') }}"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.areaOfPremises')}} <span class="text-red">*</span></label>
 
                         <div class="col-sm-2">
-                            <input type="text" class="form-control" name="area_of_premises" value="{{ old('area_of_premises') }}"/>
+                            <input type="number" class="form-control" name="area_of_premises" value="{{ old('area_of_premises') }}"/>
                         </div>
                         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.areaOfUse')}}</label>
 
                         <div class="col-sm-2">
-                            <input type="text" class="form-control" name="area_of_use" value="{{ old('area_of_use') }}"/>
+                            <input type="number" class="form-control" name="area_of_use" value="{{ old('area_of_use') }}"/>
                         </div>
                         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.floor')}}</label>
 

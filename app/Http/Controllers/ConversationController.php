@@ -113,6 +113,16 @@ class ConversationController extends Controller
                 'menuData' => $this->menuFE
             ]);
 
-        return redirect()->back();
+        return view('errors.403',[
+            'conversation' => $conversation,
+            'vipRealEstates' => $this->vipRealEstates,
+            'categories' => $this->categories,
+            'provinces' => $this->provinces,
+            'districts' => $this->districts,
+            'streets' => $this->streets,
+            'directions' => $this->directions,
+            'projects' => $this->projects,
+            'menuData' => $this->menuFE
+        ])->with('message', 'Bạn không tham gia cuộc hội thoại này, vui lòng thử lại!');
     }
 }

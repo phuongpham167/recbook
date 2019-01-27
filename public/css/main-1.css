@@ -535,14 +535,22 @@ button {
     border: 1px solid transparent;
     border-bottom: 0;
 }
-
-.cat_top_box > form {
+.good_price .left_box .title_box {
+    float: left;
+    width: 65%;
+    border-bottom: none;
+    margin-bottom: 0;
+}
+.good_price .left_box form {
     float: right;
     background: #fff;
-    margin-top: 10px;
 }
-
-.cat_top_box > form > input[type=text] {
+.good_price .left_box .row {
+    margin-left: 0;
+    margin-right: 0;
+    border-bottom: 1px solid #eaeaea;
+}
+.good_price .left_box form > input[type=text] {
     text-indent: 5px;
     width: 250px;
     height: 30px;
@@ -550,7 +558,7 @@ button {
     border-right: 0;
 }
 
-.cat_top_box > form > * {
+.good_price .left_box form > * {
     float: left;
     background: transparent;
     border: 0;
@@ -560,11 +568,11 @@ button {
     display: block;
 }
 
-.cat_top_box > form button {
+.good_price .left_box form button {
     padding: 0;
 }
 
-.cat_top_box > form button i {
+.good_price .left_box form button i {
     line-height: 30px;
     width: 30px;
     text-align: center;

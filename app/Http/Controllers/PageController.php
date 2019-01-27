@@ -191,7 +191,7 @@ class PageController extends Controller
             ->orWhere('post_date', '>=', Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->subDays(Settings('system_changenametime'))->format('m/d/Y H:i A')));
 
 //        $freeRealEstates = $this->checkRegisterDate($freeRealEstates);
-        $freeRealEstates =  $freeRealEstates->take(get_config('homePublic',8))->get();
+        $freeRealEstates =  $freeRealEstates->orderBy('created_at', 'DESC')->take(get_config('homePublic',8))->get();
 
         /*
          * get lít category

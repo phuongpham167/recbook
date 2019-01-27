@@ -192,61 +192,67 @@
         <div class="col-md-12 chao-gia">
             @include(theme(TRUE).'.includes.message')
             @if($data->status == 'open')
-                @if(auth()->check())
-            <form method="post" action="{{route('freelancerDeal', ['id'=>$data->id])}}">
-                {{csrf_field()}}
-                <h3 style="border-bottom: 1px dotted #333">Thông tin chào giá</h3>
-                <hr/>
-                <div class="col-md-5 col-sm-12">
-                    <div class="block-amount-detail">
-                        <div class="form-group">
-                            <label>Chi phí đề xuất *</label>
-                            <input type="text" class="form-control" id="price" name="price" />
-                        </div>
-                        <div class="form-group">
-                            <label>Dự kiến hoàn thành trong *</label>
-                            <div class="input-group">
-                                <input type="text" class="form-control" name="days" placeholder="thời gian tới lúc hoàn thiện"
-                                       aria-describedby="basic-addon2">
-                                <span class="input-group-addon" id="basic-addon2">ngày</span>
+                @if($data->end_at >= \Carbon\Carbon::now())
+                    @if(auth()->check())
+                        <form method="post" action="{{route('freelancerDeal', ['id'=>$data->id])}}">
+                            {{csrf_field()}}
+                            <h3 style="border-bottom: 1px dotted #333">Thông tin chào giá</h3>
+                            <hr/>
+                            <div class="col-md-5 col-sm-12">
+                                <div class="block-amount-detail">
+                                    <div class="form-group">
+                                        <label>Chi phí đề xuất *</label>
+                                        <input type="number" class="form-control" id="price" name="price" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Dự kiến hoàn thành trong *</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" name="days" placeholder="thời gian tới lúc hoàn thiện"
+                                                   aria-describedby="basic-addon2">
+                                            <span class="input-group-addon" id="basic-addon2">ngày</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-7 col-sm-12">
-                    <div class="form-group">
-                        <label>1.Bạn có những kinh nghiệm và kỹ năng nào phù hợp với dự án này? *</label>
-                        <textarea type="text" class="form-control" id="selfIntro" name="selfIntro" rows="5"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>2.Bạn dự định thực hiện dự án này như thế nào? *</label>
-                        <textarea type="text" class="form-control" id="road" name="road" rows="5"></textarea>
-                    </div>
-                    <h5>THÔNG TIN LIÊN HỆ</h5>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="input-group">
-                                <span class="input-group-addon" id="basic-addon1"><i class="fa fa-user"></i></span>
-                                <span class="form-control disabled">{{auth()->user()->userinfo?auth()->user()->userinfo->full_name:''}}</span>
+                            <div class="col-md-7 col-sm-12">
+                                <div class="form-group">
+                                    <label>1.Bạn có những kinh nghiệm và kỹ năng nào phù hợp với dự án này? *</label>
+                                    <textarea type="text" class="form-control" id="selfIntro" name="selfIntro" rows="5"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>2.Bạn dự định thực hiện dự án này như thế nào? *</label>
+                                    <textarea type="text" class="form-control" id="road" name="road" rows="5"></textarea>
+                                </div>
+                                <h5>THÔNG TIN LIÊN HỆ</h5>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <span class="input-group-addon" id="basic-addon1"><i class="fa fa-user"></i></span>
+                                            <span class="form-control disabled">{{auth()->user()->userinfo?auth()->user()->userinfo->full_name:''}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <span class="input-group-addon" id="basic-addon1"><i class="fa fa-phone-square"></i></span>
+                                            <span class="form-control disabled">{{auth()->user()->userinfo?auth()->user()->userinfo->phone:''}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12" style="margin: 15px 0">
+                                        <button type="submit" class="btn btn-primary" style="width: 100%">Gửi chào giá</button>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="input-group">
-                                <span class="input-group-addon" id="basic-addon1"><i class="fa fa-phone-square"></i></span>
-                                <span class="form-control disabled">{{auth()->user()->userinfo?auth()->user()->userinfo->phone:''}}</span>
-                            </div>
-                        </div>
-                        <div class="col-md-12" style="margin: 15px 0">
-                            <button type="submit" class="btn btn-primary" style="width: 100%">Gửi chào giá</button>
-                        </div>
-                    </div>
-                </div>
-            </form>
+                        </form>
+                    @else
+                        <p class="alert-title">Thông báo</p>
+                        <p>Để chào giá, hãy <a
+                                    href="{{route('login')}}">Đăng nhập</a> hoặc <a
+                                    href="{{route('register')}}">Đăng ký</a>.</p>
+                    @endif
                 @else
-                    <p class="alert-title">Thông báo</p>
-                    <p>Để chào giá, hãy <a
-                                href="{{route('login')}}">Đăng nhập</a> hoặc <a
-                                href="{{route('register')}}">Đăng ký</a>.</p>
+                    <div class="jumbotron" style="padding: 14px; margin-top: 10px">
+                        Tin đăng đã hết hạn!
+                    </div>
                 @endif
             @else
                 <div class="jumbotron" style="padding: 14px; margin-top: 10px">
