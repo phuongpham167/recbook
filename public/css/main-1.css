@@ -4,11 +4,25 @@ body {
     color: #000;
 }
 .container{
-    width: 1200px;
+    max-width: 1200px;
     margin: 0 auto;
 }
 .margin-0 {
     margin: 0;
+}
+@media(max-width: 768px){
+    .navbar-nav {
+        margin: 7.5px 0px;
+    }
+    .menu-search {
+        margin-left: 10px;
+    }
+    .menu-search .form-control {
+        width: 30% !important;
+    }
+    .menu-search #ip-kw {
+        width: 90% !important;
+    }
 }
 
 .margin-top-20 {
@@ -177,7 +191,7 @@ button {
     width: 105px;
     border-right: 1px dotted #000;
     border-right-style: dashed;
-    float: left;
+    float: left;margin-bottom: 4px;
 }
 
 @media screen and (max-width: 767px) {
