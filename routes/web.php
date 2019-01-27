@@ -154,6 +154,7 @@ Route::get('/street-by-ward/{wardId}', ['as' => 'streetByWard', 'uses' => 'RealE
 Route::get('/project-by-province/{provinceId}', ['as' => 'projectByProvince', 'uses' => 'RealEstateController@projectByProvince']);
 Route::get('/range-price/list-dropdown/{catId}', ['as' => 'rangePriceByCat', 'uses' => 'RangePriceController@getListDropDown']);
 Route::get('/re-type/list-dropdown/{catId}', ['as' => 'reTypeByCat', 'uses' => 'ReTypeController@getListDropDown']);
+Route::get('/re-type/list-dropdown', ['as' => 'reType', 'uses' => 'ReTypeController@getListDropDownNoCat']);
 Route::get('/customer-by-phone/{phone}', ['as' => 'customer-by-phone', 'uses' => 'RealEstateController@customerByPhone']);
 
 Route::get('404', ['as' => '404', 'uses' => 'ErrorController@notfound']);

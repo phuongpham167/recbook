@@ -445,6 +445,18 @@ class RealEstateController extends Controller
                 if ($re->district_id) {
                     $wardsByDistrict = $this->wardService->getWardByDistrict($re->district_id);
                 }
+                $typeByLoaiBDS = [];
+                $projects = [];
+                if ($re->loai_bds) {
+                    if ($re->loai_bds == 1) {
+                        $typeByLoaiBDS = $this->reTypeService->getListDropDownNoCat();
+                    }
+                    if ($re->loai_bds == 2) {
+                        if ($re->province_id) {
+                            $projects = $this->projectService->getProjectByProvince($re->province_id);
+                        }
+                    }
+                }
                 return response()->json([
                     'success' => true,
                     'message' => '',
@@ -453,7 +465,9 @@ class RealEstateController extends Controller
                         'districts' => $districts,
                         'categories' => $reCategories,
                         'districtsByProvince' => $districtsByProvince,
-                        'wardsByDistrict' => $wardsByDistrict
+                        'wardsByDistrict' => $wardsByDistrict,
+                        'typeByLoaiBDS' => $typeByLoaiBDS,
+                        'projects' => $projects
                     ]
                 ]);
             }
