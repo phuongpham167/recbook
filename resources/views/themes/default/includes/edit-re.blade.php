@@ -779,13 +779,15 @@
             let priceDOM = panelRe.find('.price');
             if (priceDOM.html()) {
                 if (data.price) {
-                    priceDOM.find('.price-val').text(data.price);
+                    const price = DocTienBangChu(data.price);
+                    priceDOM.find('.price-val').text(price);
                 } else {
                     priceDOM.html('');
                 }
             } else {
                 if (data.price) {
-                    priceDOM.html('Giá: <span class="price-val">' + price + '</span>');
+                    const price = DocTienBangChu(data.price);
+                    priceDOM.html('<b class="text-red"><span class="text-upper" style="font-size: 12px;">Giá:</span> <span class="price-val">' + price + '</span><span style="font-size: 12px;">VND</span></b>');
                 }
             }
 
