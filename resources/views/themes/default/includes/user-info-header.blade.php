@@ -33,7 +33,7 @@
                             <img class="img-responsive header-avatar" src="{{$avatar}}" > <span class="header-name">{{auth()->user()->userinfo->full_name}}</span>
                         </a>
                     </li>
-                    <li ><a href="{{ route('home') }}" style="text-transform: capitalize">{{ trans('header.navbar-item.home') }}</a></li>
+                    <li class="home-link"><a href="{{ route('home') }}" style="text-transform: capitalize">{{ trans('header.navbar-item.home') }}</a></li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#" title="Lời mời kết bạn"><i class="fa fa-users" aria-hidden="true"></i></a>
                         <ul class="dropdown-menu friend-request-list">
@@ -43,23 +43,25 @@
                             @endphp
                             @if(count($authFriendRequestLists) > 0)
                                 @foreach($authFriendRequestLists as $authFriendRequest)
-                                <li><a style="color: #fff !important;">{{$authFriendRequest->fuser1->userinfo->full_name}}</a> <a href="{{route('friend.confirm.request', [$authFriendRequest->fuser1->id])}}" class="btn btn-primary pull-right btn-accept-rq"><i class="fa fa-plus"></i> Chấp nhận</a></li>
+                                <li><a>{{$authFriendRequest->fuser1->userinfo->full_name}}</a> <a href="{{route('friend.confirm.request', [$authFriendRequest->fuser1->id])}}" class="btn btn-primary pull-right btn-accept-rq"><i class="fa fa-plus"></i> Chấp nhận</a></li>
                                 @endforeach
                             @else
-                                <li><a class="notice_dropdown" style=" color: #fff !important;">Không có lời mời kết bạn nào</a></li>
+                                <li><a class="notice_dropdown">Không có lời mời kết bạn nào</a></li>
                             @endif
                         </ul>
                     </li>
                     <li class="dropdown">
                         {{--<a href="{{ route('chat') }}" title="Tin nhắn"><i class="fa fa-comment" aria-hidden="true"></i></a>--}}
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true" title="Tin nhắn"><i class="fa fa-comment" aria-hidden="true"></i>
-                            <?php $unseen_conversation = \App\Conversation::whereHas('messages', function ($q) {$q->where('user_id','<>',auth()->user()->id)->where('is_read',0);})->count() ?>
+                            <?php $unseen_conversation = \App\Conversation::whereHas('messages', function ($q) {$q->where('user_id','<>',auth()->user()->id)->where('is_read',0);})->where(function ($q) {
+                                $q->where('user1',auth()->user()->id)->orWhere('user2',auth()->user()->id);
+                            })->count() ?>
                             @if( $unseen_conversation!= 0)
                                 <span class="label label-success">{{$unseen_conversation}}</span>
                             @endif
                         </a>
                         <ul class="dropdown-menu message_dropdown">
-                            <li class="header" style="color: #fff !important;">Bạn có {{$unseen_conversation}} tin nhắn chưa đọc</li>
+                            <li class="header">Bạn có {{$unseen_conversation}} tin nhắn chưa đọc</li>
 
                             @foreach(\App\Conversation::orderBy('created_at', 'desc')->where(function ($q) {
                                 $q->where('user1',auth()->user()->id)->orWhere('user2',auth()->user()->id);
@@ -72,7 +74,7 @@
                                         <div class="pull-left" style="margin-left: 10px; display: block; width: 80%">
                                             <p>
                                                 <?php
-                                                    $unseen_message =  \App\Message::orderBy('created_at', 'asc')->where('conversation_id',$item->id)->where('user_id','<>',auth()->user()->id)->where('is_read',0)->take(1)->first();
+                                                    $unseen_message =  \App\Message::orderBy('created_at', 'desc')->where('conversation_id',$item->id)->where('user_id','<>',auth()->user()->id)->where('is_read',0)->take(1)->first();
                                                 ?>
                                                 {{\App\User::find($unseen_message->user_id)?\App\User::find($unseen_message->user_id)->name:$unseen_message->user_id}}
                                                 <small class="pull-right" style="margin-right: 10px; color: #cacaca"> <i class="fa fa-clock-o"></i> {{Carbon\Carbon::parse($unseen_message->created_at)->diffForHumans(\Carbon\Carbon::now())}}</small>
@@ -82,7 +84,7 @@
                                     </a>
                                 </li>
                             @endforeach
-                            <li class="footer"><a href="{{asset('tin-nhan')}}">Xem tất cả tin nhắn</a></li>
+                            <li class="footer"><a style="color: black" href="{{asset('tin-nhan')}}">Xem tất cả tin nhắn</a></li>
                         </ul>
                         {{--<ul class="dropdown-menu">--}}
                         {{--</ul>--}}

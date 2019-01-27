@@ -796,7 +796,7 @@ class PageController extends Controller
                  * */
                 $userProvinceId = $user->userinfo->province_id;
                 $districtByUProvince = $this->districtService->getDistrictByProvince($userProvinceId);
-                $projectByUProvince = $this->projectService->getProjectByProvince($userProvinceId);
+//                $projectByUProvince = $this->projectService->getProjectByProvince($userProvinceId);
 
                 /*
                  * get all post of user
@@ -852,7 +852,7 @@ class PageController extends Controller
                     'listPostedRe' => $listPostedRe,
                     'listFriends' => $listFriends,
                     'districtByUProvince' => $districtByUProvince,
-                    'projectByUProvince' => $projectByUProvince,
+//                    'projectByUProvince' => $projectByUProvince,
                     'joinedFreeLances' => $joinedFreeLances,
                     'menuData' => $this->menuFE
                 ]);
