@@ -111,7 +111,7 @@
                                             <p class=" text-center">Làm việc tại: {{ $data->userinfo->company }}</p>
                                             <p class=" text-center">Đánh giá: 87/100 điểm</p>
                                             @if((\Auth::user() && \Auth::user()->id  == $data->id))
-                                            <p class=" text-center">Số dư: <strong>{{auth()->user()->credits}}</strong></p>
+                                            <p class=" text-center">Số dư: <strong>{{number_format(auth()->user()->credits).' '.\App\Currency::where('default',1)->first()->icon}}</strong></p>
                                             <p class=" text-center">Nhóm tài khoản: <strong>{{auth()->user()->group->name}}</strong></p>
                                             @endif
                                             <p class="user-desc">{{ $data->userinfo->description }}</p>
@@ -410,7 +410,7 @@
                                                                     </p>
                                                                     <p class="price">
                                                                         @if($re->price)
-                                                                            Giá: <span class="price-val">{{$re->price}}</span>
+                                                                            Giá: <span class="price-val">{{ number_format($re->price) }} {{$re->unit ? $re->unit->name : 'VND'}}</span>
                                                                         @endif
                                                                     </p>
                                                                 </div>

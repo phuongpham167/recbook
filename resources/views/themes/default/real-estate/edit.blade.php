@@ -203,40 +203,40 @@ if ($user->group_id != $adminGroup) {
                         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.width')}}</label>
 
                         <div class="col-sm-2">
-                            <input type="text" class="form-control" name="width" value="{{ $realEstate->width }}"/>
+                            <input type="number" class="form-control" name="width" value="{{ $realEstate->width }}"/>
                         </div>
                         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.length')}}</label>
 
                         <div class="col-sm-2">
-                            <input type="text" class="form-control" name="length" value="{{ $realEstate->length }}"/>
+                            <input type="number" class="form-control" name="length" value="{{ $realEstate->length }}"/>
                         </div>
                         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.bedroom')}}</label>
 
                         <div class="col-sm-2">
-                            <input type="text" class="form-control" name="bedroom" value="{{ $realEstate->bedroom }}"/>
+                            <input type="number" class="form-control" name="bedroom" value="{{ $realEstate->bedroom }}"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.areaOfPremises')}} <span class="text-red">*</span></label>
 
                         <div class="col-sm-2">
-                            <input type="text" class="form-control" name="area_of_premises" value="{{ $realEstate->area_of_premises }}"/>
+                            <input type="number" class="form-control" name="area_of_premises" value="{{ $realEstate->area_of_premises }}"/>
                         </div>
                         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.areaOfUse')}}</label>
 
                         <div class="col-sm-2">
-                            <input type="text" class="form-control" name="area_of_use" value="{{ $realEstate->area_of_use }}"/>
+                            <input type="number" class="form-control" name="area_of_use" value="{{ $realEstate->area_of_use }}"/>
                         </div>
                         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.floor')}}</label>
 
                         <div class="col-sm-2">
-                            <input type="text" class="form-control" name="floor" value="{{ $realEstate->floor }}"/>
+                            <input type="number" class="form-control" name="floor" value="{{ $realEstate->floor }}"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.price')}}</label>
                         <div class="col-sm-2">
-                            <input type="text" class="form-control" name="price" value="{{ $realEstate->price }}"/>
+                            <input type="number" class="form-control" name="price" value="{{ $realEstate->price }}"/>
                         </div>
 
                         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.unit')}}</label>
@@ -351,7 +351,7 @@ if ($user->group_id != $adminGroup) {
                     <div class="form-group">
                         <div class="col-sm-10 col-sm-offset-2">
                             <button type="submit" name="add_new" class="_btn bg_red"><i class="fa fa-plus"></i> &nbsp;&nbsp;ĐĂNG TIN</button>
-                            <button type="submit" name="add_draft" value="1" class="_btn bg_black"><i class="fa fa-plus"></i> &nbsp;&nbsp;LƯU TIN</button>
+                            {{--<button type="submit" name="add_draft" value="1" class="_btn bg_black"><i class="fa fa-plus"></i> &nbsp;&nbsp;LƯU TIN</button>--}}
                         </div>
                     </div>
                     <!-- /.box-footer -->
