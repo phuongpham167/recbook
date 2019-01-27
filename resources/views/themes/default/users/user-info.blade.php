@@ -971,6 +971,8 @@
         });
         function setValueForEditRe(data) {
             const re = data.re;
+            console.log('re here');
+            console.log(re);
             const districtsByProvince = data.districtsByProvince;
             if (districtsByProvince.length) {
                 let html = '<option value="">{{trans('real-estate.selectFirstOpt')}}</option>';
@@ -993,15 +995,55 @@
                     $('#ward-edit').html(html);
                 }
             }
+
+            // set value for thocu or duan
+            const typeByLoaiBDS = data.typeByLoaiBDS;
+            const projects = data.projects;
+            if (re.loai_bds) {
+                $('#loai-bds-edit').val(re.loai_bds);
+                if (re.loai_bds == 1) {
+                    if (typeByLoaiBDS.length) {
+                        let html = '<select class="form-control" name="re_type_id">';
+                        for (let t of typeByLoaiBDS) {
+                            html += '<option value="' + t.id + '">' + t.name + '</option>';
+                        }
+                        html += '</select>';
+                        if (html) {
+                            $('#thocu-select-wrap-edit').removeClass('hidden');
+                            $('#thocu-select-edit').html(html);
+                            if (re.re_type_id) {
+                                $('#thocu-select-edit select').val(re.re_type_id);
+                            }
+                        }
+                    }
+                }
+                else if (re.loai_bds == 2) {
+                    if (projects.length) {
+                        let html = '<select class="form-control" name="project_id">';
+                        for (let p of projects) {
+                            html += '<option value="' + p.id + '">' + p.name + '</option>';
+                        }
+                        html += '</select>';
+                        if (html) {
+                            $('#duan-select-wrap-edit').removeClass('hidden');
+                            $('#duan-select-edit').html(html);
+                            if (re.project_id) {
+                                $('#duan-select-edit select').val(re.project_id);
+                            }
+                        }
+                    }
+                }
+            }
+
             $('#id-edit').val(re.id);
             $('#title-edit').val(re.title);
             $('#detail-edit').val(re.detail).focus().blur();
             if (re.re_category_id) {
                 $('#re-category-edit').val(re.re_category_id);
             }
-            if(re.re_type_id) {
-                $('#re-type-edit').val(re.re_type_id);
-            }
+            // if(re.re_type_id) {
+            //     $('#re-type-edit').val(re.re_type_id);
+            // }
             if (re.province_id) {
                 $('#province-edit').val(re.province_id);
             }
@@ -1032,9 +1074,9 @@
             if (re.exhibit_id) {
                 $('#exhibit-edit').val(re.exhibit_id);
             }
-            if (re.project_id) {
-                $('#project-edit').val(re.project_id);
-            }
+            // if (re.project_id) {
+            //     $('#project-edit').val(re.project_id);
+            // }
             if (re.bedroom) {
                 $('#bedroom-edit').val(re.bedroom);
             }

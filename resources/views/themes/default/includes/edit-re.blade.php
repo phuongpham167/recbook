@@ -72,7 +72,7 @@
                     <div class="form-group clearfix collapse" id="addressSelectEdit">
                         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.province')}} </label>
                         <div class="col-sm-4">
-                            <select class="form-control" id="province-edit" name="province_id_edit" onchange="changeProvince(this)">
+                            <select class="form-control" id="province-edit" name="province_id_edit" onchange="changeProvinceEdit(this)">
                                 <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
                                 @foreach($provinces as $province)
                                     <option value="{{$province->id}}" {{auth()->user() && auth()->user()->userinfo->province_id == $province->id ? 'selected' : ''}}>{{$province->name}}</option>
@@ -91,8 +91,7 @@
                         </div>
                         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.ward')}} </label>
                         <div class="col-sm-4">
-                            <select class="form-control" id="ward-edit" name="ward_id_edit"
-                                    onchange="changeWardEdit(this)">
+                            <select class="form-control" id="ward-edit" name="ward_id_edit">
                                 <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
                             </select>
                             <p class="text-red error"></p>
@@ -499,9 +498,44 @@
             hideLoader();
         }
 
+        function changeProvinceEdit(e) {
+            let provinceId = $(e).val();
+            if (!provinceId) {
+                $('#district-edit').html('<option value="">{{trans('real-estate.selectFirstOpt')}}</option>');
+                $('#ward-edit').html('<option value="">{{trans('real-estate.selectFirstOpt')}}</option>');
+                return;
+            }
+            showLoader();
+            $.ajax({
+                url: '/district-by-province/' + provinceId,
+                method: 'GET',
+                success: function (result) {
+                    console.log('success');
+                    console.log(result);
+                    let html = '<option value="">{{trans('real-estate.selectFirstOpt')}}</option>';
+                    if (result) {
+                        for (let r of result) {
+                            html += '<option value="' + r.id + '">' + r.name + '</option>';
+                        }
+                    }
+                    if (html) {
+                        $('#district-edit').html(html);
+                    }
+                    hideLoader();
+                }
+            });
+
+
+        }
+
         function changeDistrictEdit(e) {
             // console.log($(e).val());
             let districtId = $(e).val();
+
+            if (!districtId) {
+                $('#ward-edit').html('<option value="">{{trans('real-estate.selectFirstOpt')}}</option>');
+                return;
+            }
 
             $.ajax({
                 url: '/ward-by-district/' + districtId,
@@ -607,7 +641,7 @@
 
             let reCatId = $('#re-category-edit').val();
 
-            let reTypeId = $('#re-type-edit').val();
+            let reTypeId = $('#re-type-edit').length ? $('#re-type-edit').val() : '';
 
             let provinceId = $('#province-edit').val();
 
@@ -627,7 +661,7 @@
 
             let exhibitId = $('#exhibit-edit').val();
 
-            let projectId = $('#project-edit').val();
+            let projectId = $('#project-edit').length ? $('#project-edit').val() : '';
 
             let bedroom = $('#bedroom-edit').val();
 
@@ -670,7 +704,9 @@
             formDataEdit.append('title', title);
             formDataEdit.append('detail', detail);
             formDataEdit.append('re_category_id', reCatId);
-            formDataEdit.append('re_type_id', reTypeId);
+            if (reTypeId) {
+                formDataEdit.append('re_type_id', reTypeId);
+            }
             formDataEdit.append('province_id', provinceId);
             formDataEdit.append('district_id', districtId);
             formDataEdit.append('ward_id', wardId);
@@ -681,7 +717,9 @@
             formDataEdit.append('position', position);
             formDataEdit.append('direction_id', directionId);
             formDataEdit.append('exhibit_id', exhibitId);
-            formDataEdit.append('project_id', projectId);
+            if (projectId) {
+                formDataEdit.append('project_id', projectId);
+            }
             formDataEdit.append('bedroom', bedroom);
             formDataEdit.append('living_room', livingroom);
             formDataEdit.append('wc', wc);
@@ -712,6 +750,8 @@
                         toastr.success(res.message);
                         const re = res.data.re;
                         displayValueAfterUpdate(re);
+                        $('#street-id-hidden').val('');
+                        $('#street-name-hidden').val('');
                         $('#modalEditRe').modal('hide');
                     } else {
                         toastr.error(res.message);

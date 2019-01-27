@@ -108,9 +108,9 @@ class RealEstateService
             'loai_bds' => isset($input['loai_bds']) ? $input['loai_bds'] : null,
             're_type_id' => isset($input['re_type_id']) ? $input['re_type_id'] : null,
             'province_id' => isset($input['province_id']) ? $input['province_id'] : null,
-            'district_id' => isset($input['district_id']) ? $input['district_id'] : null,
-            'ward_id' => isset($input['ward_id']) ? $input['ward_id'] : null,
-            'street_id' => isset($input['street_id']) ? $input['street_id'] : null,
+            'district_id' => isset($input['province_id']) ? (isset($input['district_id']) ? $input['district_id'] : null) : null,
+            'ward_id' => (isset($input['province_id']) && isset($input['district_id'])) ? (isset($input['ward_id']) ? $input['ward_id'] : null) : null,
+            'street_id' => ($provinceId && $districtId && $wardId) ? (isset($input['street_id']) ? $input['street_id'] : null) : null,
             'address' => isset($input['address']) ? $input['address'] : null,
             'position' => isset($input['position']) ? $input['position'] : null,
             'direction_id' => isset($input['direction_id']) ? $input['direction_id'] : null,
@@ -354,9 +354,9 @@ class RealEstateService
             $realEstate->loai_bds = isset($input['loai_bds']) ? $input['loai_bds'] : null;
             $realEstate->re_type_id = isset($input['re_type_id']) ? $input['re_type_id'] : null;
             $realEstate->province_id = isset($input['province_id']) ? $input['province_id'] : null;
-            $realEstate->district_id = isset($input['district_id']) ? $input['district_id'] : null;
-            $realEstate->ward_id = isset($input['ward_id']) ? $input['ward_id'] : null;
-            $realEstate->street_id = isset($input['street_id']) ? $input['street_id'] : null;
+            $realEstate->district_id = isset($input['province_id']) ? (isset($input['district_id']) ? $input['district_id'] : null) : null;
+            $realEstate->ward_id = (isset($input['province_id']) && isset($input['district_id'])) ? (isset($input['ward_id']) ? $input['ward_id'] : null) : null;
+            $realEstate->street_id = ($provinceId && $districtId && $wardId) ? (isset($input['street_id']) ? $input['street_id'] : null) : null;
             $realEstate->address = isset($input['address']) ? $input['address'] : null;
             $realEstate->position = isset($input['position']) ? $input['position'] : '';
             $realEstate->direction_id = isset($input['direction_id']) ? $input['direction_id'] : null;

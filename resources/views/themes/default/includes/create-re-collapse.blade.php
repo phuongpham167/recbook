@@ -61,8 +61,7 @@
     </div>
     <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.ward')}} </label>
     <div class="col-sm-4">
-        <select class="form-control" id="ward" name="ward_id" value="{{ old('ward_id') }}"
-                onchange="changeWard(this)">
+        <select class="form-control" id="ward" name="ward_id" value="{{ old('ward_id') }}">
             <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
         </select>
         <p class="text-red error"></p>
@@ -395,6 +394,11 @@
         function changeProvince(e) {
             console.log($(e).val());
             let provinceId = $(e).val();
+            if (!provinceId) {
+                $('#district').html('<option value="">{{trans('real-estate.selectFirstOpt')}}</option>');
+                $('#ward').html('<option value="">{{trans('real-estate.selectFirstOpt')}}</option>');
+                return;
+            }
             showLoader();
             $.ajax({
                 url: '/district-by-province/' + provinceId,
@@ -421,6 +425,10 @@
         function changeDistrict(e) {
             console.log($(e).val());
             let districtId = $(e).val();
+            if (!districtId) {
+                $('#ward').html('<option value="">{{trans('real-estate.selectFirstOpt')}}</option>');
+                return;
+            }
             showLoader();
             $.ajax({
                 url: '/ward-by-district/' + districtId,
