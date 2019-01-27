@@ -1,5 +1,16 @@
 var app = require('express')();
-var server = require('http').Server(app);
+var https = require('https');
+var fs = require('fs');
+
+var httpsOptions = {
+    key: fs.readFileSync('./key/recbook.vn.key'),
+    cert: fs.readFileSync('./key/recbook.vn.cert')
+};
+
+var server = https.createServer(httpsOptions, app);
+
+// var server = require('http').Server(app);
+
 var io = require('socket.io')(server);
 var redis = require('redis');
 
