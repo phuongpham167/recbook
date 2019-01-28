@@ -116,7 +116,7 @@
                                             @endif
                                             <p class="user-desc">{{ $data->userinfo->description }}</p>
                                         </div>
-                                        @if ( (\Auth::user() && \Auth::user()->id  == $data->id) || $isFriend)
+                                        @if ( (\Auth::user() && \Auth::user()->id  == $data->id) || $isFriend || $data->group->public_permission == 1)
                                             <p class="title-short-section">Tin đã đăng</p>
                                             <div class="posted-re border-block">
                                                 @foreach($listPostedRe as $re)
@@ -129,7 +129,7 @@
                                         @if ((\Auth::user() && \Auth::user()->id  == $data->id))
                                             @include(theme(TRUE).'.includes.left-menu')
                                         @endif
-                                        @if ((\Auth::user() && \Auth::user()->id  == $data->id)|| $isFriend)
+                                        @if ((\Auth::user() && \Auth::user()->id  == $data->id)|| $isFriend || $data->group->public_permission == 1)
                                             <p class="title-short-section">Dự án đã làm</p>
                                             <div class="success-project border-block">
                                                 {{--<a href="#">Bán nhà số 44/54 Bạch Đằng</a>--}}
@@ -168,6 +168,7 @@
                                                                 href="{{route('register')}}">Đăng ký</a>.</p>
                                                     </div>
                                                 @else
+                                                    {{--Đăng tin mới--}}
                                                     @if(\Auth::user()->id == $data->id)
                                                         <div class="panel panel-default">
                                                             <div class="panel-heading">
@@ -397,7 +398,7 @@
                                             </div>
                                         </div>
                                         <div class="row list-re">
-                                            @if((\Auth::user() && \Auth::user()->id == $data->id)|| $isFriend)
+                                            @if((\Auth::user() && \Auth::user()->id == $data->id)|| $isFriend || $data->group->public_permission)
                                                 @foreach($listRe as $re)
                                                     <div class="col-xs-12">
                                                         <div class="panel panel-default" id="{{$re->id}}">
@@ -550,7 +551,7 @@
                         <div class="col-xs-12 col-md-3">
                             <div class="row">
                                 <div class="col-xs-12">
-                                    @if ((\Auth::user() && \Auth::user()->id  == $data->id)|| $isFriend)
+                                    @if ((\Auth::user() && \Auth::user()->id  == $data->id)|| $isFriend || $data->group->public_permission)
                                         <p class="title-short-section" style="margin-top: 16px;">Bạn bè</p>
                                         <div class="list-friend border-block">
                                             @foreach($listFriends as $friend)
@@ -566,7 +567,7 @@
                                             @endforeach
                                         </div>
                                     @endif
-                                    @if ((\Auth::user() && \Auth::user()->id  == $data->id)|| $isFriend)
+                                    @if ((\Auth::user() && \Auth::user()->id  == $data->id)|| $isFriend || $data->group->public_permission)
                                         <p class="title-short-section">Dự án tham gia</p>
                                         <div class="joined-project border-block">
                                             @foreach($joinedFreeLances as $joinedFreeLance)
