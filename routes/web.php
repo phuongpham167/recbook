@@ -139,6 +139,36 @@ Route::group(['middleware'=>'auth'], function(){
     });
 
     Route::post('search-area', 'AreaController@searchArea');
+
+
+    Route::group(['prefix'=>'khach-hang'], function(){
+        Route::get('', function(\App\DataTables\CustomerDatatable $dataTable) {
+            return $dataTable->with([
+                'user_id' => request('user_id'),
+                'datefrom' => request('datefrom'),
+                'dateto' => request('dateto'),
+                'phone' => request('phone'),
+                'source_id' => request('source_id'),
+                'type_id' => request('type_id')
+            ])->render('themes.default.customer.list');
+        })->name('customerList');
+        Route::get('data', ['as'=>'customerData', 'uses'=>'CustomerController@dataList']);
+        Route::get('them', ['as'=>'customerCreate', 'uses'=>'CustomerController@getCreate']);
+        Route::post('them', ['as'=>'customerCreate', 'uses'=>'CustomerController@postCreate']);
+        Route::get('xoa', ['as'=>'customerDelete', 'uses'=>'CustomerController@getDelete']);
+        Route::get('sua', ['as'=>'customerEdit', 'uses'=>'CustomerController@getEdit']);
+        Route::post('sua', ['as'=>'customerEdit', 'uses'=>'CustomerController@postEdit']);
+
+        Route::group(['prefix'=>'care'], function(){
+            Route::get('', ['as'=>'customerCare', 'uses'=>'CareController@index']);
+            Route::get('list', ['as'=>'customerCareList', 'uses'=>'CareController@list']);
+            Route::get('responses', ['as'=>'responseList', 'uses'=>'CareController@response']);
+            Route::get('suggest', ['as'=>'suggestResponse', 'uses'=>'CareController@suggest']);
+            Route::get('/del', ['as'=>'careDelete', 'uses'=>'CareController@getDelete']);
+            Route::get('/edit', ['as'=>'careEdit', 'uses'=>'CareController@getEdit']);
+        });
+    });
+
 });
 Route::group(['prefix' => 'du-an'], function () {
     Route::get('/', ['as' => 'freelancerList', 'uses' => 'FreelancerController@index']);

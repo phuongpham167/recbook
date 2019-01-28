@@ -1,6 +1,7 @@
 <?php
 
 use App\Friend;
+use App\Menu;
 use App\ShowingCfg;
 use App\WebsiteConfig;
 
@@ -5395,4 +5396,7 @@ function convert_number_to_words($number) {
     }
 
     return $string;
+}
+function menu(){
+    return Menu::where('web_id', get_web_id())->where('menu_type', config('menu.mainMenuFE'))->first();
 }
