@@ -799,7 +799,23 @@
             if (district) {
                 districtDOM.text(district.name);
             } else {
-                districtDOM.text('');
+                districtDOM.text('-');
+            }
+
+            let exhibitDOM = panelRe.find('.exhibit-val');
+            const exhibit = data.exhibit;
+            if (exhibit) {
+                exhibitDOM.text(exhibit.name);
+            } else {
+                exhibitDOM.text('-');
+            }
+
+            let directionDOM = panelRe.find('.direction-val');
+            const direction = data.direction;
+            if (direction) {
+                directionDOM.text(direction.name);
+            } else {
+                directionDOM.text('-');
             }
 
             let floorDOM = panelRe.find('.floor-val');

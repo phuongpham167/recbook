@@ -435,14 +435,18 @@
                                                                             <tbody>
                                                                                 <tr>
                                                                                     <td><b class="text-upper">Loại tin: </b><span class="category-val">{!! $re->reCategory ? '<a href="/danh-muc-bds/' . $re->reCategory->slug . '-c' . $re->reCategory->id . '">' . $re->reCategory->name . '</a>' : '-' !!}</span></td>
+                                                                                    <td colspan="2"><b class="text-upper">Pháp lý: </b><span class="exhibit-val">{{$re->exhibit_id ? $re->exhibit->name : '-'}}</span> </td>
                                                                                     <td><b class="text-upper">Số tầng: </b><span class="floor-val">{{$re->floor ? $re->floor : '-'}}</span></td>
                                                                                 </tr>
                                                                                 <tr>
-                                                                                    <td><b class="text-upper">Khu vực: </b><span class="district-val">{{$re->district ? $re->district->name : '-'}}</span></td>
-                                                                                    <td class="room-wrap">{!! $re->bedroom ? '<b>Phòng ngủ: </b>' . $re->bedroom : '' !!}{!! ($re->bedroom && $re->living_room) ? ', ' : '' !!}{!! $re->living_room ? '<b>Phòng khách: </b>' . $re->living_room : ''!!}{{ (($re->living_room && $re->wc) || ($re->bedroom && !$re->living_room && $re->wc)) ? ', ' : '' }}{!! $re->wc ? '<b>WC: </b>' . $re->wc : '' !!} @if(!$re->bedroom && !$re->living_room && !$re->wc) - @endif</td>
+                                                                                    <td colspan="2"><b class="text-upper">Khu vực: </b><span class="district-val">{{$re->district ? $re->district->name : '-'}}</span></td>
+                                                                                    <td colspan="2"><b class="text-upper">Hướng: </b><span class="direction-val">{{$re->direction_id ? $re->direction->name : '-'}}</span></td>
                                                                                 </tr>
                                                                                 <tr>
-                                                                                    <td colspan="2"><b class="text-upper">Vị trí: </b><span class="position-val">{{$re->position ? $re->position : '-'}}</span></td>
+                                                                                    <td colspan="4" class="room-wrap">{!! $re->bedroom ? '<b>Phòng ngủ: </b>' . $re->bedroom : '' !!}{!! ($re->bedroom && $re->living_room) ? ', ' : '' !!}{!! $re->living_room ? '<b>Phòng khách: </b>' . $re->living_room : ''!!}{{ (($re->living_room && $re->wc) || ($re->bedroom && !$re->living_room && $re->wc)) ? ', ' : '' }}{!! $re->wc ? '<b>WC: </b>' . $re->wc : '' !!} @if(!$re->bedroom && !$re->living_room && !$re->wc) - @endif</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td colspan="4"><b class="text-upper">Vị trí: </b><span class="position-val">{{$re->position ? $re->position : '-'}}</span></td>
                                                                                 </tr>
                                                                             </tbody>
                                                                         </table>
@@ -487,24 +491,8 @@
                                                                     {{--</div>--}}
                                                                     <div class="row">
                                                                         <div class="col-xs-12 detail-item-wrap">
-                                                                            <div class="table-responsive">
-                                                                                <table class="table table-bordered">
-                                                                                    <tbody>
-                                                                                        <tr>
-                                                                                            <td><b class="text-upper">Mô tả:</b></td>
-                                                                                        </tr>
-                                                                                        <tr>
-                                                                                            <td class="detail-item-wrap">
-                                                                                                {!! $re->detail !!}
-                                                                                            </td>
-                                                                                        </tr>
-                                                                                    </tbody>
-                                                                                </table>
-                                                                            </div>
+                                                                            {!! $re->detail !!}
                                                                         </div>
-                                                                        {{--<div class="col-xs-12 detail-item-wrap">--}}
-                                                                            {{--{!! $re->detail !!}--}}
-                                                                        {{--</div>--}}
                                                                     </div>
                                                                     <div class="row">
                                                                         @php
