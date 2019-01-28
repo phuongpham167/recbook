@@ -96,6 +96,7 @@ Route::group(['middleware'=>'auth'], function(){
         Route::get('/up', 'RealEstateController@upPost');
         Route::get('/da-ban', 'RealEstateController@sold');
         Route::post('/gia-han', 'RealEstateController@renewed');
+        Route::post('/bao-cao',['as' => 're-report', 'uses' => 'RealEstateController@report']);
     });
 
     Route::group(['prefix' => 'du-an'], function () {

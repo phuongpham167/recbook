@@ -112,4 +112,7 @@ class RealEstate extends Model
     {
         return $this->belongsTo('\App\User', 'posted_by');
     }
+    public function reports(){
+        return $this->hasMany(ReReport::class, 'real_estate_id');
+    }
 }
