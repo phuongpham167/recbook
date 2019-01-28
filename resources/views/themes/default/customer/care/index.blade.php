@@ -36,7 +36,7 @@
                 @include('themes.default.includes.message')
                 <!--begin manage_page-->
                 <div class="listlandA_page">
-                    <p class="title_boxM"><strong><i class="fa fa-file-pdf-o"></i>Danh sách khách hàng</strong> </p>
+                    <p class="title_boxM"><strong><i class="fa fa-file-pdf-o"></i>Chăm sóc khách hàng</strong> </p>
                     <div>
                         <div class="box-body">
                             <div class="col-md-6">

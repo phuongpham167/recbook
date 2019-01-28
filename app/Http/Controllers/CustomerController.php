@@ -13,11 +13,17 @@ class CustomerController extends Controller
         $data   =   Customer::with('type');
         $data   =   $data->where('user_id', auth()->user()->id);
         $result = Datatables::of($data)
+            ->editColumn('name', function(Customer $customer){
+                return "<a href='".route('customerCare', ['id'=>$customer->id])."'>".$customer->name."</a>";
+            })
+            ->editColumn('phone', function(Customer $customer){
+                return "<a href='".route('customerCare', ['id'=>$customer->id])."'>".$customer->phone."</a>";
+            })
             ->addColumn('type', function(Customer $customer) {
                 return $customer->type?$customer->type->name:'-';
             })->addColumn('manage', function(Customer $customer) {
                 return a('khach-hang/xoa', 'id='.$customer->id,trans('g.delete'), ['class'=>'btn btn-xs btn-danger'],'#',"return bootbox.confirm('".trans('system.delete_confirm')."', function(result){if(result==true){window.location.replace('".asset('khach-hang/xoa?id='.$customer->id)."')}})").'  '.a('khach-hang/sua', 'id='.$customer->id,trans('g.edit'), ['class'=>'btn btn-xs btn-default']);
-            })->rawColumns(['manage']);
+            })->rawColumns(['manage', 'name', 'phone']);
 
         return $result->make(true);
     }
