@@ -20,7 +20,7 @@ return [
         'contactPhone' => 'Điện thoại liên hệ',
         'contactAddress' => 'Địa chỉ liên hệ',
         'reCategory' => 'Danh mục',
-        'reType' => 'Loại BĐS',
+        'reType' => 'Bất động sản thổ cư',
         'province' => 'Tỉnh/Thành phố',
         'district' => 'Quận/Huyện',
         'ward' => 'Phường/Xã',
