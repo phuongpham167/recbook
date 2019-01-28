@@ -177,7 +177,7 @@
                                         <p><strong>- Mã số tin:</strong> {{ $data->code }}</p>
                                     </div>
                                     <div class="col-xs-12 col-sm-6">
-                                        <p><strong>- Ngày cập nhật:</strong> {{ \Carbon\Carbon::parse($data->updated_at)->format('d/m/Y')}}</p>
+                                        <p><strong>- Ngày cập nhật:</strong> {{ \Carbon\Carbon::parse($data->post_date)->format('d/m/Y')}}</p>
                                     </div>
                                     <div class="col-xs-12 col-sm-6">
                                         <p><strong>- Lượt xem:</strong> {{$data->views}}</p>
@@ -216,8 +216,8 @@
                         <div class="title-short-section">Mô tả chi tiết:</div>
                         <div class="description short-section">
                             <div class="row margin-0">
-                                <div class="col-xs-12 col-sm-4 description__item"><strong>Chiều rộng:</strong> {{ $data->width ? $data->width : '0m2' }}</div>
-                                <div class="col-xs-12 col-sm-4 description__item"><strong>Chiều dài:</strong> {{ $data->length ? $data->length : '0m2' }}</div>
+                                <div class="col-xs-12 col-sm-4 description__item"><strong>Chiều rộng:</strong> {{ $data->width ? $data->width : '0m' }}</div>
+                                <div class="col-xs-12 col-sm-4 description__item"><strong>Chiều dài:</strong> {{ $data->length ? $data->length : '0m' }}</div>
                                 <div class="col-xs-12 col-sm-4 description__item"><strong>Giấy tờ:</strong> Sổ đỏ Chính
                                     Chủ
                                 </div>
