@@ -23,8 +23,15 @@
                 <div class="col-xs-12 col-md-9 detail-content-wrap">
                     <p class="title_box"><strong>{{ $data->reCategory ? $data->reCategory->name : '' }} @if($data->reCategory)<i class="fa fa-angle-right"></i>@endif {{ $data->reType ? $data->reType->name : '' }}</strong>
                     </p>
+                    @include('themes.default.includes.message')
                     <div class="detail-content">
-                        <h1 class="title">{{$data->title}} {!!$data->verified ? '<i class="fa fa-check-circle verified" title="Tin đã xác thực"></i>' : '<i class="fa fa-question-circle none-verified" aria-hidden="true" title="Tin chưa xác thực"></i>'!!}</h1>
+                        <div class="row" style="margin: 0px">
+                            <h1 style="text-align:left;float:left;" class="title">{{$data->title}} {!!$data->verified ? '<i class="fa fa-check-circle verified" title="Tin đã xác thực"></i>' : '<i class="fa fa-question-circle none-verified" aria-hidden="true" title="Tin chưa xác thực"></i>'!!}</h1>
+                            @if(auth()->check())
+                                <a style="text-align:right;float:right;" id="{{$data->id}}" class="btn btn-sm btn-danger btn-report">Báo cáo</a>
+                            @endif
+                        </div>
+
                         <div class="title-short-section">Thông tin liên hệ:</div>
                         <div class="contact short-section">
                             <div class="row margin-0">
@@ -177,7 +184,7 @@
                                         <p><strong>- Mã số tin:</strong> {{ $data->code }}</p>
                                     </div>
                                     <div class="col-xs-12 col-sm-6">
-                                        <p><strong>- Ngày cập nhật:</strong> {{ \Carbon\Carbon::parse($data->updated_at)->format('d/m/Y')}}</p>
+                                        <p><strong>- Ngày cập nhật:</strong> {{ \Carbon\Carbon::parse($data->post_date)->format('d/m/Y')}}</p>
                                     </div>
                                     <div class="col-xs-12 col-sm-6">
                                         <p><strong>- Lượt xem:</strong> {{$data->views}}</p>
@@ -216,8 +223,8 @@
                         <div class="title-short-section">Mô tả chi tiết:</div>
                         <div class="description short-section">
                             <div class="row margin-0">
-                                <div class="col-xs-12 col-sm-4 description__item"><strong>Chiều rộng:</strong> {{ $data->width ? $data->width : '0m2' }}</div>
-                                <div class="col-xs-12 col-sm-4 description__item"><strong>Chiều dài:</strong> {{ $data->length ? $data->length : '0m2' }}</div>
+                                <div class="col-xs-12 col-sm-4 description__item"><strong>Chiều rộng:</strong> {{ $data->width ? $data->width : '0m' }}</div>
+                                <div class="col-xs-12 col-sm-4 description__item"><strong>Chiều dài:</strong> {{ $data->length ? $data->length : '0m' }}</div>
                                 <div class="col-xs-12 col-sm-4 description__item"><strong>Giấy tờ:</strong> Sổ đỏ Chính
                                     Chủ
                                 </div>
@@ -483,6 +490,49 @@
             </div>
         </div>
     </div>
+    <form method="post" action="{{route('re-report')}}">
+        {{csrf_field()}}
+        <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content modal-lg">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Báo cáo tin đăng</h4>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" name="id" id="id">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Loại lỗi</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" id="report_type" name="report_type">
+                                    <option value="">--Chọn lỗi--</option>
+                                    <option value="info_wrong">Thông tin sai</option>
+                                    <option value="error">Tin đăng lỗi</option>
+                                    <option value="other">Khác</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Nội dung</label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" name="report_content"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" name="add_new"
+                                id="add-new-re"
+                                class="_btn bg_red pull-right"><i
+                                class="fa fa-plus"></i> &nbsp;&nbsp;BÁO CÁO
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
     {{-- Include footer --}}
     @include(theme(TRUE).'.includes.footer')
 @endsection
@@ -500,6 +550,14 @@
             var divBox = $(".detail-content .imgs_land_box .hide_imgsBox");
             divBox.hide().filter($(this).attr("href")).show();
             return false;
+        });
+
+        $('.detail-content').on('click', '.btn-report', function () {
+            // console.log(check);
+            var id      =   $(this).attr('id');
+
+            $('.modal #id').val(id);
+            $('#myModal').modal('show');
         });
     </script>
 @endpush

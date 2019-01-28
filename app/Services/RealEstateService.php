@@ -396,7 +396,7 @@ class RealEstateService
 //            }
 
             if($realEstate->save()) {
-                return RealEstate::with(['district', 'reCategory'])->find($input['id']);
+                return RealEstate::with(['district', 'reCategory', 'exhibit', 'direction'])->find($input['id']);
             } else {
                 return false;
             }

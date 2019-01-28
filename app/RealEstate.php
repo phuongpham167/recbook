@@ -104,6 +104,10 @@ class RealEstate extends Model
     {
         return $this->belongsTo('App\Street');
     }
+    public function exhibit()
+    {
+        return $this->belongsTo('App\Exhibit');
+    }
     public function unit()
     {
         return $this->belongsTo('App\Unit');
@@ -111,5 +115,8 @@ class RealEstate extends Model
     public function user()
     {
         return $this->belongsTo('\App\User', 'posted_by');
+    }
+    public function reports(){
+        return $this->hasMany(ReReport::class, 'real_estate_id');
     }
 }
