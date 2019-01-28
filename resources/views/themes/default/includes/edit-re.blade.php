@@ -779,92 +779,70 @@
             let priceDOM = panelRe.find('.price');
             if (priceDOM.html()) {
                 if (data.price) {
-                    priceDOM.find('.price-val').text(data.price);
+                    const price = DocTienBangChu(data.price);
+                    priceDOM.find('.price-val').text(price);
                 } else {
                     priceDOM.html('');
                 }
             } else {
                 if (data.price) {
-                    priceDOM.html('Giá: <span class="price-val">' + data.price + '</span>');
+                    const price = DocTienBangChu(data.price);
+                    priceDOM.html('<b class="text-red"><span class="text-upper" style="font-size: 12px;">Giá:</span> <span class="price-val">' + price + '</span><span style="font-size: 12px;">VND</span></b>');
                 }
             }
 
-            let districtDOM = panelRe.find('.district-wrap');
+            let detailDOM = panelRe.find('.detail-item-wrap');
+            detailDOM.html(data.detail);
+
+            let districtDOM = panelRe.find('.district-val');
             const district = data.district;
-            if (districtDOM.html()) {
-                if (district) {
-                    districtDOM.find('.district-val').text(district.name);
-                } else {
-                    districtDOM.html('');
-                }
+            if (district) {
+                districtDOM.text(district.name);
             } else {
-                if (district) {
-                    districtDOM.html('<div class="col-xs-12 col-md-4 ">Khu vực: <span class="district-val">' + district.name + '</span></div>');
-                }
+                districtDOM.text('');
             }
 
-            let floorDOM = panelRe.find('.floor-wrap');
-            if (floorDOM.html()) {
-                if (data.floor) {
-                    floorDOM.find('.floor-val').text(data.floor);
-                } else {
-                    floorDOM.html('');
-                }
+            let floorDOM = panelRe.find('.floor-val');
+            if (data.floor) {
+                floorDOM.text(data.floor);
             } else {
-                if (data.floor) {
-                    floorDOM.html('<div class="col-xs-12 col-md-2 ">Số tầng: <span class="floor-val">' + data.floor + '<span></div>');
-                }
+                floorDOM.html('');
             }
 
-            let positionDOM = panelRe.find('.position-wrap');
-            if (positionDOM.html()) {
-                if (data.position) {
-                    positionDOM.find('.position-val').text(data.position);
-                } else {
-                    positionDOM.html('');
-                }
+            let positionDOM = panelRe.find('.position-val');
+            if (data.position) {
+                positionDOM.text(data.position);
             } else {
-                if (data.position) {
-                    positionDOM.html('<div class="col-xs-12 col-md-6 ">Gần: <span class="position-val">' + data.position + '<span></div>');
-                }
+                positionDOM.html('');
             }
 
-            let categoryDOM = panelRe.find('.category-wrap');
+            let categoryDOM = panelRe.find('.category-val');
             const category = data.re_category;
-            if (categoryDOM.html()) {
-                if (category) {
-                    categoryDOM.find('.category-val').text(category.name);
-                } else {
-                    categoryDOM.html('');
-                }
+            if (category) {
+                categoryDOM.html('<a href="/danh-muc-bds/' + category.slug + '-c' + category.id + '">' + category.name + '</a>');
             } else {
-                if (category) {
-                    categoryDOM.html('<div class="col-xs-12 col-md-3 "><span class="category-val">' + category.name + '</span></div>');
-                }
+                categoryDOM.html('');
             }
 
             let roomDOM = panelRe.find('.room-wrap');
-            if (roomDOM.html()) {
-                let markup = '<div class="col-xs-12 col-md-9">';
-                if (data.bedroom) {
-                    markup += 'Phòng ngủ: ' + data.bedroom;
-                }
-                if (data.bedroom && data.living_room) {
-                    markup += ', ';
-                }
-                if (data.living_room) {
-                    markup += 'Phòng khách: ' + data.living_room
-                }
-                if (data.living_room && data.wc) {
-                    markup += ', ';
-                }
-                if (data.wc) {
-                    markup += 'WC: ' + data.wc
-                }
-                markup += '</div>';
-
-                roomDOM.html(markup);
+            let markup = '';
+            if (data.bedroom) {
+                markup += '<b>Phòng ngủ: </b>' + data.bedroom;
             }
+            if (data.bedroom && data.living_room) {
+                markup += ', ';
+            }
+            if (data.living_room) {
+                markup += '<b>Phòng khách: </b>' + data.living_room
+            }
+            if ( (data.living_room && data.wc) || (data.bedroom && !data.living_room && data.wc)) {
+                markup += ', ';
+            }
+            if (data.wc) {
+                markup += '<b>WC: </b>' + data.wc
+            }
+
+            roomDOM.html(markup);
 
             let imagesDOM = panelRe.find('.images-wrap');
             const imgDf = {
