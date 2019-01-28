@@ -160,13 +160,16 @@ Route::group(['middleware'=>'auth'], function(){
         Route::get('sua', ['as'=>'customerEdit', 'uses'=>'CustomerController@getEdit']);
         Route::post('sua', ['as'=>'customerEdit', 'uses'=>'CustomerController@postEdit']);
 
-        Route::group(['prefix'=>'care'], function(){
+        Route::group(['prefix'=>'cham-soc'], function(){
             Route::get('', ['as'=>'customerCare', 'uses'=>'CareController@index']);
+            Route::get('/data', ['as'=>'careData', 'uses'=>'CareController@dataList']);
             Route::get('list', ['as'=>'customerCareList', 'uses'=>'CareController@list']);
             Route::get('responses', ['as'=>'responseList', 'uses'=>'CareController@response']);
             Route::get('suggest', ['as'=>'suggestResponse', 'uses'=>'CareController@suggest']);
             Route::get('/del', ['as'=>'careDelete', 'uses'=>'CareController@getDelete']);
             Route::get('/edit', ['as'=>'careEdit', 'uses'=>'CareController@getEdit']);
+            Route::get('/create', ['as'=>'careCreate', 'uses'=>'CareController@getCreate']);
+            Route::post('/create', ['as'=>'careCreate', 'uses'=>'CareController@postCreate']);
         });
     });
 

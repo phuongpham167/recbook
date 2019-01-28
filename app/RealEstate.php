@@ -119,4 +119,8 @@ class RealEstate extends Model
     public function reports(){
         return $this->hasMany(ReReport::class, 'real_estate_id');
     }
+    public function customer()
+    {
+        return $this->belongsTo('\App\Customer');
+    }
 }
