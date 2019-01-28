@@ -177,7 +177,7 @@
                                         <p><strong>- Mã số tin:</strong> {{ $data->code }}</p>
                                     </div>
                                     <div class="col-xs-12 col-sm-6">
-                                        <p><strong>- Ngày cập nhật:</strong> {{ \Carbon\Carbon::parse($data->updated_at)->format('d/m/Y')}}</p>
+                                        <p><strong>- Ngày cập nhật:</strong> {{ \Carbon\Carbon::parse($data->post_date)->format('d/m/Y')}}</p>
                                     </div>
                                     <div class="col-xs-12 col-sm-6">
                                         <p><strong>- Lượt xem:</strong> {{$data->views}}</p>
