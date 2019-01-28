@@ -23,6 +23,12 @@ body {
     .menu-search #ip-kw {
         width: 90% !important;
     }
+    .title-hot-real-estate a.active{
+        width: 100% !important;
+    }
+    .good_price form{
+        display: none;
+    }
 }
 
 .margin-top-20 {
