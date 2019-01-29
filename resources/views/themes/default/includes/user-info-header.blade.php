@@ -52,7 +52,7 @@
                     </li>
                     <li class="dropdown">
                         {{--<a href="{{ route('chat') }}" title="Tin nhắn"><i class="fa fa-comment" aria-hidden="true"></i></a>--}}
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true" title="Tin nhắn"><i class="fa fa-comment" aria-hidden="true"></i>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true" title="Tin nhắn" id="drop-message"><i class="fa fa-comment" aria-hidden="true"></i>
                             <?php $unseen_conversation = \App\Conversation::whereHas('messages', function ($q) {$q->where('user_id','<>',auth()->user()->id)->where('is_read',0);})->where(function ($q) {
                                 $q->where('user1',auth()->user()->id)->orWhere('user2',auth()->user()->id);
                             })->count() ?>
@@ -61,6 +61,7 @@
                             @endif
                         </a>
                         <ul class="dropdown-menu message_dropdown">
+                            <li class="spin-message"><i class="fa fa-spinner fa-spin" style="font-size:24px"></i></li>
                             <li class="header" style="color: #fff">Bạn có {{$unseen_conversation}} tin nhắn chưa đọc</li>
 
                             @foreach(\App\Conversation::orderBy('created_at', 'desc')->where(function ($q) {
@@ -124,3 +125,25 @@
         line-height: .9;
    }
 </style>
+
+@push('js')
+    <script>
+        $('#drop-message').on('click', function (e) {
+            console.log('mess dropdown click');
+            $.ajax({
+                url: '/ajax/get-unread-message',
+                method: 'GET',
+                success: function (data) {
+                    console.log('get re success');
+                    console.log(data.data);
+                    if (data.success) {
+
+                    }
+                },
+                error: function (err) {
+                    // console.log(err);
+                }
+            });
+        });
+    </script>
+@endpush

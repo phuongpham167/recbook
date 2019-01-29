@@ -27,6 +27,15 @@
   font-size: 9px;
 }
 
+.spin-message {
+  text-align: center;
+}
+
+.spin-message i {
+  color: white;
+  font-size: 24px;
+}
+
 .detail-top {
   margin-bottom: 20px;
 }
