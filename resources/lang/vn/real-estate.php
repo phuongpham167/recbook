@@ -52,7 +52,8 @@ return [
         'mapHelpBlock' => '(Nhấn và kéo điểm màu đỏ đến vị trí Bất động sản của bạn)',
         'detail' => 'Nội dung chi tiết',
         'source' => 'Nguồn tin',
-        'isPrivate' => 'Loại tin'
+        'isPrivate' => 'Loại tin',
+        'don_vi' => 'Đơn vị'
     ],
     'isPrivateSelectText' => [
         'public' => 'Công cộng',

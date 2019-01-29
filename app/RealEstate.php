@@ -69,7 +69,8 @@ class RealEstate extends Model
         'slug',
         'web_id',
         'is_public',
-        'loai_bds'
+        'loai_bds',
+        'don_vi'
     ];
 
     public function direction()

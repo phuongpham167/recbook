@@ -127,6 +127,7 @@ class RealEstateService
             'area_of_use' => isset($input['area_of_use']) ? $input['area_of_use'] : null,
             'floor' => isset($input['floor']) ? $input['floor'] : null,
             'price' => isset($input['price']) ? $input['price'] : null,
+            'don_vi' => isset($input['don_vi']) ? $input['don_vi'] : null,
             'unit_id' => isset($input['unit_id']) ? $input['unit_id'] : null,
             'range_price_id' => isset($input['range_price_id']) ? $input['range_price_id'] : null,
             'is_deal' => isset($input['is_deal']) ? 1 : 0,
@@ -373,6 +374,7 @@ class RealEstateService
             $realEstate->area_of_use = isset($input['area_of_use']) ? $input['area_of_use'] : null;
             $realEstate->floor = isset($input['floor']) ? $input['floor'] : null;
             $realEstate->price = isset($input['price']) ? $input['price'] : null;
+            $realEstate->don_vi = isset($input['don_vi']) ? $input['don_vi'] : null;
             $realEstate->unit_id = isset($input['unit_id']) ? $input['unit_id'] : null;
             $realEstate->range_price_id = isset($input['range_price_id']) ? $input['range_price_id'] : null;
             $realEstate->is_deal = isset($input['is_deal']) ? ( $input['is_deal'] ? 1 : 0 ) : 0;

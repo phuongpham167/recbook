@@ -190,6 +190,10 @@
     <div class="col-sm-4">
         <input type="number" class="form-control" name="price" value="{{ old('price') }}"/>
     </div>
+    <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.don_vi')}}</label>
+    <div class="col-sm-4">
+        <input type="text" class="form-control" name="don_vi" value="{{ old('don_vi') }}"/>
+    </div>
     <div class="col-sm-10 col-sm-offset-2">
         <div class="checkbox">
             <label>
