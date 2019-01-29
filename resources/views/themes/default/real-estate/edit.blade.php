@@ -210,10 +210,22 @@ if ($user->group_id != $adminGroup) {
                         <div class="col-sm-2">
                             <input type="number" class="form-control" name="length" value="{{ $realEstate->length }}"/>
                         </div>
+                    </div>
+                    <div class="form-group">
                         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.bedroom')}}</label>
 
                         <div class="col-sm-2">
                             <input type="number" class="form-control" name="bedroom" value="{{ $realEstate->bedroom }}"/>
+                        </div>
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.living_room')}}</label>
+
+                        <div class="col-sm-2">
+                            <input type="number" class="form-control" name="living_room" value="{{ $realEstate->living_room }}"/>
+                        </div>
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.wc')}}</label>
+
+                        <div class="col-sm-2">
+                            <input type="number" class="form-control" name="wc" value="{{ $realEstate->wc }}"/>
                         </div>
                     </div>
                     <div class="form-group">
