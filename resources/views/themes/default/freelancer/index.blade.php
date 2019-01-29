@@ -104,7 +104,7 @@
                                     </dt>
                                     <dd style="margin-left: 180px">
                                         <h3><a style="text-transform: uppercase; color: #0c4da2; font-size: 18px" href="{{route('freelancerDetail', ['id'=>$item->id, 'slug'=>to_slug($item->title)])}}">{{$item->title}}</a></h3>
-                                        <span class="info">Đánh giá: <span style="color: gold"><input type="hidden" class="rating" data-readonly value="{{auth()->user()->owner_rate()}}"/></span></span>
+                                        <span class="info">Đánh giá: <span style="color: gold"><input type="hidden" class="rating" data-readonly value="{{\App\User::find($item->user_id)->owner_rate()}}"/></span></span>
                                         <span
                                             class="info">Ngân sách: <span style="font-weight: bold">{{number_format($item->budget)}} {{\App\Currency::where("default",1)->first()->icon}}</span></span>
                                         <span
