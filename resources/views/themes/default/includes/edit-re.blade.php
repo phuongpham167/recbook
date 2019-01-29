@@ -221,6 +221,24 @@
                         </div>
 
                     </div>
+                    <div class="form-group clearfix collapse" id="mattienEdit">
+
+                        <label
+                            class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.width')}} </label>
+
+                        <div class="col-sm-4">
+                            <input type="number" class="form-control" id="width-edit"
+                                   name="width_edit"/>
+                            <p class="text-red error"></p>
+                        </div>
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.length')}}</label>
+
+                        <div class="col-sm-4">
+                            <input type="number" class="form-control" name="length_edit" id="length-edit"
+                            />
+                        </div>
+
+                    </div>
                     <div class="form-group clearfix collapse" id="floorSelectEdit">
                         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.floor')}}</label>
 
@@ -313,18 +331,19 @@
                             <button type="button" class="btn btn-default btn-collapse" data-target="#areaEdit"><i
                                     class="fa fa-area-chart" aria-hidden="true"></i> Diện tích
                             </button>
+                            <button type="button" class="btn btn-default btn-collapse" data-target="#mattienEdit"><i
+                                    class="fa fa-area-chart" aria-hidden="true"></i> Mặt tiền
+                            </button>
                             <button type="button" class="btn btn-default btn-collapse" data-target="#floorSelectEdit">Số
                                 tầng
                             </button>
-
-                            <button type="button" class="btn btn-default btn-collapse" data-target="#mapSelectEdit"><i
-                                    class="fa fa-map-marker"></i> Vị ví
-                            </button>
-
                         </div>
                     </div>
                     <div class="form-group clearfix">
                         <div class="col-xs-12">
+                            <button type="button" class="btn btn-default btn-collapse" data-target="#mapSelectEdit"><i
+                                    class="fa fa-map-marker"></i> Vị ví
+                            </button>
                             <button type="button" class="btn btn-default btn-collapse" data-target="#imageSelectEdit"><i
                                     class="fa fa-picture-o"></i> Hình ảnh
                             </button>
@@ -677,6 +696,10 @@
 
             let aou = $('#area-of-use-edit').val();
 
+            let width = $('#width-edit').val();
+
+            let length = $('#length-edit').val();
+
             let floor = $('#floor-edit').val();
 
             let price = $('#price-edit').val();
@@ -731,6 +754,8 @@
             formDataEdit.append('wc', wc);
             formDataEdit.append('area_of_premises', aop);
             formDataEdit.append('area_of_use', aou);
+            formDataEdit.append('width', width);
+            formDataEdit.append('length', length);
             formDataEdit.append('floor', floor);
             formDataEdit.append('price', price);
             formDataEdit.append('don_vi', donvi);

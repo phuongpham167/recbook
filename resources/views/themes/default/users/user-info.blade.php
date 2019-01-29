@@ -288,6 +288,10 @@
                                                                                 </button>
                                                                                 <button type="button"
                                                                                         class="btn btn-default btn-collapse"
+                                                                                        data-target="#mattien">Mặt tiền
+                                                                                </button>
+                                                                                <button type="button"
+                                                                                        class="btn btn-default btn-collapse"
                                                                                         data-target="#floorSelect">Số
                                                                                     tầng
                                                                                 </button>
@@ -979,6 +983,7 @@
                         // const editHtml = editMarkupHtml(result);
                         // $(panelWarp).find('.detail-item-re-wrap').css('display', 'none');
                         // $(panelWarp).find('.edit-re-wrap').html(editHtml);
+                        resetValueModal();
                         setValueForEditRe(result);
                         $('#is-edit').val('edit');
                         initMapEdit(result.re.lat, result.re.long);
@@ -1114,6 +1119,12 @@
             if (re.area_of_use) {
                 $('#area-of-use-edit').val(re.area_of_use);
             }
+            if (re.width) {
+                $('#width-edit').val(re.width);
+            }
+            if (re.length) {
+                $('#length-edit').val(re.length);
+            }
             if (re.floor) {
                 $('#floor-edit').val(re.floor);
             }
@@ -1144,6 +1155,60 @@
 
         function removeImgPreview(e) {
             $(e).closest('.item-img-preview').remove();
+        }
+
+        function resetValueModal() {
+            $('#id-edit').val('');
+            $('#title-edit').val('');
+            $('#detail-edit').val('');
+
+            $('#re-category-edit').val('');
+
+            $('#province-edit').val('');
+
+            $('#district-edit').val('');
+
+            $('#ward-edit').val('');
+
+            $('#street-edit').val('');
+
+            $('#street-id-hidden').val('');
+
+            $('#street-name-hidden').val('');
+
+            $('#contact-person-edit').val('');
+            $('#contact-phone-edit').val('');
+            $('#contact-address-edit').val('');
+
+            $('#position-edit').val('');
+
+            $('#direction-edit').val('');
+
+            $('#exhibit-edit').val('');
+
+            $('#bedroom-edit').val('');
+
+            $('#living-room-edit').val('');
+
+            $('#wc-edit').val('');
+
+            $('#area-of-premises-edit').val('');
+
+            $('#area-of-use-edit').val('');
+
+            $('#width-edit').val('');
+
+            $('#length-edit').val('');
+
+            $('#floor-edit').val('');
+
+            $('#price-edit').val('');
+
+            $('#don-vi-edit').val('');
+
+            $('#is-deal-edit').prop('checked', false);
+
+            $('#map-edit').val('');
         }
         //-----------------------------------------------------------------
         //          END EDIT REAL ESTATE

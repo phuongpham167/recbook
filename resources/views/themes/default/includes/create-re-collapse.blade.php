@@ -178,6 +178,21 @@
     </div>
 
 </div>
+<div class="form-group collapse collapse1" id="mattien">
+
+    <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.width')}} </label>
+
+    <div class="col-sm-4">
+        <input type="number" class="form-control" id="width" name="width" value="{{ old('width') }}"/>
+        <p class="text-red error"></p>
+    </div>
+    <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.length')}}</label>
+
+    <div class="col-sm-4">
+        <input type="number" class="form-control" name="length" value="{{ old('length') }}"/>
+    </div>
+
+</div>
 <div class="form-group collapse collapse1" id="floorSelect">
     <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.floor')}}</label>
 
