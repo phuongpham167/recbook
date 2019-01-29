@@ -171,8 +171,11 @@
                                     <a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">{{ $item->title }}</a>
                                 </h3>
 
-                                <p>{{ $item->short_description }}
-                                </p>
+                                @php
+                                    $shortDes = substr($item->detail, 0, 150);
+                                @endphp
+                                <div class="short-des">{{$item->short_description ? $item->short_description : ($shortDes ? $shortDes : '')}}...
+                                </div>
                                 <div class="row area">
                                     <div class="col-xs-6 larea">DTMB: {{$item->area_of_premises ? $item->area_of_premises . 'm2' : '0m2'}}</div>
                                     <div class="col-xs-6 rarea">DTSD: {{$item->area_of_use ? $item->area_of_use . 'm2' : '0m2'}}</div>
@@ -274,7 +277,10 @@
                                                             </a>
                                                             <span></span>
                                                         </h3>
-                                                        <div>{{ $item->short_description }}
+                                                        @php
+                                                            $shortDes = substr($item->detail, 0, 150);
+                                                        @endphp
+                                                        <div class="short-des">{{$item->short_description ? $item->short_description : ($shortDes ? $shortDes : '')}}...
                                                         </div>
                                                         <p>
                                                             <strong>DTMB:</strong> {{$item->area_of_premises ? $item->area_of_premises . 'm2' : '0m2'}} - <strong>Giá:</strong>
@@ -323,7 +329,10 @@
                                                             </a>
                                                             <span></span>
                                                         </h3>
-                                                        <div>{{ $item->short_description }}
+                                                        @php
+                                                            $shortDes = substr($item->detail, 0, 150);
+                                                        @endphp
+                                                        <div class="short-des">{{$item->short_description ? $item->short_description : ($shortDes ? $shortDes : '')}}...
                                                         </div>
                                                         <p>
                                                             <strong>DTMB:</strong> {{$item->area_of_premises ? $item->area_of_premises . 'm2' : '0m2'}} - <strong>Giá:</strong>
@@ -372,7 +381,10 @@
                                                             </a>
                                                             <span></span>
                                                         </h3>
-                                                        <div>{{ $item->short_description }}
+                                                        @php
+                                                            $shortDes = substr($item->detail, 0, 150);
+                                                        @endphp
+                                                        <div class="short-des">{{$item->short_description ? $item->short_description : ($shortDes ? $shortDes : '')}}...
                                                         </div>
                                                         <p>
                                                             <strong>DTMB:</strong> {{$item->area_of_premises ? $item->area_of_premises . 'm2' : '0m2'}} - <strong>Giá:</strong>
@@ -453,7 +465,10 @@
                                                         <h3><a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">{{ $item->title }}</a>
                                                             <span></span>
                                                         </h3>
-                                                        <div>{{$item->short_description ? $item->short_description : ''}}
+                                                        @php
+                                                            $shortDes = substr($item->detail, 0, 150);
+                                                        @endphp
+                                                        <div class="short-des">{{$item->short_description ? $item->short_description : ($shortDes ? $shortDes : '')}}...
                                                         </div>
                                                         <p>
                                                             <strong>DTMB:</strong> {{$item->area_of_premises ? $item->area_of_premises . 'm2' : '0m2'}} - <strong>Giá:</strong>
