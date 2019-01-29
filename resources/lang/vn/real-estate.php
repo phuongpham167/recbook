@@ -20,7 +20,7 @@ return [
         'contactPhone' => 'Điện thoại liên hệ',
         'contactAddress' => 'Địa chỉ liên hệ',
         'reCategory' => 'Danh mục',
-        'reType' => 'Bất động sản thổ cư',
+        'reType' => 'Loại BĐS',
         'province' => 'Tỉnh/Thành phố',
         'district' => 'Quận/Huyện',
         'ward' => 'Phường/Xã',
@@ -53,7 +53,8 @@ return [
         'detail' => 'Nội dung chi tiết',
         'source' => 'Nguồn tin',
         'isPrivate' => 'Loại tin',
-        'don_vi' => 'Đơn vị'
+        'don_vi' => 'Đơn vị',
+        'mattien' => 'Mặt tiền'
     ],
     'isPrivateSelectText' => [
         'public' => 'Công cộng',
