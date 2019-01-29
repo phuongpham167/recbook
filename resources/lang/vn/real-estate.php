@@ -41,7 +41,7 @@ return [
         'areaOfUse' => 'DTSD (m2)',
         'floor' => 'Số tầng',
         'price' => 'Giá',
-        'unit' => 'Đơn vị',
+        'unit' => 'Đơn vị tiền',
         'rangePrice' => 'Khoảng giá',
         'isDeal' => 'Có thỏa thuận',
         'postDate' => 'Ngày đăng',

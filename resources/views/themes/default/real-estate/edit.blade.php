@@ -260,6 +260,12 @@ if ($user->group_id != $adminGroup) {
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.don_vi')}}</label>
+                        <div class="col-sm-2">
+                            <input type="number" class="form-control" name="don_vi" value="{{ $realEstate->don_vi }}"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <div class="col-sm-10 col-sm-offset-2">
                             <div class="checkbox">
                                 <label>
