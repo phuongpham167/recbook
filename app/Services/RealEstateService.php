@@ -197,7 +197,7 @@ class RealEstateService
             $street->save();
             $input['street_id'] = $street->id;
         }
-        
+
         $realEstate = RealEstate::find($input['id']);
         if ($realEstate) {
             $approve = $realEstate->draft ? 0 : ( $this->needApprove ? 0 : 1 );
@@ -239,8 +239,8 @@ class RealEstateService
             $realEstate->unit_id = $input['unit_id'];
             $realEstate->range_price_id = $input['range_price_id'];
             $realEstate->is_deal = isset($input['is_deal']) ? 1 : 0;
-            $realEstate->post_date = $input['post_date'];
-            $realEstate->expire_date = $input['expire_date'];
+//            $realEstate->post_date = $input['post_date'];
+//            $realEstate->expire_date = $input['expire_date'];
             $realEstate->images = json_encode($imagesVal);
             $realEstate->lat = $lat;
             $realEstate->long = $long;
