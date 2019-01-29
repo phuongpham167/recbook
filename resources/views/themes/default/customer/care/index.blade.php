@@ -60,10 +60,6 @@
                                             <input type="text" class="form-control" value="{{$customer->email}}" disabled>
                                         </div>
                                         <div class="form-group">
-                                            <label>Đơn vị</label>
-                                            <input type="text" class="form-control" value="{{$customer->company}}" disabled>
-                                        </div>
-                                        <div class="form-group">
                                             <label>Địa chỉ</label>
                                             <input type="text" class="form-control" value="{{$customer->address}}" disabled>
                                         </div>
