@@ -58,7 +58,7 @@
                                             <i class="fa fa-map-marker"></i> {{$item->district->name}}
                                         </div>
                                         <div class="col-xs-12 rprice">
-                                            {{$item->price}} {{$item->unit ? $item->unit->name : 'VND'}}
+                                            {{convert_number_to_words($item->price)}} {{$item->unit ? $item->unit->name : 'VND'}}{{$item->don_vi ? '/'.$item->don_vi : ''}}
                                         </div>
                                     </div>
                                 </div>

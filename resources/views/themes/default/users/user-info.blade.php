@@ -1119,6 +1119,9 @@
             if (re.price) {
                 $('#price-edit').val(re.price);
             }
+            if (re.don_vi) {
+                $('#don-vi-edit').val(re.don_vi);
+            }
             if (re.is_deal) {
                 $('#is-deal-edit').prop('checked', true);
             }

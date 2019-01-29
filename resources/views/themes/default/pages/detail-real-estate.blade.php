@@ -207,7 +207,7 @@
                                 <div class="row">
                                     <div class="col-xs-12">
                                         <p class="price"><strong>{{ trans('detail-real-estate.briefDetail.price') }}
-                                                :</strong> {{ number_format($data->price) }} {{$data->unit ? $data->unit->name : 'VND'}}</p>
+                                                :</strong> {{ number_format($data->price) }} {{$data->unit ? $data->unit->name : 'VND'}}{{$data->don_vi ? '/'.$data->don_vi : ''}}</p>
                                         <p class="is_deal">{{ $data->is_deal ? '(Có thỏa thuận)' : '' }}</p>
                                     </div>
                                 </div>

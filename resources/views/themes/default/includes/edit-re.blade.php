@@ -233,6 +233,10 @@
                         <div class="col-sm-4">
                             <input type="number" class="form-control" name="price_edit" id="price-edit" step="1"/>
                         </div>
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.don_vi')}}</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="don_vi" id="don-vi-edit"/>
+                        </div>
                         <div class="col-sm-10 col-sm-offset-2">
                             <div class="checkbox">
                                 <label>
@@ -677,6 +681,8 @@
 
             let price = $('#price-edit').val();
 
+            let donvi = $('#don-vi-edit').val();
+
             let isDeal = $('#is-deal-edit').is(":checked") ? 1 : 0;
 
             let map = $('#map-edit').val();
@@ -727,6 +733,7 @@
             formDataEdit.append('area_of_use', aou);
             formDataEdit.append('floor', floor);
             formDataEdit.append('price', price);
+            formDataEdit.append('don_vi', donvi);
             formDataEdit.append('is_deal', isDeal);
             formDataEdit.append('map', map);
             formDataEdit.append('is_private', isPrivate);
