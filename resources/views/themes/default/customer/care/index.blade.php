@@ -195,7 +195,7 @@
                         <div class="clearfix"></div>
                         <div class="col-md-6">
                             <div class="panel panel-default">
-                                <div class="panel-heading">Lịch sử chăm sóc <a class="btn btn-xs btn-info" data-id="" id="addcare"><i
+                                <div class="panel-heading">Lịch sử chăm sóc <a class="btn btn-xs btn-info pull-right" style="display: none" data-id="" id="addcare"><i
                                                 class="fa fa-plus"></i>  Chăm sóc</a></div>
                                 <div class="panel-body">
                                     <div class="table-responsive">
@@ -252,7 +252,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">{{trans('care.add')}}</h4>
+                    <h4 class="modal-title">Thêm chăm sóc</h4>
                 </div>
                 <div class="modal-body row form-horizontal">
                     <div class="col-md-12">
@@ -329,6 +329,7 @@
     <script src="{{asset('plugins/bootbox.min.js')}}"></script>
     <script>
         function fill_detail(detail){
+            $('#addcare').show();
             console.log(detail.title);
             $('#code').html(detail.id);
             $('#title').html(detail.title);
@@ -394,11 +395,14 @@
             });
         }
         $(function() {
-            fill_detail($('.get-detail').first().data('detail'));
-            get_cares($('.get-detail').first().data('id'));
-            console.log($('.get-detail').first().data('id'));
-            get_response($('.get-detail').first().data('id'));
-            $('#addcare').data('id', $('.get-detail').first().data('id'));
+            if($('.get-detail').first().data('detail') != null){
+                fill_detail($('.get-detail').first().data('detail'));
+                get_cares($('.get-detail').first().data('id'));
+                console.log($('.get-detail').first().data('id'));
+                get_response($('.get-detail').first().data('id'));
+                $('#addcare').data('id', $('.get-detail').first().data('id'));
+            }
+
             $('.get-detail').click(function(){
                 fill_detail($(this).data('detail'));
                 get_cares($(this).data('id'));
