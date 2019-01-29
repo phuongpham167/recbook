@@ -10,6 +10,7 @@ use App\Menu;
 use App\RealEstate;
 use App\Receipt;
 use App\ReceiptType;
+use App\ReReport;
 use App\Services\BlockService;
 use App\Services\ConstructionTypeService;
 use App\Services\DirectionService;
@@ -317,7 +318,7 @@ class RealEstateController extends Controller
 
     public function renewed()
     {
-        $data = RealEstate::find(\request('id'));
+        $data = RealEstate::where('posted_by',auth()->user()->id)->where('id',\request('id'))->first();
 
         if ($data) {
             $data->expire_date = Carbon::createFromFormat('Y-m-d', $data->expire_date)->addDays(\request('days'));
@@ -325,7 +326,25 @@ class RealEstateController extends Controller
             set_notice(trans('real-estate.message.renewed_success'), 'success');
             return redirect()->back()->withInput();
         }
-        set_notice(trans('real-estate.message.error'), 'error');
+        set_notice(trans('real-estate.message.error'), 'warning');
+        return redirect('realEstateList');
+    }
+
+    public function report()
+    {
+        $data = RealEstate::find(\request('id'));
+
+        if ($data) {
+            $report = new ReReport();
+            $report->user_id = auth()->user()->id;
+            $report->real_estate_id = $data->id;
+            $report->type = \request('report_type');
+            $report->content = \request('report_content');
+            $report->save();
+            set_notice(trans('real-estate.message.report_success'), 'success');
+            return redirect()->back();
+        }
+        set_notice(trans('real-estate.message.error'), 'warning');
         return redirect('realEstateList');
     }
 
