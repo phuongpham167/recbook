@@ -331,8 +331,7 @@
                             <button type="button" class="btn btn-default btn-collapse" data-target="#areaEdit"><i
                                     class="fa fa-area-chart" aria-hidden="true"></i> Diện tích
                             </button>
-                            <button type="button" class="btn btn-default btn-collapse" data-target="#mattienEdit"><i
-                                    class="fa fa-area-chart" aria-hidden="true"></i> Mặt tiền
+                            <button type="button" class="btn btn-default btn-collapse" data-target="#mattienEdit"> Mặt tiền
                             </button>
                             <button type="button" class="btn btn-default btn-collapse" data-target="#floorSelectEdit">Số
                                 tầng
