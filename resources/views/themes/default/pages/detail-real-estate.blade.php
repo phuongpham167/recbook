@@ -36,17 +36,17 @@
                         <div class="contact short-section">
                             <div class="row margin-0">
                                 <div class="col-xs-12 description__item">
-                                    <strong>Người liên hệ :</strong> {!! $data->user?'<a target="_blank" href="'.asset('user/'.$data->posted_by).'">':''!!} {{$data->user->userinfo ? $data->user->userinfo->full_name : $data->contact_person}}{!!$data->user?'</a>':''!!}
+                                    <strong>Người liên hệ :</strong> {{$data->contact_person ? $data->contact_person : ($data->user->userinfo ? $data->user->userinfo->full_name : $data->user->name)}}
                                 </div>
                             </div>
                             <div class="row margin-0">
                                 <div class="col-xs-12 description__item">
-                                    <strong>Địa chỉ :</strong> {{$data->user->userinfo ? $data->user->userinfo->address : $data->contact_address}}
+                                    <strong>Địa chỉ :</strong> {{$data->contact_address ? $data->contact_address : ($data->user->userinfo ? $data->user->userinfo->address : '')}}
                                 </div>
                             </div>
                             <div class="row margin-0">
                                 <div class="col-xs-12 description__item">
-                                    <strong>Điện thoại :</strong> {{$data->user->userinfo ? $data->user->userinfo->phone : $data->contact_phone_number}}
+                                    <strong>Điện thoại :</strong> {{$data->contact_phone_number ? $data->contact_phone_number: ($data->user->userinfo ? $data->user->userinfo->phone : '')}}
                                 </div>
                             </div>
                         </div>
