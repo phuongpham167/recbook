@@ -6,12 +6,53 @@ use App\Care;
 use App\Customer;
 use App\Http\Requests\CreateCareRequest;
 use App\RealEstate;
+use App\Services\BlockService;
+use App\Services\DirectionService;
+use App\Services\DistrictService;
+use App\Services\ExhibitService;
+use App\Services\ProjectService;
+use App\Services\ProvinceService;
+use App\Services\ReCategoryService;
+use App\Services\StreetService;
+use App\Services\WardService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use \DataTables;
 
 class CareController extends Controller
 {
+    protected $reCategoryService;
+    protected $provinceService;
+    protected $districtService;
+    protected $wardService;
+    protected $streetService;
+    protected $directionService;
+    protected $exhibitService;
+    protected $projectService;
+
+    public function __construct(
+        ReCategoryService $reCategoryService,
+        ProvinceService $provinceService,
+        DistrictService $districtService,
+        WardService $wardService,
+        StreetService $streetService,
+        DirectionService $directionService,
+        ExhibitService $exhibitService,
+        ProjectService $projectService,
+        BlockService $blockService
+    )
+    {
+        $this->reCategoryService = $reCategoryService;
+        $this->provinceService = $provinceService;
+        $this->districtService = $districtService;
+        $this->wardService = $wardService;
+        $this->streetService = $streetService;
+        $this->directionService = $directionService;
+        $this->exhibitService = $exhibitService;
+        $this->projectService = $projectService;
+        $this->blockService = $blockService;
+    }
+
     public function index(){
         $id =   \request('id');
         if(!empty($customer = Customer::find($id))){
@@ -21,7 +62,13 @@ class CareController extends Controller
                 $data   =   $data->where('id', request('re_id'));
             }
             $data   =   $data->get();
-            return v('customer.care.index', compact('customer','data'));
+            $reCategories = $this->reCategoryService->getListDropDown();
+            $provinces = $this->provinceService->getListDropDown();
+            $directions = $this->directionService->getListDropDown();
+            $exhibits = $this->exhibitService->getListDropDown();
+
+            return v('customer.care.index', compact('customer','data', 'reCategories',
+                    'provinces', 'directions', 'exhibits'));
         }
     }
     public function dataList() {

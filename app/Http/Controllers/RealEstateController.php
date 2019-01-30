@@ -560,4 +560,23 @@ class RealEstateController extends Controller
         set_notice(trans('real-estate.message.error'), 'warning');
         return redirect()->back();
     }
+
+    public function addCil() {
+        $result = $this->service->store(request()->all());
+        if($result) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Thêm thành công',
+                'data' => [
+                    're' => $result
+                ]
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Có lỗi xảy ra. vui lòng thử lại',
+                'data' => []
+            ]);
+        }
+    }
 }
