@@ -51,7 +51,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand visible-xs" href="{{ route('home') }}">DoThiGroup</a>
+            <a class="navbar-brand visible-xs" href="{{ route('home') }}">Recbook.vn</a>
         </div>
         <div class="collapse navbar-collapse main-menu-list" id="myNavbar">
             <ul class="nav navbar-nav">

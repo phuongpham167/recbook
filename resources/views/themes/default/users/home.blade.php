@@ -5,7 +5,7 @@
 @endsection
 
 @section('title')
-    Dothigroup
+    Recbook.vn
 @endsection
 
 @section('style')
