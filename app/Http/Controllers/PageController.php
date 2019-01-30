@@ -548,7 +548,7 @@ class PageController extends Controller
 
 //            $query = $this->checkRegisterDate($query);
             $countAll = $query->count();
-            $results = $query->get();
+            $results = $query->paginate(get_config('itemsPerPage', 30));
 
             $this->vipRealEstates = $this->getVipRealEstates();
 

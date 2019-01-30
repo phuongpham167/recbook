@@ -20,6 +20,9 @@
     <div class="content-body">
         <div class="container padding-top-30 padding-bottom-30">
             <div class="row">
+                {{--<div class="col-md-12">--}}
+                    {{--{{$data->appends($_GET)->render()}}--}}
+                {{--</div>--}}
                 <div class="col-xs-12 col-md-9 list-content-wrap">
                     <p class="title_box">
                         <strong>
@@ -89,7 +92,11 @@
                             </div>
                         @endforeach
                     </div>
+                    <div class="col-md-12">
+                        {{$data->appends($_GET)->render()}}
+                    </div>
                 </div>
+
                 <div class="col-xs-12 col-md-3">
                     @include(theme(TRUE).'.includes.right-sidebar')
                     @include(theme(TRUE).'.includes.vip-slide')
