@@ -17,6 +17,9 @@ class PrivateScope implements Scope
      */
     public function apply(Builder $builder, Model $model)
     {
-        $builder->where('is_private', '<>', 1);
+        $builder->where(function($q){
+            $q->where('is_private', '<>', 1)
+                ->orWhere('posted_by', auth()->user()->id);
+        });
     }
 }
