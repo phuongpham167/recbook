@@ -64,6 +64,9 @@
                                             <input type="text" class="form-control" value="{{$customer->address}}" disabled>
                                         </div>
                                         <div class="table-responsive">
+                                            <div class="">
+                                                <button class="btn btn-info" data-toggle="modal" data-target="#modalAddCustomerInfoList">Thêm</button>
+                                            </div>
                                             <table class="table table-bordered" id="datatable">
                                                 <thead>
                                                 <tr>
@@ -313,6 +316,9 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+
+    @include(theme(TRUE).'.includes.create-customer-info-list-collapse')
+
     <link rel="stylesheet" href="{{asset('plugins/jquery.datatables/css/jquery.dataTables.min.css')}}" />
 
     @include(theme(TRUE).'.includes.footer')
