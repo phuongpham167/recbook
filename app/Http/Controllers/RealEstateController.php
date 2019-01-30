@@ -11,6 +11,8 @@ use App\RealEstate;
 use App\Receipt;
 use App\ReceiptType;
 use App\ReReport;
+use App\Scopes\PrivateScope;
+use App\Scopes\PublicScope;
 use App\Services\BlockService;
 use App\Services\ConstructionTypeService;
 use App\Services\DirectionService;
@@ -508,8 +510,9 @@ class RealEstateController extends Controller
     {
         $result = false;
         if ($id) {
-            $re = RealEstate::find($id);
+            $re = RealEstate::withoutGlobalScope(PrivateScope::class)->find($id);
             if ($re) {
+
                 $result = $this->service->updateAjax(request()->all());
             }
         }

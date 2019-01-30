@@ -9,6 +9,8 @@
 namespace App\Services;
 use App\Customer;
 use App\RealEstate;
+use App\Scopes\PrivateScope;
+use App\Scopes\PublicScope;
 use App\Street;
 use App\WebsiteConfig;
 use Carbon\Carbon;
@@ -99,7 +101,7 @@ class RealEstateService
         }
         $post_date  =   isset($input['post_date']) ? $input['post_date'] : Carbon::now();
 
-        $public_input   =   !empty($input['is_public'])?$input['is_public']:0;
+        $public_input   =   !empty($input['public_site'])?$input['public_site']:0;
         $realEstate = new RealEstate([
             'title' => $input['title'],
             'slug' => $slug,
@@ -146,7 +148,8 @@ class RealEstateService
             'web_id' => $this->web_id,
             'approve' => $approve,
             'draft' => isset($input['add_draft']) ? 1 : 0,
-            'is_public' =>  post_left(auth()->user())==0?0:$public_input
+            'is_public' =>  1,
+            'public_site' =>  post_left(auth()->user())==0?0:$public_input
         ]);
 
         if($realEstate->save()) {
@@ -295,6 +298,7 @@ class RealEstateService
                 ];
             }
         }
+
         if (isset($input['imagesNew'])) {
             $imagesNew = $input['imagesNew'];
             $altNew = $input['altNew'];
@@ -338,7 +342,9 @@ class RealEstateService
             }
         }
 
-        $realEstate = RealEstate::find($input['id']);
+        $realEstate = RealEstate::withoutGlobalScope(PrivateScope::class)->find($input['id']);
+
+
         if ($realEstate) {
             $approve = $realEstate->draft ? 0 : ( $this->needApprove ? 0 : 1 );
             if ($input['is_private'] == RealEstate::USER_PAGE || $input['is_private'] == RealEstate::USER_WEB) {
@@ -376,7 +382,6 @@ class RealEstateService
             $realEstate->area_of_use = isset($input['area_of_use']) ? $input['area_of_use'] : null;
             $realEstate->floor = isset($input['floor']) ? $input['floor'] : null;
             $realEstate->price = isset($input['price']) ? $input['price'] : null;
-            $realEstate->don_vi = isset($input['don_vi']) ? $input['don_vi'] : null;
             $realEstate->unit_id = isset($input['unit_id']) ? $input['unit_id'] : null;
             $realEstate->range_price_id = isset($input['range_price_id']) ? $input['range_price_id'] : null;
             $realEstate->is_deal = isset($input['is_deal']) ? ( $input['is_deal'] ? 1 : 0 ) : 0;
@@ -386,7 +391,6 @@ class RealEstateService
             $realEstate->lat = $lat;
             $realEstate->long = $long;
             $realEstate->detail = isset($input['detail']) ? $input['detail'] : null;
-            $realEstate->is_private = $input['is_private'];
             $realEstate->customer_id = $customer ? $customer->id : null;
             $realEstate->updated_by = \Auth::user()->id;
             $realEstate->web_id = $this->web_id;
@@ -398,9 +402,8 @@ class RealEstateService
 //                $realEstate->approved = $this->needApprove ? 0 : 1;
 //                $realEstate->draft = 0;
 //            }
-
             if($realEstate->save()) {
-                return RealEstate::with(['district', 'reCategory', 'exhibit', 'direction'])->find($input['id']);
+                return RealEstate::withoutGlobalScope(PrivateScope::class)->with(['district', 'reCategory', 'exhibit', 'direction'])->find($input['id']);
             } else {
                 return false;
             }
