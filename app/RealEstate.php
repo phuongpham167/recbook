@@ -72,7 +72,8 @@ class RealEstate extends Model
         'web_id',
         'is_public',
         'loai_bds',
-        'don_vi'
+        'don_vi',
+        'public_site'
     ];
 
     public function direction()
