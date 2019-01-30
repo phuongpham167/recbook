@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Scopes\PrivateScope;
+use App\Scopes\PublicScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -123,5 +125,12 @@ class RealEstate extends Model
     public function customer()
     {
         return $this->belongsTo('\App\Customer');
+    }
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope(new PublicScope());
+        static::addGlobalScope(new PrivateScope());
     }
 }

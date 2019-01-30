@@ -207,7 +207,10 @@
     </div>
     <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.don_vi')}}</label>
     <div class="col-sm-4">
-        <input type="text" class="form-control" name="don_vi" value="{{ old('don_vi') }}"/>
+        <select class="form-control" name="unit_id" id="don_vi">
+            <option value="1">VNĐ</option>
+            <option value="2">USD</option>
+        </select>
     </div>
     <div class="col-sm-10 col-sm-offset-2">
         <div class="checkbox">
@@ -270,6 +273,9 @@
             $('#map').val(event.latLng.lat() + ',' + event.latLng.lng());
         }
         $(function () {
+            $('#re-category').change(function(){
+                changeUnit();
+            });
             $('#contact_phone_number').keyup(function() {
                 emptyContactInfo();
 
@@ -492,7 +498,19 @@
                 }
             });
         }
-
+        function changeUnit(){
+            var type    =   $('#re-category').val();
+            console.log(type);
+            if(type == 2 || type ==4)
+                $('#don_vi').html('<option value="3">VNĐ/m2</option>\n' +
+                    '            <option value="4">VNĐ/tháng</option>\n' +
+                    '            <option value="5">USD/m2</option>\n' +
+                    '            <option value="6">USD/tháng</option>');
+            else {
+                $('#don_vi').html('<option value="1">VNĐ</option>\n' +
+                    '            <option value="2">USD</option>');
+            }
+        }
     </script>
     <script type="text/javascript" src='https://maps.googleapis.com/maps/api/js?sensor=false&key=AIzaSyAxgnRkMsWPSqlxOz_kLga0hJ4eG2l0Vmo&callback=initMap'></script>
 @endpush
