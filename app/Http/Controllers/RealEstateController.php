@@ -260,6 +260,8 @@ class RealEstateController extends Controller
 
     public function store(RealEstateRequest $request)
     {
+//        print_r($request->all());
+//        exit();
         $result = $this->service->store($request->all());
         if($result) {
             set_notice(trans('real-estate.message.createSuccess'), 'success');

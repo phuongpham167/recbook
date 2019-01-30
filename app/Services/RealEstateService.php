@@ -98,6 +98,8 @@ class RealEstateService
             }
         }
         $post_date  =   isset($input['post_date']) ? $input['post_date'] : Carbon::now();
+
+        $public_input   =   !empty($input['is_public'])?$input['is_public']:0;
         $realEstate = new RealEstate([
             'title' => $input['title'],
             'slug' => $slug,
@@ -144,7 +146,7 @@ class RealEstateService
             'web_id' => $this->web_id,
             'approve' => $approve,
             'draft' => isset($input['add_draft']) ? 1 : 0,
-            'is_public' =>  1
+            'is_public' =>  post_left(auth()->user())==0?0:$public_input
         ]);
 
         if($realEstate->save()) {

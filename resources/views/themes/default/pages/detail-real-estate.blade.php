@@ -214,7 +214,7 @@
                                 <div class="row">
                                     <div class="col-xs-12">
                                         <p class="price"><strong>{{ trans('detail-real-estate.briefDetail.price') }}
-                                                :</strong> {{ number_format($data->price) }} {{$data->unit ? $data->unit->name : 'VND'}}{{$data->don_vi ? '/'.$data->don_vi : ''}}</p>
+                                                :</strong> {{ number_format($data->price) }} {{$data->unit ? $data->unit->name : 'VND'}}</p>
                                         <p class="is_deal">{{ $data->is_deal ? '(Có thỏa thuận)' : '' }}</p>
                                     </div>
                                 </div>
@@ -355,7 +355,7 @@
                                                     <p>
                                                         <strong>DTMB:</strong> {{$item->area_of_premises ? $item->area_of_premises . 'm2' : '0m2'}} - <strong>Giá:</strong>
                                                         <span>
-                                                        {{$item->price}} {{$item->unit ? $item->unit->name : 'VND'}}
+                                                        {{convert_number_to_words($item->price)}} {{$item->unit ? $item->unit->name : 'VND'}}
                                                         </span>
                                                     </p>
                                                 </div>
@@ -438,7 +438,7 @@
                                                     <p>
                                                         <strong>DTMB:</strong> {{$item->area_of_premises ? $item->area_of_premises . 'm2' : '0m2'}} - <strong>Giá:</strong>
                                                         <span>
-                                                        {{$item->price}} {{$item->unit ? $item->unit->name : 'VND'}}
+                                                        {{convert_number_to_words($item->price)}} {{$item->unit ? $item->unit->name : 'VND'}}
                                                         </span>
                                                     </p>
                                                 </div>

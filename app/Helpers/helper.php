@@ -2,6 +2,7 @@
 
 use App\Friend;
 use App\Menu;
+use App\RealEstate;
 use App\ShowingCfg;
 use App\WebsiteConfig;
 
@@ -5399,4 +5400,10 @@ function convert_number_to_words($number) {
 }
 function menu(){
     return Menu::where('web_id', get_web_id())->where('menu_type', config('menu.mainMenuFE'))->first();
+}
+function post_left($user){
+    $postlimit   =   $user->group()->first()->post_limit;
+    $posted     =   RealEstate::where('posted_by', $user->id)->where('is_public', 1)->count();
+    $postLeft   =   !empty($postlimit)?$postlimit-$posted:null;
+    return ($postLeft!==null && $postLeft<1)?0:$postLeft;
 }

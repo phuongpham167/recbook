@@ -9,6 +9,7 @@ use App\Menu;
 use App\RealEstate;
 use App\ReCategory;
 use App\ReType;
+use App\Scopes\PublicScope;
 use App\Services\BlockService;
 use App\Services\ConstructionTypeService;
 use App\Services\DirectionService;
@@ -801,7 +802,7 @@ class PageController extends Controller
                 /*
                  * get all post of user
                  * */
-                $query = RealEstate::select('id', 'title', 'detail', 'slug', 'code', 're_category_id', 'contact_phone_number', 'district_id', 'floor', 'position', 'bedroom', 'living_room',
+                $query = RealEstate::withoutGlobalScope(PublicScope::class)->select('id', 'title', 'detail', 'slug', 'code', 're_category_id', 'contact_phone_number', 'district_id', 'floor', 'position', 'bedroom', 'living_room',
                     'don_vi', 'wc', 'direction_id', 'exhibit_id', 'lat', 'long', 'area_of_premises', 'area_of_use', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date');
                 $query1 = clone $query;
                 $query1->where('posted_by', $id);
