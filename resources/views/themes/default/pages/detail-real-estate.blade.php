@@ -503,7 +503,7 @@
                     </div>
                     <div class="modal-body">
                         <input type="hidden" name="id" id="id">
-                        <div class="form-group">
+                        <div class="row">
                             <label class="col-sm-2 control-label">Loại lỗi</label>
                             <div class="col-sm-10">
                                 <select class="form-control" id="report_type" name="report_type">
@@ -514,7 +514,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="row">
                             <label class="col-sm-2 control-label">Nội dung</label>
                             <div class="col-sm-10">
                                 <textarea class="form-control" name="report_content"></textarea>
@@ -522,10 +522,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" name="add_new"
-                                id="add-new-re"
-                                class="_btn bg_red pull-right"><i
-                                class="fa fa-plus"></i> &nbsp;&nbsp;BÁO CÁO
+                        <button type="submit"
+                                class="search-btn-submit pull-right">BÁO CÁO
                         </button>
                     </div>
                 </div>
