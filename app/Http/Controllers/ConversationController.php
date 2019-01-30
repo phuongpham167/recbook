@@ -132,6 +132,14 @@ class ConversationController extends Controller
         $result = Conversation::orderBy('created_at', 'desc')->where(function ($q) {
             $q->where('user1',auth()->user()->id)->orWhere('user2',auth()->user()->id);
         })->whereHas('messages', function ($q) {$q->where('user_id','<>',auth()->user()->id)->where('is_read',0);})->get();
+
+        foreach ($result as $re) {
+            $unreadMessage = Message::with('user')->orderBy('created_at', 'desc')->where('conversation_id',$re->id)->where('user_id','<>',auth()->user()->id)->where('is_read',0)->take(1)->first();
+            $re['unreadMessage']  = $unreadMessage;
+        }
+
+//        dd($result);
+
         $unreadCount = Conversation::whereHas('messages', function ($q) {$q->where('user_id','<>',auth()->user()->id)->where('is_read',0);})->where(function ($q) {
             $q->where('user1',auth()->user()->id)->orWhere('user2',auth()->user()->id);
         })->count();

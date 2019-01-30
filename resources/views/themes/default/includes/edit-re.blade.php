@@ -808,7 +808,7 @@
             titleDOM.text(data.title);
 
             let priceDOM = panelRe.find('.price');
-            if (priceDOM.html()) {
+            // if (priceDOM.html()) {
             if ($.trim(priceDOM.html())) {
                 if (data.price) {
                     const price = DocTienBangChu(data.price);

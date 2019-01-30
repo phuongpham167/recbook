@@ -62,29 +62,12 @@
                         </a>
                         <ul class="dropdown-menu message_dropdown">
                             <li class="spin-message"><i class="fa fa-spinner fa-spin" style="font-size:24px"></i></li>
-                            <li class="header" style="color: #fff">Bạn có {{$unseen_conversation}} tin nhắn chưa đọc</li>
+                            <li class="header" id="unread-inform" style="color: #fff">Bạn có <span id="unread-count">{{$unseen_conversation}}</span> tin nhắn chưa đọc</li>
 
-                            @foreach(\App\Conversation::orderBy('created_at', 'desc')->where(function ($q) {
-                                $q->where('user1',auth()->user()->id)->orWhere('user2',auth()->user()->id);
-                            })->whereHas('messages', function ($q) {$q->where('user_id','<>',auth()->user()->id)->where('is_read',0);})->get() as $item)
-                                <li class="row" style="border-bottom: 1px solid #dddfe2;">
-                                    <a role="button" class="notice_dropdown" style="padding: 0 !important; display: block" href="{{asset('conversation').'/'.$item->id}}">
-                                        <div class="pull-left">
-                                            <img width="50px" src="/images/default-avatar.png" class="img-circle" alt="User Image">
-                                        </div>
-                                        <div class="pull-left" style="margin-left: 10px; display: block; width: 80%;     color: #fff;">
-                                            <p>
-                                                <?php
-                                                    $unseen_message =  \App\Message::orderBy('created_at', 'desc')->where('conversation_id',$item->id)->where('user_id','<>',auth()->user()->id)->where('is_read',0)->take(1)->first();
-                                                ?>
-                                                {{\App\User::find($unseen_message->user_id)?\App\User::find($unseen_message->user_id)->name:$unseen_message->user_id}}
-                                                <small class="pull-right" style="margin-right: 10px; color: #cacaca"> <i class="fa fa-clock-o"></i> {{Carbon\Carbon::parse($unseen_message->created_at)->diffForHumans(\Carbon\Carbon::now())}}</small>
-                                            </p>
-                                            <span style="font-size: 12px">{{trim_text($unseen_message->text,40)}}</span>
-                                        </div>
-                                    </a>
-                                </li>
-                            @endforeach
+                            <div class="unread-message-wrap" style="padding: 0 25px;">
+
+                            </div>
+
                             <li class="footer"><a style="color: white" href="{{asset('tin-nhan')}}">Xem tất cả tin nhắn</a></li>
                         </ul>
                         {{--<ul class="dropdown-menu">--}}
@@ -129,15 +112,47 @@
 @push('js')
     <script>
         $('#drop-message').on('click', function (e) {
-            console.log('mess dropdown click');
+            $('.spin-message').removeClass('hidden');
+            $('.unread-message-wrap').html('');
+            if (!$('#unread-inform').hasClass('hidden')) {
+                $('#unread-inform').addClass('hidden');
+            }
             $.ajax({
                 url: '/ajax/get-unread-message',
                 method: 'GET',
                 success: function (data) {
-                    console.log('get re success');
-                    console.log(data.data);
                     if (data.success) {
-
+                        $('.spin-message').addClass('hidden');
+                        $('#unread-inform').removeClass('hidden');
+                        $('#unread-count').text(data.data.unreadCount);
+                        let unreadMessageMarkup = '';
+                        for (let u of data.data.listUnread) {
+                            console.log(u);
+                            let uDis = u.unreadMessage.user ? u.unreadMessage.user.name : u.unreadMessage.user_id;
+                            let text = u.unreadMessage.text.length > 40 ? u.unreadMessage.text.substr(0, 40) + '...' : u.unreadMessage.text;
+                            moment.locale('vi');
+                            let timeAgo = moment(u.unreadMessage.created_at).fromNow();
+                            unreadMessageMarkup += '<li class="row" style="border-bottom: 1px solid #dddfe2;">' +
+                                    '<a role="button" class="notice_dropdown" style="padding: 0 !important; display: block" href="/conversation' + '/' + u.id + '">' +
+                                        '<div class="pull-left">' +
+                                            '<img width="50px" src="/images/default-avatar.png" class="img-circle" alt="User Image">' +
+                                        '</div>' +
+                                        '<div class="pull-left" style="margin-left: 10px; display: block; width: 80%;color: #fff;">' +
+                                            '<p>' +
+                                                uDis +
+                                                '<small class="pull-right" style="margin-right: 10px; color: #cacaca"> <i class="fa fa-clock-o"></i>' +
+                                                    timeAgo +
+                                                '</small>' +
+                                            '</p>' +
+                                            '<span style="font-size: 12px">' +
+                                                text +
+                                            '</span>' +
+                                        '</div>' +
+                                    '</a>' +
+                                '</li>';
+                        }
+                        console.log(unreadMessageMarkup);
+                        $('.unread-message-wrap').html(unreadMessageMarkup);
                     }
                 },
                 error: function (err) {
