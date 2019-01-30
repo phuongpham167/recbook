@@ -209,7 +209,7 @@
                                                                                 @if(auth()->check())
                                                                                 <div class="col-sm-7" style="padding-top: 4px"><strong>@if(post_left(auth()->user()) !== null) Bạn còn {{post_left(auth()->user())}} lượt tin đăng trên trang cộng đồng. @endif </strong></div>
                                                                                 <div class="col-sm-5">
-                                                                                    <input type="checkbox" name="is_public" value="1" @if(post_left(auth()->user())==0) disabled @endif/> Đăng lên trang cộng đồng
+                                                                                    <input type="checkbox" name="is_public" value="1" @if(post_left(auth()->user())===0) disabled @endif/> Đăng lên trang cộng đồng
                                                                                 </div>
                                                                                 @endif
                                                                             </div>
