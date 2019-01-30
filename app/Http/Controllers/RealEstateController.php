@@ -148,8 +148,8 @@ class RealEstateController extends Controller
                 if($dt->is_vip == 1)
                     $title .= '<img src="'.asset('/images/vip2.gif').'"> ';
                 $title .= $dt->title;
-
-                return $title;
+                $slug   =   !empty($dt->slug)?$dt->slug:to_slug($dt->title);
+                return "<a href='".route('detail-real-estate', ['slug'=>$slug."-".$dt->id])."' target='_blank'>".$title."</a> ";
             })
             ->addColumn('re_type_id', function($dt) {
                 return $dt->reType ? $dt->reType->name : '';

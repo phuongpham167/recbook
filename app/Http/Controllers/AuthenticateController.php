@@ -238,7 +238,7 @@ class AuthenticateController extends Controller
         $data->save();
 
         Mail::send('mail.mail_password', ['name'=>\request('email'),'code'=>$code], function($message){
-            $message->to( \request('email'), 'Visitor')->subject('Đặt lại mật khẩu tài khoản DoThiGroup');
+            $message->to( \request('email'), 'Visitor')->subject('Đặt lại mật khẩu tài khoản Recbook');
         });
 
         set_notice(trans('page.send_success'), 'success');

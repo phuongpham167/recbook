@@ -7,7 +7,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand visible-xs" href="{{ route('home') }}">DoThiGroup</a>
+            <a class="navbar-brand visible-xs" href="{{ route('home') }}">Recbook.vn</a>
         </div>
         <div class="collapse navbar-collapse main-menu-list" id="myNavbar">
             <ul class="nav navbar-nav" id="mainmenu">
@@ -37,9 +37,9 @@
                     <li class=""><a href="{{ route('login') }}"><i class="fa fa-sign-in"></i> ĐĂNG NHẬP</a></li>
                     <li class=""><a href="{{ route('register') }}"><i class="fa fa-user-plus"></i> ĐĂNG KÝ</a></li>
                 @else
-                    <li class=""><a href="{{ route('recharge') }}"><i class="fa fa-credit-card"></i> <strong>Số dư: {{auth()->user()->credits}}</strong></li>
-                    <li class=""><a href="{{ route('info') }}"><i class="fa fa-user"></i> <strong>{{auth()->user()->name}}</strong></li>
-                    <li class=""><a href="{{ route('logout') }}"><i class="fa fa-sign-out"></i> ĐĂNG XUẤT</li>
+                    <li class=""><a href="{{ route('recharge') }}"><i class="fa fa-credit-card"></i> <strong>Số dư: {{auth()->user()->credits}}</strong></a></li>
+                    <li class=""><a href="{{route('user.info', [auth()->user()->id])}}"><i class="fa fa-user"></i> <strong>{{auth()->user()->userinfo->full_name}}</strong></a></li>
+                    <li class=""><a href="{{ route('logout') }}"><i class="fa fa-sign-out"></i> ĐĂNG XUẤT</a></li>
                 @endif
             </ul>
         </div>

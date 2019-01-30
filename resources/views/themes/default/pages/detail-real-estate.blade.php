@@ -36,17 +36,17 @@
                         <div class="contact short-section">
                             <div class="row margin-0">
                                 <div class="col-xs-12 description__item">
-                                    <strong>Người liên hệ :</strong> {!! $data->user?'<a target="_blank" href="'.asset('user/'.$data->posted_by).'">':''!!} {{$data->user->userinfo ? $data->user->userinfo->full_name : $data->contact_person}}{!!$data->user?'</a>':''!!}
+                                    <strong>Người liên hệ :</strong> {{$data->contact_person ? $data->contact_person : ($data->user->userinfo ? $data->user->userinfo->full_name : $data->user->name)}}
                                 </div>
                             </div>
                             <div class="row margin-0">
                                 <div class="col-xs-12 description__item">
-                                    <strong>Địa chỉ :</strong> {{$data->user->userinfo ? $data->user->userinfo->address : $data->contact_address}}
+                                    <strong>Địa chỉ :</strong> {{$data->contact_address ? $data->contact_address : ($data->user->userinfo ? $data->user->userinfo->address : '')}}
                                 </div>
                             </div>
                             <div class="row margin-0">
                                 <div class="col-xs-12 description__item">
-                                    <strong>Điện thoại :</strong> {{$data->user->userinfo ? $data->user->userinfo->phone : $data->contact_phone_number}}
+                                    <strong>Điện thoại :</strong> {{$data->contact_phone_number ? $data->contact_phone_number: ($data->user->userinfo ? $data->user->userinfo->phone : '')}}
                                 </div>
                             </div>
                         </div>
@@ -293,7 +293,7 @@
                                         @endphp
                                         <p><strong>Họ và tên</strong>: <a href="{{ route('user.info', [$data->user->id])}} ">{{$userInfo->full_name}}</a></p>
                                         <p><strong>Công ty/cá nhân</strong>: {{$userInfo && $userInfo->company ? $userInfo->company : 'Nhà Đất Hải Phòng'}}</p>
-                                        <p><strong>Địa chỉ email</strong>: {{$data->user && $data->user->email ? $data->user->email : 'dothigroup.vn@gmail.com'}}</p>
+                                        <p><strong>Địa chỉ email</strong>: {{$data->user && $data->user->email ? $data->user->email : 'recbook.vn@gmail.com'}}</p>
                                         <p><strong>Số điện thoại</strong>: {{$userInfo && $userInfo->phone ? $userInfo->phone : ''}}</p>
                                         <p><strong>Địa chỉ liên lạc</strong>: {{$userInfo && $userInfo->address ? $userInfo->address : ''}}</p>
                                         <p><strong>Website</strong>: <a href="{{$userInfo && $userInfo->website ? $userInfo->website : route('home')}}" target="_blank">{{$userInfo && $userInfo->website ? $userInfo->website : ''}}</a>
@@ -503,7 +503,7 @@
                     </div>
                     <div class="modal-body">
                         <input type="hidden" name="id" id="id">
-                        <div class="form-group">
+                        <div class="row">
                             <label class="col-sm-2 control-label">Loại lỗi</label>
                             <div class="col-sm-10">
                                 <select class="form-control" id="report_type" name="report_type">
@@ -514,7 +514,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="row">
                             <label class="col-sm-2 control-label">Nội dung</label>
                             <div class="col-sm-10">
                                 <textarea class="form-control" name="report_content"></textarea>
@@ -522,10 +522,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" name="add_new"
-                                id="add-new-re"
-                                class="_btn bg_red pull-right"><i
-                                class="fa fa-plus"></i> &nbsp;&nbsp;BÁO CÁO
+                        <button type="submit"
+                                class="search-btn-submit pull-right">BÁO CÁO
                         </button>
                     </div>
                 </div>

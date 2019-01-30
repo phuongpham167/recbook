@@ -809,6 +809,7 @@
 
             let priceDOM = panelRe.find('.price');
             if (priceDOM.html()) {
+            if ($.trim(priceDOM.html())) {
                 if (data.price) {
                     const price = DocTienBangChu(data.price);
                     priceDOM.find('.price-val').text(price);
@@ -818,7 +819,11 @@
             } else {
                 if (data.price) {
                     const price = DocTienBangChu(data.price);
-                    priceDOM.html('<b class="text-red"><span class="text-upper" style="font-size: 12px;">Giá:</span> <span class="price-val">' + price + '</span><span style="font-size: 12px;">VND</span></b>');
+                    let htmlPrice = '<b class="text-red"><span class="text-upper" style="font-size: 12px;">Giá:</span> <span class="price-val">' + price + '</span><span style="font-size: 12px;">VND</span></b>';
+                    if (data.don_vi) {
+                        htmlPrice = '<b class="text-red"><span class="text-upper" style="font-size: 12px;">Giá:</span> <span class="price-val">' + price + '</span><span style="font-size: 12px;">VND/' + data.don_vi + '</span></b>';
+                    }
+                    priceDOM.html(htmlPrice);
                 }
             }
 

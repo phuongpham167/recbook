@@ -1,11 +1,11 @@
 @extends('themes.default.layouts.app')
 
 @section('meta-description')
-    <meta name="description" content="Dothigroup" >
+    <meta name="description" content="Recbook.vn" >
 @endsection
 
 @section('title')
-    Dothigroup
+    {{\App\PostCategory::find($id)->name}}
 @endsection
 
 @push('style')
