@@ -25,6 +25,7 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 @if (auth()->check())
+                    <li><a href="{{ route('home') }}" style="text-transform: capitalize">{{ trans('header.navbar-item.home') }}</a></li>
                     <li>
                         @php
                             $avatar = auth()->user()->userinfo->avatar ? auth()->user()->userinfo->avatar : '/images/default-avatar.png';
@@ -33,7 +34,6 @@
                             <img class="img-responsive header-avatar" src="{{$avatar}}" > <span class="header-name">{{auth()->user()->userinfo->full_name}}</span>
                         </a>
                     </li>
-                    <li><a href="{{ route('home') }}" style="text-transform: capitalize">{{ trans('header.navbar-item.home') }}</a></li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#" title="Lời mời kết bạn"><i class="fa fa-users" aria-hidden="true"></i></a>
                         <ul class="dropdown-menu friend-request-list">
