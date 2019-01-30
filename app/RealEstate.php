@@ -130,7 +130,6 @@ class RealEstate extends Model
     {
         parent::boot();
 
-        static::addGlobalScope(new PublicScope());
         static::addGlobalScope(new PrivateScope());
     }
 }
