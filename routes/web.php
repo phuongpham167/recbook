@@ -137,6 +137,7 @@ Route::group(['middleware'=>'auth'], function(){
         Route::get('user', 'AjaxController@ajaxUser');
         Route::get('street', 'AjaxController@ajaxStreet');
         Route::get('province', 'AjaxController@ajaxProvince')->name('ajaxProvince');
+        Route::get('/get-unread-message', ['as' => 'ajax.getUnreadMessage', 'uses' => 'ConversationController@getUnreadMessage']);
     });
 
     Route::post('search-area', 'AreaController@searchArea');

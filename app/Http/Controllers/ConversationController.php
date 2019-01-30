@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Conversation;
 use App\Menu;
+use App\Message;
 use App\RealEstate;
 use App\ReCategory;
 use App\Services\DirectionService;
@@ -124,5 +125,32 @@ class ConversationController extends Controller
             'projects' => $this->projects,
             'menuData' => $this->menuFE
         ])->with('message', 'Bạn không tham gia cuộc hội thoại này, vui lòng thử lại!');
+    }
+
+    public function getUnreadMessage()
+    {
+        $result = Conversation::orderBy('created_at', 'desc')->where(function ($q) {
+            $q->where('user1',auth()->user()->id)->orWhere('user2',auth()->user()->id);
+        })->whereHas('messages', function ($q) {$q->where('user_id','<>',auth()->user()->id)->where('is_read',0);})->get();
+
+        foreach ($result as $re) {
+            $unreadMessage = Message::with('user')->orderBy('created_at', 'desc')->where('conversation_id',$re->id)->where('user_id','<>',auth()->user()->id)->where('is_read',0)->take(1)->first();
+            $re['unreadMessage']  = $unreadMessage;
+        }
+
+//        dd($result);
+
+        $unreadCount = Conversation::whereHas('messages', function ($q) {$q->where('user_id','<>',auth()->user()->id)->where('is_read',0);})->where(function ($q) {
+            $q->where('user1',auth()->user()->id)->orWhere('user2',auth()->user()->id);
+        })->count();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Cập nhật thành công',
+            'data' => [
+                'listUnread' => $result,
+                'unreadCount' => $unreadCount
+            ]
+        ]);
     }
 }
