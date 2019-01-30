@@ -5,7 +5,7 @@
 @endsection
 
 @section('title')
-    Dothigroup
+    {{get_config('homeHeader', 'Recbook.vn')}}
 @endsection
 
 @push('style')

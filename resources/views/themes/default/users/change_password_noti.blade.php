@@ -5,7 +5,7 @@
 @endsection
 
 @section('title')
-    Dothigroup
+    Đặt lại mật khẩu
 @endsection
 
 @push('style')
