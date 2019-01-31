@@ -14,6 +14,7 @@
             <li><a href="/du-an/quan-ly-du-an/da-dang"><i class="fa fa-angle-double-right"></i> Dự án đã đăng</a></li>
             <li><a href="/du-an/quan-ly-du-an/da-chao-gia"><i class="fa fa-angle-double-right"></i> Dự án đã chào giá</a></li>
             <li><a href="{{route('customerList')}}"><i class="fa fa-angle-double-right"></i> Quản lý khách hàng</a></li>
+            <li><a href="{{route('scheduleList')}}"><i class="fa fa-angle-double-right"></i> Quản lý lịch hẹn</a></li>
         </ul>
     </div>
 </div>
