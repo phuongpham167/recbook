@@ -415,6 +415,7 @@ class RealEstateController extends Controller
         if(!empty($data)){
 
             $data->is_vip = 1;
+            $data->is_public = 0;
             $data->vip_expire_at = Carbon::now()->addDay($request->vip_time);
             $value = $request->vip_time* HotVip::where('province_id', $data->province_id)->first()->vip_value;
             if(credit(auth()->user()->id,$value,1, 'set tin vip cho id '.$data->id.' trong '.$request->vip_time.' ngày')){
@@ -436,6 +437,7 @@ class RealEstateController extends Controller
         if(!empty($data)){
 
             $data->is_hot = 1;
+            $data->is_public = 0;
             $data->hot_expire_at = Carbon::now()->addDay($request->hot_time);
             $value = $request->hot_time* HotVip::where('province_id', $data->province_id)->first()->hot_value;
             if(credit(auth()->user()->id,$value,1, 'set tin hot cho id '.$data->id.' trong '.$request->hot_time.' ngày')){
