@@ -111,6 +111,10 @@ class PageController extends Controller
                 'area_of_premises', 'area_of_use', 'district_id', 'price', 'unit_id', 'is_vip', 'is_hot', 'vip_type',
                 'post_date', 'images')
                 ->where('vip_type', $i)
+                ->where(function($q){
+                    $q->whereNull('vip_expire_at')
+                        ->orWhere('vip_expire_at', '>=', Carbon::now());
+                })
                 ->where('expire_date', '>=', Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
                 ->where('web_id', $this->web_id);
             $query->take(get_config('vip'.$i, 10));
