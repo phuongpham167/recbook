@@ -664,7 +664,7 @@ class PageController extends Controller
         $query->orderBy('post_date', 'desc');
 //        $query = $this->checkRegisterDate($query);
 
-        $results = $query->get();
+        $results = $query->paginate(get_config('itemsPerPage', 30));
 
         $this->vipRealEstates = $this->getVipRealEstates();
 
@@ -730,7 +730,7 @@ class PageController extends Controller
             }
 //            $query = $this->checkRegisterDate($query);
 
-            $results = $query->get();
+            $results = $query->paginate(get_config('itemsPerPage', 30));
 
             $this->vipRealEstates = $this->getVipRealEstates();
 
@@ -883,8 +883,7 @@ class PageController extends Controller
 
 //            ->where('vip_expire_at',  '<=', Carbon::now())
 //        $query = $this->checkRegisterDate($query);
-        $query->limit(30);
-        $results = $query->get();
+        $results = $query->get_config('itemsPerPage', 30);
 //        dd($results);
         return $results;
     }
