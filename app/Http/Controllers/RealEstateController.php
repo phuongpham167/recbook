@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Account;
+use App\Currency;
 use App\DataTables\RealEstatesDataTable;
 use App\HotVip;
 use App\Http\Requests\HotVipRequest;
 use App\Http\Requests\RealEstateRequest;
 use App\Menu;
+use App\Province;
 use App\RealEstate;
 use App\Receipt;
 use App\ReceiptType;
@@ -171,7 +173,7 @@ class RealEstateController extends Controller
                     if(\request('filter') == 'tin-rao-nhap')
                         $manage .=   '  '.a('bat-dong-san/dang-bai', 'id='.$dt->id,trans('g.post'), ['class'=>'btn btn-xs btn-info']);
 
-                    if($dt->is_vip == 0) {
+                    if($dt->vip_expire_at < Carbon::now()) {
                         $manage .= ' <button type="button" class="btn btn-xs btn-success" data-toggle="popover" title="'.trans('system.pick_time').'" data-placement="left" data-content="
                                                 <form action=\''.asset("bat-dong-san/setvip").'\'>
                                                 <input type=\'hidden\' name=\'id\' value=\''.$dt->id.'\'>
@@ -183,9 +185,10 @@ class RealEstateController extends Controller
                                                 </select>
                                                 <button type=\'submit\' class=\'btn btn-green\'> Gửi</button>
                                                 </form>
+                                                <em>Giá tin vip tại '.Province::find($dt->province_id)->name.' là '.number_format(HotVip::where('province_id', $dt->province_id)->first()->vip_value).' '.Currency::where('default',1)->first()->icon.'/ngày</em>
                                                 "><i class=\'fa fa-star-o\' aria-hidden=\'true\'></i> '.trans('g.setvip').'</button>';
                     }
-                    if($dt->is_hot == 0) {
+                    if($dt->hot_expire_at < Carbon::now()) {
                         $manage .= ' <button type="button" class="btn btn-xs btn-success" data-toggle="popover" title="'.trans('system.pick_time').'" data-placement="left" data-content="
                                                 <form method=\'get\' action=\''.asset("bat-dong-san/sethot?id=").$dt->id.'\'>
                                                 <input type=\'hidden\' name=\'id\' value=\''.$dt->id.'\'>
@@ -197,6 +200,7 @@ class RealEstateController extends Controller
                                                 </select>
                                                 <button type=\'submit\' class=\'btn btn-green\'> Gửi </button>
                                                 </form>
+                                                <em>Giá tin hot tại '.Province::find($dt->province_id)->name.' là '.number_format(HotVip::where('province_id', $dt->province_id)->first()->vip_value).' '.Currency::where('default',1)->first()->icon.'/ngày</em>
                                                 "><i class=\'fa fa-star\' aria-hidden=\'true\'></i> '.trans('g.sethot').'</button>';
                     }
                     if($dt->approved)
