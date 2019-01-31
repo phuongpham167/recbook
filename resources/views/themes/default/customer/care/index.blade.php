@@ -236,6 +236,24 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-md-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">Danh sách lịch hẹn <a class="btn btn-xs btn-info pull-right" data-id="{{$customer->id}}" id="addschedule"><i
+                                            class="fa fa-plus"></i>  Thêm lịch hẹn</a></div>
+                                <div class="panel-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="schedule_table">
+                                            <thead>
+                                            <tr>
+                                                <th style="min-width: 200px">Nội dung</th>
+                                                <th>Thời gian</th>
+                                            </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <!--end manage_page-->
@@ -317,6 +335,66 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
+    <form method="post" action="{{asset('khach-hang/lich-hen/tao-moi')}}">
+        {{csrf_field()}}
+        <div id="myModal2" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content modal-lg">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Tạo mới lịch hẹn</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="panel-body ">
+                            <div class="form-group clearfix">
+                                <input type="text" class="col-sm-12 form-control"
+                                       name="customer_id" id="customer_id"
+                                       value="{{$customer->id}}"
+                                />
+                            </div>
+                            <div class="form-group clearfix">
+                                <div class="col-sm-12">
+                                    <input type="text" class="form-control datepicker"
+                                           name="time" id="time"
+                                           placeholder="Thời gian"
+                                    />
+                                </div>
+                            </div>
+                            <div class="form-group clearfix">
+                                <div class="col-sm-12">
+                                    <textarea name="content"
+                                              rows="3"
+                                              class="form-control autoExpand"
+                                              id="content"
+                                              placeholder="Nội dung"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" name="add_new"
+                                id="add-new-re"
+                                class="_btn bg_red pull-right"><i
+                                class="fa fa-plus"></i> &nbsp;&nbsp;ĐĂNG
+                            TIN
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+    <style type="text/css">
+        li.token-input-token {
+            max-width: 100% !important;
+        }
+
+        ul.token-input-list {
+            width: 100% !important;
+        }
+    </style>
     @include(theme(TRUE).'.includes.create-customer-info-list-collapse')
 
     <link rel="stylesheet" href="{{asset('plugins/jquery.datatables/css/jquery.dataTables.min.css')}}" />
@@ -330,6 +408,20 @@
     <script src="{{asset('plugins/jquery.datatables/js/jquery.dataTables.js')}}"></script>
     <script src="{{asset('plugins/bootbox.min.js')}}"></script>
     <script>
+        $('.datepicker').datetimepicker({format: 'YYYY-MM-DD'});
+
+        $('#customer_id').tokenInput("{{asset('ajax/customer')}}", {
+            queryParam: "term",
+            zindex  :   1005,
+            preventDuplicates   :   true,
+            tokenLimit: 1,
+            @if(!empty($customer->id))
+            prePopulate: [
+                {id: "{{$customer->id}}", name: "{{\App\Customer::find($customer->id)->name}}"}
+            ]
+            @endif
+        });
+
         function fill_detail(detail){
             $('#addcare').show();
             console.log(detail.title);
@@ -457,6 +549,26 @@
             $('#suggest_table').on('click', '.picksuggest', function(){
                 var id   =   $(this).data('id');
                 $('#modal-response-code').html(id);
+            });
+
+            $('#schedule_table').dataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    'url': urlDatatable ='{!! route('scheduleData') !!}'+'?customer_id='+{{$customer->id}},
+                    'type': 'GET',
+                    'data': function (d) {
+                    }
+                },
+                columns: [
+                    { data: 'content', name: 'content' },
+                    { data: 'time', name: 'time' },
+                ]
+            });
+
+            $('.panel-heading').on('click', '#addschedule', function () {
+                // console.log(check);
+                $('#myModal2').modal('show');
             });
         });
 

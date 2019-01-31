@@ -98,4 +98,16 @@ class AjaxController extends Controller
         }
         return response()->json($result);
     }
+
+    public function ajaxCustomer() {
+        $name   = request()->input('term');
+        $result =   [];
+        foreach(\App\Customer::where('name','LIKE',"%{$name}%")->where('web_id',get_web_id())->where('user_id',auth()->user()->id)->get() as $item){
+            $result[]   =   [
+                'id'    =>  $item->id,
+                'name'  =>  $item->name.' - '.$item->email
+            ];
+        }
+        return response()->json($result);
+    }
 }

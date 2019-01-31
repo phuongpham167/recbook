@@ -134,6 +134,7 @@ Route::group(['middleware'=>'auth'], function(){
         Route::get('/get-detail-re/{id}', ['as' => 'ajax.getDetailRe', 'uses' => 'RealEstateController@getDetailRe']);
         Route::post('/update-detail-re/{id}', ['as' => 'ajax.updateDetailRe', 'uses' => 'RealEstateController@updateDetailRe']);
         Route::get('user', 'AjaxController@ajaxUser');
+        Route::get('customer', 'AjaxController@ajaxCustomer');
         Route::get('street', 'AjaxController@ajaxStreet');
         Route::get('province', 'AjaxController@ajaxProvince')->name('ajaxProvince');
         Route::get('/get-unread-message', ['as' => 'ajax.getUnreadMessage', 'uses' => 'ConversationController@getUnreadMessage']);
@@ -171,6 +172,17 @@ Route::group(['middleware'=>'auth'], function(){
             Route::get('/edit', ['as'=>'careEdit', 'uses'=>'CareController@getEdit']);
             Route::get('/create', ['as'=>'careCreate', 'uses'=>'CareController@getCreate']);
             Route::post('/create', ['as'=>'careCreate', 'uses'=>'CareController@postCreate']);
+        });
+
+        Route::group(['prefix'=>'lich-hen'], function(){
+            Route::get('', ['as'=>'scheduleList', 'uses'=>'ScheduleController@index']);
+            Route::get('/data', ['as'=>'scheduleData', 'uses'=>'ScheduleController@dataList']);
+            Route::get('/data2', ['as'=>'scheduleData2', 'uses'=>'ScheduleController@dataCustomer']);
+            Route::get('/xoa', ['as'=>'scheduleDelete', 'uses'=>'ScheduleController@getDelete']);
+            Route::get('/sua', ['as'=>'scheduleEdit', 'uses'=>'ScheduleController@getEdit']);
+            Route::post('/sua', ['as'=>'scheduleEdit', 'uses'=>'ScheduleController@postEdit']);
+            Route::get('/tao-moi', ['as'=>'scheduleCreate', 'uses'=>'ScheduleController@getCreate']);
+            Route::post('/tao-moi', ['as'=>'scheduleCreate', 'uses'=>'ScheduleController@postCreate']);
         });
     });
 
