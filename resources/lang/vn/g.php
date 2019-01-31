@@ -26,4 +26,5 @@ return [
     'close'   =>  'Đóng dự án',
     'done'   =>  'Đã làm xong',
     'renewed'   =>  'Gia hạn',
+    'hotvip'   =>  'Hot Vip',
 ];
