@@ -71,7 +71,7 @@ class ScheduleController extends Controller
     }
     public function postEdit()
     {
-        $data   =   Customer::find(request('id'));
+        $data   =   ScheduleCustomer::find(request('id'));
         if(!empty($data) && $data->user_id == auth()->user()->id){
             $data->customer_id   =   \request('customer_id');
             $data->content   =    \request('content');
