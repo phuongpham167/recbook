@@ -205,10 +205,11 @@ class PageController extends Controller
         $reTypes = $this->reTypeService->getReTypeByCat($firstCat->id);
         $rangePrices = $this->rangePriceService->getRangePriceByCat($firstCat->id);
 
-        $freelancer_re    =   Freelancer::where('status', 'open')->where('category_id', 1)->get();
-        $freelancer_finance    =   Freelancer::where('status', 'open')->where('category_id', 2)->get();
-        $freelancer_design    =   Freelancer::where('status', 'open')->where('category_id', 3)->get();
-        $freelancer_phongthuy    =   Freelancer::where('status', 'open')->where('category_id', 4)->get();
+        $freelancer_all    =   Freelancer::where('status', 'open')->take(9)->get();
+        $freelancer_re    =   Freelancer::where('status', 'open')->where('category_id', 1)->take(9)->get();
+        $freelancer_finance    =   Freelancer::where('status', 'open')->where('category_id', 2)->take(9)->get();
+        $freelancer_design    =   Freelancer::where('status', 'open')->where('category_id', 3)->take(9)->get();
+        $freelancer_phongthuy    =   Freelancer::where('status', 'open')->where('category_id', 4)->take(9)->get();
         Carbon::setLocale('vi');
         return v('pages.home-1', [
             'hotRealEstates' => $hotRealEstates,
@@ -227,6 +228,7 @@ class PageController extends Controller
             'vipRealEstates' => $vipRealEstates,
             'agencies'  =>  $this->agencies,
             'freelancer' => [
+                'all'   =>  $freelancer_all,
                 're' => $freelancer_re,
                 'finance' => $freelancer_finance,
                 'design' => $freelancer_design,
