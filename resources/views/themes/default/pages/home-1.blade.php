@@ -123,7 +123,7 @@
                         </p>
                         <div class="" style="margin-top: 10px">
                             <div class="vip3 list-re-item list-hot">
-                                @foreach($vip[3] as $item)
+                                @foreach($vip[2] as $item)
                                     <div class="col-xs-12 col-sm-6 col-md-3 item">
                                         <div class="col-xs-12 re-item hot">
                                             <a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">

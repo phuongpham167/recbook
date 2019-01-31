@@ -90,4 +90,5 @@ return [
     'receive_commission'   =>  'Phần trăm hoa hồng',
     'credit_fail'   =>  'Tài khoản của bạn không đủ để thực hiện giao dịch này!',
     'hotvip'   =>  'Nâng cấp tin hot/vip',
+    'purchase_fail'   =>  'Tài khoản của bạn không đủ để thực hiện giao dịch này!',
 ];
