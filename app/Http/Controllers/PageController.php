@@ -510,7 +510,7 @@ class PageController extends Controller
             ->where('is_public', 1);
 //        $query = $this->checkRegisterDate($query);
 
-        $results = $query->get();
+        $results = $query->paginate(get_config('itemsPerPage', 30));
 
         $this->vipRealEstates = $this->getVipRealEstates();
 
