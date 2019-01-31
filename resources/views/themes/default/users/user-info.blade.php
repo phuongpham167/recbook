@@ -109,7 +109,7 @@
                                         <p class="title-short-section">Giới thiệu</p>
                                         <div class="u-description border-block">
                                             <p class=" text-center">Làm việc tại: {{ $data->userinfo->company }}</p>
-                                            <p class=" text-center">Đánh giá: 87/100 điểm</p>
+                                            {{--<p class=" text-center">Đánh giá: 87/100 điểm</p>--}}
                                             @if((\Auth::user() && \Auth::user()->id  == $data->id))
                                             <p class=" text-center">Số dư: <strong>{{number_format(auth()->user()->credits).' '.\App\Currency::where('default',1)->first()->icon}}</strong></p>
                                             <p class=" text-center">Nhóm tài khoản: <strong>{{auth()->user()->group->name}}</strong></p>
