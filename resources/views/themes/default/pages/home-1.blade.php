@@ -28,6 +28,7 @@
         iframe  {
             max-width: 100%;
         }
+
     </style>
 @endpush
 
@@ -58,88 +59,6 @@
 
         </section>
 
-        {{--<div class="smart-search hidden-xs">--}}
-            {{--<div class="container search-wrap">--}}
-                {{--<div class="search-content search_slide">--}}
-                    {{--<ul>--}}
-                        {{--@foreach($categories as $key => $category)--}}
-                            {{--<li @if($key == 0) class="active" @endif>--}}
-                                {{--<a href="{{ $category->id }}">{{$category->name}}</a><span></span>--}}
-                            {{--</li>--}}
-                        {{--@endforeach--}}
-                        {{--<li class="active">--}}
-                        {{--<a href="#">Cần bán</a><span></span>--}}
-                        {{--</li>--}}
-                        {{--<li>--}}
-                        {{--<a href="#">Cho thuê</a><span></span>--}}
-                        {{--</li>--}}
-                        {{--<li>--}}
-                        {{--<a href="#">Cần mua</a><span></span>--}}
-                        {{--</li>--}}
-                        {{--<li>--}}
-                        {{--<a href="#">Cần thuê</a><span></span>--}}
-                        {{--</li>--}}
-                        {{--<li>--}}
-                            {{--<form action="{{route('search')}}" method="GET">--}}
-                                {{--<input placeholder="{{trans('system.searchPlaceholder')}}" autocomplete="off" type="text" value="" name="txtkeyword" id="txtkeyword">--}}
-                                {{--<button type="submit"><i class="fa fa-search"></i></button>--}}
-                            {{--</form>--}}
-                        {{--</li>--}}
-                    {{--</ul>--}}
-                    {{--<div class="clearfix"></div>--}}
-                    {{--<form action="{{route('smart-search')}}" method="GET">--}}
-                        {{--@php--}}
-                            {{--if($categories) {--}}
-                                {{--$firstCat = $categories[0];--}}
-                            {{--}--}}
-                        {{--@endphp--}}
-                        {{--<input name="Search[cat_id]" id="Search_kind_id" type="hidden" value="{{ $firstCat ? $firstCat->id : 1 }}">--}}
-                        {{--<div class="row search-select-wrap">--}}
-                            {{--<div class="col-xs-2 item">--}}
-                                {{--<select id="re-type" name="Search[type_id]">--}}
-                                    {{--@foreach($reTypes as $reType)--}}
-                                        {{--<option value="{{$reType->id}}">{{$reType->name}}</option>--}}
-                                    {{--@endforeach--}}
-                                {{--</select>--}}
-                            {{--</div>--}}
-                            {{--<div class="col-xs-2 item">--}}
-                                {{--<input value="1" name="Search[province_id]" id="Search_province_id" type="hidden">--}}
-                                {{--<select name="Search[district_id]" id="Search_district_id">--}}
-                                    {{--@foreach($districts as $district)--}}
-                                        {{--<option value="{{$district->id}}">{{$district->name}}</option>--}}
-                                    {{--@endforeach--}}
-                                {{--</select>--}}
-                            {{--</div>--}}
-                            {{--<div class="col-xs-2 item">--}}
-                                {{--<select name="Search[street_id]" id="Search_street_id">--}}
-                                    {{--@foreach($streets as $street)--}}
-                                        {{--<option value="{{$street->id}}">{{$street->name}}</option>--}}
-                                    {{--@endforeach--}}
-                                {{--</select>--}}
-                            {{--</div>--}}
-                            {{--<div class="col-xs-2 item">--}}
-                                {{--<select name="Search[direction_id]" id="Search_direction_id">--}}
-                                    {{--@foreach($directions as $direction)--}}
-                                        {{--<option value="{{$direction->id}}">{{$direction->name}}</option>--}}
-                                    {{--@endforeach--}}
-                                {{--</select>--}}
-                            {{--</div>--}}
-                            {{--<div class="col-xs-2 item">--}}
-                                {{--<select id="range-price" name="Search[range_price_id]">--}}
-                                    {{--@foreach($rangePrices as $rangePrice)--}}
-                                        {{--<option value="{{$rangePrice->id}}">{{$rangePrice->name}}</option>--}}
-                                    {{--@endforeach--}}
-                                {{--</select>--}}
-                            {{--</div>--}}
-                            {{--<div class="col-xs-2 item">--}}
-                                {{--<button type="submit"><i class="fa fa-search"></i> tìm kiếm</button>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                    {{--</form>--}}
-                {{--</div>--}}
-            {{--</div>--}}
-        {{--</div>--}}
-        {{-- end smart search --}}
         <section class="hot-real-estate">
             <div class="container ">
                 <div class="row title-hot-wrap">
@@ -150,7 +69,7 @@
                     </div>
                 </div>
                 <div class="row list-re-item list-hot">
-                    @foreach($hotRealEstates as $item)
+                    @foreach($vip[1] as $item)
                         <div class="col-xs-12 col-sm-6 col-md-3 item">
                             <div class="col-xs-12 re-item hot">
                                 <a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">
@@ -182,7 +101,7 @@
                                 </div>
                                 <div class="row price">
                                     <div class="col-xs-12 lprice">
-                                        <i class="fa fa-map-marker"></i> {{$item->district->name}}
+                                        <i class="fa fa-map-marker"></i> {{$item->district?$item->district->name:''}}
                                     </div>
                                     <div class="col-xs-12 rprice">
                                         {{convert_number_to_words($item->price)}} {{$item->unit ? $item->unit->name : 'VND'}}
@@ -194,30 +113,44 @@
                 </div>
             </div>
         </section>
-
         <section class="addition_info">
             <div class="container">
                 <div class="row  three_cols">
                     <div class="col-xs-12 col-sm-12 three_i brokers">
 
                         <p class="title_col">
-                            <a href="#"><i class="fa fa-users"></i> NHÀ MÔI GIỚI</a>
+                            <a href="#"><i class="fa fa-users"></i> BẤT ĐỘNG SẢN HOT</a>
                         </p>
+                        <div class="" style="margin-top: 10px">
+                            <div class="vip3 list-re-item list-hot">
+                                @foreach($vip[3] as $item)
+                                    <div class="col-xs-12 col-sm-6 col-md-3 item">
+                                        <div class="col-xs-12 re-item hot">
+                                            <a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">
+                                                @php
+                                                    $images = $item->images ? json_decode($item->images) : [];
+                                                    $imgThumbnail = $images ? $images[0]->link : '/images/default_real_estate_image.jpg';
+                                                    $imgAlt = $images ? $images[0]->alt : $item->title;
+                                                @endphp
+                                                <img src="{{asset($imgThumbnail)}}" alt="{{ $imgAlt }}">
+                                            </a>
+                                            <div class="code_row">{{ $item->code }}</div>
+
+                                            <h3>
+                                                <a style="font-size: 12px" href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">{{ $item->title }}</a>
+                                            </h3>
+
+                                            @php
+                                                $shortDes = substr($item->detail, 0, 150);
+                                            @endphp
+
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
                         <div class="content col-xs-12 no-padding-left no-padding-right broker_slider">
-                            @foreach($agencies as $agency)
-                                <div class="col-xs-4 broker-item">
-                                    <div class="col-md-3" style="padding: 0">
-                                        <a href="{{asset('user/'.$agency->id)}}">
-                                            <img class="img-responsive b_img" src="{{$agency->avatar()}}" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="col-md-9">
-                                        <b class="name"><a href="{{asset('user/'.$agency->id)}}">{{$agency->userinfo?$agency->userinfo->full_name:$agency->name}}</a></b>
-                                        <p class="phone">{{$agency->userinfo?$agency->userinfo->phone:$agency->phone}}</p>
-                                        <p class="des">{{$agency->userinfo?$agency->userinfo->description:''}}</p>
-                                    </div>
-                                </div>
-                            @endforeach
+
                         </div>
                     </div>
                 </div>
@@ -247,7 +180,7 @@
 
                                 </div>
                                 <div class="row body_top_box">
-                                    @foreach($goodPriceRealEstateVip as $item)
+                                    @foreach($vip[3] as $item)
                                         <div class="col-xs-12 col-sm-6 col-md-6  good_price_item_wrap">
                                             <div class="col-xs-12  re_item2 good_price_item">
                                                 @php
@@ -263,7 +196,7 @@
                                                     $imgThumbnail = $images ? $images[0]->link : '/images/default_real_estate_image.jpg';
                                                     $imgAlt = $images ? $images[0]->alt : $item->title;
                                                 @endphp
-                                                <div class="row {{$itemClass}}">
+                                                <div class="row _vip">
                                                     <div class="col-xs-5 lgp_item">
                                                         <a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">
                                                             <img src="{{ asset($imgThumbnail) }}" alt="{{ $imgAlt }}">
@@ -299,7 +232,7 @@
 
                                         </div>
                                     @endforeach
-                                    @foreach($goodPriceRealEstateHot as $item)
+                                    @foreach($vip[4] as $item)
                                         <div class="col-xs-12 col-sm-6 col-md-6  good_price_item_wrap">
                                             <div class="col-xs-12  re_item2 good_price_item">
                                                 @php
@@ -315,7 +248,7 @@
                                                     $imgThumbnail = $images ? $images[0]->link : '/images/default_real_estate_image.jpg';
                                                     $imgAlt = $images ? $images[0]->alt : $item->title;
                                                 @endphp
-                                                <div class="row {{$itemClass}}">
+                                                <div class="row _vip_hot">
                                                     <div class="col-xs-5 lgp_item">
                                                         <a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">
                                                             <img src="{{ asset($imgThumbnail) }}" alt="{{ $imgAlt }}">
@@ -351,7 +284,7 @@
 
                                         </div>
                                     @endforeach
-                                    @foreach($goodPriceRealEstateNormal as $item)
+                                    @foreach($vip[5] as $item)
                                         <div class="col-xs-12 col-sm-6 col-md-6  good_price_item_wrap">
                                             <div class="col-xs-12  re_item2 good_price_item">
                                                 @php
@@ -414,7 +347,31 @@
                         </div>
                     </div>
                     <div class="col-xs-12 col-md-3 col_right no-padding-right">
-                    @include(theme(TRUE).'.includes.vip-slide')
+                    @include(theme(TRUE).'.includes.vip-slide', ['vipRealEstates'=>$vip[6]])
+                        <div class="agency list-re-item" style="margin-top: 10px">
+                            <p class="title_box">
+                                <a href="#">
+                                    <strong>NHÀ MÔI GIỚI</strong>
+                                </a>
+                            </p>
+                            @foreach($agencies as $agency)
+                                <div class="col-xs-6 no-padding-left no-padding-right">
+                                    <div class="col-xs-12 re-item hot" style="border: 1px solid #eee;
+    background: #fffce6;">
+                                        <a href="{{asset('user/'.$agency->id)}}" style="height: 100px">
+                                            <img src="{{$agency->avatar()}}" alt="">
+                                        </a>
+                                        <h3>
+                                            <a style="font-size: 12px" href="{{asset('user/'.$agency->id)}}">{{$agency->userinfo?$agency->userinfo->full_name:$agency->name}}</a>
+                                        </h3>
+
+                                        @php
+                                            $shortDes = substr($item->detail, 0, 150);
+                                        @endphp
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
                         <div class="adv_box">
                             @foreach(\App\Banner::where('location', 4)->where('province_id', 0)->get() as $item)
                                 @if($item->type==1)
@@ -792,6 +749,17 @@
                 }
                 e.preventDefault(); // prevent the default action (scroll / move caret)
             });
-
+        $(document).ready(function(){
+            $('.vip3').bxSlider({
+                auto: true,
+                speed: 500,
+                slideSelector: 'div.item',
+                minSlides: 5,
+                maxSlides: 5,
+                moveSlides: 5,
+                slideWidth: 250,
+                pager: false
+            });
+        });
     </script>
 @endpush
