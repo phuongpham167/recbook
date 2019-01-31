@@ -113,25 +113,19 @@ class RealEstateController extends Controller
 
         if(!empty(\request('filter'))) {
             if(\request('filter') == 'tin-rao-het-han')
-                $data = $data->where('posted_by',auth()->user()->id)->where(function($q){
-                    $q->where('expire_date','<',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
-                        ->orWhere('post_date', '<', Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->subDays(get_config('expireRealEstate', 30))->format('m/d/Y H:i A')));
-                });
+                $data = $data->where('posted_by',auth()->user()->id)->where('expire_date','<',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')));
 
             if(\request('filter') == 'tin-rao-cho-duyet')
-                $data = $data->where('posted_by',auth()->user()->id)->where('approved','0')->where('draft', 0)->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
-                        ->where('post_date', '>=', Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->subDays(get_config('expireRealEstate', 30))->format('m/d/Y H:i A')));
+                $data = $data->where('posted_by',auth()->user()->id)->where('approved','0')->where('draft', 0)->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')));
 
             if(\request('filter') == 'tin-rao-nhap')
-                $data = $data->where('posted_by',auth()->user()->id)->where('draft','1')->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
-                    ->where('post_date', '>=', Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->subDays(get_config('expireRealEstate', 30))->format('m/d/Y H:i A')));
+                $data = $data->where('posted_by',auth()->user()->id)->where('draft','1')->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')));
 
             if(\request('filter') == 'tin-rao-da-xoa')
                 $data = $data->where('posted_by',auth()->user()->id)->onlyTrashed()->get();
         }
         else
-            $data = $data->where('posted_by',auth()->user()->id)->where('approved', 1)->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
-                ->where('post_date', '>=', Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->subDays(get_config('expireRealEstate', 30))->format('m/d/Y H:i A')));
+            $data = $data->where('posted_by',auth()->user()->id)->where('approved', 1)->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')));
 
         $start  =   !empty(\request('datefrom'))?Carbon::createFromFormat('d/m/Y',\request('datefrom'))->startOfDay():'';
         $end    =   !empty(\request('dateto'))?Carbon::createFromFormat('d/m/Y',\request('dateto'))->endOfDay():'';
