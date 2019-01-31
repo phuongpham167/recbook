@@ -678,9 +678,11 @@ if ($user->group_id != $adminGroup) {
             onAdd   :   function(r){
                 $('#method').val(r.method);
             },
+            @if(!empty($realEstate->street_id) && !empty(\App\Street::find($realEstate->street_id)))
             prePopulate: [
                 {id: '{{$realEstate->street_id}}', name: '{{\App\Street::find($realEstate->street_id)->name}}'}
             ]
+            @endif
         });
     </script>
 @endpush
