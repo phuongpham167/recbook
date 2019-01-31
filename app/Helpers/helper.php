@@ -5413,11 +5413,16 @@ function credit($user_id, $value, $type = 1, $note) {
 
     if($type == 0)
         $user->credits += $value;
-    else
+    else {
+        if($user->credits < $value)
+            return false;
         $user->credits -= $value;
+    }
+
     $user->save();
 
     transaction_log($note, $value, $type);
+    return true;
 }
 
 function transaction_log($reason, $value, $type) {

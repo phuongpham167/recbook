@@ -146,9 +146,9 @@ class RealEstateController extends Controller
             })
             ->addColumn('title', function($dt) {
                 $title = null;
-                if($dt->is_hot == 1)
+                if($dt->hot_expire_at >= Carbon::now())
                     $title .= '<img src="'.asset('/images/vip1.gif').'"> ';
-                if($dt->is_vip == 1)
+                if($dt->vip_expire_at >= Carbon::now())
                     $title .= '<img src="'.asset('/images/vip2.gif').'"> ';
                 $title .= $dt->title;
                 $slug   =   !empty($dt->slug)?$dt->slug:to_slug($dt->title);
@@ -202,9 +202,9 @@ class RealEstateController extends Controller
                     if($dt->approved)
                         $manage .= '  ' . a('bat-dong-san/up', 'id=' . $dt->id, trans('g.up'), ['class' => 'btn btn-xs btn-info']);
                     if($dt->sold == 1)
-                        $manage .= a('#','id='.$dt->id,trans('g.sold'), ['class'=>'btn btn-xs btn-default btn-is-disabled']);
+                        $manage .=' '. a('#','id='.$dt->id,trans('g.sold'), ['class'=>'btn btn-xs btn-default btn-is-disabled']);
                     else
-                        $manage .= a('bat-dong-san/da-ban','id='.$dt->id,trans('g.sold'), ['class'=>'btn btn-xs btn-info'],'#',
+                        $manage .= ' '.a('bat-dong-san/da-ban','id='.$dt->id,trans('g.sold'), ['class'=>'btn btn-xs btn-info'],'#',
                             "return bootbox.confirm('".trans('system.sold_confirm')."', function(result){if(result==true){window.location.replace('".asset('bat-dong-san/da-ban?id='.$dt->id)."')}})");
                 }
                 else {
@@ -412,10 +412,13 @@ class RealEstateController extends Controller
 
             $data->is_vip = 1;
             $data->vip_expire_at = Carbon::now()->addDay($request->vip_time);
-            $data->save();
             $value = $request->vip_time* HotVip::where('province_id', $data->province_id)->first()->vip_value;
-            credit(auth()->user()->id,$value,1, 'set tin vip cho id '.$data->id.' trong '.$request->vip_time.' ngày');
-            set_notice(trans('system.set_vip_success').$request->vip_time.' ngày thành công!', 'success');
+            if(credit(auth()->user()->id,$value,1, 'set tin vip cho id '.$data->id.' trong '.$request->vip_time.' ngày')){
+                $data->save();
+                set_notice(trans('system.set_vip_success').$request->vip_time.' ngày thành công!', 'success');
+            }
+            else
+                set_notice(trans('system.credit_fail'), 'warning');
         }else
             set_notice(trans('system.not_exist'), 'warning');
 
@@ -431,9 +434,12 @@ class RealEstateController extends Controller
             $data->is_hot = 1;
             $data->hot_expire_at = Carbon::now()->addDay($request->hot_time);
             $value = $request->hot_time* HotVip::where('province_id', $data->province_id)->first()->hot_value;
-            credit(auth()->user()->id,$value,1, 'set tin hot cho id '.$data->id.' trong '.$request->hot_time.' ngày');
-            $data->save();
-            set_notice(trans('system.set_hot_success').$request->hot_time.' ngày thành công!', 'success');
+            if(credit(auth()->user()->id,$value,1, 'set tin hot cho id '.$data->id.' trong '.$request->hot_time.' ngày')){
+                $data->save();
+                set_notice(trans('system.set_hot_success').$request->hot_time.' ngày thành công!', 'success');
+            }
+            else
+                set_notice(trans('system.credit_fail'), 'warning');
         }else
             set_notice(trans('system.not_exist'), 'warning');
         return redirect()->back();

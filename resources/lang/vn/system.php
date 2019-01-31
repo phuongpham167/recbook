@@ -88,4 +88,5 @@ return [
     'sold_confirm'   =>  'Xác nhận đã bán?',
     'close_confirm'   =>  'Xác nhận đóng dự án?',
     'receive_commission'   =>  'Phần trăm hoa hồng',
+    'credit_fail'   =>  'Tài khoản của bạn không đủ để thực hiện giao dịch này!',
 ];
