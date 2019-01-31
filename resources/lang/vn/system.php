@@ -80,7 +80,7 @@ return [
     'ward'   =>  'Phường/Xã',
     'street'   =>  'Đường phố',
     'searchPlaceholder' => 'Từ khóa, mã số tin, số đt',
-    'set_vip_success'   =>  'Đăng ký tin vip ',
+    'set_vip_success'   =>  'Đăng ký ',
     'set_hot_success'   =>  'Đăng ký tin hot ',
     'not_enough_info'   =>  'Bạn chưa điền đầy đủ thông tin!',
     'up_post_success'   =>  'Up tin thành công!',

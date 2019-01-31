@@ -419,7 +419,7 @@ class RealEstateController extends Controller
 
             if(credit(auth()->user()->id,$value,1, 'nâng cấp '.$type.' cho id '.$data->id.' trong '.$request->vip_time.' ngày')){
                 $data->save();
-                set_notice(trans('system.set_vip_success').$request->vip_time.' ngày thành công!', 'success');
+                set_notice(trans('system.set_vip_success').$type.' '.$request->vip_time.' ngày thành công!', 'success');
             }
             else
                 set_notice(trans('system.credit_fail'), 'warning');
