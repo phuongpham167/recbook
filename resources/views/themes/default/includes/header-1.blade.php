@@ -2,11 +2,11 @@
 <div class="top_page">
     <div class="container">
         <div class="row">
-            <div class="col-sm-8 welcome-text hidden-xs">
+            <div class="col-sm-6 welcome-text hidden-xs">
                 <p>{{get_config('homeHeader', 'CHÀO MỪNG QUÝ KHÁCH ĐẾN VỚI RECBOOK.VN - HOTLINE: 0989.186.179')}}</p>
             </div>
 
-            <div class="col-xs-12 col-sm-4 user-action">
+            <div class="col-xs-12 col-sm-6 user-action">
                 @if (!auth()->check())
                     <p class="pull-right">
                         <a href="{{ route('login') }}"><i class="fa fa-sign-in"></i> ĐĂNG NHẬP</a>
