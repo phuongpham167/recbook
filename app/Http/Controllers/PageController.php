@@ -466,7 +466,7 @@ class PageController extends Controller
             ->orderBy('post_date', 'desc');
 //        $query = $this->checkRegisterDate($query);
 
-        $results = $query->get();
+        $results = $query->paginate(get_config('itemsPerPage', 30));
 
         $this->vipRealEstates = $this->getVipRealEstates();
 
