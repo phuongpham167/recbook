@@ -107,15 +107,17 @@ class PageController extends Controller
     {
         $vip    =   [];
         for($i=1; $i<7; $i++){
-            $vip[$i]    = RealEstate::where('public_site', 1)->select('id', 'title', 'slug', 'short_description', 'detail', 'code', 'don_vi',
+            $query    = RealEstate::where('public_site', 1)->select('id', 'title', 'slug', 'short_description', 'detail', 'code', 'don_vi',
                 'area_of_premises', 'area_of_use', 'district_id', 'price', 'unit_id', 'is_vip', 'is_hot', 'vip_type',
                 'post_date', 'images')
                 ->where('vip_type', $i)
                 ->where('expire_date', '>=', Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
                 ->where('web_id', $this->web_id);
-            $vip[$i]->limit(get_config('vip'.$i, 10));
-            $vip[$i] = $vip[$i]->get();
+            $query->take(get_config('vip'.$i, 10));
+            $query = $query->get();
+            $vip[$i] = $query;
         }
+
 
         //Tin HOT
         $hotRealEstates = RealEstate::where('public_site',1)->select('id', 'title', 'slug', 'short_description', 'detail', 'code', 'don_vi',
