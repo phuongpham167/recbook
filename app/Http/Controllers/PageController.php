@@ -205,10 +205,11 @@ class PageController extends Controller
         $reTypes = $this->reTypeService->getReTypeByCat($firstCat->id);
         $rangePrices = $this->rangePriceService->getRangePriceByCat($firstCat->id);
 
-        $freelancer_re    =   Freelancer::where('status', 'open')->where('category_id', 1)->get();
-        $freelancer_finance    =   Freelancer::where('status', 'open')->where('category_id', 2)->get();
-        $freelancer_design    =   Freelancer::where('status', 'open')->where('category_id', 3)->get();
-        $freelancer_phongthuy    =   Freelancer::where('status', 'open')->where('category_id', 4)->get();
+        $freelancer_all    =   Freelancer::where('status', 'open')->take(9)->get();
+        $freelancer_re    =   Freelancer::where('status', 'open')->where('category_id', 1)->take(9)->get();
+        $freelancer_finance    =   Freelancer::where('status', 'open')->where('category_id', 2)->take(9)->get();
+        $freelancer_design    =   Freelancer::where('status', 'open')->where('category_id', 3)->take(9)->get();
+        $freelancer_phongthuy    =   Freelancer::where('status', 'open')->where('category_id', 4)->take(9)->get();
         Carbon::setLocale('vi');
         return v('pages.home-1', [
             'hotRealEstates' => $hotRealEstates,
@@ -227,6 +228,7 @@ class PageController extends Controller
             'vipRealEstates' => $vipRealEstates,
             'agencies'  =>  $this->agencies,
             'freelancer' => [
+                'all'   =>  $freelancer_all,
                 're' => $freelancer_re,
                 'finance' => $freelancer_finance,
                 'design' => $freelancer_design,
@@ -664,7 +666,7 @@ class PageController extends Controller
         $query->orderBy('post_date', 'desc');
 //        $query = $this->checkRegisterDate($query);
 
-        $results = $query->get();
+        $results = $query->paginate(get_config('itemsPerPage', 30));
 
         $this->vipRealEstates = $this->getVipRealEstates();
 
@@ -730,7 +732,7 @@ class PageController extends Controller
             }
 //            $query = $this->checkRegisterDate($query);
 
-            $results = $query->get();
+            $results = $query->paginate(get_config('itemsPerPage', 30));
 
             $this->vipRealEstates = $this->getVipRealEstates();
 
@@ -883,8 +885,7 @@ class PageController extends Controller
 
 //            ->where('vip_expire_at',  '<=', Carbon::now())
 //        $query = $this->checkRegisterDate($query);
-        $query->limit(30);
-        $results = $query->get();
+        $results = $query->paginate(get_config('itemsPerPage', 30));
 //        dd($results);
         return $results;
     }

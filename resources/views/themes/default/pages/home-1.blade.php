@@ -516,7 +516,8 @@
 
                                 <!-- Nav tabs -->
                                 <ul class="nav nav-tabs" role="tablist">
-                                    <li role="presentation" class="active"><a href="#realestate" aria-controls="home" role="tab" data-toggle="tab">Bất động sản</a></li>
+                                    <li role="presentation" class="active"><a href="#all" aria-controls="home" role="tab" data-toggle="tab">Tất cả dự án</a></li>
+                                    <li role="presentation"><a href="#realestate" aria-controls="home" role="tab" data-toggle="tab">Bất động sản</a></li>
                                     <li role="presentation"><a href="#finance" aria-controls="profile" role="tab" data-toggle="tab">Tư vấn tài chính</a></li>
                                     <li role="presentation"><a href="#design" aria-controls="messages" role="tab" data-toggle="tab">Thiết kế</a></li>
                                     <li role="presentation"><a href="#phongthuy" aria-controls="settings" role="tab" data-toggle="tab">Phong thuỷ</a></li>
@@ -524,7 +525,25 @@
 
                                 <!-- Tab panes -->
                                 <div class="tab-content">
-                                    <div role="tabpanel" class="tab-pane active" id="realestate">
+                                    <div role="tabpanel" class="tab-pane active" id="all">
+                                        <table class="table">
+                                            <tr>
+                                                <th width="50%">Tiêu đề</th>
+                                                <th>Ngân sách</th>
+                                                <th>Mở chào giá đến</th>
+                                                <th>Chào giá</th>
+                                            </tr>
+                                            @foreach($freelancer['all'] as $item)
+                                                <tr>
+                                                    <td><a href="{{route('freelancerDetail', ['id'=>$item->id, 'slug'=>to_slug($item->title)])}}"><strong>{{$item->title}}</strong></a></td>
+                                                    <td><a href="{{route('freelancerDetail', ['id'=>$item->id, 'slug'=>to_slug($item->title)])}}">{{convert_number_to_words($item->budget)}}</a></td>
+                                                    <td><a href="{{route('freelancerDetail', ['id'=>$item->id, 'slug'=>to_slug($item->title)])}}">{{Carbon\Carbon::parse($item->end_at)->diffForHumans(\Carbon\Carbon::now())}}</a></td>
+                                                    <td><a href="{{route('freelancerDetail', ['id'=>$item->id, 'slug'=>to_slug($item->title)])}}">{{$item->deals()->count()}}</a></td>
+                                                </tr>
+                                            @endforeach
+                                        </table>
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane" id="realestate">
                                         <table class="table">
                                             <tr>
                                                 <th width="50%">Tiêu đề</th>
