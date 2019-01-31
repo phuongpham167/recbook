@@ -91,8 +91,7 @@ Route::group(['middleware'=>'auth'], function(){
         Route::get('/xoa', 'RealEstateController@delete');
         Route::get('/dang-bai', 'RealEstateController@publish');
         Route::post('/multi-delete', 'RealEstateController@multiDelete');
-        Route::get('/setvip', 'RealEstateController@setVip');
-        Route::get('/sethot', 'RealEstateController@setHot');
+        Route::post('/sethotvip', 'RealEstateController@setVipHot');
         Route::get('/up', 'RealEstateController@upPost');
         Route::get('/da-ban', 'RealEstateController@sold');
         Route::post('/gia-han', 'RealEstateController@renewed');
