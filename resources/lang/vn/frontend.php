@@ -3,7 +3,7 @@
 return [
     'index' =>  'Danh sách website đã tạo',
     'id'    =>  'id',
-    'title'  =>  'Tiêu đề frontend',
+    'title'  =>  'Tiêu đề trang web',
     'domain'  =>  'Tên miền',
     'theme'  =>  'Theme',
     'address'  =>  'Địa chỉ',
