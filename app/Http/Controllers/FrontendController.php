@@ -10,6 +10,8 @@ use App\Http\Requests\CreateFrontendRequest;
 use App\Http\Requests\CreateWebRequest;
 use App\Jobs\PublishWeb;
 use App\Menu;
+use App\PurchaseTheme;
+use App\Themes;
 use App\User;
 use App\Web;
 use Carbon\Carbon;
@@ -86,7 +88,25 @@ class FrontendController extends Controller
         $data->domain   =   $request->domain;
         $data->theme   =   $request->theme;
         $data->created_at   =   Carbon::now();
-        $data->save();
+        $theme = Themes::where('folder',$request->theme )->first();
+
+        if(!empty(PurchaseTheme::where('user_id', auth()->user()->id)->where('theme_code', $theme->folder)->first()))
+            $data->save();
+        else if($theme->price == 0)
+            $data->save();
+        else if(credit(auth()->user()->id,$theme->price,1, 'Mua theme '.$request->theme.' thành công!')){
+            $pt = new PurchaseTheme();
+            $pt->user_id = auth()->user()->id;
+            $pt->theme_code = $theme->folder;
+            $pt->created_at = Carbon::now();
+            $pt->save();
+            $data->save();
+        }
+        else{
+            set_notice(trans('system.purchase_fail'), 'warning');
+            return response()->json(['url'=>asset('frontend/create')]);
+        }
+
         event_log('Tạo website frontend đơn vị mới '.$data->domain.' id '.$data->id);
 //        set_notice(trans('frontend.add_success'), 'success');
         frontendweb_create($data->id, $data->theme, $data->title);
@@ -111,7 +131,26 @@ class FrontendController extends Controller
             $data->title   =   $request->title;
             $data->domain   =   $request->domain;
             $data->theme   =   $request->theme;
-            $data->save();
+
+            $theme = Themes::where('folder',$request->theme )->first();
+
+            if(!empty(PurchaseTheme::where('user_id', auth()->user()->id)->where('theme_code', $theme->folder)->first()))
+                $data->save();
+            else if($theme->price == 0)
+                $data->save();
+            else if(credit(auth()->user()->id,$theme->price,1, 'Mua theme '.$request->theme.' thành công!')){
+                $pt = new PurchaseTheme();
+                $pt->user_id = auth()->user()->id;
+                $pt->theme_code = $theme->folder;
+                $pt->created_at = Carbon::now();
+                $pt->save();
+                $data->save();
+            }
+            else{
+                set_notice(trans('system.purchase_fail'), 'warning');
+                return response()->json(['url'=>asset('frontend/edit?id='.$data->id)]);
+            }
+
             event_log('Sửa website frontend đơn vị '.$data->domain.' id '.$data->id);
             frontendweb_create($data->id, $data->theme, $data->title);
             return response()->json(['status'=>0, 'url'=>asset('frontend_web/'.$data->id)]);

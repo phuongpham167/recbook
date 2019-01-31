@@ -108,7 +108,7 @@
                                                             <h3>@if($item->price != 0) {{number_format($item->price)}} {{\App\Currency::where('default',1)->first()->icon}} @else Miễn phí @endif</h3>
                                                         </div>
                                                         <div class="book-now-c">
-                                                            <a class="btn-theme" data-theme="{{$item->folder}}" href="#a">Chọn</a>
+                                                            <a class="btn-theme" style="color: white" data-theme="{{$item->folder}}" href="#a">Chọn</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -204,7 +204,7 @@
             });
             if(theme != '' && title != '' && domain !='')
             {
-                $(this).html('<i class="fa fa-spinner fa-spin" style="font-size:24px"></i> Đang tải');
+                $(this).html('<i class="fa fa-spinner fa-spin" style="font-size:24px; color: white"></i> Đang tải');
                 $(this).attr('disabled','disabled');
                 $.post('<?php echo asset('frontend/create'); ?>', {theme, title, domain, _token: '{{csrf_token()}}'}, function(r){
 
