@@ -106,17 +106,11 @@ class PageController extends Controller
     public function index1()
     {
         $hotRealEstates = RealEstate::where('is_public',1)->select('id', 'title', 'slug', 'short_description', 'detail', 'code', 'don_vi',
-            'area_of_premises', 'area_of_use', 'district_id', 'price', 'unit_id', 'is_vip', 'is_hot',
+            'area_of_premises', 'area_of_use', 'district_id', 'price', 'unit_id', 'is_vip', 'is_hot','vip_type',
             'post_date', 'images')
-            ->where(function($q){
-                $q->where('is_hot', 1)
-                  ->where('is_vip', '<>', 1);
-            })
-            ->where(function($q){
-                $q->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
-                ->orWhere('post_date', '>=', Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->subDays(Settings('system_changenametime'))->format('m/d/Y H:i A')));
-            })
-            ->where('post_date', '<=', Carbon::now())
+            ->where('vip_type', 1)
+            ->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
+//            ->where('post_date', '<=', Carbon::now())
 //            ->where('hot_expire_at', '<=', Carbon::now())
             ->where('web_id', $this->web_id);
 
@@ -126,6 +120,16 @@ class PageController extends Controller
         $hotRealEstates = $hotRealEstates->get();
 //        dd($hotRealEstates);
 
+        $hotHLRealEstates = RealEstate::where('is_public',1)->select('id', 'title', 'slug', 'short_description', 'detail', 'code', 'don_vi',
+            'area_of_premises', 'area_of_use', 'district_id', 'price', 'unit_id', 'is_vip', 'is_hot','vip_type',
+            'post_date', 'images')
+            ->where('vip_type', 2)
+            ->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
+            ->where('web_id', $this->web_id);
+
+
+        $hotHLRealEstates->limit(get_config('homeHotRealEstate', 10));
+        $hotHLRealEstates = $hotHLRealEstates->get();
         /*
          * TODO: need more info to filter good price items
          * Now: get vip only
@@ -166,20 +170,22 @@ class PageController extends Controller
 
 
         $vipRealEstates  =   RealEstate::where('public_site',1)->select('id', 'title', 'slug', 'short_description', 'detail', 'code', 'don_vi',
-            'area_of_premises', 'area_of_use', 'district_id', 'price', 'unit_id', 'is_vip', 'is_hot',
+            'area_of_premises', 'area_of_use', 'district_id', 'price', 'unit_id', 'is_vip', 'is_hot','vip_type',
             'post_date', 'images','district_id', 'province_id', 'direction_id')
-            ->where(function($q){
-                $q->where('is_hot', '<>', 1)
-                    ->where('is_vip', 1);
-            })
-            ->where(function($q){
-                $q->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
-                    ->orWhere('post_date', '>=', Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->subDays(Settings('system_changenametime'))->format('m/d/Y H:i A')));
-            })
-            ->where('post_date', '<=', Carbon::now())
-//            ->where('hot_expire_at', '<=', Carbon::now())
+            ->where('vip_type', 3)
+            ->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
             ->where('web_id', $this->web_id)->orderBy('post_date','DESC');
+
         $vipRealEstates = $vipRealEstates->take(get_config('homeSidebarVip',8))->get();
+
+        $vipHLRealEstates  =   RealEstate::where('public_site',1)->select('id', 'title', 'slug', 'short_description', 'detail', 'code', 'don_vi',
+            'area_of_premises', 'area_of_use', 'district_id', 'price', 'unit_id', 'is_vip', 'is_hot','vip_type',
+            'post_date', 'images','district_id', 'province_id', 'direction_id')
+            ->where('vip_type', 3)
+            ->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
+            ->where('web_id', $this->web_id)->orderBy('post_date','DESC');
+
+        $vipHLRealEstates = $vipHLRealEstates->take(get_config('homeSidebarVip',8))->get();
 
         $freeRealEstates = RealEstate::select('id', 'title', 'short_description', 'detail', 'slug', 'code', 'don_vi',
             'area_of_premises', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date')
@@ -212,6 +218,7 @@ class PageController extends Controller
         $freelancer_phongthuy    =   Freelancer::where('status', 'open')->where('category_id', 4)->take(9)->get();
         Carbon::setLocale('vi');
         return v('pages.home-1', [
+            'hotHLRealEstates' => $hotHLRealEstates,
             'hotRealEstates' => $hotRealEstates,
             'goodPriceRealEstateNormal' => $goodPriceRealEstateNormal,
             'goodPriceRealEstateVip' => $goodPriceRealEstateVip,
@@ -226,6 +233,7 @@ class PageController extends Controller
             'rangePrices' => $rangePrices,
             'menuData' => $this->menuFE,
             'vipRealEstates' => $vipRealEstates,
+            'vipHLRealEstates' => $vipHLRealEstates,
             'agencies'  =>  $this->agencies,
             'freelancer' => [
                 'all'   =>  $freelancer_all,

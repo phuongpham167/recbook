@@ -5440,3 +5440,16 @@ function transaction_log($reason, $value, $type) {
     $data->created_at = \Carbon\Carbon::now();
     $data->save();
 }
+
+function vip_type () {
+    $type = [
+      1 => 'Tin hot',
+        2 => 'Tin hot nổi bật',
+        3 => 'Tin vip',
+        4 => 'Tin vip nổi bật',
+        5 => 'Tin hấp dẫn',
+        6 => 'Tin vip phải',
+    ];
+
+    return $type;
+}

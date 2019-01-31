@@ -209,12 +209,9 @@
                         <input type='hidden' name='id' id="id-re2" value="">
                         <label class="control-label">Chọn loại vip/hot</label>
                         <select class="form-control" name='vip_type' id='vip_type'>
-                            <option value='1'>Tin hot</option>
-                            <option value='2'>Tin hot nổi bật</option>
-                            <option value='3'>Tin vip</option>
-                            <option value='4'>Tin vip nổi bật</option>
-                            <option value='5'>Tin hấp dẫn</option>
-                            <option value='6'>Tin vip phải</option>
+                            @foreach(vip_type() as $k=>$item)
+                            <option value='{{$k}}'>{{$item}}</option>
+                            @endforeach
                         </select>
                         <label class="control-label">Chọn số ngày gia hạn</label>
                         <select class="form-control" name='vip_time' id='vip_time'>
