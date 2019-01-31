@@ -162,7 +162,7 @@ class RealEstateController extends Controller
 
                 $manage .= '  ' . a('bat-dong-san/sua', 'id=' . $dt->id, trans('g.edit'), ['class' => 'btn btn-xs btn-default']);
                 $manage .= '  ' . a('#a', '', trans('g.renewed'), ['class' => 'btn btn-xs btn-primary btn-renewed', 'id' => $dt->id]);
-                if($dt->expire_date >= Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')) && $dt->post_date >= Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->subDays(get_config('expireRealEstate', 30))->format('m/d/Y H:i A'))) {
+                if($dt->expire_date >= Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')) ) {
 
                     if(\request('filter') == 'tin-rao-nhap')
                         $manage .=   '  '.a('bat-dong-san/dang-bai', 'id='.$dt->id,trans('g.post'), ['class'=>'btn btn-xs btn-info']);

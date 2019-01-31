@@ -23,7 +23,7 @@ return [
     'add_success'   =>  'Thêm đơn vị mới thành công!',
     'administrator' =>  'Người quản trị',
     'backend_domain'    =>  'Tên miền backend',
-    'frontend_domain'   =>  'Tên miền Frontend',
+    'frontend_domain'   =>  'Tên miền trang web',
     'sub_backend_domain'    =>  'Tên miền con cho backend',
     'ended_at'    =>  'Trạng thái'
 ];
