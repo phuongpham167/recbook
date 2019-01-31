@@ -543,7 +543,7 @@
                                             @endforeach
                                         </table>
                                     </div>
-                                    <div role="tabpanel" class="tab-pane active" id="realestate">
+                                    <div role="tabpanel" class="tab-pane" id="realestate">
                                         <table class="table">
                                             <tr>
                                                 <th width="50%">Tiêu đề</th>
