@@ -883,7 +883,7 @@ class PageController extends Controller
 
 //            ->where('vip_expire_at',  '<=', Carbon::now())
 //        $query = $this->checkRegisterDate($query);
-        $results = $query->get_config('itemsPerPage', 30);
+        $results = $query->paginate(get_config('itemsPerPage', 30));
 //        dd($results);
         return $results;
     }
