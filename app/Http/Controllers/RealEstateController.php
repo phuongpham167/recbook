@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Account;
 use App\DataTables\RealEstatesDataTable;
+use App\HotVip;
 use App\Http\Requests\HotVipRequest;
 use App\Http\Requests\RealEstateRequest;
 use App\Menu;
@@ -412,6 +413,8 @@ class RealEstateController extends Controller
             $data->is_vip = 1;
             $data->vip_expire_at = Carbon::now()->addDay($request->vip_time);
             $data->save();
+            $value = $request->vip_time* HotVip::where('province_id', $data->province_id)->first()->vip_value;
+            credit(auth()->user()->id,$value,1, 'set tin vip cho id '.$data->id.' trong '.$request->vip_time.' ngày');
             set_notice(trans('system.set_vip_success').$request->vip_time.' ngày thành công!', 'success');
         }else
             set_notice(trans('system.not_exist'), 'warning');
@@ -427,6 +430,8 @@ class RealEstateController extends Controller
 
             $data->is_hot = 1;
             $data->hot_expire_at = Carbon::now()->addDay($request->hot_time);
+            $value = $request->hot_time* HotVip::where('province_id', $data->province_id)->first()->hot_value;
+            credit(auth()->user()->id,$value,1, 'set tin hot cho id '.$data->id.' trong '.$request->hot_time.' ngày');
             $data->save();
             set_notice(trans('system.set_hot_success').$request->hot_time.' ngày thành công!', 'success');
         }else

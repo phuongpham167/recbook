@@ -5407,3 +5407,31 @@ function post_left($user){
     $postLeft   =   !empty($postlimit)?$postlimit-$posted:null;
     return ($postLeft!==null && $postLeft<1)?0:$postLeft;
 }
+
+function credit($user_id, $value, $type = 1, $note) {
+    $user = \App\User::find($user_id);
+
+    if($type == 0)
+        $user->credits += $value;
+    else
+        $user->credits -= $value;
+    $user->save();
+
+    transaction_log($note, $value, $type);
+}
+
+function transaction_log($reason, $value, $type) {
+    $data = new \App\TransactionLog();
+    if(!auth()->check()) {
+        $data->id = null;
+    }
+    else
+        $data->user_id = auth()->user()->id;
+
+    $data->reason = $reason;
+    $data->type = $type;
+    $data->value = $value;
+    $data->currency = \App\Currency::where('default',1)->first()->id;
+    $data->created_at = \Carbon\Carbon::now();
+    $data->save();
+}
