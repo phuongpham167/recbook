@@ -323,8 +323,8 @@ class RealEstateController extends Controller
     {
         $data = RealEstate::where('posted_by',auth()->user()->id)->where('id',\request('id'))->first();
 
-        if ($data) {
-            $data->expire_date = Carbon::createFromFormat('Y-m-d', $data->expire_date)->addDays(\request('days'));
+        if (!empty($data)) {
+            $data->expire_date = Carbon::createFromFormat('Y-m-d H:i:s', $data->expire_date)->addDays(\request('days'));
             $data->save();
             set_notice(trans('real-estate.message.renewed_success'), 'success');
             return redirect()->back()->withInput();
