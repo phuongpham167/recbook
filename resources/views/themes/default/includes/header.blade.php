@@ -34,9 +34,15 @@
                 </a>
             </div>
             <div class="right col-sm-8 hidden-xs">
-                <a href="">
-                    <img src="{{ asset('images/banner/banner-header.gif') }}" class="img-responsive" alt="" />
-                </a>
+                @foreach(\App\Banner::where('location', 8)->where('province_id', 0)->get() as $item)
+                    @if($item->type==1)
+                        <a href="{{$item->url}}">
+                            <img src="http://{{env('DOMAIN_BACKEND', 'recbook.net')}}/{{$item->image}}" class="img-responsive" alt="{{$item->note}}">
+                        </a>
+                    @else
+                        {!! $item->content !!}
+                    @endif
+                @endforeach
             </div>
             {{--<div class="clearfix"></div>--}}
         </div>
