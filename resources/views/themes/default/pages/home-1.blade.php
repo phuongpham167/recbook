@@ -58,7 +58,49 @@
             </div>
 
         </section>
+        <section class="addition_info">
+            <div class="container">
+                <div class="row  three_cols">
+                    <div class="col-xs-12 col-sm-12 three_i brokers">
 
+                        <p class="title_col">
+                            <a href="#"><i class="fa fa-users"></i> BẤT ĐỘNG SẢN HOT</a>
+                        </p>
+                        <div class="" style="margin-top: 10px">
+                            <div class="vip3 list-re-item list-hot">
+                                @foreach($vip[2] as $item)
+                                    <div class="col-xs-12 col-sm-6 col-md-3 item">
+                                        <div class="col-xs-12 re-item hot">
+                                            <a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">
+                                                @php
+                                                    $images = $item->images ? json_decode($item->images) : [];
+                                                    $imgThumbnail = $images ? $images[0]->link : '/images/default_real_estate_image.jpg';
+                                                    $imgAlt = $images ? $images[0]->alt : $item->title;
+                                                @endphp
+                                                <img src="{{asset($imgThumbnail)}}" alt="{{ $imgAlt }}">
+                                            </a>
+                                            <div class="code_row">{{ $item->code }}</div>
+
+                                            <h3>
+                                                <a style="font-size: 12px" href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">{{ $item->title }}</a>
+                                            </h3>
+
+                                            @php
+                                                $shortDes = substr($item->detail, 0, 150);
+                                            @endphp
+
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                        <div class="content col-xs-12 no-padding-left no-padding-right broker_slider">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
         <section class="hot-real-estate">
             <div class="container ">
                 <div class="row title-hot-wrap">
@@ -113,49 +155,7 @@
                 </div>
             </div>
         </section>
-        <section class="addition_info">
-            <div class="container">
-                <div class="row  three_cols">
-                    <div class="col-xs-12 col-sm-12 three_i brokers">
 
-                        <p class="title_col">
-                            <a href="#"><i class="fa fa-users"></i> BẤT ĐỘNG SẢN HOT</a>
-                        </p>
-                        <div class="" style="margin-top: 10px">
-                            <div class="vip3 list-re-item list-hot">
-                                @foreach($vip[2] as $item)
-                                    <div class="col-xs-12 col-sm-6 col-md-3 item">
-                                        <div class="col-xs-12 re-item hot">
-                                            <a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">
-                                                @php
-                                                    $images = $item->images ? json_decode($item->images) : [];
-                                                    $imgThumbnail = $images ? $images[0]->link : '/images/default_real_estate_image.jpg';
-                                                    $imgAlt = $images ? $images[0]->alt : $item->title;
-                                                @endphp
-                                                <img src="{{asset($imgThumbnail)}}" alt="{{ $imgAlt }}">
-                                            </a>
-                                            <div class="code_row">{{ $item->code }}</div>
-
-                                            <h3>
-                                                <a style="font-size: 12px" href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">{{ $item->title }}</a>
-                                            </h3>
-
-                                            @php
-                                                $shortDes = substr($item->detail, 0, 150);
-                                            @endphp
-
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-                        <div class="content col-xs-12 no-padding-left no-padding-right broker_slider">
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
         <section class="good_price">
             <div class="container">
                 <div class="row two_cols">
@@ -754,7 +754,7 @@
                 auto: true,
                 speed: 500,
                 slideSelector: 'div.item',
-                minSlides: 5,
+                minSlides: 1,
                 maxSlides: 5,
                 moveSlides: 5,
                 slideWidth: 250,
