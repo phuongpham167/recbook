@@ -96,13 +96,7 @@
                     </dd>
                 </dl>
 
-                <dl>
-                    <dt>Giới thiệu <span class="required">*</span></dt>
-                    <dd>
-                        <textarea class="_required" name="description">{{old('description')}}</textarea>
-                    </dd>
-                </dl>
-
+                <input type="hidden" name="description" value="" />
                 <dl>
                     <dt>Nhóm </dt>
                     <dd>
