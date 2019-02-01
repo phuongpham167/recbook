@@ -284,7 +284,7 @@
                             <div class="row margin-0">
                                 <div class="col-xs-12 padding-0">
                                     <div class="col-xs-12 col-sm-3 no-padding-left post-by-info__left">
-                                        <img src="http://nhadathaiphong.vn/css/images/noimage.jpg"
+                                        <img src="{{$data->user->avatar()}}"
                                              class="img-responsive post-by-info__avatar"/>
                                     </div>
                                     <div class="col-xs-12 col-sm-9 post-by-info__right">
