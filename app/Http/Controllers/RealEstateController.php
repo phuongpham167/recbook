@@ -133,8 +133,8 @@ class RealEstateController extends Controller
         if($start != '' && $end != '')
             $data   =   $data->where('post_date', '>=', $start)->where('post_date', '<=', $end);
 
-        if(!empty(\request('type_tran')))
-            $data = $data->where('type_tran',\request('type_tran'));
+        if(!empty(\request('re_type_id')))
+            $data = $data->where('re_type_id',\request('re_type_id'));
 
         if(!empty(\request('re_category_id')))
             $data = $data->where('re_category_id',\request('re_category_id'));

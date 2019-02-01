@@ -37,8 +37,7 @@
                     <div>
 
                         <div class="_form search_listlandA_page">
-                            <form enctype="multipart/form-data" id="yw0" method="get">
-                                {{csrf_field()}}
+                            <form id="yw0" method="get">
                                 <div class="row">
 
                                     <div class="col-xs-4">
@@ -66,7 +65,7 @@
                                                 <select name="re_category_id" id="re_category_id">
                                                     <option value="">{{trans('real-estate.all')}}</option>
                                                     @foreach(\App\ReCategory::all() as $item)
-                                                        <option value="{{$item->id}}">{{$item->name}}</option>
+                                                        <option value="{{$item->id}}" @if(request('re_category_id')==$item->id) selected @endif>{{$item->name}}</option>
                                                     @endforeach
                                                 </select>
                                             </dd>
@@ -82,26 +81,26 @@
                                                 <select name="re_type_id" id="re_type_id">
                                                     <option value="">{{trans('real-estate.all')}}</option>
                                                         @foreach(\App\ReType::all() as $item)
-                                                            <option value="{{$item->id}}">{{$item->name}}</option>
+                                                            <option value="{{$item->id}}"  @if(request('re_type_id')==$item->id) selected @endif>{{$item->name}}</option>
                                                         @endforeach
                                                 </select>
                                             </dd>
                                         </dl>
                                     </div>
 
-                                    <div class="col-xs-4">
-                                        <dl>
-                                            <dt>{{trans('real-estate.formCreateLabel.district')}}</dt>
-                                            <dd>
-                                                <select name="district_id" id="district_id">
-                                                    <option value="">{{trans('real-estate.all')}}</option>
-                                                    @foreach(\App\District::all() as $item)
-                                                        <option value="{{$item->id}}">{{$item->name}}</option>
-                                                    @endforeach
-                                                </select>
-                                            </dd>
-                                        </dl>
-                                    </div>
+                                    {{--<div class="col-xs-4">--}}
+                                        {{--<dl>--}}
+                                            {{--<dt>{{trans('real-estate.formCreateLabel.district')}}</dt>--}}
+                                            {{--<dd>--}}
+                                                {{--<select name="district_id" id="district_id">--}}
+                                                    {{--<option value="">{{trans('real-estate.all')}}</option>--}}
+                                                    {{--@foreach(\App\District::all() as $item)--}}
+                                                        {{--<option value="{{$item->id}}" >{{$item->name}}</option>--}}
+                                                    {{--@endforeach--}}
+                                                {{--</select>--}}
+                                            {{--</dd>--}}
+                                        {{--</dl>--}}
+                                    {{--</div>--}}
 
                                     <div class="col-xs-4">
                                         <dl>
@@ -109,9 +108,9 @@
                                             <dd>
                                                 <select name="post_type" id="post_type">
                                                     <option value="">Tất cả</option>
-                                                    <option value="3">Tin cần bán gấp</option>
-                                                    <option value="2">Tin giá hấp dẫn</option>
-                                                    <option value="1">Tin rao cộng đồng miễn phí</option>
+                                                    <option value="3"   @if(request('post_type')==3) selected @endif>Tin cần bán gấp</option>
+                                                    <option value="2" @if(request('post_type')==2) selected @endif>Tin giá hấp dẫn</option>
+                                                    <option value="1" @if(request('post_type')==1) selected @endif>Tin rao cộng đồng miễn phí</option>
                                                 </select></dd>
                                         </dl>
                                     </div>
@@ -276,7 +275,7 @@
                     'type': 'GET',
                     'data': function (d) {
                         d.datefrom    =   $('#datefrom').val();
-                        d.datefrom    =   $('#dateto').val();
+                        d.dateto    =   $('#dateto').val();
                         d.re_category_id = $('#re_category_id').val();
                         d.re_type_id = $('#re_type_id').val();
                         d.district_id = $('#district_id').val();
