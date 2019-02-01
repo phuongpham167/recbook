@@ -109,7 +109,7 @@ class RealEstateController extends Controller
 
     public function data()
     {
-        $data = new RealEstate();
+        $data = RealEstate::query();
 
         if(!empty(\request('filter'))) {
             if(\request('filter') == 'tin-rao-het-han')
@@ -131,10 +131,13 @@ class RealEstateController extends Controller
         $end    =   !empty(\request('dateto'))?Carbon::createFromFormat('d/m/Y',\request('dateto'))->endOfDay():'';
 
         if($start != '' && $end != '')
-            $data   =   $data->where('created_at', '>=', $start)->where('created_at', '<=', $end);
+            $data   =   $data->where('post_date', '>=', $start)->where('post_date', '<=', $end);
 
         if(!empty(\request('type_tran')))
             $data = $data->where('type_tran',\request('type_tran'));
+
+        if(!empty(\request('re_category_id')))
+            $data = $data->where('re_category_id',\request('re_category_id'));
 
         $result = Datatables::of($data)
             ->addColumn('re_category_id', function($dt) {

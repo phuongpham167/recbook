@@ -37,7 +37,8 @@
                     <div>
 
                         <div class="_form search_listlandA_page">
-                            <form enctype="multipart/form-data" id="yw0" method="post">
+                            <form enctype="multipart/form-data" id="yw0" method="get">
+                                {{csrf_field()}}
                                 <div class="row">
 
                                     <div class="col-xs-4">
