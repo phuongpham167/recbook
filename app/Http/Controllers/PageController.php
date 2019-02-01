@@ -436,10 +436,7 @@ class PageController extends Controller
     {
         $query = RealEstate::select('id', 'title', 'short_description', 'detail', 'slug', 'code', 'district_id', 'don_vi',
             'area_of_premises', 'area_of_use', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date')
-            ->where(function($q){
-                $q->where('is_hot', 1)
-                    ->where('is_vip', '<>', 1);
-            })
+            ->where('vip_type', 1)
             ->where(function($q){
                 $q->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
                     ->orWhere('post_date', '>=', Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->subDays(Settings('system_changenametime'))->format('m/d/Y H:i A')));
@@ -449,7 +446,7 @@ class PageController extends Controller
             ->orderBy('post_date', 'desc');
 
 //        $query = $this->checkRegisterDate($query);
-        $results = $query->get();
+        $results = $query->paginate(get_config('itemsPerPage',30));
 
         $this->vipRealEstates = $this->getVipRealEstates();
 
