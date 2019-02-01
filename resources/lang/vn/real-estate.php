@@ -66,6 +66,7 @@ return [
     'ssSelectFirstType' => 'Nhóm bất động sản',
     'ssSelectFirstProvince' =>'Tất cả tỉnh/thành',
     'ssSelectFirstDistrict' =>'Tất cả quận huyện',
+    'ssSelectFirstWard' => 'Tất cả phường xã',
     'ssSelectFirstStreet' => 'Tất cả đường phố',
     'ssSelectFirstDirection' => 'Tất cả các hướng',
     'ssSelectFirstPrice' => 'Tất cả các giá',

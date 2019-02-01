@@ -34,7 +34,7 @@ use Illuminate\Support\Facades\Log;
 class PageController extends Controller
 {
     protected $menuFE, $vipRealEstates, $web_id;
-    protected $categories, $provinces, $districts, $streets, $directions, $projects;
+    protected $categories, $provinces, $districts, $wards, $streets, $directions, $projects;
 
     protected $service;
     protected $reCategoryService;
@@ -95,6 +95,7 @@ class PageController extends Controller
 
         $this->provinces = $this->provinceService->getListDropDown();
         $this->districts = $this->districtService->getListDropDown();
+        $this->wards = $this->wardService->getListDropDown();
         $this->streets = $this->streetService->getListDropDown();
         $this->directions = $this->directionService->getListDropDown();
         $this->projects = $this->projectService->getListDropDown();
@@ -236,6 +237,7 @@ class PageController extends Controller
             'reTypes' => $reTypes,
             'provinces' => $this->provinces,
             'districts' => $this->districts,
+            'wards' => $this->wards,
             'streets' => $this->streets,
             'directions' => $this->directions,
             'rangePrices' => $rangePrices,
@@ -350,6 +352,7 @@ class PageController extends Controller
             'reTypes' => $reTypes,
             'provinces' => $this->provinces,
             'districts' => $this->districts,
+            'wards' => $this->wards,
             'streets' => $this->streets,
             'directions' => $this->directions,
             'rangePrices' => $rangePrices,
@@ -420,6 +423,7 @@ class PageController extends Controller
                     'categories' => $this->categories,
                     'provinces' => $this->provinces,
                     'districts' => $this->districts,
+                    'wards' => $this->wards,
                     'streets' => $this->streets,
                     'directions' => $this->directions,
                     'projects' => $this->projects,
@@ -460,6 +464,7 @@ class PageController extends Controller
             'categories' => $this->categories,
             'provinces' => $this->provinces,
             'districts' => $this->districts,
+            'wards' => $this->wards,
             'streets' => $this->streets,
             'directions' => $this->directions,
             'projects' => $this->projects,
@@ -494,6 +499,7 @@ class PageController extends Controller
             'categories' => $this->categories,
             'provinces' => $this->provinces,
             'districts' => $this->districts,
+            'wards' => $this->wards,
             'streets' => $this->streets,
             'directions' => $this->directions,
             'projects' => $this->projects,
@@ -538,6 +544,7 @@ class PageController extends Controller
             'categories' => $this->categories,
             'provinces' => $this->provinces,
             'districts' => $this->districts,
+            'wards' => $this->wards,
             'streets' => $this->streets,
             'directions' => $this->directions,
             'projects' => $this->projects,
@@ -579,6 +586,7 @@ class PageController extends Controller
                 'categories' => $this->categories,
                 'provinces' => $this->provinces,
                 'districts' => $this->districts,
+                'wards' => $this->wards,
                 'streets' => $this->streets,
                 'directions' => $this->directions,
                 'projects' => $this->projects,
@@ -614,6 +622,7 @@ class PageController extends Controller
             'categories' => $this->categories,
             'provinces' => $this->provinces,
             'districts' => $this->districts,
+            'wards' => $this->wards,
             'streets' => $this->streets,
             'directions' => $this->directions,
             'projects' => $this->projects,
@@ -654,6 +663,7 @@ class PageController extends Controller
             'categories' => $this->categories,
             'provinces' => $this->provinces,
             'districts' => $this->districts,
+            'wards' => $this->wards,
             'streets' => $this->streets,
             'directions' => $this->directions,
             'projects' => $this->projects,
@@ -692,6 +702,7 @@ class PageController extends Controller
             'categories' => $this->categories,
             'provinces' => $this->provinces,
             'districts' => $this->districts,
+            'wards' => $this->wards,
             'streets' => $this->streets,
             'directions' => $this->directions,
             'projects' => $this->projects,
@@ -705,7 +716,7 @@ class PageController extends Controller
         $filter = $request->all();
 //        dd($filter);
         if($filter['Search']) {
-            $query = RealEstate::select('id', 'title', 'short_description', 'detail', 'slug', 'code', 'district_id', 'don_vi',
+            $query = RealEstate::select('id', 'title', 'short_description', 'detail', 'slug', 'code', 'district_id','province_id','ward_id','street_id', 'don_vi',
                 'area_of_premises', 'area_of_use', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date');
 
             if (isset($filter['Search']['cat_id']) && $filter['Search']['cat_id']) {
@@ -719,6 +730,9 @@ class PageController extends Controller
             }
             if (isset($filter['Search']['district_id']) && $filter['Search']['district_id']) {
                 $query->where('district_id', $filter['Search']['district_id']);
+            }
+            if (isset($filter['Search']['ward_id']) && $filter['Search']['ward_id']) {
+                $query->where('ward_id', $filter['Search']['ward_id']);
             }
             if (isset($filter['Search']['street_id']) && $filter['Search']['street_id']) {
                 $query->where('street_id', $filter['Search']['street_id']);
@@ -758,6 +772,7 @@ class PageController extends Controller
                 'categories' => $this->categories,
                 'provinces' => $this->provinces,
                 'districts' => $this->districts,
+                'wards' => $this->wards,
                 'streets' => $this->streets,
                 'directions' => $this->directions,
                 'projects' => $this->projects,
@@ -788,6 +803,7 @@ class PageController extends Controller
             'categories' => $this->categories,
             'provinces' => $this->provinces,
             'districts' => $this->districts,
+            'wards' => $this->wards,
             'streets' => $this->streets,
             'directions' => $this->directions,
             'projects' => $this->projects,
@@ -859,6 +875,7 @@ class PageController extends Controller
                     'reCategories' => $reCategories,
                     'provinces' => $this->provinces,
                     'districts' => $this->districts,
+                    'wards' => $this->wards,
                     'streets' => $this->streets,
                     'directions' => $this->directions,
                     'exhibits' => $exhibits,
