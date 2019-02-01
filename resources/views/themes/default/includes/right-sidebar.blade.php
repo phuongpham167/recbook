@@ -185,9 +185,9 @@ $filter = request()->all();
                                 </button>
                             </div>
                         </div>
-                        <div class="col-xs-12">
-                            <p>Có 135 dự án trong Thành phố</p>
-                        </div>
+                        {{--<div class="col-xs-12">--}}
+                            {{--<p>Có 135 dự án trong Thành phố</p>--}}
+                        {{--</div>--}}
                     </div>
                 </form>
             </div>
