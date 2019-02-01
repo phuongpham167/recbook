@@ -154,6 +154,10 @@ class AuthenticateController extends Controller
             $userInfo->certificate    =   'uploads/certificate/'.$userInfo->id.'/'.$request->certificate->getClientOriginalName();
         }
         $userInfo->save();
+        $user   =   auth()->user();
+        $user->phone    =   $request->phone;
+        $user->address  =   $request->address;
+        $user->save();
         if(!empty($request->subcribes)){
             auth()->user()->subcribes()->sync(explode(',',$request->subcribes));
         }
