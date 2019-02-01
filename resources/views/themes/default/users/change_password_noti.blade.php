@@ -13,7 +13,7 @@
 @endpush
 
 @section('content')
-    @include(theme(TRUE).'.includes.header')
+    @include(theme(TRUE).'.includes.user-info-header')
     <div class="content-body">
         <div class="slider">
             <div class="smart-search">
