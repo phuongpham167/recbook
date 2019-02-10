@@ -129,12 +129,7 @@
                                         @if ((\Auth::user() && \Auth::user()->id  == $data->id))
                                             @include(theme(TRUE).'.includes.left-menu')
                                         @endif
-                                        @if ((\Auth::user() && \Auth::user()->id  == $data->id)|| $isFriend || $data->group->public_permission == 1)
-                                            <p class="title-short-section">Dự án đã làm</p>
-                                            <div class="success-project border-block">
-                                                {{--<a href="#">Bán nhà số 44/54 Bạch Đằng</a>--}}
-                                            </div>
-                                        @endif
+
                                         {{--<p class="title-short-section">Dự án đã đăng</p>--}}
                                         {{--<div class="registered-project border-block">--}}
                                             {{--@foreach(\App\Freelancer::orderBy('created_at', 'desc')->where('user_id',auth()->user()->id)->take(15)->get() as $freelancer)--}}
@@ -587,6 +582,12 @@
                                             @foreach($joinedFreeLances as $joinedFreeLance)
                                                 <a href="{{route('freelancerDetail', ['id'=>$joinedFreeLance->freelancer->id, 'slug'=>to_slug($joinedFreeLance->freelancer->title)])}}" class="" >{{$joinedFreeLance->freelancer->title}}</a>
                                             @endforeach
+                                        </div>
+                                    @endif
+                                    @if ((\Auth::user() && \Auth::user()->id  == $data->id)|| $isFriend || $data->group->public_permission == 1)
+                                        <p class="title-short-section">Dự án đã làm</p>
+                                        <div class="success-project border-block">
+                                            {{--<a href="#">Bán nhà số 44/54 Bạch Đằng</a>--}}
                                         </div>
                                     @endif
                                 </div>
