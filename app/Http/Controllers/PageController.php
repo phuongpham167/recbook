@@ -527,7 +527,8 @@ class PageController extends Controller
             ->where('post_date', '<=', Carbon::now())
             ->where('web_id', $this->web_id)
             ->orderBy('post_date', 'desc')
-            ->where('is_public', 1);
+            ->where('is_public', 1)
+            ->where('public_site', 1);
 //        $query = $this->checkRegisterDate($query);
 
         $results = $query->paginate(get_config('itemsPerPage', 30));
