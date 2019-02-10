@@ -6,5 +6,5 @@
  * Time: 11:32 PM
  */
 return [
-    'codePrefix' => 'BDS',
+    'codePrefix' => 'REC',
 ];
