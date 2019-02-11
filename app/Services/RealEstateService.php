@@ -58,7 +58,7 @@ class RealEstateService
                 $thumbPath = public_path().'/storage/thumbs/' . $png_url;
                 $watermark_logo = public_path().'/images/watermark_logo.png';
 
-                $originImg = Image::make(file_get_contents($image))->insert($watermark_logo, 'bottom', 10, 10)->save($path);
+                $originImg = Image::make(file_get_contents($image))->insert($watermark_logo, 'top-left', 10, 10)->save($path);
                 $thumbnail = $originImg->resize(122, 91)->save($thumbPath);
                 $imagesVal[] = [
                     'link' => $root . '/storage/uploads/' . $png_url,
@@ -308,7 +308,7 @@ class RealEstateService
                 $thumbPath = public_path().'/storage/thumbs/' . $png_url;
                 $watermark_logo = public_path().'/images/watermark_logo.png';
 
-                $originImg = Image::make(file_get_contents($image))->insert($watermark_logo, 'bottom', 10, 10)->save($path);
+                $originImg = Image::make(file_get_contents($image))->insert($watermark_logo, 'top-left', 10, 10)->save($path);
                 $thumbnail = $originImg->resize(122, 91)->save($thumbPath);
                 $imagesVal[] = [
                     'link' => $root . '/storage/uploads/' . $png_url,
