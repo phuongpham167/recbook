@@ -114,7 +114,7 @@ class PageController extends Controller
             if($i == 6)
                 $query  =   $query->where(function($q){
                     $q->where('vip_type', 2)
-                        ->where('vip_type', 6);
+                        ->orWhere('vip_type', 6);
                 });
             else
                 $query  =   $query->where('vip_type', $i);
