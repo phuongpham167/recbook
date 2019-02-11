@@ -110,9 +110,15 @@ class PageController extends Controller
         for($i=1; $i<7; $i++){
             $query    = RealEstate::where('public_site', 1)->select('id', 'title', 'slug', 'short_description', 'detail', 'code', 'don_vi',
                 'area_of_premises', 'area_of_use', 'district_id', 'price', 'unit_id', 'is_vip', 'is_hot', 'vip_type',
-                'post_date', 'images')
-                ->where('vip_type', $i)
-                ->where(function($q){
+                'post_date', 'images');
+            if($i == 6)
+                $query  =   $query->where(function($q){
+                    $q->where('vip_type', 2)
+                        ->where('vip_type', 6);
+                });
+            else
+                $query  =   $query->where('vip_type', $i);
+            $query =    $query->where(function($q){
                     $q->whereNull('vip_expire_at')
                         ->orWhere('vip_expire_at', '>=', Carbon::now());
                 })
