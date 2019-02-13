@@ -140,6 +140,10 @@ Route::group(['middleware'=>'auth'], function(){
 
     Route::post('search-area', 'AreaController@searchArea');
 });
+Route::group(['prefix' => 'ajax'], function() {
+    Route::get('province', 'AjaxController@ajaxProvince')->name('ajaxProvince');
+});
+
 Route::group(['prefix' => 'du-an'], function () {
     Route::get('/', ['as' => 'freelancerList', 'uses' => 'FreelancerController@index']);
     Route::get('/chi-tiet/{id}/{slug}', ['as' => 'freelancerDetail', 'uses' => 'FreelancerController@show']);
@@ -160,7 +164,16 @@ Route::get('/customer-by-phone/{phone}', ['as' => 'customer-by-phone', 'uses' =>
 Route::get('404', ['as' => '404', 'uses' => 'ErrorController@notfound']);
 Route::get('500', ['as' => '500', 'uses' => 'ErrorController@fatal']);
 
-Route::get('/test', function (){
-    echo url()->current();
+Route::get('/tinh-thanh-quan-tam', function (){
+    $value = session('tinhthanhquantam');
+
+    if(!empty($value))
+        return $value;
+    else
+        return null;
+});
+
+Route::post('/tinh-thanh-quan-tam', function (){
+    session(['tinhthanhquantam' => request('tinhthanhquantam')]);
 });
 

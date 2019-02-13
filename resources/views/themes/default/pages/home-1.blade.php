@@ -25,6 +25,20 @@
             margin-top: 15px;
             margin-bottom: 15px;
         }
+        div.token-input-dropdown-bootstrap {
+            position: absolute;
+            width: 400px;
+            background-color: #fff;
+            overflow: hidden;
+            border-left: 1px solid #ccc;
+            border-right: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+            cursor: default;
+            z-index: 11001;
+        }
+        li.token-input-token {
+            max-width: 100% !important;
+        }
     </style>
 @endpush
 
@@ -589,14 +603,39 @@
             </div>
         </div>
     </div>
+    <div class="modal fade bs-example-modal-md" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="myModal" style="margin-top: 100px; border-radius: 0 !important;">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content" style="border-radius: 0 !important;">
+                <div class="modal-header" style="background: #0c4da2; color: white">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Bạn quan tâm đến bất động sản ở tỉnh thành nào?</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="province">
+                        <input type="text" class="form-control province" name="province" value=""/>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a type="button" class="btn btn-default" data-dismiss="modal">{{trans('system.cancel')}}</a>
+                    <a type="submit" class="btn btn-info btn-save" data-id="" data-dismiss="modal">{{trans('system.submit')}}</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
     @include(theme(TRUE).'.includes.footer')
 
     <link rel="stylesheet" href="{{ asset('css/main-1.css') }}"/>
+    <link rel="stylesheet" href="{{asset('plugins/jquery.tokenInput/token-input.css')}}" />
+    <link rel="stylesheet" href="{{asset('plugins/loopj-jquery-tokeninput/styles/token-input.css')}}" />
+    <link rel="stylesheet" href="{{asset('plugins/loopj-jquery-tokeninput/styles/token-input-bootstrap3.css')}}" />
 @endsection
 
 @push('js')
     <script src="{{ asset('js/jquery.flexslider.js') }}"></script>
+    <script src="{{asset('plugins\loopj-jquery-tokeninput\src\jquery.tokeninput.js')}}" ></script>
     <script>
         $('.search_slide ul li a').click(function() {
             $('.search_slide ul li').removeClass('active');
@@ -755,6 +794,27 @@
                 }
                 e.preventDefault(); // prevent the default action (scroll / move caret)
             });
+
+        // auto modal
+        $.get('<?php echo asset('tinh-thanh-quan-tam'); ?>', {_token: '{{csrf_token()}}'}, function(r){
+            console.log('a');
+        }).done(function(r) {
+            // if (r) {
+                $(window).load(function() {
+                    $('#myModal').modal('show');
+                    $('.province').tokenInput("{{asset('/ajax/province')}}", {
+                        theme: "bootstrap",
+                        queryParam: "term",
+                        zindex  :   9999,
+                        tokenLimit  :   1,
+                        hintText : 'Nhập tên tỉnh thành để tìm kiếm',
+                        onAdd   :   function(r){
+                            $('#method').val(r.method);
+                        }
+                    });
+                });
+            // }
+        });
 
     </script>
 @endpush
