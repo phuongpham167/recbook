@@ -25,7 +25,6 @@
             margin-top: 15px;
             margin-bottom: 15px;
         }
-<<<<<<< HEAD
         div.token-input-dropdown-bootstrap {
             position: absolute;
             width: 400px;
@@ -40,12 +39,9 @@
         li.token-input-token {
             max-width: 100% !important;
         }
-=======
         iframe  {
             max-width: 100%;
         }
-
->>>>>>> c1bfb584da59ff50124e6fb3351f0f736baa3c30
     </style>
 @endpush
 
@@ -600,27 +596,31 @@
             </div>
         </div>
     </div>
-    <div class="modal fade bs-example-modal-md" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="myModal" style="margin-top: 100px; border-radius: 0 !important;">
-        <div class="modal-dialog modal-md">
-            <div class="modal-content" style="border-radius: 0 !important;">
-                <div class="modal-header" style="background: #0c4da2; color: white">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h4 class="modal-title">Bạn quan tâm đến bất động sản ở tỉnh thành nào?</h4>
-                </div>
-                <div class="modal-body">
-                    <div id="province">
-                        <input type="text" class="form-control province" name="province" value=""/>
+    <form method="post" action="{{route('interested-provinces')}}">
+        {{csrf_field()}}
+        <div class="modal fade bs-example-modal-md" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="myModal" style="margin-top: 100px; border-radius: 0 !important;">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content" style="border-radius: 0 !important;">
+                    <div class="modal-header" style="background: #0c4da2; color: white">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title">Bạn quan tâm đến bất động sản ở tỉnh thành nào?</h4>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <a type="button" class="btn btn-default" data-dismiss="modal">{{trans('system.cancel')}}</a>
-                    <a type="submit" class="btn btn-info btn-save" data-id="" data-dismiss="modal">{{trans('system.submit')}}</a>
+                    <div class="modal-body">
+                        <div id="province">
+                            <input type="text" class="form-control province" name="provinces" value=""/>
+                        </div>
+                        {{session('tinhthanhquantam')}}
+                    </div>
+                    <div class="modal-footer" style="text-align: center">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                        <button type="submit" class="btn btn-info">{{trans('system.submit')}}</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </form>
 
     @include(theme(TRUE).'.includes.footer')
 
@@ -791,30 +791,27 @@
                 }
                 e.preventDefault(); // prevent the default action (scroll / move caret)
             });
-<<<<<<< HEAD
 
         // auto modal
         $.get('<?php echo asset('tinh-thanh-quan-tam'); ?>', {_token: '{{csrf_token()}}'}, function(r){
-            console.log('a');
         }).done(function(r) {
-            // if (r) {
+            console.log('value: '+r);
+            if (r=='') {
                 $(window).load(function() {
                     $('#myModal').modal('show');
                     $('.province').tokenInput("{{asset('/ajax/province')}}", {
                         theme: "bootstrap",
                         queryParam: "term",
                         zindex  :   9999,
-                        tokenLimit  :   1,
                         hintText : 'Nhập tên tỉnh thành để tìm kiếm',
                         onAdd   :   function(r){
                             $('#method').val(r.method);
                         }
                     });
                 });
-            // }
+            }
         });
 
-=======
         $(document).ready(function(){
             $('.vip3').bxSlider({
                 auto: true,
@@ -827,6 +824,5 @@
                 pager: false
             });
         });
->>>>>>> c1bfb584da59ff50124e6fb3351f0f736baa3c30
     </script>
 @endpush

@@ -217,10 +217,19 @@ Route::get('/tinh-thanh-quan-tam', function (){
     if(!empty($value))
         return $value;
     else
-        return null;
+        return '';
 });
 
-Route::post('/tinh-thanh-quan-tam', function (){
-    session(['tinhthanhquantam' => request('tinhthanhquantam')]);
+Route::post('/tinh-thanh-quan-tam',['as' => 'interested-provinces', function (){
+    session(['tinhthanhquantam' => request('provinces')]);
+    return redirect()->back();
+}]);
+
+Route::get('/xoa-session', function (){
+    session(['tinhthanhquantam' => '']);
+});
+
+Route::get('/t', function (){
+    print_r( 'session: '.session('tinhthanhquantam'));
 });
 
