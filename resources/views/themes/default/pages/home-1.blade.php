@@ -608,10 +608,8 @@
                         <h4 class="modal-title">Bạn quan tâm đến bất động sản ở tỉnh thành nào?</h4>
                     </div>
                     <div class="modal-body">
-                        <div id="province">
-                            <input type="text" class="form-control province" name="provinces" value=""/>
-                        </div>
-                        {{session('tinhthanhquantam')}}
+                        <input type="text" class="form-control province" name="provinces" value=""/>
+                        <input type="checkbox" name="provinces" value="0" /> Chọn tất cả
                     </div>
                     <div class="modal-footer" style="text-align: center">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
@@ -795,8 +793,8 @@
         // auto modal
         $.get('<?php echo asset('tinh-thanh-quan-tam'); ?>', {_token: '{{csrf_token()}}'}, function(r){
         }).done(function(r) {
-            console.log('value: '+r);
-            if (r=='') {
+            // console.log('value: '+r);
+            if (r=='' || r==null) {
                 $(window).load(function() {
                     $('#myModal').modal('show');
                     $('.province').tokenInput("{{asset('/ajax/province')}}", {

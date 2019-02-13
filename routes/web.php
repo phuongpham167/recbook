@@ -214,10 +214,7 @@ Route::get('500', ['as' => '500', 'uses' => 'ErrorController@fatal']);
 Route::get('/tinh-thanh-quan-tam', function (){
     $value = session('tinhthanhquantam');
 
-    if(!empty($value))
-        return $value;
-    else
-        return '';
+    return $value;
 });
 
 Route::post('/tinh-thanh-quan-tam',['as' => 'interested-provinces', function (){
@@ -227,6 +224,7 @@ Route::post('/tinh-thanh-quan-tam',['as' => 'interested-provinces', function (){
 
 Route::get('/xoa-session', function (){
     session(['tinhthanhquantam' => '']);
+    return redirect()->back();
 });
 
 Route::get('/t', function (){
