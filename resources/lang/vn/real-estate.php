@@ -41,7 +41,7 @@ return [
         'areaOfUse' => 'DTSD (m2)',
         'floor' => 'Số tầng',
         'price' => 'Giá',
-        'unit' => 'Đơn vị',
+        'unit' => 'Đơn vị tiền',
         'rangePrice' => 'Khoảng giá',
         'isDeal' => 'Có thỏa thuận',
         'postDate' => 'Ngày đăng',
@@ -52,7 +52,9 @@ return [
         'mapHelpBlock' => '(Nhấn và kéo điểm màu đỏ đến vị trí Bất động sản của bạn)',
         'detail' => 'Nội dung chi tiết',
         'source' => 'Nguồn tin',
-        'isPrivate' => 'Loại tin'
+        'isPrivate' => 'Loại tin',
+        'don_vi' => 'Đơn vị',
+        'mattien' => 'Mặt tiền'
     ],
     'isPrivateSelectText' => [
         'public' => 'Công cộng',
@@ -64,6 +66,7 @@ return [
     'ssSelectFirstType' => 'Nhóm bất động sản',
     'ssSelectFirstProvince' =>'Tất cả tỉnh/thành',
     'ssSelectFirstDistrict' =>'Tất cả quận huyện',
+    'ssSelectFirstWard' => 'Tất cả phường xã',
     'ssSelectFirstStreet' => 'Tất cả đường phố',
     'ssSelectFirstDirection' => 'Tất cả các hướng',
     'ssSelectFirstPrice' => 'Tất cả các giá',
@@ -77,6 +80,7 @@ return [
         'post_limit' => 'Đã hết số lượt đăng tin cho phép, hãy nâng cấp nhóm thành viên để đăng nhiều tin hơn!',
         'up_limit' => 'Đã hết số lượt up tin cho phép, hãy nâng cấp nhóm thành viên để up nhiều tin hơn!',
         'renewed_success' => 'Gia hạn thành công!',
+        'report_success' => 'Báo cáo thành công!',
     ],
     'list' => [
         'pageTitle' => 'Danh sách tin BĐS',

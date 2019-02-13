@@ -22,6 +22,13 @@
         font-size: 9px;
     }
 }
+.spin-message {
+    text-align: center;
+    i {
+        color: white;
+        font-size: 24px;
+    }
+}
 .detail-top {
     margin-bottom: 20px;
     .row-wrap {
@@ -232,8 +239,19 @@
     }
     .list-re {
         margin-top: 15px;
+        .re-code {
+            color: red;
+            font-weight: bold;
+        }
+        .title {
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .price-val {
+            font-size: 12px;
+        }
         .detail-item-wrap {
-            margin: 30px 0px;
+            margin: 10px 0px;
         }
     }
 //}
@@ -287,4 +305,7 @@
 .btn-cancel-edit-re {
     border-radius: 0;
     margin-right: 10px;
+}
+.text-upper {
+    text-transform: uppercase;
 }

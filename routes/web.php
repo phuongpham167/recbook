@@ -91,11 +91,11 @@ Route::group(['middleware'=>'auth'], function(){
         Route::get('/xoa', 'RealEstateController@delete');
         Route::get('/dang-bai', 'RealEstateController@publish');
         Route::post('/multi-delete', 'RealEstateController@multiDelete');
-        Route::get('/setvip', 'RealEstateController@setVip');
-        Route::get('/sethot', 'RealEstateController@setHot');
+        Route::post('/sethotvip', 'RealEstateController@setVipHot');
         Route::get('/up', 'RealEstateController@upPost');
         Route::get('/da-ban', 'RealEstateController@sold');
         Route::post('/gia-han', 'RealEstateController@renewed');
+        Route::post('/bao-cao',['as' => 're-report', 'uses' => 'RealEstateController@report']);
     });
 
     Route::group(['prefix' => 'du-an'], function () {
@@ -134,11 +134,58 @@ Route::group(['middleware'=>'auth'], function(){
         Route::get('/get-detail-re/{id}', ['as' => 'ajax.getDetailRe', 'uses' => 'RealEstateController@getDetailRe']);
         Route::post('/update-detail-re/{id}', ['as' => 'ajax.updateDetailRe', 'uses' => 'RealEstateController@updateDetailRe']);
         Route::get('user', 'AjaxController@ajaxUser');
+        Route::get('customer', 'AjaxController@ajaxCustomer');
         Route::get('street', 'AjaxController@ajaxStreet');
         Route::get('province', 'AjaxController@ajaxProvince')->name('ajaxProvince');
+        Route::get('/get-unread-message', ['as' => 'ajax.getUnreadMessage', 'uses' => 'ConversationController@getUnreadMessage']);
+        Route::post('/add-cil', ['as'=> 'ajax.addCil', 'uses' => 'RealEstateController@addCil']);
     });
 
     Route::post('search-area', 'AreaController@searchArea');
+
+
+    Route::group(['prefix'=>'khach-hang'], function(){
+        Route::get('', function(\App\DataTables\CustomerDatatable $dataTable) {
+            return $dataTable->with([
+                'user_id' => request('user_id'),
+                'datefrom' => request('datefrom'),
+                'dateto' => request('dateto'),
+                'phone' => request('phone'),
+                'source_id' => request('source_id'),
+                'type_id' => request('type_id')
+            ])->render('themes.default.customer.list');
+        })->name('customerList');
+        Route::get('data', ['as'=>'customerData', 'uses'=>'CustomerController@dataList']);
+        Route::get('them', ['as'=>'customerCreate', 'uses'=>'CustomerController@getCreate']);
+        Route::post('them', ['as'=>'customerCreate', 'uses'=>'CustomerController@postCreate']);
+        Route::get('xoa', ['as'=>'customerDelete', 'uses'=>'CustomerController@getDelete']);
+        Route::get('sua', ['as'=>'customerEdit', 'uses'=>'CustomerController@getEdit']);
+        Route::post('sua', ['as'=>'customerEdit', 'uses'=>'CustomerController@postEdit']);
+
+        Route::group(['prefix'=>'cham-soc'], function(){
+            Route::get('', ['as'=>'customerCare', 'uses'=>'CareController@index']);
+            Route::get('/data', ['as'=>'careData', 'uses'=>'CareController@dataList']);
+            Route::get('list', ['as'=>'customerCareList', 'uses'=>'CareController@list']);
+            Route::get('responses', ['as'=>'responseList', 'uses'=>'CareController@response']);
+            Route::get('suggest', ['as'=>'suggestResponse', 'uses'=>'CareController@suggest']);
+            Route::get('/del', ['as'=>'careDelete', 'uses'=>'CareController@getDelete']);
+            Route::get('/edit', ['as'=>'careEdit', 'uses'=>'CareController@getEdit']);
+            Route::get('/create', ['as'=>'careCreate', 'uses'=>'CareController@getCreate']);
+            Route::post('/create', ['as'=>'careCreate', 'uses'=>'CareController@postCreate']);
+        });
+
+        Route::group(['prefix'=>'lich-hen'], function(){
+            Route::get('', ['as'=>'scheduleList', 'uses'=>'ScheduleController@index']);
+            Route::get('/data', ['as'=>'scheduleData', 'uses'=>'ScheduleController@dataList']);
+            Route::get('/data2', ['as'=>'scheduleData2', 'uses'=>'ScheduleController@dataCustomer']);
+            Route::get('/xoa', ['as'=>'scheduleDelete', 'uses'=>'ScheduleController@getDelete']);
+            Route::get('/sua', ['as'=>'scheduleEdit', 'uses'=>'ScheduleController@getEdit']);
+            Route::post('/sua', ['as'=>'scheduleEdit', 'uses'=>'ScheduleController@postEdit']);
+            Route::get('/tao-moi', ['as'=>'scheduleCreate', 'uses'=>'ScheduleController@getCreate']);
+            Route::post('/tao-moi', ['as'=>'scheduleCreate', 'uses'=>'ScheduleController@postCreate']);
+        });
+    });
+
 });
 Route::group(['prefix' => 'ajax'], function() {
     Route::get('province', 'AjaxController@ajaxProvince')->name('ajaxProvince');

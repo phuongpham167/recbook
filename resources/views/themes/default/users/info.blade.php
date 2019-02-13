@@ -20,7 +20,7 @@
 @endpush
 
 @section('content')
-    @include(theme(TRUE).'.includes.header')
+    @include(theme(TRUE).'.includes.user-info-header')
 
     <div class="container-vina">
         <div class="row subpage">
@@ -47,14 +47,25 @@
                                         <dl>
                                             <dt class="txt_right">Họ và tên <span class="required">*</span></dt>
                                             <dd>
-                                                <input class="_required" name="full_name" id="full_name" type="text" maxlength="200" value="{{auth()->user()->userinfo->full_name}}">											<div class="errorMessage" id="Account_name_em_" style="display:none"></div>										</dd>
+                                                <input class="_required" name="full_name" id="full_name" type="text" maxlength="200" value="{{auth()->user()->userinfo->full_name}}">
+                                            </dd>
+                                        </dl>
+                                    </div>
+                                    <div class="col-xs-12">
+                                        <dl>
+                                            <dt class="txt_right">Hạng thành viên <span class="required">*</span></dt>
+                                            <dd>
+                                                <input class="_required" name="group" id="group" type="text" value="{{auth()->user()->group->name}}" disabled>
+                                                <a></a>
+                                            </dd>
                                         </dl>
                                     </div>
                                     <div class="col-xs-12">
                                         <dl>
                                             <dt class="txt_right">Nơi làm việc <span class="required">*</span></dt>
                                             <dd>
-                                                <input class="_required" name="company" id="company" type="text" maxlength="200" value="{{auth()->user()->userinfo->company}}">											<div class="errorMessage" id="Account_name_em_" style="display:none"></div>										</dd>
+                                                <input class="_required" name="company" id="company" type="text" maxlength="200" value="{{auth()->user()->userinfo->company}}">
+                                            </dd>
                                         </dl>
                                     </div>
 

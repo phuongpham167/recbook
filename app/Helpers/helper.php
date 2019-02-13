@@ -1,6 +1,8 @@
 <?php
 
 use App\Friend;
+use App\Menu;
+use App\RealEstate;
 use App\ShowingCfg;
 use App\WebsiteConfig;
 
@@ -5286,113 +5288,168 @@ function ads_display($location){
     return $banner;
 }
 function convert_number_to_words($number) {
+    return number_format($number);
+//    $hyphen      = ' ';
+//    $conjunction = '  ';
+//    $separator   = ' ';
+//    $negative    = 'âm ';
+//    $decimal     = ' phẩy ';
+//    $dictionary  = array(
+//        0                   => '0',
+//        1                   => '1',
+//        2                   => '2',
+//        3                   => '3',
+//        4                   => '4',
+//        5                   => '5',
+//        6                   => '6',
+//        7                   => '7',
+//        8                   => '8',
+//        9                   => '9',
+//        10                  => '10',
+//        11                  => '11',
+//        12                  => '12',
+//        13                  => '13',
+//        14                  => '14',
+//        15                  => '15',
+//        16                  => '16',
+//        17                  => '17',
+//        18                  => '18',
+//        19                  => '19',
+//        20                  => '20',
+//        30                  => '30',
+//        40                  => '40',
+//        50                  => '50',
+//        60                  => '60',
+//        70                  => '70',
+//        80                  => '80',
+//        90                  => '90',
+//        100                 => 'trăm',
+//        1000                => 'ngàn',
+//        1000000             => 'triệu',
+//        1000000000          => 'tỷ',
+//        1000000000000       => 'nghìn tỷ',
+//        1000000000000000    => 'ngàn triệu triệu',
+//        1000000000000000000 => 'tỷ tỷ'
+//    );
+//
+//    if (!is_numeric($number)) {
+//        return false;
+//    }
+//
+//    if (($number >= 0 && (int) $number < 0) || (int) $number < 0 - PHP_INT_MAX) {
+//// overflow
+//        trigger_error(
+//            'convert_number_to_words only accepts numbers between -' . PHP_INT_MAX . ' and ' . PHP_INT_MAX,
+//            E_USER_WARNING
+//        );
+//        return false;
+//    }
+//
+//    if ($number < 0) {
+//        return $negative . convert_number_to_words(abs($number));
+//    }
+//
+//    $string = $fraction = null;
+//
+//    if (strpos($number, '.') !== false) {
+//        list($number, $fraction) = explode('.', $number);
+//    }
+//
+//    switch (true) {
+//        case $number < 21:
+//            $string = $dictionary[$number];
+//            break;
+//        case $number < 100:
+//            $tens   = ((int) ($number / 10)) * 10;
+//            $units  = $number % 10;
+//            $string = $dictionary[$tens];
+//            if ($units) {
+//                $string .= $hyphen . $dictionary[$units];
+//            }
+//            break;
+//        case $number < 1000:
+//            $hundreds  = $number / 100;
+//            $remainder = $number % 100;
+//            $string = $dictionary[$hundreds] . ' ' . $dictionary[100];
+//            if ($remainder) {
+//                $string .= $conjunction . convert_number_to_words($remainder);
+//            }
+//            break;
+//        default:
+//            $baseUnit = pow(1000, floor(log($number, 1000)));
+//            $numBaseUnits = (int) ($number / $baseUnit);
+//            $remainder = $number % $baseUnit;
+//            $string = convert_number_to_words($numBaseUnits) . ' ' . $dictionary[$baseUnit];
+//            if ($remainder) {
+//                $string .= $remainder < 100 ? $conjunction : $separator;
+//                $string .= convert_number_to_words($remainder);
+//            }
+//            break;
+//    }
+//
+//    if (null !== $fraction && is_numeric($fraction)) {
+//        $string .= $decimal;
+//        $words = array();
+//        foreach (str_split((string) $fraction) as $number) {
+//            $words[] = $dictionary[$number];
+//        }
+//        $string .= implode(' ', $words);
+//    }
+//
+//    return $string;
+}
+function menu(){
+    return Menu::where('web_id', get_web_id())->where('menu_type', config('menu.mainMenuFE'))->first();
+}
+function post_left($user){
+    $postlimit   =   $user->group()->first()->post_limit;
+    $posted     =   RealEstate::where('posted_by', $user->id)->where('public_site', 1)->count();
+    $postLeft   =   !empty($postlimit)?$postlimit-$posted:null;
+    return ($postLeft!==null && $postLeft<1)?0:$postLeft;
+}
 
-    $hyphen      = ' ';
-    $conjunction = '  ';
-    $separator   = ' ';
-    $negative    = 'âm ';
-    $decimal     = ' phẩy ';
-    $dictionary  = array(
-        0                   => '0',
-        1                   => '1',
-        2                   => '2',
-        3                   => '3',
-        4                   => '4',
-        5                   => '5',
-        6                   => '6',
-        7                   => '7',
-        8                   => '8',
-        9                   => '9',
-        10                  => '10',
-        11                  => '11',
-        12                  => '12',
-        13                  => '13',
-        14                  => '14',
-        15                  => '15',
-        16                  => '16',
-        17                  => '17',
-        18                  => '18',
-        19                  => '19',
-        20                  => '20',
-        30                  => '30',
-        40                  => '40',
-        50                  => '50',
-        60                  => '60',
-        70                  => '70',
-        80                  => '80',
-        90                  => '90',
-        100                 => 'trăm',
-        1000                => 'ngàn',
-        1000000             => 'triệu',
-        1000000000          => 'tỷ',
-        1000000000000       => 'nghìn tỷ',
-        1000000000000000    => 'ngàn triệu triệu',
-        1000000000000000000 => 'tỷ tỷ'
-    );
+function credit($user_id, $value, $type = 1, $note) {
+    $user = \App\User::find($user_id);
 
-    if (!is_numeric($number)) {
-        return false;
+    if($type == 0)
+        $user->credits += $value;
+    else {
+        if($user->credits < $value)
+            return false;
+        $user->credits -= $value;
     }
 
-    if (($number >= 0 && (int) $number < 0) || (int) $number < 0 - PHP_INT_MAX) {
-// overflow
-        trigger_error(
-            'convert_number_to_words only accepts numbers between -' . PHP_INT_MAX . ' and ' . PHP_INT_MAX,
-            E_USER_WARNING
-        );
-        return false;
+    $user->save();
+
+    transaction_log($note, $value, $type);
+    return true;
+}
+
+function transaction_log($reason, $value, $type) {
+    $data = new \App\TransactionLog();
+    if(!auth()->check()) {
+        $data->id = null;
     }
+    else
+        $data->user_id = auth()->user()->id;
 
-    if ($number < 0) {
-        return $negative . convert_number_to_words(abs($number));
-    }
+    $data->reason = $reason;
+    $data->type = $type;
+    $data->value = $value;
+    $data->currency = \App\Currency::where('default',1)->first()->id;
+    $data->created_at = \Carbon\Carbon::now();
+    $data->save();
+}
 
-    $string = $fraction = null;
+function vip_type () {
+    $type = [
+      1 => 'Tin hot',
+        2 => 'Tin hot nổi bật',
+        3 => 'Tin vip',
+        4 => 'Tin vip nổi bật',
+        5 => 'Tin hấp dẫn',
+        6 => 'Tin vip phải',
+    ];
 
-    if (strpos($number, '.') !== false) {
-        list($number, $fraction) = explode('.', $number);
-    }
-
-    switch (true) {
-        case $number < 21:
-            $string = $dictionary[$number];
-            break;
-        case $number < 100:
-            $tens   = ((int) ($number / 10)) * 10;
-            $units  = $number % 10;
-            $string = $dictionary[$tens];
-            if ($units) {
-                $string .= $hyphen . $dictionary[$units];
-            }
-            break;
-        case $number < 1000:
-            $hundreds  = $number / 100;
-            $remainder = $number % 100;
-            $string = $dictionary[$hundreds] . ' ' . $dictionary[100];
-            if ($remainder) {
-                $string .= $conjunction . convert_number_to_words($remainder);
-            }
-            break;
-        default:
-            $baseUnit = pow(1000, floor(log($number, 1000)));
-            $numBaseUnits = (int) ($number / $baseUnit);
-            $remainder = $number % $baseUnit;
-            $string = convert_number_to_words($numBaseUnits) . ' ' . $dictionary[$baseUnit];
-            if ($remainder) {
-                $string .= $remainder < 100 ? $conjunction : $separator;
-                $string .= convert_number_to_words($remainder);
-            }
-            break;
-    }
-
-    if (null !== $fraction && is_numeric($fraction)) {
-        $string .= $decimal;
-        $words = array();
-        foreach (str_split((string) $fraction) as $number) {
-            $words[] = $dictionary[$number];
-        }
-        $string .= implode(' ', $words);
-    }
-
-    return $string;
+    return $type;
 }

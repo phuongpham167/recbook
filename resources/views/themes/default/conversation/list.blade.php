@@ -15,7 +15,7 @@
 
 @section('content')
     {{-- Include Header --}}
-    @include(theme(TRUE).'.includes.header')
+    @include(theme(TRUE).'.includes.user-info-header')
     {{--Page html content --}}
     <div class="content-body">
         <div class="container padding-top-30 padding-bottom-30">

@@ -14,7 +14,7 @@ $filter = request()->all();
                     <div class="row">
                         <div class="col-xs-12 item">
                             <div class="form-group">
-                                <select class="form-control" name="Search[cat_id]"
+                                <select class="form-control js-basic-single" name="Search[cat_id]"
                                         onchange="changeReCategory(this, 1)" id="search-category-id">
                                     <option value="">{{trans('real-estate.ssSelectFirstCat')}}</option>
                                     @foreach($categories as $category)
@@ -25,15 +25,15 @@ $filter = request()->all();
                         </div>
                         <div class="col-xs-12 item">
                             <div class="form-group">
-                                <select class="form-control" id="re-type1" name="Search[type_id]">
+                                <select class="form-control js-basic-single" id="re-type1" name="Search[type_id]">
                                     <option value="">{{trans('real-estate.ssSelectFirstType')}}</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-xs-12 item">
                             <div class="form-group">
-                                <select class="form-control"
-                                        name="Search[province_id]" id="Search_province_id">
+                                <select class="form-control js-basic-single"
+                                        name="Search[province_id]" id="Search_province_id" onchange="changeProvince(this)">
                                     <option value="">{{trans('real-estate.ssSelectFirstProvince')}}</option>
                                     @foreach($provinces as $province)
                                         <option value="{{$province->id}}" {{ ($filter && isset($filter['Search']['province_id']) && $filter['Search']['province_id'] == $province->id ) ?  'selected' : '' }}>{{$province->name}}</option>
@@ -43,28 +43,32 @@ $filter = request()->all();
                         </div>
                         <div class="col-xs-12 item">
                             <div class="form-group">
-                                <select class="form-control"
-                                        name="Search[district_id]" id="Search_district_id">
+                                <select class="form-control js-basic-single"
+                                        name="Search[district_id]" id="Search_district_id" onchange="changeDistrict(this)">
                                     <option value="">{{trans('real-estate.ssSelectFirstDistrict')}}</option>
-                                    @foreach($districts as $district)
-                                        <option value="{{$district->id}}" {{ ($filter && isset($filter['Search']['district_id']) && $filter['Search']['district_id'] == $district->id ) ?  'selected' : '' }}>{{$district->name}}</option>
-                                    @endforeach
+
                                 </select>
                             </div>
                         </div>
                         <div class="col-xs-12 item">
                             <div class="form-group">
-                                <select class="form-control" name="Search[street_id]" id="Search_street_id">
+                                <select class="form-control js-basic-single" name="Search[ward_id]" id="Search_ward_id" onchange="changeWard(this)">
+                                    <option value="">{{trans('real-estate.ssSelectFirstWard')}}</option>
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 item">
+                            <div class="form-group">
+                                <select class="form-control js-basic-single" name="Search[street_id]" id="Search_street_id">
                                     <option value="">{{trans('real-estate.ssSelectFirstStreet')}}</option>
-                                    @foreach($streets as $street)
-                                        <option value="{{$street->id}}" {{ ($filter && isset($filter['Search']['street_id']) && $filter['Search']['street_id'] == $street->id ) ?  'selected' : '' }}>{{$street->name}}</option>
-                                    @endforeach
+
                                 </select>
                             </div>
                         </div>
                         <div class="col-xs-12 item">
                             <div class="form-group">
-                                <select class="form-control" name="Search[direction_id]" id="Search_direction_id">
+                                <select class="form-control js-basic-single" name="Search[direction_id]" id="Search_direction_id">
                                     <option value="">{{trans('real-estate.ssSelectFirstDirection')}}</option>
                                     @foreach($directions as $direction)
                                         <option value="{{$direction->id}}" {{ ($filter && isset($filter['Search']['direction_id']) && $filter['Search']['direction_id'] == $direction->id ) ?  'selected' : '' }}>{{$direction->name}}</option>
@@ -75,7 +79,7 @@ $filter = request()->all();
 
                         <div class="col-xs-12 item">
                             <div class="form-group">
-                                <select class="form-control" id="range-price1" name="Search[range_price_id]">
+                                <select class="form-control js-basic-single" id="range-price1" name="Search[range_price_id]">
                                     <option value="">{{trans('real-estate.ssSelectFirstPrice')}}</option>
                                 </select>
                             </div>
@@ -122,7 +126,7 @@ $filter = request()->all();
                     <div class="row">
                         <div class="col-xs-12 item">
                             <div class="form-group">
-                                <select class="form-control" name="Search[project_id]" id="Search_project_id">
+                                <select class="form-control js-basic-single" name="Search[project_id]" id="Search_project_id">
                                     <option value="">{{trans('real-estate.ssSelectFirstProject')}}</option>
                                     @foreach($projects as $project)
                                         <option value="{{$project->id}}" {{ ($filter && isset($filter['Search']['project_id']) && $filter['Search']['project_id'] == $project->id ) ?  'selected' : '' }}>{{$project->name}}</option>
@@ -133,7 +137,7 @@ $filter = request()->all();
 
                         <div class="col-xs-12 item">
                             <div class="form-group">
-                                <select class="form-control" id="loday_project" name="Search[block_id]">
+                                <select class="form-control js-basic-single" id="loday_project" name="Search[block_id]">
                                     <option value="">{{trans('real-estate.ssSelectFirstBlock')}}</option>
                                 </select>
                             </div>
@@ -141,7 +145,7 @@ $filter = request()->all();
 
                         <div class="col-xs-12 item">
                             <div class="form-group">
-                                <select class="form-control"
+                                <select class="form-control js-basic-single"
                                         onchange="changeReCategory(this, 2)"
                                         name="Search[cat_id]" id="Search_kind_id">
                                     <option value="">{{trans('real-estate.ssSelectFirstCat')}}</option>
@@ -154,7 +158,7 @@ $filter = request()->all();
 
                         <div class="col-xs-12 item">
                             <div class="form-group">
-                                <select class="form-control" id="re-type2" name="Search[type_id]">
+                                <select class="form-control js-basic-single" id="re-type2" name="Search[type_id]">
                                     <option value="">{{trans('real-estate.ssSelectFirstType')}}</option>
                                 </select>
                             </div>
@@ -162,7 +166,7 @@ $filter = request()->all();
 
                         <div class="col-xs-12 item">
                             <div class="form-group">
-                                <select class="form-control" name="Search[direction_id]" id="Search_direction_id">
+                                <select class="form-control js-basic-single" name="Search[direction_id]" id="Search_direction_id">
                                     <option value="">{{trans('real-estate.ssSelectFirstDirection')}}</option>
                                     @foreach($directions as $direction)
                                         <option value="{{$direction->id}}" {{ ($filter && isset($filter['Search']['direction_id']) && $filter['Search']['direction_id'] == $direction->id ) ?  'selected' : '' }}>{{$direction->name}}</option>
@@ -173,7 +177,7 @@ $filter = request()->all();
 
                         <div class="col-xs-12 item">
                             <div class="form-group">
-                                <select class="form-control" id="range-price2" name="Search[range_price_id]">
+                                <select class="form-control js-basic-single" id="range-price2" name="Search[range_price_id]">
                                     <option value="">{{trans('real-estate.ssSelectFirstPrice')}}</option>
                                 </select>
                             </div>
@@ -185,18 +189,30 @@ $filter = request()->all();
                                 </button>
                             </div>
                         </div>
-                        <div class="col-xs-12">
-                            <p>Có 135 dự án trong Thành phố</p>
-                        </div>
+                        {{--<div class="col-xs-12">--}}
+                            {{--<p>Có 135 dự án trong Thành phố</p>--}}
+                        {{--</div>--}}
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
-
+<style>
+    .js-basic-single {
+        width: 100%;
+    }
+    .select2-selection__rendered{
+        line-height: 25px !important;
+    }
+</style>
 @push('js')
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
     <script>
+        $(document).ready(function() {
+            $('.js-basic-single').select2();
+        });
         function changeReCategory(e, num) {
             console.log($(e).val());
             let catId = $(e).val();
@@ -232,6 +248,75 @@ $filter = request()->all();
                         }
                     }
                     $('#range-price'+num).html(html);
+                }
+            });
+        }
+
+        function changeProvince(e) {
+            console.log($(e).val());
+            let provinceId = $(e).val();
+
+            $.ajax({
+                url: '/district-by-province/' + provinceId,
+                method: 'GET',
+                success: function (result) {
+                    // console.log('success');
+                    // console.log(result);
+                    let html = '<option value="">{{trans('real-estate.selectFirstOpt')}}</option>';
+                    if (result) {
+                        for (let r of result) {
+                            html += '<option value="'+ r.id +'">' + r.name + '</option>';
+                        }
+                    }
+                    if (html) {
+                        $('#Search_district_id').html(html);
+                    }
+                }
+            });
+        }
+
+        function changeDistrict(e) {
+            console.log($(e).val());
+            let districtId = $(e).val();
+
+            $.ajax({
+                url: '/ward-by-district/' + districtId,
+                method: 'GET',
+                success: function (result) {
+                    // console.log('success');
+                    // console.log(result);
+                    let html = '<option value="">{{trans('real-estate.selectFirstOpt')}}</option>';
+                    if (result) {
+                        for (let r of result) {
+                            html += '<option value="'+ r.id +'">' + r.name + '</option>';
+                        }
+                    }
+                    if (html) {
+                        $('#Search_ward_id').html(html);
+                    }
+                }
+            });
+        }
+
+        function changeWard(e) {
+            console.log($(e).val());
+            let wardId = $(e).val();
+
+            $.ajax({
+                url: '/street-by-ward/' + wardId,
+                method: 'GET',
+                success: function (result) {
+                    // console.log('success');
+                    // console.log(result);
+                    let html = '';
+                    if (result) {
+                        for (let r of result) {
+                            html += '<option value="'+ r.id +'">' + r.name + '</option>';
+                        }
+                    }
+                    if (html) {
+                        $('#Search_street_id').html(html);
+                    }
                 }
             });
         }

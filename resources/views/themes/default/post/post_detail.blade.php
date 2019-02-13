@@ -5,7 +5,7 @@
 @endsection
 
 @section('title')
-    Dothigroup
+    {{$data->title}}
 @endsection
 
 @push('style')

@@ -47,13 +47,14 @@ class AuthenticateController extends Controller
     public function login($username, $password, $remember=false,$api=false)
     {
         $logins =   json_decode(settings('system_loginas', json_encode(['id'])), 'true');
+        $loginPhone =   auth()->attempt(['phone'=>$username,'password'=>$password], $remember);
         if(in_array('username',$logins))
             $loginUsername   =   auth()->attempt(['name'=>$username,'password'=>$password], $remember);
         if(in_array('email',$logins))
             $loginEmail  =   auth()->attempt(['email'=>$username,'password'=>$password], $remember);
         if(in_array('id',$logins))
             $loginId  =   auth()->attempt(['id'=>$username,'password'=>$password], $remember);
-        if(!empty($loginEmail) || !empty($loginUsername) || !empty($loginId)){
+        if(!empty($loginEmail) || !empty($loginUsername) || !empty($loginId) || !empty($loginPhone)){
             if($api==true){
                 if(!empty($loginUsername))
                     return 'username';
@@ -153,6 +154,10 @@ class AuthenticateController extends Controller
             $userInfo->certificate    =   'uploads/certificate/'.$userInfo->id.'/'.$request->certificate->getClientOriginalName();
         }
         $userInfo->save();
+        $user   =   auth()->user();
+        $user->phone    =   $request->phone;
+        $user->address  =   $request->address;
+        $user->save();
         if(!empty($request->subcribes)){
             auth()->user()->subcribes()->sync(explode(',',$request->subcribes));
         }
@@ -188,6 +193,7 @@ class AuthenticateController extends Controller
             set_notice(trans('users.dont_allow'), 'warning');
             return redirect()->back();
         }
+        $data->phone =  $request->phone;
         $data->branch_id =   Branch::where('is_head','1')->first()->id;
         $data->web_id   =   get_web_id();
         $data->created_at   =   Carbon::now();
@@ -236,7 +242,7 @@ class AuthenticateController extends Controller
         $data->save();
 
         Mail::send('mail.mail_password', ['name'=>\request('email'),'code'=>$code], function($message){
-            $message->to( \request('email'), 'Visitor')->subject('Đặt lại mật khẩu tài khoản DoThiGroup');
+            $message->to( \request('email'), 'Visitor')->subject('Đặt lại mật khẩu tài khoản Recbook');
         });
 
         set_notice(trans('page.send_success'), 'success');

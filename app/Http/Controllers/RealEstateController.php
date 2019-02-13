@@ -3,13 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Account;
+use App\Currency;
 use App\DataTables\RealEstatesDataTable;
+use App\HotVip;
 use App\Http\Requests\HotVipRequest;
 use App\Http\Requests\RealEstateRequest;
 use App\Menu;
+use App\Province;
 use App\RealEstate;
 use App\Receipt;
 use App\ReceiptType;
+use App\ReReport;
+use App\Scopes\PrivateScope;
+use App\Scopes\PublicScope;
 use App\Services\BlockService;
 use App\Services\ConstructionTypeService;
 use App\Services\DirectionService;
@@ -103,38 +109,35 @@ class RealEstateController extends Controller
 
     public function data()
     {
-        $data = new RealEstate();
+        $data = RealEstate::query();
 
         if(!empty(\request('filter'))) {
             if(\request('filter') == 'tin-rao-het-han')
-                $data = $data->where('posted_by',auth()->user()->id)->where(function($q){
-                    $q->where('expire_date','<',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
-                        ->orWhere('post_date', '<', Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->subDays(get_config('expireRealEstate', 30))->format('m/d/Y H:i A')));
-                });
+                $data = $data->where('posted_by',auth()->user()->id)->where('expire_date','<',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')));
 
             if(\request('filter') == 'tin-rao-cho-duyet')
-                $data = $data->where('posted_by',auth()->user()->id)->where('approved','0')->where('draft', 0)->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
-                        ->where('post_date', '>=', Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->subDays(get_config('expireRealEstate', 30))->format('m/d/Y H:i A')));
+                $data = $data->where('posted_by',auth()->user()->id)->where('approved','0')->where('draft', 0)->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')));
 
             if(\request('filter') == 'tin-rao-nhap')
-                $data = $data->where('posted_by',auth()->user()->id)->where('draft','1')->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
-                    ->where('post_date', '>=', Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->subDays(get_config('expireRealEstate', 30))->format('m/d/Y H:i A')));
+                $data = $data->where('posted_by',auth()->user()->id)->where('draft','1')->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')));
 
             if(\request('filter') == 'tin-rao-da-xoa')
                 $data = $data->where('posted_by',auth()->user()->id)->onlyTrashed()->get();
         }
         else
-            $data = $data->where('posted_by',auth()->user()->id)->where('approved', 1)->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
-                ->where('post_date', '>=', Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->subDays(get_config('expireRealEstate', 30))->format('m/d/Y H:i A')));
+            $data = $data->where('posted_by',auth()->user()->id)->where('approved', 1)->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')));
 
         $start  =   !empty(\request('datefrom'))?Carbon::createFromFormat('d/m/Y',\request('datefrom'))->startOfDay():'';
         $end    =   !empty(\request('dateto'))?Carbon::createFromFormat('d/m/Y',\request('dateto'))->endOfDay():'';
 
         if($start != '' && $end != '')
-            $data   =   $data->where('created_at', '>=', $start)->where('created_at', '<=', $end);
+            $data   =   $data->where('post_date', '>=', $start)->where('post_date', '<=', $end);
 
-        if(!empty(\request('type_tran')))
-            $data = $data->where('type_tran',\request('type_tran'));
+        if(!empty(\request('re_type_id')))
+            $data = $data->where('re_type_id',\request('re_type_id'));
+
+        if(!empty(\request('re_category_id')))
+            $data = $data->where('re_category_id',\request('re_category_id'));
 
         $result = Datatables::of($data)
             ->addColumn('re_category_id', function($dt) {
@@ -142,13 +145,15 @@ class RealEstateController extends Controller
             })
             ->addColumn('title', function($dt) {
                 $title = null;
-                if($dt->is_hot == 1)
-                    $title .= '<img src="'.asset('/images/vip1.gif').'"> ';
-                if($dt->is_vip == 1)
-                    $title .= '<img src="'.asset('/images/vip2.gif').'"> ';
+                if($dt->vip_expire_at >= Carbon::now()){
+                    if($dt->vip_type == 1 || $dt->vip_type == 2)
+                        $title .= '<img src="'.asset('/images/vip1.gif').'"> ';
+                    else if($dt->vip_type == 3 || $dt->vip_type == 4)
+                        $title .= '<img src="'.asset('/images/vip2.gif').'"> ';
+                }
                 $title .= $dt->title;
-
-                return $title;
+                $slug   =   !empty($dt->slug)?$dt->slug:to_slug($dt->title);
+                return "<a href='".route('detail-real-estate', ['slug'=>$slug."-".$dt->id])."' target='_blank'>".$title."</a> ";
             })
             ->addColumn('re_type_id', function($dt) {
                 return $dt->reType ? $dt->reType->name : '';
@@ -162,45 +167,24 @@ class RealEstateController extends Controller
 
                 $manage .= '  ' . a('bat-dong-san/sua', 'id=' . $dt->id, trans('g.edit'), ['class' => 'btn btn-xs btn-default']);
                 $manage .= '  ' . a('#a', '', trans('g.renewed'), ['class' => 'btn btn-xs btn-primary btn-renewed', 'id' => $dt->id]);
-                if($dt->expire_date >= Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')) && $dt->post_date >= Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->subDays(get_config('expireRealEstate', 30))->format('m/d/Y H:i A'))) {
+                if($dt->expire_date >= Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')) ) {
 
                     if(\request('filter') == 'tin-rao-nhap')
                         $manage .=   '  '.a('bat-dong-san/dang-bai', 'id='.$dt->id,trans('g.post'), ['class'=>'btn btn-xs btn-info']);
 
-                    if($dt->is_vip == 0) {
-                        $manage .= ' <button type="button" class="btn btn-xs btn-success" data-toggle="popover" title="'.trans('system.pick_time').'" data-placement="left" data-content="
-                                                <form action=\''.asset("bat-dong-san/setvip").'\'>
-                                                <input type=\'hidden\' name=\'id\' value=\''.$dt->id.'\'>
-                                                <select name=\'vip_time\' id=\'vip_time\'>
-                                                    <option value=\'1\'>1 ngày</option>
-                                                    <option value=\'7\'>7 ngày</option>
-                                                    <option value=\'30\'>30 ngày</option>
-                                                    <option value=\'90\'>90 ngày</option>
-                                                </select>
-                                                <button type=\'submit\' class=\'btn btn-green\'> Gửi</button>
-                                                </form>
-                                                "><i class=\'fa fa-star-o\' aria-hidden=\'true\'></i> '.trans('g.setvip').'</button>';
-                    }
-                    if($dt->is_hot == 0) {
-                        $manage .= ' <button type="button" class="btn btn-xs btn-success" data-toggle="popover" title="'.trans('system.pick_time').'" data-placement="left" data-content="
-                                                <form method=\'get\' action=\''.asset("bat-dong-san/sethot?id=").$dt->id.'\'>
-                                                <input type=\'hidden\' name=\'id\' value=\''.$dt->id.'\'>
-                                                <select name=\'hot_time\' id=\'hot_time\'>
-                                                    <option value=\'1\'>1 ngày</option>
-                                                    <option value=\'7\'>7 ngày</option>
-                                                    <option value=\'30\'>30 ngày</option>
-                                                    <option value=\'90\'>90 ngày</option>
-                                                </select>
-                                                <button type=\'submit\' class=\'btn btn-green\'> Gửi </button>
-                                                </form>
-                                                "><i class=\'fa fa-star\' aria-hidden=\'true\'></i> '.trans('g.sethot').'</button>';
-                    }
+                    $manage .= '  ' . a('#a', '', trans('g.hotvip'), ['class' => 'btn btn-xs btn-success btn-hotvip', 'id' => $dt->id, 'hot' => number_format(HotVip::where('province_id', $dt->province_id)->first()->hot_value)
+                        ,'hot_hl' => number_format(HotVip::where('province_id', $dt->province_id)->first()->hot_highlight_value)
+                        ,'vip' => number_format(HotVip::where('province_id', $dt->province_id)->first()->vip_value)
+                        ,'vip_hl' => number_format(HotVip::where('province_id', $dt->province_id)->first()->vip_highlight_value)
+                        ,'i_value' => number_format(HotVip::where('province_id', $dt->province_id)->first()->interesting_value)
+                        ,'vip_right' => number_format(HotVip::where('province_id', $dt->province_id)->first()->vip_right_value)]);
+
                     if($dt->approved)
                         $manage .= '  ' . a('bat-dong-san/up', 'id=' . $dt->id, trans('g.up'), ['class' => 'btn btn-xs btn-info']);
                     if($dt->sold == 1)
-                        $manage .= a('#','id='.$dt->id,trans('g.sold'), ['class'=>'btn btn-xs btn-default btn-is-disabled']);
+                        $manage .=' '. a('#','id='.$dt->id,trans('g.sold'), ['class'=>'btn btn-xs btn-default btn-is-disabled']);
                     else
-                        $manage .= a('bat-dong-san/da-ban','id='.$dt->id,trans('g.sold'), ['class'=>'btn btn-xs btn-info'],'#',
+                        $manage .= ' '.a('bat-dong-san/da-ban','id='.$dt->id,trans('g.sold'), ['class'=>'btn btn-xs btn-info'],'#',
                             "return bootbox.confirm('".trans('system.sold_confirm')."', function(result){if(result==true){window.location.replace('".asset('bat-dong-san/da-ban?id='.$dt->id)."')}})");
                 }
                 else {
@@ -259,6 +243,8 @@ class RealEstateController extends Controller
 
     public function store(RealEstateRequest $request)
     {
+//        print_r($request->all());
+//        exit();
         $result = $this->service->store($request->all());
         if($result) {
             set_notice(trans('real-estate.message.createSuccess'), 'success');
@@ -317,15 +303,33 @@ class RealEstateController extends Controller
 
     public function renewed()
     {
-        $data = RealEstate::find(\request('id'));
+        $data = RealEstate::where('posted_by',auth()->user()->id)->where('id',\request('id'))->first();
 
-        if ($data) {
-            $data->expire_date = Carbon::createFromFormat('Y-m-d', $data->expire_date)->addDays(\request('days'));
+        if (!empty($data)) {
+            $data->expire_date = Carbon::createFromFormat('Y-m-d H:i:s', $data->expire_date)->addDays(\request('days'));
             $data->save();
             set_notice(trans('real-estate.message.renewed_success'), 'success');
             return redirect()->back()->withInput();
         }
-        set_notice(trans('real-estate.message.error'), 'error');
+        set_notice(trans('real-estate.message.error'), 'warning');
+        return redirect('realEstateList');
+    }
+
+    public function report()
+    {
+        $data = RealEstate::find(\request('id'));
+
+        if ($data) {
+            $report = new ReReport();
+            $report->user_id = auth()->user()->id;
+            $report->real_estate_id = $data->id;
+            $report->type = \request('report_type');
+            $report->content = \request('report_content');
+            $report->save();
+            set_notice(trans('real-estate.message.report_success'), 'success');
+            return redirect()->back();
+        }
+        set_notice(trans('real-estate.message.error'), 'warning');
         return redirect('realEstateList');
     }
 
@@ -381,33 +385,50 @@ class RealEstateController extends Controller
         return response()->json($result);
     }
 
-    public function setVip(HotVipRequest $request)
+    public function setVipHot(HotVipRequest $request)
     {
         $data   =   RealEstate::find($request->id);
         if(!empty($data)){
 
-            $data->is_vip = 1;
+            $data->vip_type = $request->vip_type;
             $data->vip_expire_at = Carbon::now()->addDay($request->vip_time);
-            $data->save();
-            set_notice(trans('system.set_vip_success').$request->vip_time.' ngày thành công!', 'success');
+            if($request->vip_type == 1){
+                $price = HotVip::where('province_id', $data->province_id)->first()->hot_value;
+                $type = 'tin hot';
+            }
+            else if($request->vip_type == 2){
+                $price = HotVip::where('province_id', $data->province_id)->first()->hot_highlight_value;
+                $type = 'tin hot nổi bật';
+            }
+            else if($request->vip_type == 3){
+                $price = HotVip::where('province_id', $data->province_id)->first()->vip_value;
+                $type = 'tin vip';
+            }
+            else if($request->vip_type == 4){
+                $price = HotVip::where('province_id', $data->province_id)->first()->vip_highlight_value;
+                $type = 'tin vip nổi bật';
+            }
+            else if($request->vip_type == 5){
+                $price = HotVip::where('province_id', $data->province_id)->first()->interesting_value;
+                $type = 'tin hấp dẫn';
+            }
+            else if($request->vip_type == 6){
+                $price = HotVip::where('province_id', $data->province_id)->first()->vip_right_value;
+                $type = 'tin vip phải';
+            }
+
+
+            $value = $request->vip_time*$price;
+
+            if(credit(auth()->user()->id,$value,1, 'nâng cấp '.$type.' cho id '.$data->id.' trong '.$request->vip_time.' ngày')){
+                $data->save();
+                set_notice(trans('system.set_vip_success').$type.' '.$request->vip_time.' ngày thành công!', 'success');
+            }
+            else
+                set_notice(trans('system.credit_fail'), 'warning');
         }else
             set_notice(trans('system.not_exist'), 'warning');
 
-//        echo $request->id;
-        return redirect()->back();
-    }
-
-    public function setHot(HotVipRequest $request)
-    {
-        $data   =   RealEstate::find($request->id);
-        if(!empty($data)){
-
-            $data->is_hot = 1;
-            $data->hot_expire_at = Carbon::now()->addDay($request->hot_time);
-            $data->save();
-            set_notice(trans('system.set_hot_success').$request->hot_time.' ngày thành công!', 'success');
-        }else
-            set_notice(trans('system.not_exist'), 'warning');
         return redirect()->back();
     }
 
@@ -487,8 +508,9 @@ class RealEstateController extends Controller
     {
         $result = false;
         if ($id) {
-            $re = RealEstate::find($id);
+            $re = RealEstate::withoutGlobalScope(PrivateScope::class)->find($id);
             if ($re) {
+
                 $result = $this->service->updateAjax(request()->all());
             }
         }
@@ -538,5 +560,24 @@ class RealEstateController extends Controller
         }
         set_notice(trans('real-estate.message.error'), 'warning');
         return redirect()->back();
+    }
+
+    public function addCil() {
+        $result = $this->service->store(request()->all());
+        if($result) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Thêm thành công',
+                'data' => [
+                    're' => $result
+                ]
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Có lỗi xảy ra. vui lòng thử lại',
+                'data' => []
+            ]);
+        }
     }
 }

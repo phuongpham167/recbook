@@ -9,7 +9,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand visible-xs" href="{{ route('home') }}">DoThiGroup</a>
+            <a class="navbar-brand visible-xs" href="{{ route('home') }}">Recbook.vn</a>
         </div>
         <div class="collapse navbar-collapse main-menu-list" id="myNavbar">
             <ul class="nav navbar-nav">
@@ -25,6 +25,7 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 @if (auth()->check())
+                    <li><a href="{{ route('home') }}" style="text-transform: capitalize">{{ trans('header.navbar-item.home') }}</a></li>
                     <li>
                         @php
                             $avatar = auth()->user()->userinfo->avatar ? auth()->user()->userinfo->avatar : '/images/default-avatar.png';
@@ -33,7 +34,6 @@
                             <img class="img-responsive header-avatar" src="{{$avatar}}" > <span class="header-name">{{auth()->user()->userinfo->full_name}}</span>
                         </a>
                     </li>
-                    <li class="home-link"><a href="{{ route('home') }}" style="text-transform: capitalize">{{ trans('header.navbar-item.home') }}</a></li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#" title="Lời mời kết bạn"><i class="fa fa-users" aria-hidden="true"></i></a>
                         <ul class="dropdown-menu friend-request-list">
@@ -43,16 +43,16 @@
                             @endphp
                             @if(count($authFriendRequestLists) > 0)
                                 @foreach($authFriendRequestLists as $authFriendRequest)
-                                <li><a>{{($authFriendRequest->fuser1->userinfo->full_name)? ($authFriendRequest->fuser1->userinfo->full_name):''}}</a> <a href="{{route('friend.confirm.request', [($authFriendRequest->fuser1->id)?($authFriendRequest->fuser1->id):''])}}" class="btn btn-primary pull-right btn-accept-rq"><i class="fa fa-plus"></i> Chấp nhận</a></li>
+                                <li><a style="color: white !important">{{($authFriendRequest->fuser1->userinfo->full_name)? ($authFriendRequest->fuser1->userinfo->full_name):''}}</a> <a href="{{route('friend.confirm.request', [($authFriendRequest->fuser1->id)?($authFriendRequest->fuser1->id):''])}}" class="btn btn-primary pull-right btn-accept-rq"><i class="fa fa-plus"></i> Chấp nhận</a></li>
                                 @endforeach
                             @else
-                                <li><a class="notice_dropdown">Không có lời mời kết bạn nào</a></li>
+                                <li><a class="notice_dropdown" style="color: white !important">Không có lời mời kết bạn nào</a></li>
                             @endif
                         </ul>
                     </li>
                     <li class="dropdown">
                         {{--<a href="{{ route('chat') }}" title="Tin nhắn"><i class="fa fa-comment" aria-hidden="true"></i></a>--}}
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true" title="Tin nhắn"><i class="fa fa-comment" aria-hidden="true"></i>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true" title="Tin nhắn" id="drop-message"><i class="fa fa-comment" aria-hidden="true"></i>
                             <?php $unseen_conversation = \App\Conversation::whereHas('messages', function ($q) {$q->where('user_id','<>',auth()->user()->id)->where('is_read',0);})->where(function ($q) {
                                 $q->where('user1',auth()->user()->id)->orWhere('user2',auth()->user()->id);
                             })->count() ?>
@@ -61,30 +61,14 @@
                             @endif
                         </a>
                         <ul class="dropdown-menu message_dropdown">
-                            <li class="header">Bạn có {{$unseen_conversation}} tin nhắn chưa đọc</li>
+                            <li class="spin-message"><i class="fa fa-spinner fa-spin" style="font-size:24px"></i></li>
+                            <li class="header" id="unread-inform" style="color: #fff">Bạn có <span id="unread-count">{{$unseen_conversation}}</span> tin nhắn chưa đọc</li>
 
-                            @foreach(\App\Conversation::orderBy('created_at', 'desc')->where(function ($q) {
-                                $q->where('user1',auth()->user()->id)->orWhere('user2',auth()->user()->id);
-                            })->whereHas('messages', function ($q) {$q->where('user_id','<>',auth()->user()->id)->where('is_read',0);})->get() as $item)
-                                <li class="row" style="border-bottom: 1px solid #dddfe2;">
-                                    <a role="button" class="notice_dropdown" style="padding: 0 !important; display: block" href="{{asset('conversation').'/'.$item->id}}">
-                                        <div class="pull-left">
-                                            <img width="50px" src="/images/default-avatar.png" class="img-circle" alt="User Image">
-                                        </div>
-                                        <div class="pull-left" style="margin-left: 10px; display: block; width: 80%">
-                                            <p>
-                                                <?php
-                                                    $unseen_message =  \App\Message::orderBy('created_at', 'desc')->where('conversation_id',$item->id)->where('user_id','<>',auth()->user()->id)->where('is_read',0)->take(1)->first();
-                                                ?>
-                                                {{\App\User::find($unseen_message->user_id)?\App\User::find($unseen_message->user_id)->name:$unseen_message->user_id}}
-                                                <small class="pull-right" style="margin-right: 10px; color: #cacaca"> <i class="fa fa-clock-o"></i> {{Carbon\Carbon::parse($unseen_message->created_at)->diffForHumans(\Carbon\Carbon::now())}}</small>
-                                            </p>
-                                            <span style="font-size: 12px">{{trim_text($unseen_message->text,40)}}</span>
-                                        </div>
-                                    </a>
-                                </li>
-                            @endforeach
-                            <li class="footer"><a style="color: black" href="{{asset('tin-nhan')}}">Xem tất cả tin nhắn</a></li>
+                            <div class="unread-message-wrap" style="padding: 0 25px;">
+
+                            </div>
+
+                            <li class="footer"><a style="color: white" href="{{asset('tin-nhan')}}">Xem tất cả tin nhắn</a></li>
                         </ul>
                         {{--<ul class="dropdown-menu">--}}
                         {{--</ul>--}}
@@ -124,3 +108,57 @@
         line-height: .9;
    }
 </style>
+
+@push('js')
+    <script>
+        $('#drop-message').on('click', function (e) {
+            $('.spin-message').removeClass('hidden');
+            $('.unread-message-wrap').html('');
+            if (!$('#unread-inform').hasClass('hidden')) {
+                $('#unread-inform').addClass('hidden');
+            }
+            $.ajax({
+                url: '/ajax/get-unread-message',
+                method: 'GET',
+                success: function (data) {
+                    if (data.success) {
+                        $('.spin-message').addClass('hidden');
+                        $('#unread-inform').removeClass('hidden');
+                        $('#unread-count').text(data.data.unreadCount);
+                        let unreadMessageMarkup = '';
+                        for (let u of data.data.listUnread) {
+                            console.log(u);
+                            let uDis = u.unreadMessage.user ? u.unreadMessage.user.name : u.unreadMessage.user_id;
+                            let text = u.unreadMessage.text.length > 40 ? u.unreadMessage.text.substr(0, 40) + '...' : u.unreadMessage.text;
+                            moment.locale('vi');
+                            let timeAgo = moment(u.unreadMessage.created_at).fromNow();
+                            unreadMessageMarkup += '<li class="row" style="border-bottom: 1px solid #dddfe2;">' +
+                                    '<a role="button" class="notice_dropdown" style="padding: 0 !important; display: block" href="/conversation' + '/' + u.id + '">' +
+                                        '<div class="pull-left">' +
+                                            '<img width="50px" src="/images/default-avatar.png" class="img-circle" alt="User Image">' +
+                                        '</div>' +
+                                        '<div class="pull-left" style="margin-left: 10px; display: block; width: 80%;color: #fff;">' +
+                                            '<p>' +
+                                                uDis +
+                                                '<small class="pull-right" style="margin-right: 10px; color: #cacaca"> <i class="fa fa-clock-o"></i>' +
+                                                    timeAgo +
+                                                '</small>' +
+                                            '</p>' +
+                                            '<span style="font-size: 12px">' +
+                                                text +
+                                            '</span>' +
+                                        '</div>' +
+                                    '</a>' +
+                                '</li>';
+                        }
+                        console.log(unreadMessageMarkup);
+                        $('.unread-message-wrap').html(unreadMessageMarkup);
+                    }
+                },
+                error: function (err) {
+                    // console.log(err);
+                }
+            });
+        });
+    </script>
+@endpush

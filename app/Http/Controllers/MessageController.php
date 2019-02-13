@@ -13,6 +13,7 @@ class MessageController extends Controller
     public function store(Request $request){
         $conversation = Conversation::findOrFail($request->conversation_id);
         if($conversation->user1 == Auth::user()->id || $conversation->user2 == Auth::user()->id){
+            Message::where('conversation_id', $conversation->id)->where('user_id', '<>', Auth::user()->id)->update(['is_read' => 1]);
             $message = new Message;
             $message->conversation_id = $request->conversation_id;
             $message->user_id = Auth::user()->id;

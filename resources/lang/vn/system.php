@@ -80,7 +80,7 @@ return [
     'ward'   =>  'Phường/Xã',
     'street'   =>  'Đường phố',
     'searchPlaceholder' => 'Từ khóa, mã số tin, số đt',
-    'set_vip_success'   =>  'Đăng ký tin vip ',
+    'set_vip_success'   =>  'Đăng ký ',
     'set_hot_success'   =>  'Đăng ký tin hot ',
     'not_enough_info'   =>  'Bạn chưa điền đầy đủ thông tin!',
     'up_post_success'   =>  'Up tin thành công!',
@@ -88,4 +88,7 @@ return [
     'sold_confirm'   =>  'Xác nhận đã bán?',
     'close_confirm'   =>  'Xác nhận đóng dự án?',
     'receive_commission'   =>  'Phần trăm hoa hồng',
+    'credit_fail'   =>  'Tài khoản của bạn không đủ để thực hiện giao dịch này!',
+    'hotvip'   =>  'Nâng cấp tin hot/vip',
+    'purchase_fail'   =>  'Tài khoản của bạn không đủ để thực hiện giao dịch này!',
 ];

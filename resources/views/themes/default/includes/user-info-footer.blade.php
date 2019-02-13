@@ -48,7 +48,7 @@
 
                 <p><span style="font-size:14px"><strong>Tel: </strong>0225.3.68.67.68​ - 0225.3.68.67.69</span></p>
 
-                <p><span style="font-size:14px"><strong>Email:</strong>&nbsp;<span style="color:#0000CD">dothigroup.vn@gmail.com</span></span></p>
+                <p><span style="font-size:14px"><strong>Email:</strong>&nbsp;<span style="color:#0000CD">recbook.vn.vn@gmail.com</span></span></p>
 
                 <p><span style="font-size:14px"><strong>Mã số thuế (Mã số Doanh nghiệp): </strong><span style="color:#0000CD"><strong><span style="background-color:rgb(245, 245, 245)">0201868420</span></strong></span></span></p>
 

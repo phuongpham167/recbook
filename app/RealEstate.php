@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Scopes\PrivateScope;
+use App\Scopes\PublicScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -69,7 +71,9 @@ class RealEstate extends Model
         'slug',
         'web_id',
         'is_public',
-        'loai_bds'
+        'loai_bds',
+        'don_vi',
+        'public_site'
     ];
 
     public function direction()
@@ -104,6 +108,10 @@ class RealEstate extends Model
     {
         return $this->belongsTo('App\Street');
     }
+    public function exhibit()
+    {
+        return $this->belongsTo('App\Exhibit');
+    }
     public function unit()
     {
         return $this->belongsTo('App\Unit');
@@ -111,5 +119,18 @@ class RealEstate extends Model
     public function user()
     {
         return $this->belongsTo('\App\User', 'posted_by');
+    }
+    public function reports(){
+        return $this->hasMany(ReReport::class, 'real_estate_id');
+    }
+    public function customer()
+    {
+        return $this->belongsTo('\App\Customer');
+    }
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope(new PrivateScope());
     }
 }

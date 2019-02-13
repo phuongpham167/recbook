@@ -109,14 +109,14 @@
                                         <p class="title-short-section">Giới thiệu</p>
                                         <div class="u-description border-block">
                                             <p class=" text-center">Làm việc tại: {{ $data->userinfo->company }}</p>
-                                            <p class=" text-center">Đánh giá: 87/100 điểm</p>
+                                            {{--<p class=" text-center">Đánh giá: 87/100 điểm</p>--}}
                                             @if((\Auth::user() && \Auth::user()->id  == $data->id))
                                             <p class=" text-center">Số dư: <strong>{{number_format(auth()->user()->credits).' '.\App\Currency::where('default',1)->first()->icon}}</strong></p>
                                             <p class=" text-center">Nhóm tài khoản: <strong>{{auth()->user()->group->name}}</strong></p>
                                             @endif
                                             <p class="user-desc">{{ $data->userinfo->description }}</p>
                                         </div>
-                                        @if ( (\Auth::user() && \Auth::user()->id  == $data->id) || $isFriend)
+                                        @if ( (\Auth::user() && \Auth::user()->id  == $data->id) || $isFriend || $data->group->public_permission == 1)
                                             <p class="title-short-section">Tin đã đăng</p>
                                             <div class="posted-re border-block">
                                                 @foreach($listPostedRe as $re)
@@ -129,12 +129,7 @@
                                         @if ((\Auth::user() && \Auth::user()->id  == $data->id))
                                             @include(theme(TRUE).'.includes.left-menu')
                                         @endif
-                                        @if ((\Auth::user() && \Auth::user()->id  == $data->id)|| $isFriend)
-                                            <p class="title-short-section">Dự án đã làm</p>
-                                            <div class="success-project border-block">
-                                                {{--<a href="#">Bán nhà số 44/54 Bạch Đằng</a>--}}
-                                            </div>
-                                        @endif
+
                                         {{--<p class="title-short-section">Dự án đã đăng</p>--}}
                                         {{--<div class="registered-project border-block">--}}
                                             {{--@foreach(\App\Freelancer::orderBy('created_at', 'desc')->where('user_id',auth()->user()->id)->take(15)->get() as $freelancer)--}}
@@ -168,6 +163,7 @@
                                                                 href="{{route('register')}}">Đăng ký</a>.</p>
                                                     </div>
                                                 @else
+                                                    {{--Đăng tin mới--}}
                                                     @if(\Auth::user()->id == $data->id)
                                                         <div class="panel panel-default">
                                                             <div class="panel-heading">
@@ -204,6 +200,14 @@
                                                                                       id="detail"
                                                                                       placeholder="Nội dung tin *"></textarea>
                                                                             <p class="text-red error"></p>
+                                                                            <div class="row">
+                                                                                @if(auth()->check())
+                                                                                <div class="col-sm-7" style="padding-top: 4px"><strong>@if(post_left(auth()->user()) !== null) Bạn còn {{post_left(auth()->user())}} lượt tin đăng trên trang cộng đồng. @endif </strong></div>
+                                                                                <div class="col-sm-5">
+                                                                                    <input type="checkbox" name="public_site" value="1" @if(post_left(auth()->user())===0) disabled @endif/> Đăng lên trang cộng đồng
+                                                                                </div>
+                                                                                @endif
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -287,6 +291,10 @@
                                                                                 </button>
                                                                                 <button type="button"
                                                                                         class="btn btn-default btn-collapse"
+                                                                                        data-target="#mattien">Mặt tiền
+                                                                                </button>
+                                                                                <button type="button"
+                                                                                        class="btn btn-default btn-collapse"
                                                                                         data-target="#floorSelect">Số
                                                                                     tầng
                                                                                 </button>
@@ -317,6 +325,8 @@
                                                                                             id="is-private"
                                                                                             name="is_private"
                                                                                             value="{{ old('is_private') }}">
+                                                                                        <option value="0">Công khai
+                                                                                        </option>
                                                                                         <option value="1">Đăng trên
                                                                                             trang cá nhân
                                                                                         </option>
@@ -397,7 +407,7 @@
                                             </div>
                                         </div>
                                         <div class="row list-re">
-                                            @if((\Auth::user() && \Auth::user()->id == $data->id)|| $isFriend)
+                                            @if((\Auth::user() && \Auth::user()->id == $data->id)|| $isFriend || $data->group->public_permission == 1)
                                                 @foreach($listRe as $re)
                                                     <div class="col-xs-12">
                                                         <div class="panel panel-default" id="{{$re->id}}">
@@ -410,7 +420,7 @@
                                                                     </p>
                                                                     <p class="price">
                                                                         @if($re->price)
-                                                                            Giá: <span class="price-val">{{ number_format($re->price) }} {{$re->unit ? $re->unit->name : 'VND'}}</span>
+                                                                            <b class="text-red"><span class="text-upper" style="font-size: 12px;">Giá:</span> <span class="price-val">{{ convert_number_to_words($re->price) }}</span> <span style="font-size: 12px;">{{$re->unit ? $re->unit->name : 'VND'}}</span></b>
                                                                         @endif
                                                                     </p>
                                                                 </div>
@@ -430,44 +440,65 @@
                                                             </div>
                                                             <div class="panel-body">
                                                                 <div class="detail-item-re-wrap">
-                                                                    <div class="row">
-                                                                        <div class="district-wrap">
-                                                                            @if($re->district)
-                                                                                <div class="col-xs-12 col-md-4 ">
-                                                                                    Khu vực: <span
-                                                                                        class="district-val">{{$re->district->name}}</span>
-                                                                                </div>
-                                                                            @endif
-                                                                        </div>
-                                                                        <div class="floor-wrap">
-                                                                            @if($re->floor)
-                                                                                <div class="col-xs-12 col-md-2 ">
-                                                                                    Số tầng: <span
-                                                                                        class="floor-val">{{$re->floor}}</span>
-                                                                                </div>
-                                                                            @endif
-                                                                        </div>
-                                                                        <div class="position-wrap">
-                                                                            @if($re->position)
-                                                                                <div class="col-xs-12 col-md-6 ">
-                                                                                    Gần: <span
-                                                                                        class="position-val">{{$re->position}}</span>
-                                                                                </div>
-                                                                            @endif
-                                                                        </div>
+                                                                    <div class="table-responsive">
+                                                                        <table class="table table-bordered">
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td><b class="text-upper">Loại tin: </b><span class="category-val">{!! $re->reCategory ? '<a href="/danh-muc-bds/' . $re->reCategory->slug . '-c' . $re->reCategory->id . '">' . $re->reCategory->name . '</a>' : '-' !!}</span></td>
+                                                                                    <td colspan="2"><b class="text-upper">Pháp lý: </b><span class="exhibit-val">{{$re->exhibit_id ? $re->exhibit->name : '-'}}</span> </td>
+                                                                                    <td><b class="text-upper">Số tầng: </b><span class="floor-val">{{$re->floor ? $re->floor : '-'}}</span></td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td colspan="2"><b class="text-upper">Khu vực: </b><span class="district-val">{{$re->district ? $re->district->name : '-'}}</span></td>
+                                                                                    <td colspan="2"><b class="text-upper">Hướng: </b><span class="direction-val">{{$re->direction_id ? $re->direction->name : '-'}}</span></td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td colspan="4" class="room-wrap">{!! $re->bedroom ? '<b>Phòng ngủ: </b>' . $re->bedroom : '' !!}{!! ($re->bedroom && $re->living_room) ? ', ' : '' !!}{!! $re->living_room ? '<b>Phòng khách: </b>' . $re->living_room : ''!!}{{ (($re->living_room && $re->wc) || ($re->bedroom && !$re->living_room && $re->wc)) ? ', ' : '' }}{!! $re->wc ? '<b>WC: </b>' . $re->wc : '' !!} @if(!$re->bedroom && !$re->living_room && !$re->wc) - @endif</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td colspan="4"><b class="text-upper">Vị trí: </b><span class="position-val">{{$re->position ? $re->position : '-'}}</span></td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
                                                                     </div>
-                                                                    <div class="row">
-                                                                        <div class="category-wrap">
-                                                                            @if($re->reCategory)
-                                                                                <div
-                                                                                    class="col-xs-12 col-md-3"><span class="category-val">{{$re->reCategory ? $re->reCategory->name : ''}}</span></div>
-                                                                            @endif
-                                                                        </div>
-                                                                        <div class="room-wrap">
-                                                                            <div
-                                                                                class="col-xs-12 col-md-9"> {{$re->bedroom ? 'Phòng ngủ: ' . $re->bedroom : ''}}{{ ($re->bedroom && $re->living_room) ? ', ' : ''}}{{$re->living_room ? 'Phòng khách: ' . $re->living_room : ''}}{{ ($re->living_room && $re->wc) ? ', ' : '' }}{{$re->wc ? 'WC: ' . $re->wc : ''}}</div>
-                                                                        </div>
-                                                                    </div>
+                                                                    {{--<div class="row">--}}
+                                                                        {{--<div class="district-wrap">--}}
+                                                                            {{--@if($re->district)--}}
+                                                                                {{--<div class="col-xs-12 col-md-4 ">--}}
+                                                                                    {{--Khu vực: <span--}}
+                                                                                        {{--class="district-val">{{$re->district->name}}</span>--}}
+                                                                                {{--</div>--}}
+                                                                            {{--@endif--}}
+                                                                        {{--</div>--}}
+                                                                        {{--<div class="floor-wrap">--}}
+                                                                            {{--@if($re->floor)--}}
+                                                                                {{--<div class="col-xs-12 col-md-2 ">--}}
+                                                                                    {{--Số tầng: <span--}}
+                                                                                        {{--class="floor-val">{{$re->floor}}</span>--}}
+                                                                                {{--</div>--}}
+                                                                            {{--@endif--}}
+                                                                        {{--</div>--}}
+                                                                        {{--<div class="position-wrap">--}}
+                                                                            {{--@if($re->position)--}}
+                                                                                {{--<div class="col-xs-12 col-md-6 ">--}}
+                                                                                    {{--Gần: <span--}}
+                                                                                        {{--class="position-val">{{$re->position}}</span>--}}
+                                                                                {{--</div>--}}
+                                                                            {{--@endif--}}
+                                                                        {{--</div>--}}
+                                                                    {{--</div>--}}
+                                                                    {{--<div class="row">--}}
+                                                                        {{--<div class="category-wrap">--}}
+                                                                            {{--@if($re->reCategory)--}}
+                                                                                {{--<div--}}
+                                                                                    {{--class="col-xs-12 col-md-3"><span class="category-val">{{$re->reCategory ? $re->reCategory->name : ''}}</span></div>--}}
+                                                                            {{--@endif--}}
+                                                                        {{--</div>--}}
+                                                                        {{--<div class="room-wrap">--}}
+                                                                            {{--<div--}}
+                                                                                {{--class="col-xs-12 col-md-9"> {{$re->bedroom ? 'Phòng ngủ: ' . $re->bedroom : ''}}{{ ($re->bedroom && $re->living_room) ? ', ' : ''}}{{$re->living_room ? 'Phòng khách: ' . $re->living_room : ''}}{{ ($re->living_room && $re->wc) ? ', ' : '' }}{{$re->wc ? 'WC: ' . $re->wc : ''}}</div>--}}
+                                                                        {{--</div>--}}
+                                                                    {{--</div>--}}
                                                                     <div class="row">
                                                                         <div class="col-xs-12 detail-item-wrap">
                                                                             {!! $re->detail !!}
@@ -529,7 +560,7 @@
                         <div class="col-xs-12 col-md-3">
                             <div class="row">
                                 <div class="col-xs-12">
-                                    @if ((\Auth::user() && \Auth::user()->id  == $data->id)|| $isFriend)
+                                    @if ((\Auth::user() && \Auth::user()->id  == $data->id)|| $isFriend || $data->group->public_permission == 1)
                                         <p class="title-short-section" style="margin-top: 16px;">Bạn bè</p>
                                         <div class="list-friend border-block">
                                             @foreach($listFriends as $friend)
@@ -545,12 +576,18 @@
                                             @endforeach
                                         </div>
                                     @endif
-                                    @if ((\Auth::user() && \Auth::user()->id  == $data->id)|| $isFriend)
+                                    @if ((\Auth::user() && \Auth::user()->id  == $data->id)|| $isFriend || $data->group->public_permission == 1 )
                                         <p class="title-short-section">Dự án tham gia</p>
                                         <div class="joined-project border-block">
                                             @foreach($joinedFreeLances as $joinedFreeLance)
                                                 <a href="{{route('freelancerDetail', ['id'=>$joinedFreeLance->freelancer->id, 'slug'=>to_slug($joinedFreeLance->freelancer->title)])}}" class="" >{{$joinedFreeLance->freelancer->title}}</a>
                                             @endforeach
+                                        </div>
+                                    @endif
+                                    @if ((\Auth::user() && \Auth::user()->id  == $data->id)|| $isFriend || $data->group->public_permission == 1)
+                                        <p class="title-short-section">Dự án đã làm</p>
+                                        <div class="success-project border-block">
+                                            {{--<a href="#">Bán nhà số 44/54 Bạch Đằng</a>--}}
                                         </div>
                                     @endif
                                 </div>
@@ -957,6 +994,7 @@
                         // const editHtml = editMarkupHtml(result);
                         // $(panelWarp).find('.detail-item-re-wrap').css('display', 'none');
                         // $(panelWarp).find('.edit-re-wrap').html(editHtml);
+                        resetValueModal();
                         setValueForEditRe(result);
                         $('#is-edit').val('edit');
                         initMapEdit(result.re.lat, result.re.long);
@@ -1092,11 +1130,20 @@
             if (re.area_of_use) {
                 $('#area-of-use-edit').val(re.area_of_use);
             }
+            if (re.width) {
+                $('#width-edit').val(re.width);
+            }
+            if (re.length) {
+                $('#length-edit').val(re.length);
+            }
             if (re.floor) {
                 $('#floor-edit').val(re.floor);
             }
             if (re.price) {
                 $('#price-edit').val(re.price);
+            }
+            if (re.don_vi) {
+                $('#don-vi-edit').val(re.don_vi);
             }
             if (re.is_deal) {
                 $('#is-deal-edit').prop('checked', true);
@@ -1119,6 +1166,60 @@
 
         function removeImgPreview(e) {
             $(e).closest('.item-img-preview').remove();
+        }
+
+        function resetValueModal() {
+            $('#id-edit').val('');
+            $('#title-edit').val('');
+            $('#detail-edit').val('');
+
+            $('#re-category-edit').val('');
+
+            $('#province-edit').val('');
+
+            $('#district-edit').val('');
+
+            $('#ward-edit').val('');
+
+            $('#street-edit').val('');
+
+            $('#street-id-hidden').val('');
+
+            $('#street-name-hidden').val('');
+
+            $('#contact-person-edit').val('');
+            $('#contact-phone-edit').val('');
+            $('#contact-address-edit').val('');
+
+            $('#position-edit').val('');
+
+            $('#direction-edit').val('');
+
+            $('#exhibit-edit').val('');
+
+            $('#bedroom-edit').val('');
+
+            $('#living-room-edit').val('');
+
+            $('#wc-edit').val('');
+
+            $('#area-of-premises-edit').val('');
+
+            $('#area-of-use-edit').val('');
+
+            $('#width-edit').val('');
+
+            $('#length-edit').val('');
+
+            $('#floor-edit').val('');
+
+            $('#price-edit').val('');
+
+            $('#don-vi-edit').val('');
+
+            $('#is-deal-edit').prop('checked', false);
+
+            $('#map-edit').val('');
         }
         //-----------------------------------------------------------------
         //          END EDIT REAL ESTATE

@@ -221,6 +221,24 @@
                         </div>
 
                     </div>
+                    <div class="form-group clearfix collapse" id="mattienEdit">
+
+                        <label
+                            class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.width')}} </label>
+
+                        <div class="col-sm-4">
+                            <input type="number" class="form-control" id="width-edit"
+                                   name="width_edit"/>
+                            <p class="text-red error"></p>
+                        </div>
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.length')}}</label>
+
+                        <div class="col-sm-4">
+                            <input type="number" class="form-control" name="length_edit" id="length-edit"
+                            />
+                        </div>
+
+                    </div>
                     <div class="form-group clearfix collapse" id="floorSelectEdit">
                         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.floor')}}</label>
 
@@ -232,6 +250,13 @@
                         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.price')}}</label>
                         <div class="col-sm-4">
                             <input type="number" class="form-control" name="price_edit" id="price-edit" step="1"/>
+                        </div>
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.don_vi')}}</label>
+                        <div class="col-sm-4">
+                            <select class="form-control" name="unit_id" id="don_vi_edit">
+                                <option value="1">VNĐ</option>
+                                <option value="2">USD</option>
+                            </select>
                         </div>
                         <div class="col-sm-10 col-sm-offset-2">
                             <div class="checkbox">
@@ -309,18 +334,18 @@
                             <button type="button" class="btn btn-default btn-collapse" data-target="#areaEdit"><i
                                     class="fa fa-area-chart" aria-hidden="true"></i> Diện tích
                             </button>
+                            <button type="button" class="btn btn-default btn-collapse" data-target="#mattienEdit"> Mặt tiền
+                            </button>
                             <button type="button" class="btn btn-default btn-collapse" data-target="#floorSelectEdit">Số
                                 tầng
                             </button>
-
-                            <button type="button" class="btn btn-default btn-collapse" data-target="#mapSelectEdit"><i
-                                    class="fa fa-map-marker"></i> Vị ví
-                            </button>
-
                         </div>
                     </div>
                     <div class="form-group clearfix">
                         <div class="col-xs-12">
+                            <button type="button" class="btn btn-default btn-collapse" data-target="#mapSelectEdit"><i
+                                    class="fa fa-map-marker"></i> Vị ví
+                            </button>
                             <button type="button" class="btn btn-default btn-collapse" data-target="#imageSelectEdit"><i
                                     class="fa fa-picture-o"></i> Hình ảnh
                             </button>
@@ -362,8 +387,23 @@
 
 @push('js')
     <script>
-
+        function changeEditUnit(){
+            var type    =   $('#re-category-edit').val();
+            console.log(type);
+            if(type == 2 || type ==4)
+                $('#don_vi_edit').html('<option value="3">VNĐ/m2</option>\n' +
+                    '            <option value="4">VNĐ/tháng</option>\n' +
+                    '            <option value="5">USD/m2</option>\n' +
+                    '            <option value="6">USD/tháng</option>');
+            else {
+                $('#don_vi_edit').html('<option value="1">VNĐ</option>\n' +
+                    '            <option value="2">USD</option>');
+            }
+        }
         $(function () {
+            $('#modalEditRe').on('change','#re-category-edit',function(){
+                changeEditUnit();
+            });
             $('#contact-phone-edit').keyup(function() {
                 emptyContactInfoEdit();
 
@@ -673,9 +713,15 @@
 
             let aou = $('#area-of-use-edit').val();
 
+            let width = $('#width-edit').val();
+
+            let length = $('#length-edit').val();
+
             let floor = $('#floor-edit').val();
 
             let price = $('#price-edit').val();
+
+            let donvi = $('#don-vi-edit').val();
 
             let isDeal = $('#is-deal-edit').is(":checked") ? 1 : 0;
 
@@ -725,8 +771,11 @@
             formDataEdit.append('wc', wc);
             formDataEdit.append('area_of_premises', aop);
             formDataEdit.append('area_of_use', aou);
+            formDataEdit.append('width', width);
+            formDataEdit.append('length', length);
             formDataEdit.append('floor', floor);
             formDataEdit.append('price', price);
+            formDataEdit.append('don_vi', donvi);
             formDataEdit.append('is_deal', isDeal);
             formDataEdit.append('map', map);
             formDataEdit.append('is_private', isPrivate);
@@ -777,94 +826,93 @@
             titleDOM.text(data.title);
 
             let priceDOM = panelRe.find('.price');
-            if (priceDOM.html()) {
+            // if (priceDOM.html()) {
+            if ($.trim(priceDOM.html())) {
                 if (data.price) {
-                    priceDOM.find('.price-val').text(data.price);
+                    const price = DocTienBangChu(data.price);
+                    priceDOM.find('.price-val').text(price);
                 } else {
                     priceDOM.html('');
                 }
             } else {
                 if (data.price) {
-                    priceDOM.html('Giá: <span class="price-val">' + data.price + '</span>');
+                    const price = DocTienBangChu(data.price);
+                    let htmlPrice = '<b class="text-red"><span class="text-upper" style="font-size: 12px;">Giá:</span> <span class="price-val">' + price + '</span><span style="font-size: 12px;">VND</span></b>';
+                    if (data.don_vi) {
+                        htmlPrice = '<b class="text-red"><span class="text-upper" style="font-size: 12px;">Giá:</span> <span class="price-val">' + price + '</span><span style="font-size: 12px;">VND/' + data.don_vi + '</span></b>';
+                    }
+                    priceDOM.html(htmlPrice);
                 }
             }
 
-            let districtDOM = panelRe.find('.district-wrap');
+            let detailDOM = panelRe.find('.detail-item-wrap');
+            detailDOM.html(data.detail);
+
+            let districtDOM = panelRe.find('.district-val');
             const district = data.district;
-            if (districtDOM.html()) {
-                if (district) {
-                    districtDOM.find('.district-val').text(district.name);
-                } else {
-                    districtDOM.html('');
-                }
+            if (district) {
+                districtDOM.text(district.name);
             } else {
-                if (district) {
-                    districtDOM.html('<div class="col-xs-12 col-md-4 ">Khu vực: <span class="district-val">' + district.name + '</span></div>');
-                }
+                districtDOM.text('-');
             }
 
-            let floorDOM = panelRe.find('.floor-wrap');
-            if (floorDOM.html()) {
-                if (data.floor) {
-                    floorDOM.find('.floor-val').text(data.floor);
-                } else {
-                    floorDOM.html('');
-                }
+            let exhibitDOM = panelRe.find('.exhibit-val');
+            const exhibit = data.exhibit;
+            if (exhibit) {
+                exhibitDOM.text(exhibit.name);
             } else {
-                if (data.floor) {
-                    floorDOM.html('<div class="col-xs-12 col-md-2 ">Số tầng: <span class="floor-val">' + data.floor + '<span></div>');
-                }
+                exhibitDOM.text('-');
             }
 
-            let positionDOM = panelRe.find('.position-wrap');
-            if (positionDOM.html()) {
-                if (data.position) {
-                    positionDOM.find('.position-val').text(data.position);
-                } else {
-                    positionDOM.html('');
-                }
+            let directionDOM = panelRe.find('.direction-val');
+            const direction = data.direction;
+            if (direction) {
+                directionDOM.text(direction.name);
             } else {
-                if (data.position) {
-                    positionDOM.html('<div class="col-xs-12 col-md-6 ">Gần: <span class="position-val">' + data.position + '<span></div>');
-                }
+                directionDOM.text('-');
             }
 
-            let categoryDOM = panelRe.find('.category-wrap');
+            let floorDOM = panelRe.find('.floor-val');
+            if (data.floor) {
+                floorDOM.text(data.floor);
+            } else {
+                floorDOM.html('');
+            }
+
+            let positionDOM = panelRe.find('.position-val');
+            if (data.position) {
+                positionDOM.text(data.position);
+            } else {
+                positionDOM.html('');
+            }
+
+            let categoryDOM = panelRe.find('.category-val');
             const category = data.re_category;
-            if (categoryDOM.html()) {
-                if (category) {
-                    categoryDOM.find('.category-val').text(category.name);
-                } else {
-                    categoryDOM.html('');
-                }
+            if (category) {
+                categoryDOM.html('<a href="/danh-muc-bds/' + category.slug + '-c' + category.id + '">' + category.name + '</a>');
             } else {
-                if (category) {
-                    categoryDOM.html('<div class="col-xs-12 col-md-3 "><span class="category-val">' + category.name + '</span></div>');
-                }
+                categoryDOM.html('');
             }
 
             let roomDOM = panelRe.find('.room-wrap');
-            if (roomDOM.html()) {
-                let markup = '<div class="col-xs-12 col-md-9">';
-                if (data.bedroom) {
-                    markup += 'Phòng ngủ: ' + data.bedroom;
-                }
-                if (data.bedroom && data.living_room) {
-                    markup += ', ';
-                }
-                if (data.living_room) {
-                    markup += 'Phòng khách: ' + data.living_room
-                }
-                if (data.living_room && data.wc) {
-                    markup += ', ';
-                }
-                if (data.wc) {
-                    markup += 'WC: ' + data.wc
-                }
-                markup += '</div>';
-
-                roomDOM.html(markup);
+            let markup = '';
+            if (data.bedroom) {
+                markup += '<b>Phòng ngủ: </b>' + data.bedroom;
             }
+            if (data.bedroom && data.living_room) {
+                markup += ', ';
+            }
+            if (data.living_room) {
+                markup += '<b>Phòng khách: </b>' + data.living_room
+            }
+            if ( (data.living_room && data.wc) || (data.bedroom && !data.living_room && data.wc)) {
+                markup += ', ';
+            }
+            if (data.wc) {
+                markup += '<b>WC: </b>' + data.wc
+            }
+
+            roomDOM.html(markup);
 
             let imagesDOM = panelRe.find('.images-wrap');
             const imgDf = {

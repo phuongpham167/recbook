@@ -87,6 +87,10 @@ class FreelancerController extends Controller
 //            $data   =   $data->where('created_at', '>=', $start)->where('created_at', '<=', $end);
 
         $result = Datatables::of($data)
+
+            ->editColumn('title', function($dt){
+                return "<a href=".route('freelancerDetail', ['slug'=>to_slug($dt->title), 'id'=>$dt->id])." target='_blank'>".$dt->title."</a>";
+            })
             ->addColumn('end_at', function($dt) {
                 return $dt->end_at ? Carbon::parse($dt->end_at)->format('d/m/Y'): '';
             })

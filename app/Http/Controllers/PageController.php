@@ -9,6 +9,7 @@ use App\Menu;
 use App\RealEstate;
 use App\ReCategory;
 use App\ReType;
+use App\Scopes\PublicScope;
 use App\Services\BlockService;
 use App\Services\ConstructionTypeService;
 use App\Services\DirectionService;
@@ -33,7 +34,7 @@ use Illuminate\Support\Facades\Log;
 class PageController extends Controller
 {
     protected $menuFE, $vipRealEstates, $web_id;
-    protected $categories, $provinces, $districts, $streets, $directions, $projects;
+    protected $categories, $provinces, $districts, $wards, $streets, $directions, $projects;
 
     protected $service;
     protected $reCategoryService;
@@ -94,6 +95,7 @@ class PageController extends Controller
 
         $this->provinces = $this->provinceService->getListDropDown();
         $this->districts = $this->districtService->getListDropDown();
+        $this->wards = $this->wardService->getListDropDown();
         $this->streets = $this->streetService->getListDropDown();
         $this->directions = $this->directionService->getListDropDown();
         $this->projects = $this->projectService->getListDropDown();
@@ -104,32 +106,52 @@ class PageController extends Controller
 
     public function index1()
     {
-        $hotRealEstates = RealEstate::select('id', 'title', 'slug', 'short_description', 'code',
-            'area_of_premises', 'area_of_use', 'district_id', 'price', 'unit_id', 'is_vip', 'is_hot',
+        $vip    =   [];
+        for($i=1; $i<7; $i++){
+            $query    = RealEstate::where('public_site', 1)->select('id', 'title', 'slug', 'short_description', 'detail', 'code', 'don_vi',
+                'area_of_premises', 'area_of_use', 'district_id', 'price', 'unit_id', 'is_vip', 'is_hot', 'vip_type',
+                'post_date', 'images');
+            if($i == 6)
+                $query  =   $query->where(function($q){
+                    $q->where('vip_type', 2)
+                        ->orWhere('vip_type', 6);
+                });
+            else
+                $query  =   $query->where('vip_type', $i);
+            $query =    $query->where(function($q){
+                    $q->whereNull('vip_expire_at')
+                        ->orWhere('vip_expire_at', '>=', Carbon::now());
+                })
+                ->where('expire_date', '>=', Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
+                ->where('web_id', $this->web_id);
+            $query->take(get_config('vip'.$i, 10));
+            $query = $query->get();
+            $vip[$i] = $query;
+        }
+
+
+        //Tin HOT
+        $hotRealEstates = RealEstate::where('public_site',1)->select('id', 'title', 'slug', 'short_description', 'detail', 'code', 'don_vi',
+            'area_of_premises', 'area_of_use', 'district_id', 'price', 'unit_id', 'is_vip', 'is_hot','vip_type',
             'post_date', 'images')
-            ->where(function($q){
-                $q->where('is_hot', 1)
-                  ->where('is_vip', '<>', 1);
-            })
-            ->where(function($q){
-                $q->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
-                ->orWhere('post_date', '>=', Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->subDays(Settings('system_changenametime'))->format('m/d/Y H:i A')));
-            })
-            ->where('post_date', '<=', Carbon::now())
-//            ->where('hot_expire_at', '<=', Carbon::now())
+            ->where('vip_type', 1)
+            ->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
             ->where('web_id', $this->web_id);
-
-
-//        $hotRealEstates = $this->checkRegisterDate($hotRealEstates);
         $hotRealEstates->limit(get_config('homeHotRealEstate', 10));
         $hotRealEstates = $hotRealEstates->get();
-//        dd($hotRealEstates);
 
-        /*
-         * TODO: need more info to filter good price items
-         * Now: get vip only
-         * */
-        $goodPriceRealEstateVip = RealEstate::select('id', 'title', 'short_description', 'slug', 'code',
+        //Tin HOT nổi bật
+        $hotHLRealEstates = RealEstate::where('public_site',1)->select('id', 'title', 'slug', 'short_description', 'detail', 'code', 'don_vi',
+            'area_of_premises', 'area_of_use', 'district_id', 'price', 'unit_id', 'is_vip', 'is_hot','vip_type',
+            'post_date', 'images')
+            ->where('vip_type', 2)
+            ->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
+            ->where('web_id', $this->web_id);
+        $hotHLRealEstates->limit(get_config('homeHotRealEstate', 10));
+        $hotHLRealEstates = $hotHLRealEstates->get();
+
+        //Tin VIP
+        $goodPriceRealEstateVip = RealEstate::where('public_site',1)->select('id', 'title', 'short_description', 'detail', 'slug', 'code', 'don_vi',
             'area_of_premises', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date')
             ->where(function($q){
                 $q->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
@@ -138,9 +160,12 @@ class PageController extends Controller
             ->where('post_date', '<=', Carbon::now())
             ->where('web_id', $this->web_id)
             ->orderBy('post_date', 'desc')
-            ->where('is_vip',1)->where('is_hot','<>', 1);
+            ->where('vip_type', 3);
         $goodPriceRealEstateVip = $goodPriceRealEstateVip->take(get_config('homeNewestVip'))->get();
-        $goodPriceRealEstateHot = RealEstate::select('id', 'title', 'short_description', 'slug', 'code',
+
+
+        //Tin VIP nổi bật
+        $goodPriceRealEstateVipHot = RealEstate::where('public_site',1)->select('id', 'title', 'short_description', 'detail', 'slug', 'code', 'don_vi',
             'area_of_premises', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date')
             ->where(function($q){
                 $q->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
@@ -149,9 +174,11 @@ class PageController extends Controller
             ->where('post_date', '<=', Carbon::now())
             ->where('web_id', $this->web_id)
             ->orderBy('post_date', 'desc')
-            ->where('is_hot',1)->where('is_vip','<>', 1);
-        $goodPriceRealEstateHot = $goodPriceRealEstateHot->take(get_config('homeNewestHot'))->get();
-        $goodPriceRealEstateNormal = RealEstate::select('id', 'title', 'short_description', 'slug', 'code',
+            ->where('vip_type',4);
+        $goodPriceRealEstateVipHot = $goodPriceRealEstateVipHot->take(get_config('homeNewestHot'))->get();
+
+        //Tin hấp dẫn
+        $goodPriceRealEstateNormal = RealEstate::where('public_site',1)->select('id', 'title', 'short_description', 'detail', 'slug', 'code', 'don_vi',
             'area_of_premises', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date')
             ->where(function($q){
                 $q->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
@@ -160,38 +187,35 @@ class PageController extends Controller
             ->where('post_date', '<=', Carbon::now())
             ->where('web_id', $this->web_id)
             ->orderBy('post_date', 'desc')
-            ->where('is_vip','<>',1)->where('is_hot','<>', 1);
+            ->where('vip_type','<>',5);
         $goodPriceRealEstateNormal =    $goodPriceRealEstateNormal->take(get_config('homeNewestNormal'))->get();
 
-
-        $vipRealEstates  =   RealEstate::select('id', 'title', 'slug', 'short_description', 'code',
-            'area_of_premises', 'area_of_use', 'district_id', 'price', 'unit_id', 'is_vip', 'is_hot',
+        //Vip bên phải
+        $vipRealEstates  =   RealEstate::where('public_site',1)->select('id', 'title', 'slug', 'short_description', 'detail', 'code', 'don_vi',
+            'area_of_premises', 'area_of_use', 'district_id', 'price', 'unit_id', 'is_vip', 'is_hot','vip_type',
             'post_date', 'images','district_id', 'province_id', 'direction_id')
-            ->where(function($q){
-                $q->where('is_hot', '<>', 1)
-                    ->where('is_vip', 1);
-            })
-            ->where(function($q){
-                $q->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
-                    ->orWhere('post_date', '>=', Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->subDays(Settings('system_changenametime'))->format('m/d/Y H:i A')));
-            })
-            ->where('post_date', '<=', Carbon::now())
-//            ->where('hot_expire_at', '<=', Carbon::now())
+            ->where('vip_type', 3)
+            ->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
             ->where('web_id', $this->web_id)->orderBy('post_date','DESC');
+
         $vipRealEstates = $vipRealEstates->take(get_config('homeSidebarVip',8))->get();
 
-        $freeRealEstates = RealEstate::select('id', 'title', 'short_description', 'slug', 'code',
+        //Tin cộng đồng
+        $freeRealEstates = RealEstate::select('id', 'title', 'short_description', 'detail', 'slug', 'code', 'don_vi',
             'area_of_premises', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date')
             ->where('is_hot', '<>', 1)
             ->where('is_vip', '<>', 1)
             ->where('web_id', $this->web_id)->where('is_public', 1);
 
         $freeRealEstates = $freeRealEstates
-            ->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
-            ->orWhere('post_date', '>=', Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->subDays(Settings('system_changenametime'))->format('m/d/Y H:i A')));
+            ->where(function($q){
+                $q->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
+                    ->orWhere('post_date', '>=', Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->subDays(Settings('system_changenametime'))->format('m/d/Y H:i A')));
+            });
+
 
 //        $freeRealEstates = $this->checkRegisterDate($freeRealEstates);
-        $freeRealEstates =  $freeRealEstates->orderBy('created_at', 'DESC')->take(get_config('homePublic',8))->get();
+        $freeRealEstates =  $freeRealEstates->where('public_site',1)->orderBy('created_at', 'DESC')->take(get_config('homePublic',8))->get();
 
         /*
          * get lít category
@@ -201,21 +225,25 @@ class PageController extends Controller
         $reTypes = $this->reTypeService->getReTypeByCat($firstCat->id);
         $rangePrices = $this->rangePriceService->getRangePriceByCat($firstCat->id);
 
-        $freelancer_re    =   Freelancer::where('status', 'open')->where('category_id', 1)->get();
-        $freelancer_finance    =   Freelancer::where('status', 'open')->where('category_id', 2)->get();
-        $freelancer_design    =   Freelancer::where('status', 'open')->where('category_id', 3)->get();
-        $freelancer_phongthuy    =   Freelancer::where('status', 'open')->where('category_id', 4)->get();
+        $freelancer_all    =   Freelancer::where('status', 'open')->take(9)->get();
+        $freelancer_re    =   Freelancer::where('status', 'open')->where('category_id', 1)->take(9)->get();
+        $freelancer_finance    =   Freelancer::where('status', 'open')->where('category_id', 2)->take(9)->get();
+        $freelancer_design    =   Freelancer::where('status', 'open')->where('category_id', 3)->take(9)->get();
+        $freelancer_phongthuy    =   Freelancer::where('status', 'open')->where('category_id', 4)->take(9)->get();
         Carbon::setLocale('vi');
         return v('pages.home-1', [
+            'vip'   =>  $vip,
+            'hotHLRealEstates' => $hotHLRealEstates,
             'hotRealEstates' => $hotRealEstates,
             'goodPriceRealEstateNormal' => $goodPriceRealEstateNormal,
             'goodPriceRealEstateVip' => $goodPriceRealEstateVip,
-            'goodPriceRealEstateHot' => $goodPriceRealEstateHot,
+            'goodPriceRealEstateVipHot' => $goodPriceRealEstateVipHot,
             'freeRealEstates' => $freeRealEstates,
             'categories' => $this->categories,
             'reTypes' => $reTypes,
             'provinces' => $this->provinces,
             'districts' => $this->districts,
+            'wards' => $this->wards,
             'streets' => $this->streets,
             'directions' => $this->directions,
             'rangePrices' => $rangePrices,
@@ -223,6 +251,7 @@ class PageController extends Controller
             'vipRealEstates' => $vipRealEstates,
             'agencies'  =>  $this->agencies,
             'freelancer' => [
+                'all'   =>  $freelancer_all,
                 're' => $freelancer_re,
                 'finance' => $freelancer_finance,
                 'design' => $freelancer_design,
@@ -329,6 +358,7 @@ class PageController extends Controller
             'reTypes' => $reTypes,
             'provinces' => $this->provinces,
             'districts' => $this->districts,
+            'wards' => $this->wards,
             'streets' => $this->streets,
             'directions' => $this->directions,
             'rangePrices' => $rangePrices,
@@ -343,7 +373,7 @@ class PageController extends Controller
             $mappingMenuFEByTag = MappingMenuFE::where('path', $tag)->first();
 //            dd($mappingMenuFEByTag);
             if ($mappingMenuFEByTag) {
-                $query = RealEstate::whereNull('deleted_at')->where('web_id', $this->web_id);
+                $query = RealEstate::where('public_site',1)->whereNull('deleted_at')->where('web_id', $this->web_id);
                 if ($mappingMenuFEByTag->re_category_id) {
                     $query->where('re_category_id', $mappingMenuFEByTag->re_category_id);
                 }
@@ -362,7 +392,7 @@ class PageController extends Controller
                 }
 //                $query = $this->checkRegisterDate($query);
                 $countAll = $query->count();
-                $results = $query->get();
+                $results = $query->paginate(get_config('itemsPerPage',30));
 
                 $category = null;
                 if ($mappingMenuFEByTag->re_category_id) {
@@ -399,6 +429,7 @@ class PageController extends Controller
                     'categories' => $this->categories,
                     'provinces' => $this->provinces,
                     'districts' => $this->districts,
+                    'wards' => $this->wards,
                     'streets' => $this->streets,
                     'directions' => $this->directions,
                     'projects' => $this->projects,
@@ -413,12 +444,9 @@ class PageController extends Controller
 
     public function featuredRealEstate()
     {
-        $query = RealEstate::select('id', 'title', 'short_description', 'slug', 'code', 'district_id',
+        $query = RealEstate::select('id', 'title', 'short_description', 'detail', 'slug', 'code', 'district_id', 'don_vi',
             'area_of_premises', 'area_of_use', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date')
-            ->where(function($q){
-                $q->where('is_hot', 1)
-                    ->where('is_vip', '<>', 1);
-            })
+            ->where('vip_type', 1)
             ->where(function($q){
                 $q->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
                     ->orWhere('post_date', '>=', Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->subDays(Settings('system_changenametime'))->format('m/d/Y H:i A')));
@@ -428,7 +456,7 @@ class PageController extends Controller
             ->orderBy('post_date', 'desc');
 
 //        $query = $this->checkRegisterDate($query);
-        $results = $query->get();
+        $results = $query->paginate(get_config('itemsPerPage',30));
 
         $this->vipRealEstates = $this->getVipRealEstates();
 
@@ -442,6 +470,7 @@ class PageController extends Controller
             'categories' => $this->categories,
             'provinces' => $this->provinces,
             'districts' => $this->districts,
+            'wards' => $this->wards,
             'streets' => $this->streets,
             'directions' => $this->directions,
             'projects' => $this->projects,
@@ -451,7 +480,7 @@ class PageController extends Controller
 
     public function newestRealEstate()
     {
-        $query = RealEstate::select('id', 'title', 'short_description', 'slug', 'code', 'district_id',
+        $query = RealEstate::select('id', 'title', 'short_description', 'detail', 'slug', 'code', 'district_id', 'don_vi',
             'area_of_premises', 'area_of_use', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date')
             ->where('post_date', '<=', Carbon::now())
             ->where('web_id', $this->web_id)
@@ -462,7 +491,7 @@ class PageController extends Controller
             ->orderBy('post_date', 'desc');
 //        $query = $this->checkRegisterDate($query);
 
-        $results = $query->get();
+        $results = $query->paginate(get_config('itemsPerPage', 30));
 
         $this->vipRealEstates = $this->getVipRealEstates();
 
@@ -476,6 +505,7 @@ class PageController extends Controller
             'categories' => $this->categories,
             'provinces' => $this->provinces,
             'districts' => $this->districts,
+            'wards' => $this->wards,
             'streets' => $this->streets,
             'directions' => $this->directions,
             'projects' => $this->projects,
@@ -485,7 +515,7 @@ class PageController extends Controller
 
     public function freeRealEstate()
     {
-        $query = RealEstate::select('id', 'title', 'short_description', 'slug', 'code', 'district_id',
+        $query = RealEstate::select('id', 'title', 'short_description', 'detail', 'slug', 'code', 'district_id', 'don_vi',
             'area_of_premises', 'area_of_use', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date')
             ->where(function($q){
                 $q->where(function($a){
@@ -503,10 +533,11 @@ class PageController extends Controller
             ->where('post_date', '<=', Carbon::now())
             ->where('web_id', $this->web_id)
             ->orderBy('post_date', 'desc')
-            ->where('is_public', 1);
+            ->where('is_public', 1)
+            ->where('public_site', 1);
 //        $query = $this->checkRegisterDate($query);
 
-        $results = $query->get();
+        $results = $query->paginate(get_config('itemsPerPage', 30));
 
         $this->vipRealEstates = $this->getVipRealEstates();
 
@@ -520,6 +551,7 @@ class PageController extends Controller
             'categories' => $this->categories,
             'provinces' => $this->provinces,
             'districts' => $this->districts,
+            'wards' => $this->wards,
             'streets' => $this->streets,
             'directions' => $this->directions,
             'projects' => $this->projects,
@@ -535,7 +567,7 @@ class PageController extends Controller
 
         $category = ReCategory::find($catId);
         if ($category) {
-            $query = RealEstate::select('id', 'title', 'short_description', 'slug', 'code', 'district_id',
+            $query = RealEstate::select('id', 'title', 'short_description', 'detail', 'slug', 'code', 'district_id', 'don_vi',
                 'area_of_premises', 'area_of_use', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date')
                 ->where(function($q){
                     $q->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
@@ -548,7 +580,7 @@ class PageController extends Controller
 
 //            $query = $this->checkRegisterDate($query);
             $countAll = $query->count();
-            $results = $query->get();
+            $results = $query->paginate(get_config('itemsPerPage', 30));
 
             $this->vipRealEstates = $this->getVipRealEstates();
 
@@ -561,6 +593,7 @@ class PageController extends Controller
                 'categories' => $this->categories,
                 'provinces' => $this->provinces,
                 'districts' => $this->districts,
+                'wards' => $this->wards,
                 'streets' => $this->streets,
                 'directions' => $this->directions,
                 'projects' => $this->projects,
@@ -571,7 +604,7 @@ class PageController extends Controller
 
     public function homeTinVip()
     {
-        $query = RealEstate::select('id', 'title', 'short_description', 'slug', 'code', 'district_id',
+        $query = RealEstate::select('id', 'title', 'short_description', 'detail', 'slug', 'code', 'district_id', 'don_vi',
             'area_of_premises', 'area_of_use', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date')
             ->where(function($q){
                 $q->where('is_vip', 1)
@@ -596,6 +629,7 @@ class PageController extends Controller
             'categories' => $this->categories,
             'provinces' => $this->provinces,
             'districts' => $this->districts,
+            'wards' => $this->wards,
             'streets' => $this->streets,
             'directions' => $this->directions,
             'projects' => $this->projects,
@@ -607,7 +641,7 @@ class PageController extends Controller
     {
         $explodeSlug = explode('-', $slug);
         $id = $explodeSlug[count($explodeSlug)-1];
-        $realEstate = RealEstate::where('id', $id);
+        $realEstate = RealEstate::withoutGlobalScope(PrivateScope::class)->where('id', $id);
 //        $realEstate = $this->checkRegisterDate($realEstate);
         $realEstate = $realEstate->first();
 
@@ -636,6 +670,7 @@ class PageController extends Controller
             'categories' => $this->categories,
             'provinces' => $this->provinces,
             'districts' => $this->districts,
+            'wards' => $this->wards,
             'streets' => $this->streets,
             'directions' => $this->directions,
             'projects' => $this->projects,
@@ -649,7 +684,7 @@ class PageController extends Controller
         if(!$searchText) {
             return redirect()->route('home');
         }
-        $query = RealEstate::select('id', 'title', 'short_description', 'slug', 'code', 'district_id',
+        $query = RealEstate::select('id', 'title', 'short_description', 'detail', 'slug', 'code', 'district_id', 'don_vi',
             'area_of_premises', 'area_of_use', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date');
 
         $query->where('title', 'like', '%' . $searchText . '%');
@@ -660,7 +695,7 @@ class PageController extends Controller
         $query->orderBy('post_date', 'desc');
 //        $query = $this->checkRegisterDate($query);
 
-        $results = $query->get();
+        $results = $query->paginate(get_config('itemsPerPage', 30));
 
         $this->vipRealEstates = $this->getVipRealEstates();
 
@@ -674,6 +709,7 @@ class PageController extends Controller
             'categories' => $this->categories,
             'provinces' => $this->provinces,
             'districts' => $this->districts,
+            'wards' => $this->wards,
             'streets' => $this->streets,
             'directions' => $this->directions,
             'projects' => $this->projects,
@@ -687,7 +723,7 @@ class PageController extends Controller
         $filter = $request->all();
 //        dd($filter);
         if($filter['Search']) {
-            $query = RealEstate::select('id', 'title', 'short_description', 'slug', 'code', 'district_id',
+            $query = RealEstate::select('id', 'title', 'short_description', 'detail', 'slug', 'code', 'district_id','province_id','ward_id','street_id', 'don_vi',
                 'area_of_premises', 'area_of_use', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date');
 
             if (isset($filter['Search']['cat_id']) && $filter['Search']['cat_id']) {
@@ -701,6 +737,9 @@ class PageController extends Controller
             }
             if (isset($filter['Search']['district_id']) && $filter['Search']['district_id']) {
                 $query->where('district_id', $filter['Search']['district_id']);
+            }
+            if (isset($filter['Search']['ward_id']) && $filter['Search']['ward_id']) {
+                $query->where('ward_id', $filter['Search']['ward_id']);
             }
             if (isset($filter['Search']['street_id']) && $filter['Search']['street_id']) {
                 $query->where('street_id', $filter['Search']['street_id']);
@@ -726,7 +765,7 @@ class PageController extends Controller
             }
 //            $query = $this->checkRegisterDate($query);
 
-            $results = $query->get();
+            $results = $query->paginate(get_config('itemsPerPage', 30));
 
             $this->vipRealEstates = $this->getVipRealEstates();
 
@@ -740,6 +779,7 @@ class PageController extends Controller
                 'categories' => $this->categories,
                 'provinces' => $this->provinces,
                 'districts' => $this->districts,
+                'wards' => $this->wards,
                 'streets' => $this->streets,
                 'directions' => $this->directions,
                 'projects' => $this->projects,
@@ -770,6 +810,7 @@ class PageController extends Controller
             'categories' => $this->categories,
             'provinces' => $this->provinces,
             'districts' => $this->districts,
+            'wards' => $this->wards,
             'streets' => $this->streets,
             'directions' => $this->directions,
             'projects' => $this->projects,
@@ -802,7 +843,7 @@ class PageController extends Controller
                  * get all post of user
                  * */
                 $query = RealEstate::select('id', 'title', 'detail', 'slug', 'code', 're_category_id', 'contact_phone_number', 'district_id', 'floor', 'position', 'bedroom', 'living_room',
-                    'wc', 'lat', 'long', 'area_of_premises', 'area_of_use', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date');
+                    'don_vi', 'wc', 'direction_id', 'exhibit_id', 'lat', 'long', 'area_of_premises', 'area_of_use', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date');
                 $query1 = clone $query;
                 $query1->where('posted_by', $id);
                 if (!Auth::user() || (Auth::user() && Auth::user()->id !== intval($id))) {
@@ -841,6 +882,7 @@ class PageController extends Controller
                     'reCategories' => $reCategories,
                     'provinces' => $this->provinces,
                     'districts' => $this->districts,
+                    'wards' => $this->wards,
                     'streets' => $this->streets,
                     'directions' => $this->directions,
                     'exhibits' => $exhibits,
@@ -864,7 +906,7 @@ class PageController extends Controller
 
     private function getVipRealEstates()
     {
-        $query = RealEstate::select('id', 'title', 'slug', 'direction_id',
+        $query = RealEstate::select('id', 'title', 'slug', 'direction_id', 'don_vi',
             'area_of_premises', 'price', 'unit_id', 'is_vip', 'is_hot', 'post_date', 'images')
             ->where(function($q){
                 $q->where('is_vip', 1)
@@ -879,8 +921,7 @@ class PageController extends Controller
 
 //            ->where('vip_expire_at',  '<=', Carbon::now())
 //        $query = $this->checkRegisterDate($query);
-        $query->limit(30);
-        $results = $query->get();
+        $results = $query->paginate(get_config('itemsPerPage', 30));
 //        dd($results);
         return $results;
     }

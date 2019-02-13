@@ -20,6 +20,9 @@
     <div class="content-body">
         <div class="container padding-top-30 padding-bottom-30">
             <div class="row">
+                {{--<div class="col-md-12">--}}
+                    {{--{{$data->appends($_GET)->render()}}--}}
+                {{--</div>--}}
                 <div class="col-xs-12 col-md-9 list-content-wrap">
                     <p class="title_box">
                         <strong>
@@ -68,8 +71,11 @@
                                         <a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">{{$item->title}}</a>
                                     </h3>
 
-                                    <p>{{$item->short_description}}
-                                    </p>
+                                    @php
+                                        $shortDes = substr($item->detail, 0, 150);
+                                    @endphp
+                                    <div class="short-des">{{$item->short_description ? $item->short_description : ($shortDes ? $shortDes : '')}}...
+                                    </div>
                                     <div class="row area">
                                         <div class="col-xs-6 larea">DTMB: {{$item->area_of_premises ? $item->area_of_premises . 'm2' : '0m2'}}</div>
                                         <div class="col-xs-6 rarea">DTSD: {{$item->area_of_use ? $item->area_of_use . 'm2' : '0m2'}}</div>
@@ -86,7 +92,11 @@
                             </div>
                         @endforeach
                     </div>
+                    <div class="col-md-12">
+                        {{$data->appends($_GET)->render()}}
+                    </div>
                 </div>
+
                 <div class="col-xs-12 col-md-3">
                     @include(theme(TRUE).'.includes.right-sidebar')
                     @include(theme(TRUE).'.includes.vip-slide')

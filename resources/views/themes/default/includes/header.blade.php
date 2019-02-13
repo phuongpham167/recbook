@@ -2,11 +2,11 @@
 <div class="top_page">
     <div class="container">
         <div class="row">
-            <div class="col-sm-8 welcome-text hidden-xs">
+            <div class="col-sm-6 welcome-text hidden-xs">
                 <p>{{get_config('homeHeader', 'CHÀO MỪNG QUÝ KHÁCH ĐẾN VỚI RECBOOK.VN - HOTLINE: 0989.186.179')}}</p>
             </div>
 
-            <div class="col-xs-12 col-sm-4 user-action">
+            <div class="col-xs-12 col-sm-6 user-action">
                 @if (!auth()->check())
                     <p class="pull-right">
                         <a href="{{ route('login') }}"><i class="fa fa-sign-in"></i> ĐĂNG NHẬP</a>
@@ -15,7 +15,7 @@
                 @else
                     <p class="pull-right">
                         <a href="{{ route('recharge') }}"><i class="fa fa-credit-card"></i> <strong>Số dư: {{number_format(auth()->user()->credits).' '.\App\Currency::where('default',1)->first()->icon}}</strong></a>
-                        <a href="{{ route('info') }}"><i class="fa fa-user"></i> <strong>{{auth()->user()->name}}</strong></a>
+                        <a href="{{route('user.info', [auth()->user()->id])}}"><i class="fa fa-user"></i> <strong>{{auth()->user()->userinfo->full_name}}</strong></a>
                         <a href="{{ route('logout') }}"><i class="fa fa-sign-out"></i> ĐĂNG XUẤT</a>
                     </p>
                 @endif
@@ -34,9 +34,15 @@
                 </a>
             </div>
             <div class="right col-sm-8 hidden-xs">
-                <a href="">
-                    <img src="{{ asset('images/banner/banner-header.gif') }}" class="img-responsive" alt="" />
-                </a>
+                @foreach(\App\Banner::where('location', 8)->where('province_id', 0)->get() as $item)
+                    @if($item->type==1)
+                        <a href="{{$item->url}}">
+                            <img src="http://{{env('DOMAIN_BACKEND', 'recbook.net')}}/{{$item->image}}" class="img-responsive" alt="{{$item->note}}">
+                        </a>
+                    @else
+                        {!! $item->content !!}
+                    @endif
+                @endforeach
             </div>
             {{--<div class="clearfix"></div>--}}
         </div>
@@ -51,13 +57,13 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand visible-xs" href="{{ route('home') }}">DoThiGroup</a>
+            <a class="navbar-brand visible-xs" href="{{ route('home') }}">Recbook.vn</a>
         </div>
         <div class="collapse navbar-collapse main-menu-list" id="myNavbar">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="{{ route('home') }}"><i class="fa fa-home fa-lg fa-fw"></i> {{ trans('header.navbar-item.home') }}</a></li>
                 @php
-                    $menuData = json_decode($menuData->data);
+                    $menuData = json_decode(menu()->data);
                 @endphp
                 @foreach($menuData as $md)
                     @if (isset($md->children) && $children = $md->children)

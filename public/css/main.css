@@ -1018,3 +1018,9 @@ p.more a {
 *---------------------- END CSS for detail real estate page --------------------------
 */
 
+.short-des {
+    line-height: 18px;
+    height: 66px;
+    overflow: hidden;
+}
+

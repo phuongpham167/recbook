@@ -9,6 +9,8 @@
 namespace App\Services;
 use App\Customer;
 use App\RealEstate;
+use App\Scopes\PrivateScope;
+use App\Scopes\PublicScope;
 use App\Street;
 use App\WebsiteConfig;
 use Carbon\Carbon;
@@ -56,7 +58,7 @@ class RealEstateService
                 $thumbPath = public_path().'/storage/thumbs/' . $png_url;
                 $watermark_logo = public_path().'/images/watermark_logo.png';
 
-                $originImg = Image::make(file_get_contents($image))->insert($watermark_logo, 'bottom', 10, 10)->save($path);
+                $originImg = Image::make(file_get_contents($image))->insert($watermark_logo, 'top-left', 10, 10)->save($path);
                 $thumbnail = $originImg->resize(122, 91)->save($thumbPath);
                 $imagesVal[] = [
                     'link' => $root . '/storage/uploads/' . $png_url,
@@ -98,6 +100,8 @@ class RealEstateService
             }
         }
         $post_date  =   isset($input['post_date']) ? $input['post_date'] : Carbon::now();
+
+        $public_input   =   !empty($input['public_site'])?$input['public_site']:0;
         $realEstate = new RealEstate([
             'title' => $input['title'],
             'slug' => $slug,
@@ -127,6 +131,7 @@ class RealEstateService
             'area_of_use' => isset($input['area_of_use']) ? $input['area_of_use'] : null,
             'floor' => isset($input['floor']) ? $input['floor'] : null,
             'price' => isset($input['price']) ? $input['price'] : null,
+            'don_vi' => isset($input['don_vi']) ? $input['don_vi'] : null,
             'unit_id' => isset($input['unit_id']) ? $input['unit_id'] : null,
             'range_price_id' => isset($input['range_price_id']) ? $input['range_price_id'] : null,
             'is_deal' => isset($input['is_deal']) ? 1 : 0,
@@ -143,7 +148,8 @@ class RealEstateService
             'web_id' => $this->web_id,
             'approve' => $approve,
             'draft' => isset($input['add_draft']) ? 1 : 0,
-            'is_public' =>  1
+            'is_public' =>  1,
+            'public_site' =>  post_left(auth()->user())==0?0:$public_input
         ]);
 
         if($realEstate->save()) {
@@ -196,7 +202,7 @@ class RealEstateService
             $street->save();
             $input['street_id'] = $street->id;
         }
-        
+
         $realEstate = RealEstate::find($input['id']);
         if ($realEstate) {
             $approve = $realEstate->draft ? 0 : ( $this->needApprove ? 0 : 1 );
@@ -238,8 +244,8 @@ class RealEstateService
             $realEstate->unit_id = $input['unit_id'];
             $realEstate->range_price_id = $input['range_price_id'];
             $realEstate->is_deal = isset($input['is_deal']) ? 1 : 0;
-            $realEstate->post_date = $input['post_date'];
-            $realEstate->expire_date = $input['expire_date'];
+//            $realEstate->post_date = $input['post_date'];
+//            $realEstate->expire_date = $input['expire_date'];
             $realEstate->images = json_encode($imagesVal);
             $realEstate->lat = $lat;
             $realEstate->long = $long;
@@ -292,6 +298,7 @@ class RealEstateService
                 ];
             }
         }
+
         if (isset($input['imagesNew'])) {
             $imagesNew = $input['imagesNew'];
             $altNew = $input['altNew'];
@@ -301,7 +308,7 @@ class RealEstateService
                 $thumbPath = public_path().'/storage/thumbs/' . $png_url;
                 $watermark_logo = public_path().'/images/watermark_logo.png';
 
-                $originImg = Image::make(file_get_contents($image))->insert($watermark_logo, 'bottom', 10, 10)->save($path);
+                $originImg = Image::make(file_get_contents($image))->insert($watermark_logo, 'top-left', 10, 10)->save($path);
                 $thumbnail = $originImg->resize(122, 91)->save($thumbPath);
                 $imagesVal[] = [
                     'link' => $root . '/storage/uploads/' . $png_url,
@@ -335,7 +342,9 @@ class RealEstateService
             }
         }
 
-        $realEstate = RealEstate::find($input['id']);
+        $realEstate = RealEstate::withoutGlobalScope(PrivateScope::class)->find($input['id']);
+
+
         if ($realEstate) {
             $approve = $realEstate->draft ? 0 : ( $this->needApprove ? 0 : 1 );
             if ($input['is_private'] == RealEstate::USER_PAGE || $input['is_private'] == RealEstate::USER_WEB) {
@@ -382,7 +391,6 @@ class RealEstateService
             $realEstate->lat = $lat;
             $realEstate->long = $long;
             $realEstate->detail = isset($input['detail']) ? $input['detail'] : null;
-            $realEstate->is_private = $input['is_private'];
             $realEstate->customer_id = $customer ? $customer->id : null;
             $realEstate->updated_by = \Auth::user()->id;
             $realEstate->web_id = $this->web_id;
@@ -394,9 +402,8 @@ class RealEstateService
 //                $realEstate->approved = $this->needApprove ? 0 : 1;
 //                $realEstate->draft = 0;
 //            }
-
             if($realEstate->save()) {
-                return RealEstate::with(['district', 'reCategory'])->find($input['id']);
+                return RealEstate::withoutGlobalScope(PrivateScope::class)->with(['district', 'reCategory', 'exhibit', 'direction'])->find($input['id']);
             } else {
                 return false;
             }
