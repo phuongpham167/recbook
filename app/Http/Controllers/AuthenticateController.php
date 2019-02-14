@@ -63,7 +63,7 @@ class AuthenticateController extends Controller
                 if(!empty($loginEmail))
                     return 'email';
             }
-            session(['tinhthanhquantam' => auth()->user()->subcribes()->get()]);
+            session(['tinhthanhquantam' => implode(',', auth()->user()->subcribes()->pluck('province_subcribes.province_id')->toArray())]);
 //            event_log(trans('eventlog.accesssystem'));
             return TRUE;
         } else {
