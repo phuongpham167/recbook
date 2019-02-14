@@ -18,6 +18,6 @@ class ProvinceScope implements Scope
     public function apply(Builder $builder, Model $model)
     {
         if(!empty(session('tinhthanhquantam')))
-            $builder->whereIn('province_id', session('tinhthanhquantam'));
+            $builder->whereIn('province_id', explode(",",session('tinhthanhquantam')));
     }
 }
