@@ -5453,3 +5453,9 @@ function vip_type () {
 
     return $type;
 }
+function tag_filter($content){
+    preg_match('/\#[0-9]*/',$content, $matches, PREG_OFFSET_CAPTURE);
+    $id =   str_replace('#', '', $matches[0][0]);
+    $content    =   str_replace($matches[0][0], "<a href='".route('user.info', ['id'=>$id])."'>".$matches[0][0]."</a>", $content);
+    return $content;
+}
