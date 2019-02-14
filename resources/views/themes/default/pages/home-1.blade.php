@@ -791,26 +791,23 @@
             });
 
         // auto modal
-        $.get('<?php echo asset('tinh-thanh-quan-tam'); ?>', {_token: '{{csrf_token()}}'}, function(r){
-        }).done(function(r) {
-            // console.log('value: '+r);
-            if (r=='' || r==null) {
-                $(window).load(function() {
-                    $('#myModal').modal('show');
-                    $('.province').tokenInput("{{asset('/ajax/province')}}", {
-                        theme: "bootstrap",
-                        queryParam: "term",
-                        zindex  :   9999,
-                        hintText : 'Nhập tên tỉnh thành để tìm kiếm',
-                        onAdd   :   function(r){
-                            $('#method').val(r.method);
-                        }
-                    });
-                });
-            }
-        });
+
 
         $(document).ready(function(){
+            @if (empty(session('tinhthanhquantam')))
+            // $(window).load(function() {
+            $('#myModal').modal('show');
+            $('.province').tokenInput("{{asset('/ajax/province')}}", {
+                theme: "bootstrap",
+                queryParam: "term",
+                zindex  :   9999,
+                hintText : 'Nhập tên tỉnh thành để tìm kiếm',
+                onAdd   :   function(r){
+                    $('#method').val(r.method);
+                }
+            });
+            // });
+            @endif
             $('.vip3').bxSlider({
                 auto: true,
                 speed: 500,
