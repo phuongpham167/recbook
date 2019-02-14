@@ -801,6 +801,7 @@
                 theme: "bootstrap",
                 queryParam: "term",
                 zindex  :   9999,
+                tokenLimit  :   1,
                 hintText : 'Nhập tên tỉnh thành để tìm kiếm',
                 onAdd   :   function(r){
                     $('#method').val(r.method);
