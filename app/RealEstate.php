@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Scopes\PrivateScope;
+use App\Scopes\ProvinceScope;
 use App\Scopes\PublicScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -132,5 +133,6 @@ class RealEstate extends Model
         parent::boot();
 
         static::addGlobalScope(new PrivateScope());
+        static::addGlobalScope(new ProvinceScope());
     }
 }

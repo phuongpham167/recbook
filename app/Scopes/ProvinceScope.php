@@ -19,7 +19,5 @@ class ProvinceScope implements Scope
     {
         if(!empty(session('tinhthanhquantam')))
             $builder->whereIn('province_id', session('tinhthanhquantam'));
-        else if(!empty(auth()->user()->subcribes()->get()))
-            $builder->whereIn('province_id', auth()->user()->subcribes()->get());
     }
 }

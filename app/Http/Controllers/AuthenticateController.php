@@ -63,6 +63,7 @@ class AuthenticateController extends Controller
                 if(!empty($loginEmail))
                     return 'email';
             }
+            session(['tinhthanhquantam' => auth()->user()->subcribes()->get()]);
 //            event_log(trans('eventlog.accesssystem'));
             return TRUE;
         } else {
