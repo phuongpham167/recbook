@@ -622,7 +622,6 @@
                     </div>
                     <div class="modal-body">
                         <input type="text" class="form-control province" name="provinces" value=""/>
-                        <input type="checkbox" name="provinces" value="0" /> Chọn tất cả
                     </div>
                     <div class="modal-footer" style="text-align: center">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
