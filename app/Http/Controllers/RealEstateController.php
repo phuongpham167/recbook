@@ -416,11 +416,10 @@ class RealEstateController extends Controller
                 $price = HotVip::where('province_id', $data->province_id)->first()->vip_right_value;
                 $type = 'tin vip phải';
             }
-
-
             $value = $request->vip_time*$price;
-
-            if(credit(auth()->user()->id,$value,1, 'nâng cấp '.$type.' cho id '.$data->id.' trong '.$request->vip_time.' ngày')){
+            if(RealEstate::where('vip_type', $request->vip_type)->where('province_id',$data->province_id)->count() == get_config('vip'.$request->vip_type)){
+                set_notice('Loại '.$type.' tại tỉnh thành '.$data->province_id.' hiện không còn vị trí trống.Hãy thử chọn loại tin vip/hot khác!', 'warning');
+            }else if(credit(auth()->user()->id,$value,1, 'nâng cấp '.$type.' cho id '.$data->id.' trong '.$request->vip_time.' ngày')){
                 $data->save();
                 set_notice(trans('system.set_vip_success').$type.' '.$request->vip_time.' ngày thành công!', 'success');
             }

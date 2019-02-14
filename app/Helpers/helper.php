@@ -5287,6 +5287,19 @@ function ads_display($location){
 
     return $banner;
 }
+
+function first_video_display(){
+    $province = 0;
+    if(auth()->check())
+        $province   =   auth()->user()->userinfo?auth()->user()->userinfo->province_id:0;
+    $banner =   \App\Banner::where('location', 1)->where('province_id', $province);
+    if($banner->count() == 0){
+        $banner =   \App\Banner::where('location', 1)->where('province_id', 0)->first()->content;
+    }else
+        $banner =   $banner->first()->content;
+
+    return $banner;
+}
 function convert_number_to_words($number) {
     return number_format($number);
 //    $hyphen      = ' ';

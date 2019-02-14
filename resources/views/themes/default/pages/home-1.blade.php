@@ -54,11 +54,24 @@
     background: #000;
     height: 274px;
 ">
-                @foreach(ads_display(1) as $item)
-                    {!! $item->content !!}
-                @endforeach
+                <div id="video_slide">
+                    {!! first_video_display() !!}
+                </div>
             </div>
-            <div class="col-md-8 no-padding-left no-padding-right">
+            <div class="col-md-2"  style="
+    background: #000;
+    height: 274px;
+">
+                <table class="table">
+                    @foreach(ads_display(1) as $k=>$item)
+                        <tr>
+                            <td style="border: black !important;"><a href="#a" class="video-list" data-content="{{$item->content}}"><strong>{{$item->note}}</strong></a></td>
+                        </tr>
+                    @endforeach
+                </table>
+            </div>
+
+            <div class="col-md-6 no-padding-left no-padding-right">
                 <div class="flexslider">
                     <ul class="slides">
                         @foreach(\App\Banner::where('location', 0)->get() as $item)
@@ -791,7 +804,14 @@
             });
 
         // auto modal
+        $('.table').on('click', '.video-list', function () {
+            // console.log(check);
+            var content   =   $(this).data('content');
 
+            console.log(content);
+
+            $('#video_slide').html(content);
+        });
 
         $(document).ready(function(){
             @if (empty(session('tinhthanhquantam')))
@@ -801,6 +821,7 @@
                 theme: "bootstrap",
                 queryParam: "term",
                 zindex  :   9999,
+                tokenLimit  :   1,
                 hintText : 'Nhập tên tỉnh thành để tìm kiếm',
                 onAdd   :   function(r){
                     $('#method').val(r.method);
