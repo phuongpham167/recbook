@@ -218,7 +218,11 @@ Route::get('/tinh-thanh-quan-tam', function (){
 });
 
 Route::post('/tinh-thanh-quan-tam',['as' => 'interested-provinces', function (){
+//    print_r(request('provinces'));
     session(['tinhthanhquantam' => request('provinces')]);
+    if(auth()->check()){
+        auth()->user()->subcribes()->sync([request('provinces')]);
+    }
     return redirect()->back();
 }]);
 
@@ -228,6 +232,13 @@ Route::get('/xoa-session', function (){
 });
 
 Route::get('/t', function (){
+//    var_dump(session('tinhthanhquantam'));
     print_r( 'session: '.session('tinhthanhquantam'));
+    print_r(auth()->user()->subcribes()->pluck('province_subcribes.province_id')->toArray());
 });
+//
+//Route::get('/sync', function (){
+////    print_r(implode(',',session('tinhthanhquantam')->toArray()));
+//    auth()->user()->subcribes()->sync([1]);
+//});
 

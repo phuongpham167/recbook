@@ -6,6 +6,7 @@ use App\Freelancer;
 use App\Friend;
 use App\MappingMenuFE;
 use App\Menu;
+use App\Province;
 use App\RealEstate;
 use App\ReCategory;
 use App\ReType;
@@ -230,6 +231,7 @@ class PageController extends Controller
         $freelancer_finance    =   Freelancer::where('status', 'open')->where('category_id', 2)->take(9)->get();
         $freelancer_design    =   Freelancer::where('status', 'open')->where('category_id', 3)->take(9)->get();
         $freelancer_phongthuy    =   Freelancer::where('status', 'open')->where('category_id', 4)->take(9)->get();
+        $province_list = Province::whereNotNull('id')->orderBy('order','asc')->get();
         Carbon::setLocale('vi');
         return v('pages.home-1', [
             'vip'   =>  $vip,
@@ -250,6 +252,7 @@ class PageController extends Controller
             'menuData' => $this->menuFE,
             'vipRealEstates' => $vipRealEstates,
             'agencies'  =>  $this->agencies,
+            'province_list' => $province_list,
             'freelancer' => [
                 'all'   =>  $freelancer_all,
                 're' => $freelancer_re,

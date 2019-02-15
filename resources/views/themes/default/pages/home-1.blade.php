@@ -611,8 +611,8 @@
     </div>
     <form method="post" action="{{route('interested-provinces')}}">
         {{csrf_field()}}
-        <div class="modal fade bs-example-modal-md" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="myModal" style="margin-top: 100px; border-radius: 0 !important;">
-            <div class="modal-dialog modal-md">
+        <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="myModal" style="margin-top: 100px; border-radius: 0 !important;">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content" style="border-radius: 0 !important;">
                     <div class="modal-header" style="background: #0c4da2; color: white">
                         {{--<button type="button" class="close" data-dismiss="modal" aria-label="Close">--}}
@@ -621,16 +621,13 @@
                         <h4 class="modal-title">Bạn quan tâm đến bất động sản ở tỉnh thành nào?</h4>
                     </div>
                     <div class="modal-body">
-                        <select class="form-control" name="provinces">
-                            <option value="">--Chọn tỉnh thành--</option>
-                            @foreach(\App\Province::all() as $item)
-                                <option value="{{$item->id}}">{{$item->name}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="modal-footer" style="text-align: center">
-                        {{--<button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>--}}
-                        <button type="submit" class="btn btn-info">{{trans('system.submit')}}</button>
+                        <div class="row">
+                        @foreach($province_list as $item)
+                                <div class="col-md-3">
+                                    <button type="submit" name="provinces" value="{{$item->id}}" class="btn btn-default">{{$item->name}}</button>
+                                </div>
+                        @endforeach
+                        </div>
                     </div>
                 </div>
             </div>

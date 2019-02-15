@@ -161,6 +161,7 @@ class AuthenticateController extends Controller
         $user->save();
         if(!empty($request->subcribes)){
             auth()->user()->subcribes()->sync(explode(',',$request->subcribes));
+            session(['tinhthanhquantam' => implode(',', auth()->user()->subcribes()->pluck('province_subcribes.province_id')->toArray())]);
         }
 //        event_log('Sửa thành viên '.auth()->user()->name.' id '.auth()->user()->id);
         set_notice(trans('system.edit_success'), 'success');
