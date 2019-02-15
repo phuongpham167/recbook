@@ -5301,7 +5301,7 @@ function first_video_display(){
     return $banner;
 }
 function convert_number_to_words($number) {
-    return number_format($number);
+    return number_format($number, 0, ',', '.');
 //    $hyphen      = ' ';
 //    $conjunction = '  ';
 //    $separator   = ' ';
