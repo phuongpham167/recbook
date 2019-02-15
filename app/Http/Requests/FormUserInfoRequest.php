@@ -32,9 +32,7 @@ class FormUserInfoRequest extends FormRequest
             'company'  =>  'required',
             'identification'  =>  'required',
             'phone'  =>  'required',
-            'province_id'  =>  'required',
-            'address'  =>  'required',
-            'description'  =>  'required'
+            'province_id'  =>  'required'
         ];
     }
 
