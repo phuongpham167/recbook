@@ -33,14 +33,20 @@
 
                                 <div class="panel-body">
                                     @foreach($users as $user)
-                                        @if($user->group->chat_permission)
+                                        @php
+                                            $f = $user->fuser1;
+                                            if($user->user1 == auth()->user()->id){
+                                                $f = $user->fuser2;
+                                            }
+                                        @endphp
+                                        @if($f->group->chat_permission)
                                         <div class="row">
                                             <div class="col-md-6">
-                                                {{$user->name}}
+                                                {{$f->name}}
                                             </div>
                                             <div class="col-md-6 form-group">
                                                 {{Form::open(['url'=>route('conversation.store')])}}
-                                                {{Form::hidden('user_id',$user->id)}}
+                                                {{Form::hidden('user_id',$f->id)}}
                                                 {{Form::submit('Chat ngay',['class'=>'form-control btn btn-success'])}}
                                                 {{Form::close()}}
                                             </div>

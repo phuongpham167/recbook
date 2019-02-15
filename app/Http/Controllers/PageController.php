@@ -800,7 +800,14 @@ class PageController extends Controller
         if (!Auth::user()->group->chat_permission) {
             return redirect()->route('home');
         }
-        $users = User::where('id','!=',Auth::user()->id)->get();
+//        $users = User::where('id','!=',Auth::user()->id)->get();
+        $userId = Auth::user()->id;
+        $users = Friend::where(function($query) use ($userId) {
+                $query->where('user1', $userId)
+                    ->orWhere('user2', $userId);
+            })
+            ->where('confirmed', 1)
+            ->get();
         $conversations = Auth::user()->conversations();
 
         $this->vipRealEstates = $this->getVipRealEstates();
