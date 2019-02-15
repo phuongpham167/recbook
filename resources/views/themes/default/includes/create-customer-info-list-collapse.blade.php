@@ -237,6 +237,7 @@
                         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.price')}}</label>
                         <div class="col-sm-4">
                             <input type="number" class="form-control" id="price" name="price" value="{{ old('price') }}"/>
+                            <span id="price_format"></span>
                         </div>
                         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.don_vi')}}</label>
                         <div class="col-sm-4">
@@ -382,6 +383,7 @@
                 $('#method').val(r.method);
             }
         });
+
         $(document)
             .one('focus.autoExpand', 'textarea.autoExpand', function () {
                 var savedValue = this.value;
@@ -396,6 +398,7 @@
                 this.rows = minRows + rows;
             });
         $(function () {
+
             $('#contact_phone_number').keyup(function() {
                 emptyContactInfo();
 
@@ -867,6 +870,7 @@
 
             $('.form-add-cil #map').val('');
         }
+
     </script>
     <script type="text/javascript" src='https://maps.googleapis.com/maps/api/js?sensor=false&key=AIzaSyAxgnRkMsWPSqlxOz_kLga0hJ4eG2l0Vmo&callback=initMap'></script>
 @endpush
