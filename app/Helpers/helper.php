@@ -5466,9 +5466,50 @@ function vip_type () {
 
     return $type;
 }
-function tag_filter($content){
-    preg_match('/\#[0-9]*/',$content, $matches, PREG_OFFSET_CAPTURE);
-    $id =   str_replace('#', '', $matches[0][0]);
-    $content    =   str_replace($matches[0][0], "<a href='".route('user.info', ['id'=>$id])."'>".$matches[0][0]."</a>", $content);
-    return $content;
+function tag_filter($content, $type){
+    switch ($type){
+        case 'realestate':
+            $tagname    =   '#';
+            $pattern    =   "/\#[0-9]*/";
+            break;
+        case 'user':
+            $tagname    =   '@';
+            $pattern    =   "/\@[0-9]*/";
+            break;
+    }
+    preg_match_all($pattern,$content, $matches, PREG_OFFSET_CAPTURE);
+    foreach($matches[0] as $match){
+        $id =   str_replace($tagname, '', $match[0]);
+        switch ($type){
+            case 'realestate':
+                $url    =   !empty(build_url($type, $id))?build_url($type, $id):null;
+            break;
+            case 'user':
+                $url    =   !empty(build_url($type, $id))?build_url($type, $id):null;
+                break;
+        }
+        if($url!=null)
+            $content    =   str_replace($match[0], "<a href='$url'>".$match[0]."</a>", $content);
+        else
+            $content    =   str_replace($match[0], $id, $content);
+    }
+     return $content;
+}
+
+function build_url($type, $id){
+    switch ($type){
+        case 'realestate':
+            $data   =   RealEstate::find($id);
+            if(!empty($data))
+                return route('detail-real-estate', ['slug'=>to_slug($data->title).'-'.$data->id]);
+            break;
+        case 'user':
+            $data   =   \App\User::find($id);
+            if(!empty($data))
+                return route('user.info', ['id'=>$id]);
+            break;
+        default:
+            return $type."?id=$id";
+            break;
+    }
 }

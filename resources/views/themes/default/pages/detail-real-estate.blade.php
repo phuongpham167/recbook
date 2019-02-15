@@ -316,6 +316,7 @@
                             </div>
                         </div>
                     </div>
+                    @include('Comment::comment', ['type'=>'realestate', 'id'=>$data->id])
                     <div class="same-result margin-top-20">
                         <p class="title_box1">
                             <strong>CÁC TIN CÙNG TIÊU CHÍ TÌM KIẾM</strong>

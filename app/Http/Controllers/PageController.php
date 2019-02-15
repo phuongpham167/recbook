@@ -662,6 +662,8 @@ class PageController extends Controller
 
         $this->vipRealEstates = $this->getVipRealEstates();
 
+        session(['comment.id'=>$realEstate->id, 'comment.type'=>'realestate']);
+
         return v('pages.detail-real-estate', [
             'data' => $realEstate,
             'sameSearchOptions' => $sameSearchOptions,
