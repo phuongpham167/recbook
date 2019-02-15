@@ -40,7 +40,6 @@ class FormUserRequest extends FormRequest
             'company'  =>  'required',
             'identification'  =>  'required',
             'province_id'  =>  'required',
-            'description'  =>  'required'
         ];
     }
 
@@ -60,8 +59,7 @@ class FormUserRequest extends FormRequest
             'identification.required'  =>  'Vui lòng điền CMT/ Mã số thuế',
             'province_id.required'  =>  'Vui lòng chọn tỉnh/thành',
             'phone.required'  =>  'Vui lòng điền số điện thoại',
-            'address.required'  =>  'Vui lòng điền địa chỉ',
-            'description.required'  =>  'Vui lòng điền mô tả',
+            'address.required'  =>  'Vui lòng điền địa chỉ'
         ];
     }
 }
