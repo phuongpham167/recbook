@@ -615,16 +615,16 @@
             <div class="modal-dialog modal-md">
                 <div class="modal-content" style="border-radius: 0 !important;">
                     <div class="modal-header" style="background: #0c4da2; color: white">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+                        {{--<button type="button" class="close" data-dismiss="modal" aria-label="Close">--}}
+                            {{--<span aria-hidden="true">&times;</span>--}}
+                        {{--</button>--}}
                         <h4 class="modal-title">Bạn quan tâm đến bất động sản ở tỉnh thành nào?</h4>
                     </div>
                     <div class="modal-body">
                         <input type="text" class="form-control province" name="provinces" value=""/>
                     </div>
                     <div class="modal-footer" style="text-align: center">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                        {{--<button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>--}}
                         <button type="submit" class="btn btn-info">{{trans('system.submit')}}</button>
                     </div>
                 </div>
@@ -815,6 +815,7 @@
         $(document).ready(function(){
             @if (empty(session('tinhthanhquantam')))
             // $(window).load(function() {
+            $('#myModal').modal({backdrop: 'static', keyboard: false});
             $('#myModal').modal('show');
             $('.province').tokenInput("{{asset('/ajax/province')}}", {
                 theme: "bootstrap",
