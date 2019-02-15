@@ -11,7 +11,18 @@
 @push('style')
     <link rel="stylesheet" href="{{ asset('css/theme.css') }}" />
     <link rel="stylesheet" href="{{asset('plugins/jquery.datatables/css/jquery.dataTables.min.css')}}" />
-
+<style>
+    .freelancer_tab {
+        margin-bottom: 0px;
+        margin-top: 0;
+        background: #0c4da2;
+        color: #fff;
+        font-weight: 500;
+        font-size: 13px;
+        padding: 10px 15px;
+        text-transform: uppercase;
+    }
+</style>
 @endpush
 
 @section('content')
@@ -28,6 +39,14 @@
 
             <!--Begin left-->
             <div class="col-xs-9 right">
+                <div>
+                    <ul class="nav nav-tabs">
+                        <li role="presentation" @if(url()->current() == asset('lich-su-giao-dich')) class="active" @endif><a class="freelancer_tab" href="/lich-su-giao-dich/">Lịch sử giao dịch </a></li>
+                        <li role="presentation" class="pull-right"><a class="btn-add" style="background: #2db964; color: white" href="/nap-tien"><i class="fa fa-plus"
+                                                                                                                                             aria-hidden="true"></i>
+                                Nạp tiền</a></li>
+                    </ul>
+                </div>
             @include('themes.default.includes.message')
             <!--begin manage_page-->
                 <div class="listlandA_page">
