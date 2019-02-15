@@ -15,6 +15,16 @@
             pointer-events: none; /* Disables the button completely. Better than just cursor: default; */
             color: #ccc !important;
         }
+        .freelancer_tab {
+            margin-bottom: 0px;
+            margin-top: 0;
+            background: #0c4da2;
+            color: #fff;
+            font-weight: 500;
+            font-size: 13px;
+            padding: 10px 15px;
+            text-transform: uppercase;
+        }
     </style>
 @endpush
 
@@ -30,12 +40,20 @@
 
             <!--Begin left-->
             <div class="col-xs-9 right">
+                <div>
+                    <ul class="nav nav-tabs">
+                        <li role="presentation" @if(url()->current() == asset('bat-dong-san/')) class="active" @endif><a class="freelancer_tab" href="/bat-dong-san/">Danh sách tin đăng <span>({{\App\RealEstate::where('approved', 1)->where('draft','0')->where('expire_date','>=',\Carbon\Carbon::createFromFormat('m/d/Y H:i A', \Carbon\Carbon::now()->format('m/d/Y H:i A')))->where('posted_by', \Auth::user()->id)->count()}})</span></a></li>
+                        <li role="presentation" @if(url()->current() == asset('bat-dong-san/tin-rao-het-han')) class="active" @endif><a class="freelancer_tab" href="/bat-dong-san/tin-rao-het-han">Tin rao hết hạn <span>({{\App\RealEstate::where('expire_date','<',\Carbon\Carbon::createFromFormat('m/d/Y H:i A', \Carbon\Carbon::now()->format('m/d/Y H:i A')))->where('posted_by', \Auth::user()->id)->count()}})</span></a></li>
+                        <li role="presentation" @if(url()->current() == asset('bat-dong-san/tin-rao-cho-duyet')) class="active" @endif><a class="freelancer_tab" href="/bat-dong-san/tin-rao-cho-duyet">Tin rao chờ duyệt <span>({{\App\RealEstate::where('approved','0')->where('draft', 0)->where('expire_date','>=',\Carbon\Carbon::createFromFormat('m/d/Y H:i A', \Carbon\Carbon::now()->format('m/d/Y H:i A')))->where('posted_by', \Auth::user()->id)->count()}})</span></a></li>
+                        <li role="presentation" @if(url()->current() == asset('bat-dong-san/tin-rao-nhap')) class="active" @endif><a class="freelancer_tab" href="/bat-dong-san/tin-rao-nhap">Tin rao nháp <span>({{\App\RealEstate::where('draft','1')->where('expire_date','>=',\Carbon\Carbon::createFromFormat('m/d/Y H:i A', \Carbon\Carbon::now()->format('m/d/Y H:i A')))->where('posted_by', \Auth::user()->id)->count()}})</span></a></li>
+                        <li role="presentation" @if(url()->current() == asset('bat-dong-san/tin-rao-da-xoa')) class="active" @endif><a class="freelancer_tab" href="/bat-dong-san/tin-rao-da-xoa">Tin rao đã xóa <span>({{\App\RealEstate::onlyTrashed()->where('posted_by', \Auth::user()->id)->count()}})</span></a></li>
+                    </ul>
+                </div>
                 @include('themes.default.includes.message')
                 <!--begin manage_page-->
                 <div class="listlandA_page">
                     <p class="title_boxM"><strong><i class="fa fa-file-pdf-o"></i>{{trans('real-estate.manage')}}</strong></p>
                     <div>
-
                         <div class="_form search_listlandA_page">
                             <form id="yw0" method="get">
                                 <div class="row">

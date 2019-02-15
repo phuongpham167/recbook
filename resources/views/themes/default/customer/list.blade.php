@@ -15,6 +15,16 @@
             pointer-events: none; /* Disables the button completely. Better than just cursor: default; */
             color: #ccc !important;
         }
+        .freelancer_tab {
+            margin-bottom: 0px;
+            margin-top: 0;
+            background: #0c4da2;
+            color: #fff;
+            font-weight: 500;
+            font-size: 13px;
+            padding: 10px 15px;
+            text-transform: uppercase;
+        }
     </style>
 @endpush
 
@@ -30,6 +40,12 @@
 
             <!--Begin left-->
             <div class="col-xs-9 right">
+                <div>
+                    <ul class="nav nav-tabs">
+                        <li role="presentation" @if(url()->current() == asset('khach-hang')) class="active" @endif><a class="freelancer_tab" href="/khach-hang">Danh sách khách hàng</a></li>
+                        <li role="presentation" @if(url()->current() == asset('khach-hang/lich-hen')) class="active" @endif><a class="freelancer_tab" href="/khach-hang/lich-hen">Danh sách lịch hẹn</a></li>
+                    </ul>
+                </div>
                 @include('themes.default.includes.message')
                 <!--begin manage_page-->
                 <div class="listlandA_page">

@@ -11,6 +11,18 @@
 @push('style')
     <link rel="stylesheet" href="{{ asset('css/theme.css') }}"/>
     <link rel="stylesheet" href="{{asset('plugins/jquery.datatables/css/jquery.dataTables.min.css')}}"/>
+    <style>
+        .freelancer_tab {
+            margin-bottom: 0px;
+            margin-top: 0;
+            background: #0c4da2;
+            color: #fff;
+            font-weight: 500;
+            font-size: 13px;
+            padding: 10px 15px;
+            text-transform: uppercase;
+        }
+    </style>
 @endpush
 
 @section('content')
@@ -24,6 +36,12 @@
             <!--End left-->
 
             <div class="col-xs-9 right">
+                <div>
+                    <ul class="nav nav-tabs">
+                        <li role="presentation" @if(url()->current() == asset('du-an/quan-ly-du-an/da-dang')) class="active" @endif><a class="freelancer_tab" href="/du-an/quan-ly-du-an/da-dang">Dự án đã đăng</a></li>
+                        <li role="presentation" @if(url()->current() == asset('du-an/quan-ly-du-an/da-chao-gia')) class="active" @endif><a class="freelancer_tab" href="/du-an/quan-ly-du-an/da-chao-gia">Dự án đã chào giá</a></li>
+                    </ul>
+                </div>
                 @include('themes.default.includes.message')
                 <div class="listlandA_page">
                     <p class="title_boxM"><strong><i class="fa fa-list-alt"></i>{{trans('freelancer.index')}}</strong></p>
