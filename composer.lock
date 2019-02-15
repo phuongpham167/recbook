@@ -431,12 +431,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/tuandinhvu/laravel-comment.git",
-                "reference": "d80fc762915b99889c28b120f5e2d812a9279003"
+                "reference": "6dc17a0d2658850ab2df671b4a78e4c13c927523"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tuandinhvu/laravel-comment/zipball/d80fc762915b99889c28b120f5e2d812a9279003",
-                "reference": "d80fc762915b99889c28b120f5e2d812a9279003",
+                "url": "https://api.github.com/repos/tuandinhvu/laravel-comment/zipball/6dc17a0d2658850ab2df671b4a78e4c13c927523",
+                "reference": "6dc17a0d2658850ab2df671b4a78e4c13c927523",
                 "shasum": ""
             },
             "type": "library",
@@ -450,7 +450,7 @@
                 "MIT"
             ],
             "description": "Comment package for Laravel",
-            "time": "2019-02-14T19:29:22+00:00"
+            "time": "2019-02-14T20:03:24+00:00"
         },
         {
             "name": "fideloper/proxy",
@@ -1542,7 +1542,7 @@
                 {
                     "name": "Luís Otávio Cobucci Oblonczyk",
                     "email": "lcobucci@gmail.com",
-                    "role": "Developer"
+                    "role": "developer"
                 }
             ],
             "description": "A simple library to work with JSON Web Token and JSON Web Signature",
