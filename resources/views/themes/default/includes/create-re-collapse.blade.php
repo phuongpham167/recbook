@@ -30,8 +30,11 @@
     <div class="row">
         <div class="col-xs-12 hidden" id="duan-select-wrap">
             <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.project')}}</label>
-            <div class="col-sm-4" id="duan-select">
+            {{--<div class="col-sm-4" id="duan-select">--}}
 
+            {{--</div>--}}
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="project-id" name="project_id" autocomplete="off">
             </div>
         </div>
     </div>
@@ -386,32 +389,32 @@
                     }
                 });
             } else if (loaiBDS == 2) {
-                let provinceId = $('#province').val();
-                if (!provinceId) {
-                    provinceId = '{{auth()->user()->userinfo->province_id}}';
-                }
-                provinceId = parseInt(provinceId);
-                showLoader();
-                $.ajax({
-                    url: '/project-by-province/' + provinceId,
-                    method: 'GET',
-                    success: function (result) {
-                        console.log('success');
-                        console.log(result);
-                        let html = '' +
-                            '<select class="form-control" name="project_id">';
-                        if (result) {
-                            for (let r of result) {
-                                html += '<option value="' + r.id + '">' + r.name + '</option>';
-                            }
-                        }
-                        html += '</select>';
-                        if (html) {
+                {{--let provinceId = $('#province').val();--}}
+                {{--if (!provinceId) {--}}
+                    {{--provinceId = '{{auth()->user()->userinfo->province_id}}';--}}
+                {{--}--}}
+                {{--provinceId = parseInt(provinceId);--}}
+                {{--showLoader();--}}
+                {{--$.ajax({--}}
+                    {{--url: '/project-by-province/' + provinceId,--}}
+                    {{--method: 'GET',--}}
+                    {{--success: function (result) {--}}
+                        {{--console.log('success');--}}
+                        {{--console.log(result);--}}
+                        {{--let html = '' +--}}
+                            {{--'<select class="form-control" name="project_id">';--}}
+                        {{--if (result) {--}}
+                            {{--for (let r of result) {--}}
+                                {{--html += '<option value="' + r.id + '">' + r.name + '</option>';--}}
+                            {{--}--}}
+                        {{--}--}}
+                        {{--html += '</select>';--}}
+                        {{--if (html) {--}}
                             $('#duan-select-wrap').removeClass('hidden');
-                            $('#duan-select').html(html);
-                        }
-                    }
-                });
+                            {{--$('#duan-select').html(html);--}}
+                        {{--}--}}
+                    {{--}--}}
+                {{--});--}}
             }
             hideLoader();
         }
