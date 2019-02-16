@@ -8,6 +8,7 @@
 
 namespace App\Services;
 use App\Customer;
+use App\Project;
 use App\RealEstate;
 use App\Scopes\PrivateScope;
 use App\Scopes\PublicScope;
@@ -99,6 +100,21 @@ class RealEstateService
                 $input['street_id'] = $street->id;
             }
         }
+
+        //
+        $projectId = isset($input['project_id']) ? $input['project_id'] : '';
+        if ($provinceId && $projectId) {
+            if(empty(Project::find($input['project_id'])))
+            {
+                $project = new Project();
+
+                $project->name = $input['project_id'];
+                $project->province_id = $input['province_id'];
+                $project->save();
+                $input['project_id'] = $project->id;
+            }
+        }
+
         $post_date  =   isset($input['post_date']) ? $input['post_date'] : Carbon::now();
 
         $public_input   =   !empty($input['public_site'])?$input['public_site']:0;
@@ -119,7 +135,7 @@ class RealEstateService
             'position' => isset($input['position']) ? $input['position'] : null,
             'direction_id' => isset($input['direction_id']) ? $input['direction_id'] : null,
             'exhibit_id' => isset($input['exhibit_id']) ? $input['exhibit_id'] : null,
-            'project_id' => isset($input['project_id']) ? $input['project_id'] : null,
+            'project_id' => ($provinceId) ? (isset($input['project_id']) ? $input['project_id'] : null) : null,
             'block_id' => isset($input['block_id']) ? $input['block_id'] : null,
             'construction_type_id' => isset($input['construction_type_id']) ? $input['construction_type_id'] : null,
             'width' => isset($input['width']) ? $input['width'] : null,
@@ -342,6 +358,20 @@ class RealEstateService
             }
         }
 
+        //
+        $projectId = isset($input['project_id']) ? $input['project_id'] : '';
+        if ($provinceId && $projectId) {
+            if(empty(Project::find($input['project_id'])))
+            {
+                $project = new Project();
+
+                $project->name = $input['project_id'];
+                $project->province_id = $input['province_id'];
+                $project->save();
+                $input['project_id'] = $project->id;
+            }
+        }
+
         $realEstate = RealEstate::withoutGlobalScope(PrivateScope::class)->find($input['id']);
 
 
@@ -354,6 +384,20 @@ class RealEstateService
             if (!$realEstate->code) {
                 $realEstate->code = config('real-estate.codePrefix') . '-' . $realEstate->id;
             }
+
+            // handle project id
+            $reTypeIdEdit = null;
+            $projectIdEdit = null;
+            if (isset($input['loai_bds'])) {
+                if ($input['loai_bds'] == 1) {
+                    $reTypeIdEdit = isset($input['re_type_id']) ? $input['re_type_id'] : null;
+                }
+                if ($input['loai_bds'] == 2) {
+                    $projectIdEdit = ($provinceId) ? (isset($input['project_id']) ? $input['project_id'] : null) : null;
+                }
+            }
+
+
             $realEstate->title = $input['title'];
             $realEstate->slug = $slug;
             $realEstate->contact_person = $contactPerson;
@@ -361,7 +405,7 @@ class RealEstateService
             $realEstate->contact_address = $contactAddress;
             $realEstate->re_category_id = isset($input['re_category_id']) ? $input['re_category_id'] : null;
             $realEstate->loai_bds = isset($input['loai_bds']) ? $input['loai_bds'] : null;
-            $realEstate->re_type_id = isset($input['re_type_id']) ? $input['re_type_id'] : null;
+            $realEstate->re_type_id = $reTypeIdEdit;
             $realEstate->province_id = isset($input['province_id']) ? $input['province_id'] : null;
             $realEstate->district_id = isset($input['province_id']) ? (isset($input['district_id']) ? $input['district_id'] : null) : null;
             $realEstate->ward_id = (isset($input['province_id']) && isset($input['district_id'])) ? (isset($input['ward_id']) ? $input['ward_id'] : null) : null;
@@ -370,7 +414,7 @@ class RealEstateService
             $realEstate->position = isset($input['position']) ? $input['position'] : '';
             $realEstate->direction_id = isset($input['direction_id']) ? $input['direction_id'] : null;
             $realEstate->exhibit_id = isset($input['exhibit_id']) ? $input['exhibit_id'] : null;
-            $realEstate->project_id = isset($input['project_id']) ? $input['project_id'] : null;
+            $realEstate->project_id = $projectIdEdit;
             $realEstate->block_id = isset($input['block_id']) ? $input['block_id'] : null;
             $realEstate->construction_type_id = isset($input['construction_type_id']) ? $input['construction_type_id'] : null;
             $realEstate->width = isset($input['width']) ? $input['width'] : null;
