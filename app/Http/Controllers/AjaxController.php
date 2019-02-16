@@ -87,6 +87,22 @@ class AjaxController extends Controller
         }
         return response()->json($result);
     }
+    public function ajaxProject() {
+        $name   = request()->input('term');
+        $province_id   = request('province_id');
+        $result =   [];
+        $result[]   =   [
+            'id'    =>  ucwords($name),
+            'name'  =>  trans('area.new_project').': '.ucwords($name)
+        ];
+        foreach(\App\Project::where('name','LIKE',"%{$name}%")->where('province_id',$province_id)->get() as $item){
+            $result[]   =   [
+                'id'    =>  $item->id,
+                'name'  =>  $item->name
+            ];
+        }
+        return response()->json($result);
+    }
     public function ajaxProvince(){
         $name   = request()->input('term');
         $result =   [];

@@ -669,6 +669,31 @@
                 {id: $('#street-id-hidden').val(), name: $('#street-name-hidden').val()}
             ]
         });
+
+        $('#project-id').tokenInput(function(){
+            return "{{asset('/ajax/project')}}?province_id="+$("#province").val();
+        }, {
+            theme: "bootstrap",
+            queryParam: "term",
+            zindex  :   1005,
+            tokenLimit  :   1,
+            onAdd   :   function(r){
+                $('#method').val(r.method);
+            }
+        });
+
+        $('#project-id-edit').tokenInput(function () {
+            return "{{asset('/ajax/project')}}?province_id=" + $("#province-edit").val();
+        }, {
+            theme: "bootstrap",
+            queryParam: "term",
+            zindex: 1005,
+            tokenLimit: 1,
+            onAdd   :   function(r){
+                $('#method').val(r.method);
+            }
+        });
+
         $(document).on('click', '.panel-heading span.clickable', function (e) {
             var $this = $(this);
             if (!$this.hasClass('panel-collapsed')) {
@@ -1042,7 +1067,7 @@
                 $('#loai-bds-edit').val(re.loai_bds);
                 if (re.loai_bds == 1) {
                     if (typeByLoaiBDS.length) {
-                        let html = '<select class="form-control" name="re_type_id">';
+                        let html = '<select class="form-control" name="re_type_id" id="re-type-edit">';
                         for (let t of typeByLoaiBDS) {
                             html += '<option value="' + t.id + '">' + t.name + '</option>';
                         }
@@ -1057,19 +1082,39 @@
                     }
                 }
                 else if (re.loai_bds == 2) {
-                    if (projects.length) {
-                        let html = '<select class="form-control" name="project_id">';
-                        for (let p of projects) {
-                            html += '<option value="' + p.id + '">' + p.name + '</option>';
-                        }
-                        html += '</select>';
-                        if (html) {
-                            $('#duan-select-wrap-edit').removeClass('hidden');
-                            $('#duan-select-edit').html(html);
-                            if (re.project_id) {
-                                $('#duan-select-edit select').val(re.project_id);
-                            }
-                        }
+                    // if (projects.length) {
+                    //     let html = '<select class="form-control" name="project_id">';
+                    //     for (let p of projects) {
+                    //         html += '<option value="' + p.id + '">' + p.name + '</option>';
+                    //     }
+                    //     html += '</select>';
+                    //     if (html) {
+                    //         $('#duan-select-wrap-edit').removeClass('hidden');
+                            // $('#duan-select-edit').html(html);
+                            // if (re.project_id) {
+                            //     $('#duan-select-edit select').val(re.project_id);
+                            // }
+                        // }
+                    // }
+
+                    /*
+                    * change 16-02-2019
+                    * */
+                    $('#duan-select-wrap-edit').removeClass('hidden');
+
+                    if (re.project_id) {
+                        $('#project-id-edit').val(re.project_id);
+                    }
+                    if (re.project_id) {
+                        $('#project-id-hidden').val(re.project_id);
+                    }
+                    if (re.project) {
+                        $('#project-name-hidden').val(re.project.name);
+                    }
+                    console.log($('#project-id-hidden').val() + '-' + $('#project-name-hidden').val());
+
+                    if ($('#project-id-hidden').val() && $('#project-name-hidden').val()) {
+                        $('#project-id-edit').tokenInput('add', {id: $('#project-id-hidden').val(), name: $('#project-name-hidden').val()});
                     }
                 }
             }
@@ -1187,6 +1232,14 @@
             $('#street-id-hidden').val('');
 
             $('#street-name-hidden').val('');
+
+            $('#loai-bds-edit').val('');
+            // $('#project-id-edit').val('');
+
+            $('#project-id-hidden').val('');
+
+            $('#project-name-hidden').val('');
+            $('#project-id-edit').tokenInput("clear");
 
             $('#contact-person-edit').val('');
             $('#contact-phone-edit').val('');
