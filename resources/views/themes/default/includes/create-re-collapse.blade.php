@@ -214,6 +214,8 @@
         <select class="form-control" name="unit_id" id="don_vi">
             <option value="1">VNĐ</option>
             <option value="2">USD</option>
+            <option value="4">VNĐ/m2</option>
+            <option value="6">USD/m2</option>
         </select>
     </div>
     <div class="col-sm-10 col-sm-offset-2">
@@ -518,8 +520,8 @@
             else {
                 $('#don_vi').html('<option value="1">VNĐ</option>\n' +
                     '            <option value="2">USD</option>' +
-                    '<option value="3">VNĐ/m2</option>' +
-                    '<option value="5">USD/m2</option>');
+                    '<option value="4">VNĐ/m2</option>' +
+                    '<option value="6">USD/m2</option>');
             }
         }
     </script>
