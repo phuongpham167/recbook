@@ -1065,6 +1065,17 @@
             const projects = data.projects;
             if (re.loai_bds) {
                 $('#loai-bds-edit').val(re.loai_bds);
+
+                if ( !$('#thocu-select-wrap-edit').hasClass('hidden') ) {
+                    $('#thocu-select-wrap-edit').addClass('hidden');
+                }
+                $('#thocu-select-edit').html('');
+
+                if ( !$('#duan-select-wrap-edit').hasClass('hidden') ) {
+                    $('#duan-select-wrap-edit').addClass('hidden');
+                }
+                $('#duan-select-edit').html('');
+
                 if (re.loai_bds == 1) {
                     if (typeByLoaiBDS.length) {
                         let html = '<select class="form-control" name="re_type_id" id="re-type-edit">';
