@@ -63,12 +63,17 @@
                         <div class="row">
                             <div class="col-xs-12 hidden" id="duan-select-wrap-edit">
                                 <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.project')}}</label>
-                                <div class="col-sm-4" id="duan-select-edit">
+                                {{--<div class="col-sm-4" id="duan-select-edit">--}}
 
+                                {{--</div>--}}
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="project-id-edit" name="project_id_edit" autocomplete="off">
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <input type="text" class="hidden" id="project-id-hidden" value=""/>
+                    <input type="text" class="hidden" id="project-name-hidden" value=""/>
                     <div class="form-group clearfix collapse" id="addressSelectEdit">
                         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.province')}} </label>
                         <div class="col-sm-4">
@@ -496,7 +501,7 @@
                     success: function (result) {
                         console.log('success');
                         console.log(result);
-                        let html = '<select class="form-control" name="re_type_id">';
+                        let html = '<select class="form-control" name="re_type_id" id="re-type-edit">';
                         if (result) {
                             for (let r of result) {
                                 html += '<option value="' + r.id + '">' + r.name + '</option>';
@@ -510,30 +515,31 @@
                     }
                 });
             } else if (loaiBDS == 2) {
-                let provinceId = $('#province-edit').val();
-                if (!provinceId) {
-                    provinceId = '{{auth()->user()->userinfo->province_id}}';
-                }
-                provinceId = parseInt(provinceId);
-                $.ajax({
-                    url: '/project-by-province/' + provinceId,
-                    method: 'GET',
-                    success: function (result) {
-                        console.log('success');
-                        console.log(result);
-                        let html = '<select class="form-control" name="project_id">';
-                        if (result) {
-                            for (let r of result) {
-                                html += '<option value="' + r.id + '">' + r.name + '</option>';
-                            }
-                        }
-                        html += '</select>';
-                        if (html) {
-                            $('#duan-select-wrap-edit').removeClass('hidden');
-                            $('#duan-select-edit').html(html);
-                        }
-                    }
-                });
+                {{--let provinceId = $('#province-edit').val();--}}
+                {{--if (!provinceId) {--}}
+                    {{--provinceId = '{{auth()->user()->userinfo->province_id}}';--}}
+                {{--}--}}
+                {{--provinceId = parseInt(provinceId);--}}
+                {{--$.ajax({--}}
+                    {{--url: '/project-by-province/' + provinceId,--}}
+                    {{--method: 'GET',--}}
+                    {{--success: function (result) {--}}
+                        {{--console.log('success');--}}
+                        {{--console.log(result);--}}
+                        {{--let html = '<select class="form-control" name="project_id">';--}}
+                        {{--if (result) {--}}
+                            {{--for (let r of result) {--}}
+                                {{--html += '<option value="' + r.id + '">' + r.name + '</option>';--}}
+                            {{--}--}}
+                        {{--}--}}
+                        {{--html += '</select>';--}}
+                        {{--if (html) {--}}
+                            {{--$('#duan-select-wrap-edit').removeClass('hidden');--}}
+                            {{--$('#duan-select-edit').html(html);--}}
+                        {{--}--}}
+                    {{--}--}}
+                {{--});--}}
+                $('#duan-select-wrap-edit').removeClass('hidden');
             }
             hideLoader();
         }
@@ -683,6 +689,8 @@
 
             let reTypeId = $('#re-type-edit').length ? $('#re-type-edit').val() : '';
 
+            let loaiBDS = $('#loai-bds-edit').val();
+
             let provinceId = $('#province-edit').val();
 
             let districtId = $('#district-edit').val();
@@ -701,7 +709,7 @@
 
             let exhibitId = $('#exhibit-edit').val();
 
-            let projectId = $('#project-edit').length ? $('#project-edit').val() : '';
+            let projectId = $('#project-id-edit').length ? $('#project-id-edit').val() : '';
 
             let bedroom = $('#bedroom-edit').val();
 
@@ -750,6 +758,7 @@
             formDataEdit.append('title', title);
             formDataEdit.append('detail', detail);
             formDataEdit.append('re_category_id', reCatId);
+            formDataEdit.append('loai_bds', loaiBDS);
             if (reTypeId) {
                 formDataEdit.append('re_type_id', reTypeId);
             }
@@ -779,6 +788,8 @@
             formDataEdit.append('is_deal', isDeal);
             formDataEdit.append('map', map);
             formDataEdit.append('is_private', isPrivate);
+
+            console.log(formDataEdit);
 
             showLoader();
             $.ajaxSetup({
