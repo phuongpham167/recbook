@@ -836,7 +836,9 @@ class PageController extends Controller
             $user = User::find($id);
             if ($user) {
                 $reCategories = $this->reCategoryService->getListDropDown();
-                $provinces = $this->provinceService->getListDropDown();
+
+                $provinces = $this->provinceService->getListOrderByWishList();
+                
                 $streets = $this->streetService->getListDropDown();
                 $directions = $this->directionService->getListDropDown();
                 $exhibits = $this->exhibitService->getListDropDown();
@@ -892,7 +894,7 @@ class PageController extends Controller
                     'vipRealEstates' => $this->vipRealEstates,
                     'categories' => $this->categories,
                     'reCategories' => $reCategories,
-                    'provinces' => $this->provinces,
+                    'provinces' => $provinces,
                     'districts' => $this->districts,
                     'wards' => $this->wards,
                     'streets' => $this->streets,
