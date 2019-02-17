@@ -243,3 +243,9 @@ Route::get('/t', function (){
 //    auth()->user()->subcribes()->sync([1]);
 //});
 
+Route::get('change', function(){
+   $data    =   \App\RealEstate::withTrashed()->get();
+   foreach($data as $item){
+       $item->update(['code'=>str_replace('REC', 'RB', $item->code)]);
+   }
+});

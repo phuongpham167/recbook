@@ -255,12 +255,15 @@
                         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.price')}}</label>
                         <div class="col-sm-4">
                             <input type="number" class="form-control" name="price_edit" id="price-edit" step="1"/>
+                            <span id="price_format_edit"></span>
                         </div>
                         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.don_vi')}}</label>
                         <div class="col-sm-4">
                             <select class="form-control" name="unit_id" id="don_vi_edit">
                                 <option value="1">VNĐ</option>
                                 <option value="2">USD</option>
+                                <option value="4">VNĐ/m2</option>
+                                <option value="6">USD/m2</option>
                             </select>
                         </div>
                         <div class="col-sm-10 col-sm-offset-2">
@@ -402,10 +405,22 @@
                     '            <option value="6">USD/tháng</option>');
             else {
                 $('#don_vi_edit').html('<option value="1">VNĐ</option>\n' +
-                    '            <option value="2">USD</option>');
+                    '            <option value="2">USD</option>' +
+                    '<option value="4">VNĐ/m2</option>' +
+                    '<option value="6">USD/m2</option>');
             }
         }
+        function format_edit_price(){
+            $('#price_format_edit').html(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format($('input[name=price_edit]').val()));
+        }
         $(function () {
+            $('#modalEditRe').on('shown.bs.modal', function(){
+                console.log($('input[name=price_edit]').val());
+                format_edit_price();
+            });
+            $(document).on('keyup','input[name=price_edit]',function(){
+                format_edit_price();
+            });
             $('#modalEditRe').on('change','#re-category-edit',function(){
                 changeEditUnit();
             });

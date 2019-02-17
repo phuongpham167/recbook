@@ -207,12 +207,15 @@
     <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.price')}}</label>
     <div class="col-sm-4">
         <input type="number" class="form-control" name="price" value="{{ old('price') }}"/>
+        <span id="price_format"></span>
     </div>
     <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.don_vi')}}</label>
     <div class="col-sm-4">
         <select class="form-control" name="unit_id" id="don_vi">
             <option value="1">VNĐ</option>
             <option value="2">USD</option>
+            <option value="4">VNĐ/m2</option>
+            <option value="6">USD/m2</option>
         </select>
     </div>
     <div class="col-sm-10 col-sm-offset-2">
@@ -250,6 +253,7 @@
 @push('js')
     {{--<script src="{{asset('plugins/bootstrap-datetimepicker-master/build/js/bootstrap-datetimepicker.min.js')}}"></script>--}}
     <script src="{{asset('plugins/ckeditor-4/ckeditor.js')}}"></script>
+    <script src="{{asset('js/tinhtien.js')}}"></script>
     <script>
         function initMap() {
             let uLat = '{{auth()->user()->userinfo->province->lat}}';
@@ -276,6 +280,10 @@
             $('#map').val(event.latLng.lat() + ',' + event.latLng.lng());
         }
         $(function () {
+            $('input[name=price]').keyup(function(){
+                price = $(this).val();
+                $('#price_format').html(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price));
+            });
             $('#re-category').change(function(){
                 changeUnit();
             });
@@ -505,13 +513,15 @@
             var type    =   $('#re-category').val();
             console.log(type);
             if(type == 2 || type ==4)
-                $('#don_vi').html('<option value="3">VNĐ/m2</option>\n' +
-                    '            <option value="4">VNĐ/tháng</option>\n' +
-                    '            <option value="5">USD/m2</option>\n' +
-                    '            <option value="6">USD/tháng</option>');
+                $('#don_vi').html('<option value="4">VNĐ/m2</option>\n' +
+                    '            <option value="3">VNĐ/tháng</option>\n' +
+                    '            <option value="6">USD/m2</option>\n' +
+                    '            <option value="5">USD/tháng</option>');
             else {
                 $('#don_vi').html('<option value="1">VNĐ</option>\n' +
-                    '            <option value="2">USD</option>');
+                    '            <option value="2">USD</option>' +
+                    '<option value="4">VNĐ/m2</option>' +
+                    '<option value="6">USD/m2</option>');
             }
         }
     </script>

@@ -535,6 +535,7 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
+                                                                @include('Comment::comment', ['type'=>'realestate', 'id'=>$re->id])
                                                                 <div class="row">
                                                                     <div class="col-xs-12 contact-phone">
                                                                         <div class="pull-right">
