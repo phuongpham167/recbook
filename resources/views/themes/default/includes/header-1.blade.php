@@ -70,7 +70,7 @@
                         $tentinh    =   'Tất cả';
                 @endphp
                 <li class="active">
-                    <a href="#a" data-toggle="modal" data-target="#myModal"><i class="fa fa-sort"></i> Khu vực: {{$tentinh}}</a>
+                    <a href="#a" data-toggle="modal" data-target="#myModal">Khu vực: {{$tentinh}} <i class="fa fa-sort"></i></a>
                 </li>
                 @foreach($menuData as $md)
                     @if (isset($md->children) && $children = $md->children)
