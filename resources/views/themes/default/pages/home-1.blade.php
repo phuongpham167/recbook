@@ -624,7 +624,7 @@
                         <div class="row">
                         @foreach($province_list as $item)
                                 <div class="col-md-3">
-                                    <button type="submit" name="provinces" value="{{$item->id}}" class="btn btn-default">{{$item->name}}</button>
+                                    <button type="submit" name="provinces" value="{{$item->id}}" class="btn btn-default">{{str_replace('Tỉnh ', '', str_replace('Thành phố', '', $item->name))}}</button>
                                 </div>
                         @endforeach
                         </div>
