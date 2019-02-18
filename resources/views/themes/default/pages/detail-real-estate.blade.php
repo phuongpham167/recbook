@@ -1,7 +1,23 @@
 @extends(theme(TRUE).'.layouts.app')
 
 @section('meta-description')
-    <meta name="description" content="{{object_get($data, 'title')}}">
+    @php
+    $cat = $data->reCategory ? $data->reCategory->name : '';
+    $reType = $data->reType ? $data->reType->name : '';
+    $project = $data->project ? $data->project->name : '';
+    $street = $data->street ? $data->street->name : '';
+    $ward = $data->ward ? $data->ward->name : '';
+    $district = $data->district ? $data->district->name : '';
+    $province = $data->province ? $data->province->name : '';
+    $price = $data->price;
+    $direction = $data->direction ? $data->direction->name : '';
+    $mattien = $data->width ? $data->width : '' . ' ' . $data->length ? $data->length : '';
+    $area = $data->area_of_premises ? $data->area_of_premises : '';
+    $floor = $data->floor ? $data->floor : '';
+    $room = $data->bedroom ? $data->bedroom : '' . ' ' . $data->living_room ? $data->living_room : '' . ' ' . $data->wc ? $data->wc : '';
+    $postDate = $data->post_date;
+    @endphp
+    <meta name="description" content="{{$data->reCategory}}">
 @endsection
 
 @section('title')
