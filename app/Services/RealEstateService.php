@@ -165,7 +165,8 @@ class RealEstateService
             'approve' => $approve,
             'draft' => isset($input['add_draft']) ? 1 : 0,
             'is_public' =>  1,
-            'public_site' =>  post_left(auth()->user())==0?0:$public_input
+            'public_site' =>  post_left(auth()->user())==0?0:$public_input,
+            'link_video' => isset($input['link_video']) ? $input['link_video'] : null,
         ]);
 
         if($realEstate->save()) {
@@ -439,6 +440,7 @@ class RealEstateService
             $realEstate->updated_by = \Auth::user()->id;
             $realEstate->web_id = $this->web_id;
             $realEstate->approved = $approve;
+            $realEstate->link_video = isset($input['link_video']) ? $input['link_video'] : null;
 //            if (isset($input['add_draft'])) {
 //                $realEstate->approved = 0;
 //                $realEstate->draft = 1;
