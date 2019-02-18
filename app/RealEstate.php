@@ -128,11 +128,16 @@ class RealEstate extends Model
     {
         return $this->belongsTo('\App\Customer');
     }
+    public function scopeFilterprovince($query)
+    {
+        if(!empty(session('tinhthanhquantam')))
+            return $query->whereIn('province_id', explode(",",session('tinhthanhquantam')));
+    }
+
     protected static function boot()
     {
         parent::boot();
 
         static::addGlobalScope(new PrivateScope());
-        static::addGlobalScope(new ProvinceScope());
     }
 }

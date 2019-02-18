@@ -109,7 +109,7 @@ class PageController extends Controller
     {
         $vip    =   [];
         for($i=1; $i<7; $i++){
-            $query    = RealEstate::where('public_site', 1)->select('id', 'title', 'slug', 'short_description', 'detail', 'code', 'don_vi',
+            $query    = RealEstate::filterprovince()->where('public_site', 1)->select('id', 'title', 'slug', 'short_description', 'detail', 'code', 'don_vi',
                 'area_of_premises', 'area_of_use', 'district_id', 'price', 'unit_id', 'is_vip', 'is_hot', 'vip_type',
                 'post_date', 'images');
             if($i == 6)
@@ -132,7 +132,7 @@ class PageController extends Controller
 
 
         //Tin HOT
-        $hotRealEstates = RealEstate::where('public_site',1)->select('id', 'title', 'slug', 'short_description', 'detail', 'code', 'don_vi',
+        $hotRealEstates = RealEstate::filterprovince()->where('public_site',1)->select('id', 'title', 'slug', 'short_description', 'detail', 'code', 'don_vi',
             'area_of_premises', 'area_of_use', 'district_id', 'price', 'unit_id', 'is_vip', 'is_hot','vip_type',
             'post_date', 'images')
             ->where('vip_type', 1)
@@ -142,7 +142,7 @@ class PageController extends Controller
         $hotRealEstates = $hotRealEstates->get();
 
         //Tin HOT nổi bật
-        $hotHLRealEstates = RealEstate::where('public_site',1)->select('id', 'title', 'slug', 'short_description', 'detail', 'code', 'don_vi',
+        $hotHLRealEstates = RealEstate::filterprovince()->where('public_site',1)->select('id', 'title', 'slug', 'short_description', 'detail', 'code', 'don_vi',
             'area_of_premises', 'area_of_use', 'district_id', 'price', 'unit_id', 'is_vip', 'is_hot','vip_type',
             'post_date', 'images')
             ->where('vip_type', 2)
@@ -152,7 +152,7 @@ class PageController extends Controller
         $hotHLRealEstates = $hotHLRealEstates->get();
 
         //Tin VIP
-        $goodPriceRealEstateVip = RealEstate::where('public_site',1)->select('id', 'title', 'short_description', 'detail', 'slug', 'code', 'don_vi',
+        $goodPriceRealEstateVip = RealEstate::filterprovince()->where('public_site',1)->select('id', 'title', 'short_description', 'detail', 'slug', 'code', 'don_vi',
             'area_of_premises', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date')
             ->where(function($q){
                 $q->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
@@ -166,7 +166,7 @@ class PageController extends Controller
 
 
         //Tin VIP nổi bật
-        $goodPriceRealEstateVipHot = RealEstate::where('public_site',1)->select('id', 'title', 'short_description', 'detail', 'slug', 'code', 'don_vi',
+        $goodPriceRealEstateVipHot = RealEstate::filterprovince()->where('public_site',1)->select('id', 'title', 'short_description', 'detail', 'slug', 'code', 'don_vi',
             'area_of_premises', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date')
             ->where(function($q){
                 $q->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
@@ -179,7 +179,7 @@ class PageController extends Controller
         $goodPriceRealEstateVipHot = $goodPriceRealEstateVipHot->take(get_config('homeNewestHot'))->get();
 
         //Tin hấp dẫn
-        $goodPriceRealEstateNormal = RealEstate::where('public_site',1)->select('id', 'title', 'short_description', 'detail', 'slug', 'code', 'don_vi',
+        $goodPriceRealEstateNormal = RealEstate::filterprovince()->where('public_site',1)->select('id', 'title', 'short_description', 'detail', 'slug', 'code', 'don_vi',
             'area_of_premises', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date')
             ->where(function($q){
                 $q->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
@@ -192,7 +192,7 @@ class PageController extends Controller
         $goodPriceRealEstateNormal =    $goodPriceRealEstateNormal->take(get_config('homeNewestNormal'))->get();
 
         //Vip bên phải
-        $vipRealEstates  =   RealEstate::where('public_site',1)->select('id', 'title', 'slug', 'short_description', 'detail', 'code', 'don_vi',
+        $vipRealEstates  =   RealEstate::filterprovince()->where('public_site',1)->select('id', 'title', 'slug', 'short_description', 'detail', 'code', 'don_vi',
             'area_of_premises', 'area_of_use', 'district_id', 'price', 'unit_id', 'is_vip', 'is_hot','vip_type',
             'post_date', 'images','district_id', 'province_id', 'direction_id')
             ->where('vip_type', 3)
@@ -202,7 +202,7 @@ class PageController extends Controller
         $vipRealEstates = $vipRealEstates->take(get_config('homeSidebarVip',8))->get();
 
         //Tin cộng đồng
-        $freeRealEstates = RealEstate::select('id', 'title', 'short_description', 'detail', 'slug', 'code', 'don_vi',
+        $freeRealEstates = RealEstate::filterprovince()->select('id', 'title', 'short_description', 'detail', 'slug', 'code', 'don_vi',
             'area_of_premises', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date')
             ->where('is_hot', '<>', 1)
             ->where('is_vip', '<>', 1)
@@ -376,7 +376,7 @@ class PageController extends Controller
             $mappingMenuFEByTag = MappingMenuFE::where('path', $tag)->first();
 //            dd($mappingMenuFEByTag);
             if ($mappingMenuFEByTag) {
-                $query = RealEstate::where('public_site',1)->whereNull('deleted_at')->where('web_id', $this->web_id);
+                $query = RealEstate::filterprovince()->where('public_site',1)->whereNull('deleted_at')->where('web_id', $this->web_id);
                 if ($mappingMenuFEByTag->re_category_id) {
                     $query->where('re_category_id', $mappingMenuFEByTag->re_category_id);
                 }
@@ -447,7 +447,7 @@ class PageController extends Controller
 
     public function featuredRealEstate()
     {
-        $query = RealEstate::select('id', 'title', 'short_description', 'detail', 'slug', 'code', 'district_id', 'don_vi',
+        $query = RealEstate::filterprovince()->select('id', 'title', 'short_description', 'detail', 'slug', 'code', 'district_id', 'don_vi',
             'area_of_premises', 'area_of_use', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date')
             ->where('vip_type', 1)
             ->where(function($q){
@@ -483,7 +483,7 @@ class PageController extends Controller
 
     public function newestRealEstate()
     {
-        $query = RealEstate::select('id', 'title', 'short_description', 'detail', 'slug', 'code', 'district_id', 'don_vi',
+        $query = RealEstate::filterprovince()->select('id', 'title', 'short_description', 'detail', 'slug', 'code', 'district_id', 'don_vi',
             'area_of_premises', 'area_of_use', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date')
             ->where('post_date', '<=', Carbon::now())
             ->where('web_id', $this->web_id)
@@ -518,7 +518,7 @@ class PageController extends Controller
 
     public function freeRealEstate()
     {
-        $query = RealEstate::select('id', 'title', 'short_description', 'detail', 'slug', 'code', 'district_id', 'don_vi',
+        $query = RealEstate::filterprovince()->select('id', 'title', 'short_description', 'detail', 'slug', 'code', 'district_id', 'don_vi',
             'area_of_premises', 'area_of_use', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date')
             ->where(function($q){
                 $q->where(function($a){
@@ -570,7 +570,7 @@ class PageController extends Controller
 
         $category = ReCategory::find($catId);
         if ($category) {
-            $query = RealEstate::select('id', 'title', 'short_description', 'detail', 'slug', 'code', 'district_id', 'don_vi',
+            $query = RealEstate::filterprovince()->select('id', 'title', 'short_description', 'detail', 'slug', 'code', 'district_id', 'don_vi',
                 'area_of_premises', 'area_of_use', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date')
                 ->where(function($q){
                     $q->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
@@ -607,7 +607,7 @@ class PageController extends Controller
 
     public function homeTinVip()
     {
-        $query = RealEstate::select('id', 'title', 'short_description', 'detail', 'slug', 'code', 'district_id', 'don_vi',
+        $query = RealEstate::filterprovince()->select('id', 'title', 'short_description', 'detail', 'slug', 'code', 'district_id', 'don_vi',
             'area_of_premises', 'area_of_use', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date')
             ->where(function($q){
                 $q->where('is_vip', 1)
@@ -689,7 +689,7 @@ class PageController extends Controller
         if(!$searchText) {
             return redirect()->route('home');
         }
-        $query = RealEstate::select('id', 'title', 'short_description', 'detail', 'slug', 'code', 'district_id', 'don_vi',
+        $query = RealEstate::filterprovince()->select('id', 'title', 'short_description', 'detail', 'slug', 'code', 'district_id', 'don_vi',
             'area_of_premises', 'area_of_use', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date');
 
         $query->where('title', 'like', '%' . $searchText . '%');
@@ -728,7 +728,7 @@ class PageController extends Controller
         $filter = $request->all();
 //        dd($filter);
         if($filter['Search']) {
-            $query = RealEstate::select('id', 'title', 'short_description', 'detail', 'slug', 'code', 'district_id','province_id','ward_id','street_id', 'don_vi',
+            $query = RealEstate::filterprovince()->select('id', 'title', 'short_description', 'detail', 'slug', 'code', 'district_id','province_id','ward_id','street_id', 'don_vi',
                 'area_of_premises', 'area_of_use', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date');
 
             if (isset($filter['Search']['cat_id']) && $filter['Search']['cat_id']) {
@@ -920,7 +920,7 @@ class PageController extends Controller
 
     private function getVipRealEstates()
     {
-        $query = RealEstate::select('id', 'title', 'slug', 'direction_id', 'don_vi',
+        $query = RealEstate::filterprovince()->select('id', 'title', 'slug', 'direction_id', 'don_vi',
             'area_of_premises', 'price', 'unit_id', 'is_vip', 'is_hot', 'post_date', 'images')
             ->where(function($q){
                 $q->where('is_vip', 1)
