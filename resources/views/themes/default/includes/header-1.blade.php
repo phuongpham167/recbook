@@ -61,10 +61,17 @@
         </div>
         <div class="collapse navbar-collapse main-menu-list" id="myNavbar">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="{{ route('home') }}"><i class="fa fa-home fa-lg fa-fw"></i> {{ trans('header.navbar-item.home') }}</a></li>
                 @php
                     $menuData = json_decode($menuData->data);
+                    $quantam    =   session('tinhthanhquantam',0);
+                    if($quantam!=0)
+                        $tentinh = \App\Province::findOrFail(session('tinhthanhquantam', 1))?str_replace('Tỉnh ', '', str_replace('Thành phố', '', \App\Province::find(session('tinhthanhquantam'))->name)):'Tất cả';
+                    else
+                        $tentinh    =   'Tất cả';
                 @endphp
+                <li class="active">
+                    <a href="#a" data-toggle="modal" data-target="#myModal"><i class="fa fa-sort"></i> Khu vực: {{$tentinh}}</a>
+                </li>
                 @foreach($menuData as $md)
                     @if (isset($md->children) && $children = $md->children)
                         <li class="dropdown">
