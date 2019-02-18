@@ -128,19 +128,12 @@
         <p class="text-red error"></p>
     </div>
 </div>
-{{--<div class="form-group collapse collapse1" id="projectSelect">--}}
-
-    {{--<label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.project')}} </label>--}}
-    {{--<div class="col-sm-4">--}}
-        {{--<select class="form-control" id="project" name="project_id" value="{{ old('project_id') }}">--}}
-            {{--<option value="">{{trans('real-estate.selectFirstOpt')}}</option>--}}
-            {{--@foreach($projectByUProvince as $p)--}}
-                {{--<option value="{{$p->id}}">{{$p->name}}</option>--}}
-            {{--@endforeach--}}
-        {{--</select>--}}
-        {{--<p class="text-red error"></p>--}}
-    {{--</div>--}}
-{{--</div>--}}
+<div class="form-group collapse collapse1" id="linkYoutube">
+    <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.linkYoutube')}}</label>
+    <div class="col-sm-10">
+        <input type="text" class="form-control" name="link_video" value="{{ old('link_video') }}" placeholder=""/>
+    </div>
+</div>
 <div class="form-group collapse collapse1" id="room">
     <div class="row">
         <div class="col-xs-12">
