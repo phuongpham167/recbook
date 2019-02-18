@@ -2,22 +2,32 @@
 
 @section('meta-description')
     @php
-    $cat = $data->reCategory ? $data->reCategory->name : '';
-    $reType = $data->reType ? $data->reType->name : '';
-    $project = $data->project ? $data->project->name : '';
-    $street = $data->street ? $data->street->name : '';
-    $ward = $data->ward ? $data->ward->name : '';
-    $district = $data->district ? $data->district->name : '';
-    $province = $data->province ? $data->province->name : '';
-    $price = $data->price;
-    $direction = $data->direction ? $data->direction->name : '';
-    $mattien = $data->width ? $data->width : '' . ' ' . $data->length ? $data->length : '';
-    $area = $data->area_of_premises ? $data->area_of_premises : '';
-    $floor = $data->floor ? $data->floor : '';
-    $room = $data->bedroom ? $data->bedroom : '' . ' ' . $data->living_room ? $data->living_room : '' . ' ' . $data->wc ? $data->wc : '';
-    $postDate = $data->post_date;
+    $cat = $data->reCategory ? $data->reCategory->name . ' ' : '';
+    $reType = $data->reType ? $data->reType->name . ' ' : '';
+    $project = $data->project ? $data->project->name . ' ' : '';
+    $street = $data->street ? $data->street->name . ' ' : '';
+    $ward = $data->ward ? $data->ward->name . ' ' : '';
+    $district = $data->district ? $data->district->name . ' ' : '';
+    $province = $data->province ? $data->province->name . ' ' : '';
+    $price = $data->price ? $data->price . ' ' : '';
+    $direction = $data->direction ? $data->direction->name . ' ' : '';
+    $mattien = $data->width ? $data->width . ' ' : '' . $data->length ? $data->length . ' ' : '';
+    $area = $data->area_of_premises ? $data->area_of_premises . ' ' : '';
+    $floor = $data->floor ? $data->floor . ' ' : '';
+    $room = $data->bedroom ? $data->bedroom . ' ' : '' . $data->living_room ? $data->living_room . ' ' : '' . $data->wc ? $data->wc . ' ' : '';
+    $postDate = \Carbon\Carbon::parse($data->post_date)->format('d-m-Y H:i');
+
+    $des = $cat . $reType . $project . $street . $ward . $district
+        . $province  . $price . $direction . $mattien . ' - ' . $area . $floor . $room
+        . ' - ' . $postDate;
+
+    $keywords = $cat . $street . ', ' . $cat . $reType . $project . ', ' . $cat . 'dưới ' . $price . ', ' .
+        $cat . 'tầm ' .$price;
+
+    $seeMore = '<b>Quý khách có thể tìm theo từ khóa:</b> ' . $cat . $reType . $project . $street;
     @endphp
-    <meta name="description" content="{{$data->reCategory}}">
+    <meta name="description" content="{{$des}}">
+    <meta name="keywords" content="{{$keywords}}">
 @endsection
 
 @section('title')
@@ -223,6 +233,9 @@
                                     <div class="col-xs-12">
                                         <p><strong>- Địa chỉ:</strong> {{ $data->address }}
                                         </p>
+                                    </div>
+                                    <div class="col-xs-12">
+                                        <p>{!! $seeMore !!}</p>
                                     </div>
                                 </div>
                             </div>
