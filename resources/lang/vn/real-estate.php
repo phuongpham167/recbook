@@ -54,7 +54,8 @@ return [
         'source' => 'Nguồn tin',
         'isPrivate' => 'Loại tin',
         'don_vi' => 'Đơn vị',
-        'mattien' => 'Mặt tiền'
+        'mattien' => 'Mặt tiền',
+        'linkYoutube' => 'Link youtube'
     ],
     'isPrivateSelectText' => [
         'public' => 'Công cộng',

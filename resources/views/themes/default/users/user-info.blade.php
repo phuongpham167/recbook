@@ -271,11 +271,10 @@
                                                                         </div>
                                                                         <div class="form-group">
                                                                             <div class="col-xs-12">
-                                                                                {{--<button type="button"--}}
-                                                                                        {{--class="btn btn-default btn-collapse"--}}
-                                                                                        {{--data-target="#projectSelect">Dự--}}
-                                                                                    {{--án--}}
-                                                                                {{--</button>--}}
+                                                                                <button type="button"
+                                                                                        class="btn btn-default btn-collapse"
+                                                                                        data-target="#linkYoutube"><i class="fa fa-youtube-square" aria-hidden="true"></i> Youtube
+                                                                                </button>
                                                                                 <button type="button"
                                                                                         class="btn btn-default btn-collapse"
                                                                                         data-target="#room"><i
@@ -293,16 +292,17 @@
                                                                                         class="btn btn-default btn-collapse"
                                                                                         data-target="#mattien">Mặt tiền
                                                                                 </button>
-                                                                                <button type="button"
-                                                                                        class="btn btn-default btn-collapse"
-                                                                                        data-target="#floorSelect">Số
-                                                                                    tầng
-                                                                                </button>
+
 
                                                                             </div>
                                                                         </div>
                                                                         <div class="form-group">
                                                                             <div class="col-xs-12">
+                                                                                <button type="button"
+                                                                                        class="btn btn-default btn-collapse"
+                                                                                        data-target="#floorSelect">Số
+                                                                                    tầng
+                                                                                </button>
                                                                                 <button type="button"
                                                                                         class="btn btn-default btn-collapse"
                                                                                         data-target="#mapSelect"><i
@@ -1169,6 +1169,10 @@
             if (re.exhibit_id) {
                 $('#exhibit-edit').val(re.exhibit_id);
             }
+
+            if (re.link_video) {
+                $('#link-video-edit').val(re.link_video);
+            }
             // if (re.project_id) {
             //     $('#project-edit').val(re.project_id);
             // }
@@ -1261,6 +1265,8 @@
             $('#direction-edit').val('');
 
             $('#exhibit-edit').val('');
+
+            $('#link-video-edit').val();
 
             $('#bedroom-edit').val('');
 

@@ -166,19 +166,13 @@
                             <p class="text-red error"></p>
                         </div>
                     </div>
-                    {{--<div class="form-group clearfix collapse" id="projectSelectEdit">--}}
+                    <div class="form-group clearfix collapse" id="linkYoutubeEdit">
 
-                        {{--<label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.project')}} </label>--}}
-                        {{--<div class="col-sm-4">--}}
-                            {{--<select class="form-control" id="project-edit" name="project_id_edit">--}}
-                                {{--<option value="">{{trans('real-estate.selectFirstOpt')}}</option>--}}
-                                {{--@foreach($projectByUProvince as $p)--}}
-                                    {{--<option value="{{$p->id}}">{{$p->name}}</option>--}}
-                                {{--@endforeach--}}
-                            {{--</select>--}}
-                            {{--<p class="text-red error"></p>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.linkYoutube')}} </label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="link-video-edit" name="link_video" placeholder=""/>
+                        </div>
+                    </div>
                     <div class="form-group clearfix collapse" id="roomEdit">
                         <div class="row">
                             <div class="col-xs-12">
@@ -329,9 +323,9 @@
                             <button type="button" class="btn btn-default btn-collapse" data-target="#exhibitSelectEdit">
                                 Giấy tờ
                             </button>
-                            {{--<button type="button" class="btn btn-default btn-collapse" data-target="#projectSelectEdit">--}}
-                                {{--Dự án--}}
-                            {{--</button>--}}
+                            <button type="button" class="btn btn-default btn-collapse" data-target="#linkYoutubeEdit">
+                                <i class="fa fa-youtube-square" aria-hidden="true"></i> Youtube
+                            </button>
                         </div>
                     </div>
                     <div class="form-group clearfix">
@@ -722,6 +716,8 @@
 
             let directionId = $('#direction-edit').val();
 
+            let linkVideo = $('#link-video-edit').val();
+
             let exhibitId = $('#exhibit-edit').val();
 
             let projectId = $('#project-id-edit').length ? $('#project-id-edit').val() : '';
@@ -803,6 +799,7 @@
             formDataEdit.append('is_deal', isDeal);
             formDataEdit.append('map', map);
             formDataEdit.append('is_private', isPrivate);
+            formDataEdit.append('link_video', linkVideo);
 
             console.log(formDataEdit);
 

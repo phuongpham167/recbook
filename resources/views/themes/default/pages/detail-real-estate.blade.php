@@ -98,7 +98,21 @@
                                         }
                                         $images = $images ? $images : [(object)$imgDf];
                                         $thumbs = $thumbs ? $thumbs : [$thumbDf];
+
+                                        $linkVideo = $data->link_video ? $data->link_video : '';
+                                        if ($linkVideo) {
+                                            preg_match('/[\\?\\&]v=([^\\?\\&]+)/', $linkVideo, $matches);
+                                            $id = $matches[1];
+                                            $width = '100%';
+                                            $height = '400';
+                                            $linkVideo = 'https://www.youtube.com/embed/' . $id;
+                                        }
                                     @endphp
+                                    @if ($linkVideo)
+                                        <li>
+                                            <iframe width="100%" height="400" src="{{$linkVideo}}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen=""></iframe>
+                                        </li>
+                                    @endif
                                     @foreach($images as $image)
                                         <li>
                                             <div>
