@@ -205,18 +205,21 @@
 .adv_box a img {
   max-width: 100%;
 }
-  .list-hot .item {
+
+.list-hot .item {
     width: 20%;
     padding-left: 0;
     padding-right: 5px;
-  }
-  .list-hot .item:nth-child(5n+5) {
-    padding-right: 0;
-  }
+}
 
-.main-menu {
+.list-hot .item:nth-child(5n+5) {
+    padding-right: 0;
+}
+
+.main-menu, .menu-footer, #footer {
     min-width: 1170px;
 }
+
 .top_page {
     min-width: 1170px;
 }
