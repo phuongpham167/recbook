@@ -27,14 +27,18 @@ class ProvinceService
 
     public function getListOrderByWishList()
     {
-        $userProvinceId = auth()->user()->userinfo->province_id;
-        $userProvince = Province::select('id', 'name')->where('id', $userProvinceId)->get();
+        if(auth()->check()){
+            $userProvinceId = auth()->user()->userinfo->province_id;
+            $userProvince = Province::select('id', 'name')->where('id', $userProvinceId)->get();
 
-        $wishListId = auth()->user()->subcribes()->pluck('province_subcribes.province_id')->toArray();
-        $wishListIdF = array_diff($wishListId, [$userProvinceId]);
-        $wishList = Province::select('id', 'name')->whereIn('id', $wishListIdF)->get();
+            $wishListId = auth()->check()?explode(',',session('tinhthanhquantam')):[];
+            $wishListIdF = array_diff($wishListId, [$userProvinceId]);
+            $wishList = Province::select('id', 'name')->whereIn('id', $wishListIdF)->get();
 
-        $result = $userProvince->merge($wishList);
+            $result = $userProvince->merge($wishList);
+        }
+        else
+            $result =   Province::orderBy('order', 'ASC')->get();
         return $result;
     }
 }
