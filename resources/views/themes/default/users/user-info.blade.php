@@ -217,6 +217,10 @@
                                                                         <div class="col-xs-12">
                                                                             <button type="button"
                                                                                     class="btn btn-default btn-collapse"
+                                                                                    data-target="#contactInfo">Liên hệ
+                                                                            </button>
+                                                                            <button type="button"
+                                                                                    class="btn btn-default btn-collapse"
                                                                                     data-target="#addressSelect"><i
                                                                                     class="fa fa-road"
                                                                                     aria-hidden="true"></i> Khu vực
@@ -224,10 +228,6 @@
                                                                             <button type="button"
                                                                                     class="btn btn-default btn-collapse"
                                                                                     data-target="#catSelect">Danh mục
-                                                                            </button>
-                                                                            <button type="button"
-                                                                                    class="btn btn-default btn-collapse"
-                                                                                    data-target="#priceSelect">Giá
                                                                             </button>
                                                                             <button type="button"
                                                                                     class="btn btn-default btn-collapse-second"
@@ -250,11 +250,9 @@
                                                                             <div class="col-xs-12">
                                                                                 <button type="button"
                                                                                         class="btn btn-default btn-collapse"
-                                                                                        data-target="#contactInfo">Liên hệ
-                                                                                </button>
-                                                                                <button type="button"
-                                                                                        class="btn btn-default btn-collapse"
-                                                                                        data-target="#nearBy">Gần
+                                                                                        data-target="#area"><i
+                                                                                        class="fa fa-area-chart"
+                                                                                        aria-hidden="true"></i> Thông số
                                                                                 </button>
                                                                                 <button type="button"
                                                                                         class="btn btn-default btn-collapse"
@@ -266,31 +264,9 @@
                                                                                         data-target="#exhibitSelect">
                                                                                     Giấy tờ
                                                                                 </button>
-
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="form-group">
-                                                                            <div class="col-xs-12">
                                                                                 <button type="button"
                                                                                         class="btn btn-default btn-collapse"
-                                                                                        data-target="#linkYoutube"><i class="fa fa-youtube-square" aria-hidden="true"></i> Youtube
-                                                                                </button>
-                                                                                <button type="button"
-                                                                                        class="btn btn-default btn-collapse"
-                                                                                        data-target="#room"><i
-                                                                                        class="fa fa-bed"
-                                                                                        aria-hidden="true"></i> Phòng
-                                                                                </button>
-                                                                                <button type="button"
-                                                                                        class="btn btn-default btn-collapse"
-                                                                                        data-target="#area"><i
-                                                                                        class="fa fa-area-chart"
-                                                                                        aria-hidden="true"></i> Diện
-                                                                                    tích
-                                                                                </button>
-                                                                                <button type="button"
-                                                                                        class="btn btn-default btn-collapse"
-                                                                                        data-target="#mattien">Mặt tiền
+                                                                                        data-target="#priceSelect">Giá
                                                                                 </button>
 
 
@@ -298,25 +274,52 @@
                                                                         </div>
                                                                         <div class="form-group">
                                                                             <div class="col-xs-12">
-                                                                                <button type="button"
-                                                                                        class="btn btn-default btn-collapse"
-                                                                                        data-target="#floorSelect">Số
-                                                                                    tầng
-                                                                                </button>
-                                                                                <button type="button"
-                                                                                        class="btn btn-default btn-collapse"
-                                                                                        data-target="#mapSelect"><i
-                                                                                        class="fa fa-map-marker"></i> Vị
-                                                                                    ví
-                                                                                </button>
                                                                                 <button type="button"
                                                                                         class="btn btn-default btn-collapse"
                                                                                         data-target="#imageSelect"><i
                                                                                         class="fa fa-picture-o"></i>
-                                                                                    Hình ảnh
+                                                                                    Ảnh
                                                                                 </button>
+                                                                                <button type="button"
+                                                                                        class="btn btn-default btn-collapse"
+                                                                                        data-target="#linkYoutube"><i class="fa fa-youtube-square" aria-hidden="true"></i> Video
+                                                                                </button>
+                                                                                <button type="button"
+                                                                                        class="btn btn-default btn-collapse"
+                                                                                        data-target="#mapSelect"><i
+                                                                                        class="fa fa-map-marker"></i> Bản đồ
+                                                                                </button>
+                                                                                {{--<button type="button"--}}
+                                                                                        {{--class="btn btn-default btn-collapse"--}}
+                                                                                        {{--data-target="#nearBy">Gần--}}
+                                                                                {{--</button>--}}
+
+                                                                                {{--<button type="button"--}}
+                                                                                        {{--class="btn btn-default btn-collapse"--}}
+                                                                                        {{--data-target="#room"><i--}}
+                                                                                        {{--class="fa fa-bed"--}}
+                                                                                        {{--aria-hidden="true"></i> Phòng--}}
+                                                                                {{--</button>--}}
+
+                                                                                {{--<button type="button"--}}
+                                                                                        {{--class="btn btn-default btn-collapse"--}}
+                                                                                        {{--data-target="#mattien">Mặt tiền--}}
+                                                                                {{--</button>--}}
+
+
                                                                             </div>
                                                                         </div>
+                                                                        {{--<div class="form-group">--}}
+                                                                            {{--<div class="col-xs-12">--}}
+                                                                                {{--<button type="button"--}}
+                                                                                        {{--class="btn btn-default btn-collapse"--}}
+                                                                                        {{--data-target="#floorSelect">Số--}}
+                                                                                    {{--tầng--}}
+                                                                                {{--</button>--}}
+                                                                                {{----}}
+
+                                                                            {{--</div>--}}
+                                                                        {{--</div>--}}
 
                                                                         <div class="col-xs-12">
                                                                             <div class="row">
