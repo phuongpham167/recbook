@@ -205,7 +205,6 @@
 .adv_box a img {
   max-width: 100%;
 }
-@media (min-width: 992px) {
   .list-hot .item {
     width: 20%;
     padding-left: 0;
@@ -214,5 +213,10 @@
   .list-hot .item:nth-child(5n+5) {
     padding-right: 0;
   }
-}
 
+.main-menu {
+    min-width: 1170px;
+}
+.top_page {
+    min-width: 1170px;
+}

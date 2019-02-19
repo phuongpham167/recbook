@@ -1,4 +1,4 @@
-@extends(theme(TRUE).'.layouts.app')
+@extends(theme(TRUE).'.layouts.app-non-responsive')
 
 @section('meta-description')
     <meta name="description" content="Home page" >
@@ -12,6 +12,9 @@
     <link rel="stylesheet" href="{{ asset('common-css/flexslider.css') }}"/>
     <link rel="stylesheet" href="{{ asset('css/home-1.css') }}"/>
     <style>
+        .container {
+            width: 1170px;
+        }
         .btn:focus, .btn:active, button:focus, button:active {
             outline: none !important;
             box-shadow: none !important;
@@ -50,7 +53,7 @@
     @include(theme(TRUE).'.includes.header-1')
     <div class="content-body">
         <section class="slider container" style="margin-top: 20px">
-            <div class="col-md-4"  style="
+            <div class="col-xs-4"  style="
     background: #000;
     height: 274px;
 ">
@@ -58,7 +61,7 @@
                     {!! first_video_display() !!}
                 </div>
             </div>
-            <div class="col-md-2"  style="
+            <div class="col-xs-2"  style="
     background: #000;
     height: 274px;
 ">
@@ -71,7 +74,7 @@
                 </table>
             </div>
 
-            <div class="col-md-6 no-padding-left no-padding-right">
+            <div class="col-xs-6 no-padding-left no-padding-right">
                 <div class="flexslider">
                     <ul class="slides">
                         @foreach(\App\Banner::where('location', 0)->get() as $item)
@@ -96,7 +99,7 @@
                 </div>
                 <div class="row list-re-item list-hot">
                     @foreach($vip[1] as $item)
-                        <div class="col-xs-12 col-sm-6 col-md-3 item">
+                        <div class="col-xs-3 item">
                             <div class="col-xs-12 re-item hot">
                                 <a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">
                                     @php
@@ -150,7 +153,7 @@
                         <div class="" style="margin-top: 10px">
                             <div class="vip3 list-re-item list-hot">
                                 @foreach($vip[2] as $item)
-                                    <div class="col-xs-12 col-sm-6 col-md-3 item">
+                                    <div class="col-xs-3 item">
                                         <div class="col-xs-12 re-item hot">
                                             <a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">
                                                 @php
@@ -185,7 +188,7 @@
         <section class="good_price">
             <div class="container">
                 <div class="row two_cols">
-                    <div class="col-xs-12 col-md-9 col_left no-padding-left">
+                    <div class="col-xs-12 col-xs-9 col_left no-padding-left">
                         <div class="left_box">
                             <div class="row" style="margin-right: 0; margin-left: 0">
                                 <p class="title_box">
@@ -207,7 +210,7 @@
                                 </div>
                                 <div class="row body_top_box">
                                     @foreach($vip[3] as $item)
-                                        <div class="col-xs-12 col-sm-6 col-md-6  good_price_item_wrap">
+                                        <div class="col-xs-12 col-sm-6 col-xs-6  good_price_item_wrap">
                                             <div class="col-xs-12  re_item2 good_price_item">
                                                 @php
                                                     $itemClass = '';
@@ -259,7 +262,7 @@
                                         </div>
                                     @endforeach
                                     @foreach($vip[4] as $item)
-                                        <div class="col-xs-12 col-sm-6 col-md-6  good_price_item_wrap">
+                                        <div class="col-xs-12 col-sm-6 col-xs-6  good_price_item_wrap">
                                             <div class="col-xs-12  re_item2 good_price_item">
                                                 @php
                                                     $itemClass = '';
@@ -311,7 +314,7 @@
                                         </div>
                                     @endforeach
                                     @foreach($vip[5] as $item)
-                                        <div class="col-xs-12 col-sm-6 col-md-6  good_price_item_wrap">
+                                        <div class="col-xs-12 col-sm-6 col-xs-6  good_price_item_wrap">
                                             <div class="col-xs-12  re_item2 good_price_item">
                                                 @php
                                                     $itemClass = '';
@@ -372,7 +375,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xs-12 col-md-3 col_right no-padding-right">
+                    <div class="col-xs-3 col_right no-padding-right">
                     @include(theme(TRUE).'.includes.vip-slide', ['vipRealEstates'=>$vip[6]])
                         <div class="agency list-re-item" style="margin-top: 10px">
                             <p class="title_box">
@@ -475,15 +478,15 @@
             <div class="row  three_cols">
                 <div class="col-xs-12 col-sm-12 three_i brokers">
                     <div class="content col-xs-12 no-padding-left no-padding-right broker_slider">
-                        <div class="col-md-4">
+                        <div class="col-xs-4">
                             <p class="title_box">
                                 <strong>Tin tức</strong>
                             </p>
                                 @foreach(\App\Post::orderBy('created_at', 'desc')->take(3)->get() as $item)
                                     <dl>
                                         <div class="row">
-                                            <dt class="col-md-4"><a href="{{ route('postdetail', ['slugchitiet' => $item->slugchitiet]) }}"><img width="100px" height="100px" src="/images/default_thumb.jpg" alt="DỰ ÁN LÀNG VIỆT KIỀU QUỐC TẾ HẢI PHÒNG"></a></dt>
-                                            <dd class="col-md-8">
+                                            <dt class="col-xs-4"><a href="{{ route('postdetail', ['slugchitiet' => $item->slugchitiet]) }}"><img width="100px" height="100px" src="/images/default_thumb.jpg" alt="DỰ ÁN LÀNG VIỆT KIỀU QUỐC TẾ HẢI PHÒNG"></a></dt>
+                                            <dd class="col-xs-8">
                                                 <a style="color: #0c4da2; font-size: 14px; font-weight: bold; text-transform: uppercase" href="{{ route('postdetail', ['slugchitiet' => $item->slugchitiet]) }}">{{$item->title}}</a>
                                                 <p style="color: grey"><em>{{\Carbon\Carbon::parse($item->created_at)->format('d/m/Y')}}</em></p>
                                                 <div>{!! trim_text($item->content,100) !!}</div>
@@ -492,7 +495,7 @@
                                     </dl>
                                 @endforeach
                         </div>
-                        <div class="col-md-8">
+                        <div class="col-xs-8">
                             <p class="title_box">
                                 <strong>YÊU CẦU</strong>
                             <div>
@@ -623,8 +626,8 @@
                     <div class="modal-body">
                         <div class="row">
                         @foreach($province_list as $item)
-                                <div class="col-md-3">
-                                    <button type="submit" name="provinces" value="{{$item->id}}" class="btn btn-default">{{str_replace('Tỉnh ', '', str_replace('Thành phố', '', $item->name))}}</button>
+                                <div class="col-xs-2" style="margin-bottom: 2px">
+                                    <button type="submit" name="provinces" value="{{$item->id}}" class="btn btn-default btn-xs">{{str_replace('Tỉnh ', '', str_replace('Thành phố', '', $item->name))}}</button>
                                 </div>
                         @endforeach
                         </div>

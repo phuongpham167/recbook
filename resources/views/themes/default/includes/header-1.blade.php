@@ -59,7 +59,7 @@
             </button>
             <a class="navbar-brand visible-xs" href="{{ route('home') }}">Recbook.vn</a>
         </div>
-        <div class="collapse navbar-collapse main-menu-list" id="myNavbar">
+        <div class="main-menu-list" id="myNavbar">
             <ul class="nav navbar-nav">
                 @php
                     $menuData = json_decode($menuData->data);
