@@ -235,10 +235,14 @@
                     </label>
                 </div>
             </div>
+
             <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.rangePrice')}}</label>
             <div class="col-sm-4">
                 <select class="form-control" id="range-price" name="range_price_id" value="{{ old('range_price_id') }}">
                     <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
+                    @foreach($rangePrices as $r)
+                        <option value="{{$r->id}}">{{$r->name}}</option>
+                    @endforeach
                 </select>
             </div>
         </div>

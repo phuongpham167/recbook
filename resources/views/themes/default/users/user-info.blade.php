@@ -221,9 +221,7 @@
                                                                             </button>
                                                                             <button type="button"
                                                                                     class="btn btn-default btn-collapse"
-                                                                                    data-target="#addressSelect"><i
-                                                                                    class="fa fa-road"
-                                                                                    aria-hidden="true"></i> Khu vực
+                                                                                    data-target="#addressSelect">Khu vực
                                                                             </button>
                                                                             <button type="button"
                                                                                     class="btn btn-default btn-collapse"
@@ -250,9 +248,7 @@
                                                                             <div class="col-xs-12">
                                                                                 <button type="button"
                                                                                         class="btn btn-default btn-collapse"
-                                                                                        data-target="#area"><i
-                                                                                        class="fa fa-area-chart"
-                                                                                        aria-hidden="true"></i> Thông số
+                                                                                        data-target="#area">Thông số
                                                                                 </button>
                                                                                 <button type="button"
                                                                                         class="btn btn-default btn-collapse"
@@ -276,18 +272,16 @@
                                                                             <div class="col-xs-12">
                                                                                 <button type="button"
                                                                                         class="btn btn-default btn-collapse"
-                                                                                        data-target="#imageSelect"><i
-                                                                                        class="fa fa-picture-o"></i>
+                                                                                        data-target="#imageSelect">
                                                                                     Ảnh
                                                                                 </button>
                                                                                 <button type="button"
                                                                                         class="btn btn-default btn-collapse"
-                                                                                        data-target="#linkYoutube"><i class="fa fa-youtube-square" aria-hidden="true"></i> Video
+                                                                                        data-target="#linkYoutube">Video
                                                                                 </button>
                                                                                 <button type="button"
                                                                                         class="btn btn-default btn-collapse"
-                                                                                        data-target="#mapSelect"><i
-                                                                                        class="fa fa-map-marker"></i> Bản đồ
+                                                                                        data-target="#mapSelect">Bản đồ
                                                                                 </button>
                                                                                 {{--<button type="button"--}}
                                                                                         {{--class="btn btn-default btn-collapse"--}}
@@ -504,7 +498,7 @@
                                                                     {{--</div>--}}
                                                                     <div class="row">
                                                                         <div class="col-xs-12 detail-item-wrap">
-                                                                            {!! $re->detail !!}
+                                                                            {!! nl2br($re->detail) !!}
                                                                         </div>
                                                                     </div>
                                                                     <div class="row">
@@ -1188,6 +1182,12 @@
             if (re.wc) {
                 $('#wc-edit').val(re.wc);
             }
+            if (re.block_id) {
+                $('#block-edit').val(re.block_id);
+            }
+            if (re.construction_type_id) {
+                $('#construction-type-edit').val(re.construction_type_id);
+            }
             if (re.area_of_premises) {
                 $('#area-of-premises-edit').val(re.area_of_premises);
             }
@@ -1211,6 +1211,9 @@
             }
             if (re.is_deal) {
                 $('#is-deal-edit').prop('checked', true);
+            }
+            if (re.range_price_id) {
+                $('#range-price-edit').val(re.range_price_id);
             }
             if (re.lat && re.long) {
                 $('#map-edit').val(re.lat + ',' + re.long);
@@ -1277,6 +1280,10 @@
 
             $('#wc-edit').val('');
 
+            $('#block-edit').val('');
+
+            $('#construction-type-edit').val('');
+
             $('#area-of-premises-edit').val('');
 
             $('#area-of-use-edit').val('');
@@ -1292,6 +1299,8 @@
             $('#don-vi-edit').val('');
 
             $('#is-deal-edit').prop('checked', false);
+
+            $('#range-price-edit').val('');
 
             $('#map-edit').val('');
         }

@@ -845,6 +845,7 @@ class PageController extends Controller
                 $blocks = $this->blockService->getListDropDown();
                 $constructionTypes = $this->constructionTypeService->getListDropDown();
                 $units = $this->unitService->getListDropDown();
+                $rangePrices = $this->rangePriceService->getListDropDown();
 
                 /*
                  * TODO: get list districts by user province
@@ -903,6 +904,7 @@ class PageController extends Controller
                     'blocks' => $blocks,
                     'constructionTypes' => $constructionTypes,
                     'units' => $units,
+                    'rangePrices' => $rangePrices,
                     'projects' => $this->projects,
                     'listRe' => $listRe,
                     'listPostedRe' => $listPostedRe,
