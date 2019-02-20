@@ -62,8 +62,8 @@ if ($user->group_id != $adminGroup) {
                             <input type="text" class="form-control" name="title" value="{{ $realEstate->title }}"/>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.shortDescription')}} <span class="text-red">*</span></label>
+                    <div class="form-group hidden">
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.shortDescription')}} </label>
 
                         <div class="col-sm-10">
                             <input type="text" class="form-control" id="short-description" name="short_description" maxlength="150" value="{{ $realEstate->short_description }}"/>
@@ -71,26 +71,26 @@ if ($user->group_id != $adminGroup) {
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.contactPhone')}} <span class="text-red">*</span></label>
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.contactPhone')}} </label>
 
                         <div class="col-sm-10">
                             <input type="text" class="form-control" id="contact_phone_number" name="contact_phone_number" value="{{ $realEstate->contact_phone_number }}"/>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.contactPerson')}} <span class="text-red">*</span></label>
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.contactPerson')}} </label>
 
                         <div class="col-sm-4">
                             <input type="text" class="form-control" id="contact_person" name="contact_person" value="{{ $realEstate->contact_person }}" readonly />
                         </div>
-                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.contactAddress')}} <span class="text-red">*</span></label>
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.contactAddress')}} </label>
 
                         <div class="col-sm-4">
                             <input type="text" class="form-control" id="contact_address" name="contact_address" value="{{ $realEstate->contact_address }}" readonly />
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.reCategory')}} <span class="text-red">*</span></label>
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.reCategory')}} </label>
                         <div class="col-sm-4">
                             <select class="form-control" id="re-category" name="re_category_id" onchange="changeReCategory(this)" value="{{ $realEstate->re_category_id }}">
                                 <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
@@ -99,7 +99,7 @@ if ($user->group_id != $adminGroup) {
                                 @endforeach
                             </select>
                         </div>
-                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.reType')}} <span class="text-red">*</span></label>
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.reType')}} </label>
                         <div class="col-sm-4">
                             <select class="form-control" id="re-type" name="re_type_id" value="{{ $realEstate->re_type_id }}">
                                 <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
@@ -110,7 +110,7 @@ if ($user->group_id != $adminGroup) {
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.province')}} <span class="text-red">*</span></label>
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.province')}} </label>
                         <div class="col-sm-4">
                             <select class="form-control" id="province" name="province_id" onchange="changeProvince(this)" value="{{ $realEstate->province_id }}">
                                 <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
@@ -119,7 +119,7 @@ if ($user->group_id != $adminGroup) {
                                 @endforeach
                             </select>
                         </div>
-                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.district')}} <span class="text-red">*</span></label>
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.district')}} </label>
                         <div class="col-sm-4">
                             <select class="form-control" id="district" name="district_id" onchange="changeDistrict(this)" value="{{ $realEstate->district_id }}">
                                 <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
@@ -130,7 +130,7 @@ if ($user->group_id != $adminGroup) {
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.ward')}} <span class="text-red">*</span></label>
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.ward')}} </label>
                         <div class="col-sm-4">
                             <select class="form-control" id="ward" name="ward_id" value="{{ $realEstate->ward_id }}" onchange="changeWard(this)">
                                 <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
@@ -139,19 +139,19 @@ if ($user->group_id != $adminGroup) {
                                 @endforeach
                             </select>
                         </div>
-                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.street')}} <span class="text-red">*</span></label>
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.street')}} </label>
                         <div class="col-sm-4">
                             <input type="text" class="form-control" name="street_id" id="street" autocomplete="off"/>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.address')}} <span class="text-red">*</span></label>
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.address')}} </label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" name="address" value="{{ $realEstate->address }}"/>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.direction')}} <span class="text-red">*</span></label>
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.direction')}} </label>
                         <div class="col-sm-2">
                             <select class="form-control" id="direction" name="direction_id" value="{{ $realEstate->direction_id }}">
                                 <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
@@ -160,7 +160,7 @@ if ($user->group_id != $adminGroup) {
                                 @endforeach
                             </select>
                         </div>
-                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.exhibit')}} <span class="text-red">*</span></label>
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.exhibit')}} </label>
                         <div class="col-sm-2">
                             <select class="form-control" id="exhibit" name="exhibit_id" value="{{ $realEstate->exhibit_id }}">
                                 <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
@@ -171,7 +171,7 @@ if ($user->group_id != $adminGroup) {
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.project')}} <span class="text-red">*</span></label>
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.project')}} </label>
                         <div class="col-sm-2">
                             <select class="form-control" id="project" name="project_id" value="{{ $realEstate->project_id }}">
                                 <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
@@ -229,7 +229,7 @@ if ($user->group_id != $adminGroup) {
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.areaOfPremises')}} <span class="text-red">*</span></label>
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.areaOfPremises')}} </label>
 
                         <div class="col-sm-2">
                             <input type="number" class="form-control" name="area_of_premises" value="{{ $realEstate->area_of_premises }}"/>
@@ -288,7 +288,7 @@ if ($user->group_id != $adminGroup) {
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.postDate')}} <span class="text-red">*</span></label>
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.postDate')}} </label>
                         <div class="col-sm-4">
                             <div class='input-group date' id='post-date'>
                                 <input type='text' class="form-control" name="post_date" value="{{ $realEstate->post_date }}" {{ $realEstate->approved ? 'disabled' : ''}}/>
@@ -338,7 +338,7 @@ if ($user->group_id != $adminGroup) {
                     <div class="form-group">
                         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.map')}}</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="map" id="map" value="{{ ($realEstate->lat && $realEstate->long) ? $realEstate->lat . ', ' . $realEstate->long : '' }}"/>
+                            <input type="text" class="form-control" name="map" id="map" value="{{ ($realEstate->lat && $realEstate->long) ? $realEstate->lat . ', ' . $realEstate->long : '' }}" readonly/>
                             <span class="help-block"><i>{{trans('real-estate.formCreateLabel.mapHelpBlock')}}</i></span>
                         </div>
                     </div>
