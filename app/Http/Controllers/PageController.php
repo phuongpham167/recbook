@@ -27,6 +27,7 @@ use App\Services\UnitService;
 use App\Services\WardService;
 use App\User;
 use Carbon\Carbon;
+use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Auth;
@@ -915,6 +916,7 @@ class PageController extends Controller
                     'menuData' => $this->menuFE
                 ]);
             }
+            return response('Người dùng không tồn tại hoặc đã bị khóa');
         } catch (\Exception $exception) {
             \Log::info($exception->getMessage());
         }
