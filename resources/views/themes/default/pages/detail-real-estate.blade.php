@@ -295,6 +295,13 @@
                         </div>
 
                         <div class="title-short-section">Bản đồ vị trí:</div>
+                        @if ($data->lat && $data->long)
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div id="map-view" style="width: 100%; height: 250px;"></div>
+                            </div>
+                        </div>
+                        @endif
                         <div class="strike-title">
                             <strong>Dành cho quảng cáo</strong>
                         </div>
@@ -602,4 +609,27 @@
             $('#myModal').modal('show');
         });
     </script>
+    @if ($data->lat && $data->long)
+        <script>
+            // show maps detail
+            let lat = '{{$data->lat}}';
+            let long = '{{$data->long}}';
+            function initMap() {
+                var myLatLng = {lat: parseFloat(lat), lng: parseFloat(long)};
+
+                var map = new google.maps.Map(document.getElementById('map-view'), {
+                    zoom: 15,
+                    center: myLatLng
+                });
+
+                var marker = new google.maps.Marker({
+                    position: myLatLng,
+                    map: map,
+                    draggable:false,
+                    title: '{{$data->title}}'
+                });
+            }
+        </script>
+        <script type="text/javascript" src='https://maps.googleapis.com/maps/api/js?sensor=false&key=AIzaSyAxgnRkMsWPSqlxOz_kLga0hJ4eG2l0Vmo&callback=initMap'></script>
+    @endif
 @endpush

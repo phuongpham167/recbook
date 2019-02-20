@@ -1066,7 +1066,7 @@
                 position: myLatLng,
                 map: map,
                 draggable:true,
-                title: 'Hello World!'
+                title: 'Chọn vị trí'
             });
             // marker.addListener('drag', handleEvent);
             marker.addListener('dragend', handleEventMapEdit);
