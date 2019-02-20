@@ -18,7 +18,7 @@
     @yield('content')
     <form method="post" action="{{route('interested-provinces')}}">
         {{csrf_field()}}
-        <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="myModal" style="margin-top: 100px; border-radius: 0 !important;">
+        <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="quantamtinhthanhModal" style="margin-top: 100px; border-radius: 0 !important;">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content" style="border-radius: 0 !important;">
                     <div class="modal-header" style="background: #0c4da2; color: white">
@@ -83,7 +83,19 @@
                 }
 
             });
+
         });
     </script>
     @stack('js')
+<script>
+    $(document).ready(function(){
+        @if (empty(session('tinhthanhquantam')))
+        // $(window).load(function() {
+        $('#quantamtinhthanhModal').modal({backdrop: 'static', keyboard: false});
+        $('#quantamtinhthanhModal').modal('show');
+
+        // });
+        @endif
+    });
+</script>
 </body>
