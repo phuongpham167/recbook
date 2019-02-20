@@ -1,3 +1,61 @@
+<div class="form-group collapse collapse1" id="contactInfo">
+    <div class="row form-group">
+        <div class="col-xs-12">
+            <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.contactPerson')}}</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="contact_person" name="contact_person" value="{{ old('contact_person') ? old('contact_person') : auth()->user()->userinfo->full_name }}">
+            </div>
+            <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.contactPhone')}}</label>
+            <div class="col-sm-4">
+                <input type="tel" class="form-control" id="contact_phone_number" name="contact_phone_number" value="{{ old('contact_phone_number') ? old('contact_phone_number') : auth()->user()->userinfo->phone }}">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.contactAddress')}}</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="contact_address" name="contact_address" value="{{ old('contact_address') ? old('contact_address') : auth()->user()->userinfo->address }}">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-group collapse collapse1" id="addressSelect">
+    <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.province')}} </label>
+    <div class="col-sm-4">
+        <select class="form-control" id="province" name="province_id" onchange="changeProvince(this)"
+                value="{{ old('province_id') }}">
+            <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
+            @foreach($provinces as $province)
+                <option value="{{$province->id}}" {{auth()->user() && auth()->user()->userinfo->province_id == $province->id ? 'selected' : ''}}>{{$province->name}}</option>
+            @endforeach
+        </select>
+        <p class="text-red error"></p>
+    </div>
+    <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.district')}} </label>
+    <div class="col-sm-4">
+        <select class="form-control" id="district" name="district_id" onchange="changeDistrict(this)"
+                value="{{ old('district_id') }}">
+            <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
+            @foreach($districtByUProvince as $d)
+                <option value="{{$d->id}}">{{$d->name}}</option>
+            @endforeach
+        </select>
+        <p class="text-red error"></p>
+    </div>
+    <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.ward')}} </label>
+    <div class="col-sm-4">
+        <select class="form-control" id="ward" name="ward_id" value="{{ old('ward_id') }}">
+            <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
+        </select>
+        <p class="text-red error"></p>
+    </div>
+    <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.street')}} </label>
+    <div class="col-sm-4">
+        <input type="text" class="form-control" id="street" name="street_id" autocomplete="off">
+        <p class="text-red error"></p>
+    </div>
+</div>
 <div class="form-group collapse collapse1" id="catSelect">
     <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.reCategory')}}</label>
     <div class="col-sm-4">
@@ -39,68 +97,87 @@
         </div>
     </div>
 </div>
-<div class="form-group collapse collapse1" id="addressSelect">
-    <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.province')}} </label>
-    <div class="col-sm-4">
-        <select class="form-control" id="province" name="province_id" onchange="changeProvince(this)"
-                value="{{ old('province_id') }}">
-            <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
-            @foreach($provinces as $province)
-                <option value="{{$province->id}}" {{auth()->user() && auth()->user()->userinfo->province_id == $province->id ? 'selected' : ''}}>{{$province->name}}</option>
-            @endforeach
-        </select>
-        <p class="text-red error"></p>
-    </div>
-    <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.district')}} </label>
-    <div class="col-sm-4">
-        <select class="form-control" id="district" name="district_id" onchange="changeDistrict(this)"
-                value="{{ old('district_id') }}">
-            <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
-            @foreach($districtByUProvince as $d)
-                <option value="{{$d->id}}">{{$d->name}}</option>
-            @endforeach
-        </select>
-        <p class="text-red error"></p>
-    </div>
-    <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.ward')}} </label>
-    <div class="col-sm-4">
-        <select class="form-control" id="ward" name="ward_id" value="{{ old('ward_id') }}">
-            <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
-        </select>
-        <p class="text-red error"></p>
-    </div>
-    <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.street')}} </label>
-    <div class="col-sm-4">
-        <input type="text" class="form-control" id="street" name="street_id" autocomplete="off">
-        <p class="text-red error"></p>
-    </div>
-</div>
-<div class="form-group collapse collapse1" id="contactInfo">
-    <div class="row form-group">
+<div class="form-group collapse collapse1" id="area">
+    <div class="row">
         <div class="col-xs-12">
-            <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.contactPhone')}}</label>
+            <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.width')}} </label>
             <div class="col-sm-4">
-                <input type="tel" class="form-control" id="contact_phone_number" name="contact_phone_number" value="{{ old('contact_phone_number') ? old('contact_phone_number') : auth()->user()->userinfo->phone }}">
+                <input type="number" class="form-control" id="width" name="width" value="{{ old('width') }}"/>
+                <p class="text-red error"></p>
             </div>
-            <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.contactPerson')}}</label>
+
+            <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.length')}}</label>
             <div class="col-sm-4">
-                <input type="text" class="form-control" id="contact_person" name="contact_person" value="{{ old('contact_person') ? old('contact_person') : auth()->user()->userinfo->full_name }}">
+                <input type="number" class="form-control" name="length" value="{{ old('length') }}"/>
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-xs-12">
-            <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.contactAddress')}}</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" id="contact_address" name="contact_address" value="{{ old('contact_address') ? old('contact_address') : auth()->user()->userinfo->address }}">
+            <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.areaOfPremises')}} </label>
+            <div class="col-sm-4">
+                <input type="number" class="form-control" id="area-of-premises" name="area_of_premises" value="{{ old('area_of_premises') }}" step="0.01"/>
+                <p class="text-red error"></p>
+            </div>
+
+            <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.areaOfUse')}}</label>
+            <div class="col-sm-4">
+                <input type="number" class="form-control" name="area_of_use" value="{{ old('area_of_use') }}" step="0.01"/>
             </div>
         </div>
     </div>
-</div>
-<div class="form-group collapse collapse1" id="nearBy">
-    <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.position')}}</label>
-    <div class="col-sm-10">
-        <input type="text" class="form-control" name="position" value="{{ old('position') }}" placeholder="VD: gần chợ 200m,"/>
+    <div class="row">
+        <div class="col-xs-12">
+            <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.floor')}}</label>
+            <div class="col-sm-4">
+                <input type="number" class="form-control" name="floor" value="{{ old('floor') }}"/>
+                <p class="text-red error"></p>
+            </div>
+
+            <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.bedroom')}}</label>
+            <div class="col-sm-4">
+                <input type="number" class="form-control" name="bedroom" value="{{ old('bedroom') }}"/>
+                <p class="text-red error"></p>
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.living_room')}}</label>
+            <div class="col-sm-4">
+                <input type="number" class="form-control" name="living_room" value="{{ old('living_room') }}"/>
+            </div>
+
+            <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.wc')}}</label>
+            <div class="col-sm-4">
+                <input type="number" class="form-control" name="wc" value="{{ old('wc') }}"/>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.block')}}</label>
+            <div class="col-sm-4">
+                <select class="form-control" id="block" name="block_id" value="{{ old('block_id') }}">
+                    <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
+                    @foreach($blocks as $block)
+                        <option value="{{$block->id}}">{{$block->name}}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.constructionType')}}</label>
+            <div class="col-sm-4">
+                <select class="form-control" id="construction-type" name="construction_type_id"
+                    value="{{ old('construction_type_id') }}">
+                    <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
+                    @foreach($constructionTypes as $constructionType)
+                        <option value="{{$constructionType->id}}">{{$constructionType->name}}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
     </div>
 </div>
 <div class="form-group collapse collapse1" id="directionSelect">
@@ -128,96 +205,66 @@
         <p class="text-red error"></p>
     </div>
 </div>
+<div class="form-group collapse collapse1" id="priceSelect">
+    <div class="row">
+        <div class="col-xs-12">
+            <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.price')}}</label>
+            <div class="col-sm-4">
+                <input type="number" class="form-control" name="price" value="{{ old('price') }}"/>
+                <span id="price_format"></span>
+            </div>
+            <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.don_vi')}}</label>
+            <div class="col-sm-4">
+                <select class="form-control" name="unit_id" id="don_vi">
+                    <option value="1">VNĐ</option>
+                    <option value="2">USD</option>
+                    <option value="4">VNĐ/m2</option>
+                    <option value="6">USD/m2</option>
+                </select>
+                <p class="text-red error"></p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="col-sm-4 col-sm-offset-2">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="is_deal" {{ old('is_deal') == 'on' ? 'checked' : '' }}>
+                        {{trans('real-estate.formCreateLabel.isDeal')}}
+                    </label>
+                </div>
+            </div>
+
+            <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.rangePrice')}}</label>
+            <div class="col-sm-4">
+                <select class="form-control" id="range-price" name="range_price_id" value="{{ old('range_price_id') }}">
+                    <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
+                    @foreach($rangePrices as $r)
+                        <option value="{{$r->id}}">{{$r->name}}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="form-group collapse collapse1" id="imageSelect">
+    <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.image')}}</label>
+    <div class="col-sm-10">
+        <button class="btn btn-primary" type="button" id="choose-image">
+            <i class="fa fa-picture-o"></i> Choose
+        </button>
+        <input id="images" class="form-control hidden" name="imagesList[]" type="file" multiple="multiple">
+    </div>
+    <div class="col-sm-12 img-preview">
+
+    </div>
+</div>
 <div class="form-group collapse collapse1" id="linkYoutube">
     <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.linkYoutube')}}</label>
     <div class="col-sm-10">
         <input type="text" class="form-control" name="link_video" value="{{ old('link_video') }}" placeholder=""/>
-    </div>
-</div>
-<div class="form-group collapse collapse1" id="room">
-    <div class="row">
-        <div class="col-xs-12">
-            <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.bedroom')}}</label>
-
-            <div class="col-sm-4">
-                <input type="number" class="form-control" name="bedroom" value="{{ old('bedroom') }}"/>
-            </div>
-            <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.living_room')}}</label>
-
-            <div class="col-sm-4">
-                <input type="number" class="form-control" name="living_room" value="{{ old('living_room') }}"/>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-xs-12">
-            <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.wc')}}</label>
-
-            <div class="col-sm-4">
-                <input type="number" class="form-control" name="wc" value="{{ old('wc') }}"/>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="form-group collapse collapse1" id="area">
-
-    <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.areaOfPremises')}} </label>
-
-    <div class="col-sm-4">
-        <input type="number" class="form-control" id="area-of-premises" name="area_of_premises" value="{{ old('area_of_premises') }}" step="0.01"/>
-        <p class="text-red error"></p>
-    </div>
-    <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.areaOfUse')}}</label>
-
-    <div class="col-sm-4">
-        <input type="number" class="form-control" name="area_of_use" value="{{ old('area_of_use') }}" step="0.01"/>
-    </div>
-
-</div>
-<div class="form-group collapse collapse1" id="mattien">
-
-    <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.width')}} </label>
-
-    <div class="col-sm-4">
-        <input type="number" class="form-control" id="width" name="width" value="{{ old('width') }}"/>
-        <p class="text-red error"></p>
-    </div>
-    <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.length')}}</label>
-
-    <div class="col-sm-4">
-        <input type="number" class="form-control" name="length" value="{{ old('length') }}"/>
-    </div>
-
-</div>
-<div class="form-group collapse collapse1" id="floorSelect">
-    <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.floor')}}</label>
-
-    <div class="col-sm-4">
-        <input type="number" class="form-control" name="floor" value="{{ old('floor') }}"/>
-    </div>
-</div>
-<div class="form-group collapse collapse1" id="priceSelect">
-    <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.price')}}</label>
-    <div class="col-sm-4">
-        <input type="number" class="form-control" name="price" value="{{ old('price') }}"/>
-        <span id="price_format"></span>
-    </div>
-    <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.don_vi')}}</label>
-    <div class="col-sm-4">
-        <select class="form-control" name="unit_id" id="don_vi">
-            <option value="1">VNĐ</option>
-            <option value="2">USD</option>
-            <option value="4">VNĐ/m2</option>
-            <option value="6">USD/m2</option>
-        </select>
-    </div>
-    <div class="col-sm-10 col-sm-offset-2">
-        <div class="checkbox">
-            <label>
-                <input type="checkbox" name="is_deal" {{ old('is_deal') == 'on' ? 'checked' : '' }}>
-                {{trans('real-estate.formCreateLabel.isDeal')}}
-            </label>
-        </div>
     </div>
 </div>
 <div class="form-group collapse collapse1" id="mapSelect">
@@ -230,18 +277,25 @@
         <div id="map-view" style="width: 100%; height: 250px;"></div>
     </div>
 </div>
-<div class="form-group collapse collapse1" id="imageSelect">
-    <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.image')}}</label>
-    <div class="col-sm-10">
-            <button class="btn btn-primary" type="button" id="choose-image">
-                <i class="fa fa-picture-o"></i> Choose
-            </button>
-            <input id="images" class="form-control hidden" name="imagesList[]" type="file" multiple="multiple">
-    </div>
-    <div class="col-sm-12 img-preview">
+{{--<div class="form-group collapse collapse1" id="room">--}}
 
-    </div>
-</div>
+
+{{--</div>--}}
+{{--<div class="form-group collapse collapse1" id="floorSelect">--}}
+
+{{--</div>--}}
+{{--<div class="form-group collapse collapse1" id="mattien">--}}
+
+
+
+
+{{--</div>--}}
+{{--<div class="form-group collapse collapse1" id="nearBy">--}}
+    {{--<label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.position')}}</label>--}}
+    {{--<div class="col-sm-10">--}}
+        {{--<input type="text" class="form-control" name="position" value="{{ old('position') }}" placeholder="VD: gần chợ 200m,"/>--}}
+    {{--</div>--}}
+{{--</div>--}}
 
 @push('js')
     {{--<script src="{{asset('plugins/bootstrap-datetimepicker-master/build/js/bootstrap-datetimepicker.min.js')}}"></script>--}}
@@ -262,7 +316,7 @@
                 position: myLatLng,
                 map: map,
                 draggable:true,
-                title: 'Hello World!'
+                title: 'Chọn vị trí'
             });
             // marker.addListener('drag', handleEvent);
             marker.addListener('dragend', handleEvent);

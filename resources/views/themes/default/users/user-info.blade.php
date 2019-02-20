@@ -217,17 +217,15 @@
                                                                         <div class="col-xs-12">
                                                                             <button type="button"
                                                                                     class="btn btn-default btn-collapse"
-                                                                                    data-target="#addressSelect"><i
-                                                                                    class="fa fa-road"
-                                                                                    aria-hidden="true"></i> Khu vực
+                                                                                    data-target="#contactInfo">Liên hệ
+                                                                            </button>
+                                                                            <button type="button"
+                                                                                    class="btn btn-default btn-collapse"
+                                                                                    data-target="#addressSelect">Khu vực
                                                                             </button>
                                                                             <button type="button"
                                                                                     class="btn btn-default btn-collapse"
                                                                                     data-target="#catSelect">Danh mục
-                                                                            </button>
-                                                                            <button type="button"
-                                                                                    class="btn btn-default btn-collapse"
-                                                                                    data-target="#priceSelect">Giá
                                                                             </button>
                                                                             <button type="button"
                                                                                     class="btn btn-default btn-collapse-second"
@@ -250,11 +248,7 @@
                                                                             <div class="col-xs-12">
                                                                                 <button type="button"
                                                                                         class="btn btn-default btn-collapse"
-                                                                                        data-target="#contactInfo">Liên hệ
-                                                                                </button>
-                                                                                <button type="button"
-                                                                                        class="btn btn-default btn-collapse"
-                                                                                        data-target="#nearBy">Gần
+                                                                                        data-target="#area">Thông số
                                                                                 </button>
                                                                                 <button type="button"
                                                                                         class="btn btn-default btn-collapse"
@@ -266,31 +260,9 @@
                                                                                         data-target="#exhibitSelect">
                                                                                     Giấy tờ
                                                                                 </button>
-
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="form-group">
-                                                                            <div class="col-xs-12">
                                                                                 <button type="button"
                                                                                         class="btn btn-default btn-collapse"
-                                                                                        data-target="#linkYoutube"><i class="fa fa-youtube-square" aria-hidden="true"></i> Youtube
-                                                                                </button>
-                                                                                <button type="button"
-                                                                                        class="btn btn-default btn-collapse"
-                                                                                        data-target="#room"><i
-                                                                                        class="fa fa-bed"
-                                                                                        aria-hidden="true"></i> Phòng
-                                                                                </button>
-                                                                                <button type="button"
-                                                                                        class="btn btn-default btn-collapse"
-                                                                                        data-target="#area"><i
-                                                                                        class="fa fa-area-chart"
-                                                                                        aria-hidden="true"></i> Diện
-                                                                                    tích
-                                                                                </button>
-                                                                                <button type="button"
-                                                                                        class="btn btn-default btn-collapse"
-                                                                                        data-target="#mattien">Mặt tiền
+                                                                                        data-target="#priceSelect">Giá
                                                                                 </button>
 
 
@@ -300,23 +272,48 @@
                                                                             <div class="col-xs-12">
                                                                                 <button type="button"
                                                                                         class="btn btn-default btn-collapse"
-                                                                                        data-target="#floorSelect">Số
-                                                                                    tầng
+                                                                                        data-target="#imageSelect">
+                                                                                    Ảnh
                                                                                 </button>
                                                                                 <button type="button"
                                                                                         class="btn btn-default btn-collapse"
-                                                                                        data-target="#mapSelect"><i
-                                                                                        class="fa fa-map-marker"></i> Vị
-                                                                                    ví
+                                                                                        data-target="#linkYoutube">Video
                                                                                 </button>
                                                                                 <button type="button"
                                                                                         class="btn btn-default btn-collapse"
-                                                                                        data-target="#imageSelect"><i
-                                                                                        class="fa fa-picture-o"></i>
-                                                                                    Hình ảnh
+                                                                                        data-target="#mapSelect">Bản đồ
                                                                                 </button>
+                                                                                {{--<button type="button"--}}
+                                                                                        {{--class="btn btn-default btn-collapse"--}}
+                                                                                        {{--data-target="#nearBy">Gần--}}
+                                                                                {{--</button>--}}
+
+                                                                                {{--<button type="button"--}}
+                                                                                        {{--class="btn btn-default btn-collapse"--}}
+                                                                                        {{--data-target="#room"><i--}}
+                                                                                        {{--class="fa fa-bed"--}}
+                                                                                        {{--aria-hidden="true"></i> Phòng--}}
+                                                                                {{--</button>--}}
+
+                                                                                {{--<button type="button"--}}
+                                                                                        {{--class="btn btn-default btn-collapse"--}}
+                                                                                        {{--data-target="#mattien">Mặt tiền--}}
+                                                                                {{--</button>--}}
+
+
                                                                             </div>
                                                                         </div>
+                                                                        {{--<div class="form-group">--}}
+                                                                            {{--<div class="col-xs-12">--}}
+                                                                                {{--<button type="button"--}}
+                                                                                        {{--class="btn btn-default btn-collapse"--}}
+                                                                                        {{--data-target="#floorSelect">Số--}}
+                                                                                    {{--tầng--}}
+                                                                                {{--</button>--}}
+                                                                                {{----}}
+
+                                                                            {{--</div>--}}
+                                                                        {{--</div>--}}
 
                                                                         <div class="col-xs-12">
                                                                             <div class="row">
@@ -501,7 +498,7 @@
                                                                     {{--</div>--}}
                                                                     <div class="row">
                                                                         <div class="col-xs-12 detail-item-wrap">
-                                                                            {!! $re->detail !!}
+                                                                            {!! nl2br($re->detail) !!}
                                                                         </div>
                                                                     </div>
                                                                     <div class="row">
@@ -1185,6 +1182,12 @@
             if (re.wc) {
                 $('#wc-edit').val(re.wc);
             }
+            if (re.block_id) {
+                $('#block-edit').val(re.block_id);
+            }
+            if (re.construction_type_id) {
+                $('#construction-type-edit').val(re.construction_type_id);
+            }
             if (re.area_of_premises) {
                 $('#area-of-premises-edit').val(re.area_of_premises);
             }
@@ -1208,6 +1211,9 @@
             }
             if (re.is_deal) {
                 $('#is-deal-edit').prop('checked', true);
+            }
+            if (re.range_price_id) {
+                $('#range-price-edit').val(re.range_price_id);
             }
             if (re.lat && re.long) {
                 $('#map-edit').val(re.lat + ',' + re.long);
@@ -1274,6 +1280,10 @@
 
             $('#wc-edit').val('');
 
+            $('#block-edit').val('');
+
+            $('#construction-type-edit').val('');
+
             $('#area-of-premises-edit').val('');
 
             $('#area-of-use-edit').val('');
@@ -1289,6 +1299,8 @@
             $('#don-vi-edit').val('');
 
             $('#is-deal-edit').prop('checked', false);
+
+            $('#range-price-edit').val('');
 
             $('#map-edit').val('');
         }

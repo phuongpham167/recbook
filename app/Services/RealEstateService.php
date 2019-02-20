@@ -180,13 +180,17 @@ class RealEstateService
 
     public function update($input)
     {
-        $slug = to_slug($input['title']);
+        $phone = isset($input['contact_phone_number']) ? $input['contact_phone_number'] : '';
+        $contactPerson = isset($input['contact_person']) ? $input['contact_person'] : '';
+        $contactAddress = isset($input['contact_address']) ? $input['contact_address'] : '';
 
-//        $phone = $input['contact_phone_number'];
-//        $contactPerson = $input['contact_person'];
-//        $contactAddress = $input['contact_address'];
-//
-//        $customer = $this->checkCustomer($phone, $contactPerson, $contactAddress);
+        $customer = null;
+        if ($phone) {
+            $customer = $this->checkCustomer($phone, $contactPerson, $contactAddress);
+        }
+
+        $root = \Request::root();
+        $slug = to_slug($input['title']);
 
         $imagesVal = [];
         if (isset($input['images'])) {
@@ -208,19 +212,25 @@ class RealEstateService
             $long = $maps[1] ? $maps[1] : '';
         }
 
-        if(empty(Street::find($input['street_id'])))
-        {
-            $street = new Street();
+        $streetId = isset($input['street_id']) ? $input['street_id'] : '';
+        $provinceId = isset($input['province_id']) ? $input['province_id'] : '';
+        $districtId = isset($input['district_id']) ? $input['district_id'] : '';
+        $wardId = isset($input['ward_id']) ? $input['ward_id'] : '';
+        if ($provinceId && $districtId && $wardId && $streetId) {
+            if(empty(Street::find($input['street_id'])))
+            {
+                $street = new Street();
 
-            $street->name = $input['street_id'];
-            $street->province_id = $input['province_id'];
-            $street->district_id = $input['district_id'];
-            $street->ward_id = $input['ward_id'];
-            $street->save();
-            $input['street_id'] = $street->id;
+                $street->name = $input['street_id'];
+                $street->province_id = $input['province_id'];
+                $street->district_id = $input['district_id'];
+                $street->ward_id = $input['ward_id'];
+                $street->save();
+                $input['street_id'] = $street->id;
+            }
         }
 
-        $realEstate = RealEstate::find($input['id']);
+        $realEstate = RealEstate::withoutGlobalScope(PrivateScope::class)->find($input['id']);
         if ($realEstate) {
             $approve = $realEstate->draft ? 0 : ( $this->needApprove ? 0 : 1 );
             if ($input['is_private'] == RealEstate::USER_PAGE || $input['is_private'] == RealEstate::USER_WEB) {
@@ -267,6 +277,7 @@ class RealEstateService
             $realEstate->lat = $lat;
             $realEstate->long = $long;
             $realEstate->detail = $input['detail'];
+            $realEstate->customer_id = $customer ? $customer->id : null;
             $realEstate->is_private = $input['is_private'];
             $realEstate->updated_by = \Auth::user()->id;
             $realEstate->web_id = $this->web_id;
