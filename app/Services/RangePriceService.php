@@ -19,14 +19,9 @@ class RangePriceService
         return $list;
     }
 
-    public function getListDropDown($catId)
+    public function getListDropDown()
     {
-        \Log::info($catId);
-        $result = [];
-        $reCategory = ReCategory::find($catId);
-        if ($reCategory) {
-            $result = $reCategory->rangePrices()->select('id', 'name')->get();
-        }
+        $result = RangePrice::select('id', 'name')->get();
         return $result;
     }
 
