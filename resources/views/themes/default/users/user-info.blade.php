@@ -450,7 +450,7 @@
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td colspan="2"><b class="text-upper">Khu vực: </b><span class="district-val">{{$re->district ? $re->district->name : '-'}}</span></td>
-                                                                                    <td colspan="2"><b class="text-upper">Hướng: </b><span class="direction-val">{{$re->direction_id ? $re->direction->name : '-'}}</span></td>
+                                                                                    <td colspan="2"><b class="text-upper">Hướng: </b><span class="direction-val">{{$re->direction ? $re->direction->name : $re->direction_id}}</span></td>
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td colspan="4" class="room-wrap">{!! $re->bedroom ? '<b>Phòng ngủ: </b>' . $re->bedroom : '' !!}{!! ($re->bedroom && $re->living_room) ? ', ' : '' !!}{!! $re->living_room ? '<b>Phòng khách: </b>' . $re->living_room : ''!!}{{ (($re->living_room && $re->wc) || ($re->bedroom && !$re->living_room && $re->wc)) ? ', ' : '' }}{!! $re->wc ? '<b>WC: </b>' . $re->wc : '' !!} @if(!$re->bedroom && !$re->living_room && !$re->wc) - @endif</td>
