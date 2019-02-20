@@ -187,13 +187,12 @@ button {
 
 .main-menu .main-menu-list ul li.active a,
 .main-menu .main-menu-list ul li.open a {
-  background: none !important;
+  background: #038fe3 !important;
 }
 
 .main-menu .main-menu-list .menu-search {
   float: left;
   margin-top: 6px;
-  width: 100%;
 }
 
 .main-menu .main-menu-list .menu-search .wrap {
@@ -1024,3 +1023,64 @@ p.more a {
     overflow: hidden;
 }
 
+.menu-search .token-input-list-bootstrap {
+    float: left;
+}
+.menu-search .token-input-list-bootstrap #token-input-ip-kw{
+    width: 180px !important;
+    height: 28px !important;
+    margin: 0 !important;
+}
+.menu-search .token-input-token-bootstrap {
+    line-height: 18px;
+    max-width: 180px !important;
+}
+.menu-search .dropdown-menu{
+    width: 1000px;
+}
+.menu-search .search_slide ul li {
+    display: block;
+    margin-bottom: 20px;
+    position: relative;
+    float: left;
+}
+.search_slide ul li a {
+    display: inline-block;
+    background: #333;
+    color: #000;
+    font-weight: 600;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 10px 20px;
+    font-size: 15px;
+}
+.search_slide ul li.active a, .search_slide ul li:hover a {
+    background: #0085e0;
+    color: #fff;
+}
+.search_slide ul li span {
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    margin-left: -10px;
+    display: none;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #0085e0;
+    border-bottom: 10px solid transparent;
+}
+.search_slide .row {
+    padding: 30px;
+}
+.search_slide .row .item {
+    padding: 5px;
+}
+.search_slide li.active a {
+    background: #038fe3 !important;
+}
+.search_slide li.active span {
+    display: block;
+}
+.search_slide .item select {
+    width: 100% !important;
+}

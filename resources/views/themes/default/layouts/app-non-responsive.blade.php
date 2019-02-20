@@ -28,6 +28,23 @@
 {{--    <script src="{{asset('plugins/jquery-locationpicker-plugin-master/dist/locationpicker.jquery.min.js')}}"></script>--}}
     <script>
         $(document).ready(function() {
+            $('input[name=project_id]').tokenInput(function(){
+                return "{{asset('/ajax/project')}}?addnew=0&province_id="+$('input[name=project_id]').data('province');
+            }, {
+                theme: "bootstrap",
+                queryParam: "term",
+                zindex  :   9999,
+                tokenLimit  :   1,
+                hintText : 'Nhập tên dự án để tìm kiếm',
+                onAdd   :   function(r){
+                    $('#method').val(r.method);
+                }
+            });
+            $('#token-input-ip-kw').attr('placeholder', 'Tìm theo tên dự án');
+
+            $(document).on('click', '.menu-search .dropdown-menu', function (e) {
+                e.stopPropagation();
+            });
             // Show or hide the sticky footer button
             $(window).scroll(function() {
                 if ($(this).scrollTop() > 100) {

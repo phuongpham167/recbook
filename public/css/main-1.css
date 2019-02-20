@@ -170,12 +170,11 @@ button {
 
 .main-menu .main-menu-list ul li.active a,
 .main-menu .main-menu-list ul li.open a {
-    background: none !important;
+    background: #038fe3 !important;
 }
 
 .main-menu .main-menu-list .menu-search {
     float: left;
-    width: 100%;
 }
 
 .main-menu .main-menu-list .menu-search .wrap {

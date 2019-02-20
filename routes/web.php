@@ -139,7 +139,6 @@ Route::group(['middleware'=>'auth'], function(){
         Route::get('province', 'AjaxController@ajaxProvince')->name('ajaxProvince');
         Route::get('/get-unread-message', ['as' => 'ajax.getUnreadMessage', 'uses' => 'ConversationController@getUnreadMessage']);
         Route::post('/add-cil', ['as'=> 'ajax.addCil', 'uses' => 'RealEstateController@addCil']);
-        Route::get('project', ['as' => 'ajax.project', 'uses' => 'AjaxController@ajaxProject']);
     });
 
     Route::post('search-area', 'AreaController@searchArea');
@@ -231,6 +230,12 @@ Route::get('/xoa-session', function (){
     session(['tinhthanhquantam' => '']);
     return redirect()->back();
 });
+
+Route::group(['prefix'=>'ajax'], function(){
+    Route::get('project', ['as' => 'ajax.project', 'uses' => 'AjaxController@ajaxProject']);
+
+});
+
 
 Route::get('/t', function (){
 //    var_dump(session('tinhthanhquantam'));
