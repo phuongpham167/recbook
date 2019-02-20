@@ -125,8 +125,8 @@
                                 <div class="short-des">{{$item->short_description ? $item->short_description : ($shortDes ? $shortDes : '')}}...
                                 </div>
                                 <div class="row area">
-                                    <div class="col-xs-6 larea">DTMB: {{$item->area_of_premises ? $item->area_of_premises . 'm2' : '0m2'}}</div>
-                                    <div class="col-xs-6 rarea">DTSD: {{$item->area_of_use ? $item->area_of_use . 'm2' : '0m2'}}</div>
+                                    <div class="col-xs-6 larea">DTMB: {{$item->area_of_premises ? round($item->area_of_premises) . 'm2' : '0m2'}}</div>
+                                    <div class="col-xs-6 rarea">DTSD: {{$item->area_of_use ? round($item->area_of_use) . 'm2' : '0m2'}}</div>
                                 </div>
                                 <div class="row price">
                                     <div class="col-xs-12 lprice">
