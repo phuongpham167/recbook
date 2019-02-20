@@ -288,7 +288,7 @@
                                 <div class="col-xs-12 description__item">
                                     <h3 class="description__title">Thông tin chi tiết:</h3>
                                     <div class="description__body">
-                                            {!! $data->detail !!}
+                                            {!! nl2br($data->detail) !!}
                                     </div>
                                 </div>
                             </div>

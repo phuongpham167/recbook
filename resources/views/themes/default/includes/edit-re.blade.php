@@ -30,6 +30,70 @@
                         </div>
                     </div>
 
+                    <div class="form-group clearfix collapse" id="contactInfoEdit">
+                        <div class="row form-group">
+                            <div class="col-xs-12">
+                                <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.contactPerson')}}</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" name="contact_person" id="contact-person-edit">
+                                </div>
+
+                                <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.contactPhone')}}</label>
+                                <div class="col-sm-4">
+                                    <input type="tel" class="form-control" name="contact_phone_number" id="contact-phone-edit">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.contactAddress')}}</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="contact_address" id="contact-address-edit">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group clearfix collapse" id="addressSelectEdit">
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.province')}} </label>
+                        <div class="col-sm-4">
+                            <select class="form-control" id="province-edit" name="province_id_edit" onchange="changeProvinceEdit(this)">
+                                <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
+                                @foreach($provinces as $province)
+                                    <option value="{{$province->id}}" {{auth()->user() && auth()->user()->userinfo->province_id == $province->id ? 'selected' : ''}}>{{$province->name}}</option>
+                                @endforeach
+                            </select>
+                            <p class="text-red error"></p>
+                        </div>
+
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.district')}} </label>
+                        <div class="col-sm-4">
+                            <select class="form-control" id="district-edit" name="district_id_edit"
+                                    onchange="changeDistrictEdit(this)"
+                            >
+                                <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
+                            </select>
+                            <p class="text-red error"></p>
+                        </div>
+
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.ward')}} </label>
+                        <div class="col-sm-4">
+                            <select class="form-control" id="ward-edit" name="ward_id_edit">
+                                <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
+                            </select>
+                            <p class="text-red error"></p>
+                        </div>
+
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.street')}} </label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="street-edit" name="street_id_edit" autocomplete="off">
+
+                            <p class="text-red error"></p>
+                        </div>
+                    </div>
+                    <input type="text" class="hidden" id="street-id-hidden" value=""/>
+                    <input type="text" class="hidden" id="street-name-hidden" value=""/>
+
                     <div class="form-group clearfix collapse" id="catSelectEdit">
                         <label
                             class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.reCategory')}}</label>
@@ -43,6 +107,7 @@
                             </select>
                             <p class="text-red error"></p>
                         </div>
+
                         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.reType')}}</label>
                         <div class="col-sm-4">
                             <select class="form-control" id="loai-bds-edit" name="loai_bds" onChange="changeLoaiBDSEdit(this)">
@@ -52,6 +117,7 @@
                             </select>
                             <p class="text-red error"></p>
                         </div>
+
                         <div class="row">
                             <div class="col-xs-12 hidden" id="thocu-select-wrap-edit">
                                 <label class="col-sm-2 control-label">Thổ cư</label>
@@ -60,6 +126,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="row">
                             <div class="col-xs-12 hidden" id="duan-select-wrap-edit">
                                 <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.project')}}</label>
@@ -74,72 +141,106 @@
                     </div>
                     <input type="text" class="hidden" id="project-id-hidden" value=""/>
                     <input type="text" class="hidden" id="project-name-hidden" value=""/>
-                    <div class="form-group clearfix collapse" id="addressSelectEdit">
-                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.province')}} </label>
-                        <div class="col-sm-4">
-                            <select class="form-control" id="province-edit" name="province_id_edit" onchange="changeProvinceEdit(this)">
-                                <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
-                                @foreach($provinces as $province)
-                                    <option value="{{$province->id}}" {{auth()->user() && auth()->user()->userinfo->province_id == $province->id ? 'selected' : ''}}>{{$province->name}}</option>
-                                @endforeach
-                            </select>
-                            <p class="text-red error"></p>
-                        </div>
-                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.district')}} </label>
-                        <div class="col-sm-4">
-                            <select class="form-control" id="district-edit" name="district_id_edit"
-                                    onchange="changeDistrictEdit(this)"
-                            >
-                                <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
-                            </select>
-                            <p class="text-red error"></p>
-                        </div>
-                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.ward')}} </label>
-                        <div class="col-sm-4">
-                            <select class="form-control" id="ward-edit" name="ward_id_edit">
-                                <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
-                            </select>
-                            <p class="text-red error"></p>
-                        </div>
-                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.street')}} </label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" id="street-edit" name="street_id_edit" autocomplete="off">
 
-                            <p class="text-red error"></p>
-                        </div>
-                    </div>
-                    <input type="text" class="hidden" id="street-id-hidden" value=""/>
-                    <input type="text" class="hidden" id="street-name-hidden" value=""/>
-                    <div class="form-group clearfix collapse" id="contactInfoEdit">
-                        <div class="row form-group">
-                            <div class="col-xs-12">
-                                <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.contactPhone')}}</label>
-                                <div class="col-sm-4">
-                                    <input type="tel" class="form-control" name="contact_phone_number" id="contact-phone-edit">
-                                </div>
-                                <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.contactPerson')}}</label>
-                                <div class="col-sm-4">
-                                    <input type="text" class="form-control" name="contact_person" id="contact-person-edit">
-                                </div>
-                            </div>
-                        </div>
+                    <div class="form-group clearfix collapse" id="areaEdit">
                         <div class="row">
                             <div class="col-xs-12">
-                                <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.contactAddress')}}</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="contact_address" id="contact-address-edit">
+                                <label
+                                    class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.width')}} </label>
+                                <div class="col-sm-4">
+                                    <input type="number" class="form-control" id="width-edit"
+                                           name="width_edit"/>
+                                    <p class="text-red error"></p>
+                                </div>
+
+                                <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.length')}}</label>
+                                <div class="col-sm-4">
+                                    <input type="number" class="form-control" name="length_edit" id="length-edit"
+                                    />
+                                    <p class="text-red error"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label
+                                    class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.areaOfPremises')}} </label>
+                                <div class="col-sm-4">
+                                    <input type="number" class="form-control" id="area-of-premises-edit"
+                                           name="area_of_premises_edit" step="0.01"/>
+                                    <p class="text-red error"></p>
+                                </div>
+
+                                <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.areaOfUse')}}</label>
+                                <div class="col-sm-4">
+                                    <input type="number" class="form-control" name="area_of_use_edit" id="area-of-use-edit"
+                                           step="0.01"/>
+                                    <p class="text-red error"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.floor')}}</label>
+                                <div class="col-sm-4">
+                                    <input type="number" class="form-control" name="floor_edit" id="floor-edit"/>
+                                    <p class="text-red error"></p>
+                                </div>
+
+                                <label
+                                    class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.bedroom')}}</label>
+                                <div class="col-sm-4">
+                                    <input type="number" class="form-control" name="bedroom_edit" id="bedroom-edit"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label
+                                    class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.living_room')}}</label>
+                                <div class="col-sm-4">
+                                    <input type="number" class="form-control" name="living_room_edit"
+                                           id="living-room-edit"/>
+                                </div>
+
+                                <label
+                                    class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.wc')}}</label>
+                                <div class="col-sm-4">
+                                    <input type="number" class="form-control" name="wc_edit" id="wc-edit"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.block')}}</label>
+                                <div class="col-sm-4">
+                                    <select class="form-control" id="block-edit" name="block_id_edit">
+                                        <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
+                                        @foreach($blocks as $block)
+                                            <option value="{{$block->id}}">{{$block->name}}</option>
+                                        @endforeach
+                                    </select>
+                                    <p class="text-red error"></p>
+                                </div>
+
+                                <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.constructionType')}}</label>
+                                <div class="col-sm-4">
+                                    <select class="form-control" id="construction-type-edit" name="construction_type_id_edit"
+                                            >
+                                        <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
+                                        @foreach($constructionTypes as $constructionType)
+                                            <option value="{{$constructionType->id}}">{{$constructionType->name}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="form-group clearfix collapse" id="nearByEdit">
-                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.position')}}</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="position_edit" id="position-edit"
-                                   placeholder="VD: gần chợ 200m,"/>
-                        </div>
-                    </div>
                     <div class="form-group clearfix collapse" id="directionSelectEdit">
 
                         <label
@@ -154,6 +255,7 @@
                             <p class="text-red error"></p>
                         </div>
                     </div>
+
                     <div class="form-group clearfix collapse" id="exhibitSelectEdit">
                         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.exhibit')}} </label>
                         <div class="col-sm-4">
@@ -166,120 +268,52 @@
                             <p class="text-red error"></p>
                         </div>
                     </div>
-                    <div class="form-group clearfix collapse" id="linkYoutubeEdit">
 
-                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.linkYoutube')}} </label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="link-video-edit" name="link_video" placeholder=""/>
-                        </div>
-                    </div>
-                    <div class="form-group clearfix collapse" id="roomEdit">
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <label
-                                    class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.bedroom')}}</label>
-
-                                <div class="col-sm-4">
-                                    <input type="number" class="form-control" name="bedroom_edit" id="bedroom-edit"/>
-                                </div>
-                                <label
-                                    class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.living_room')}}</label>
-
-                                <div class="col-sm-4">
-                                    <input type="number" class="form-control" name="living_room_edit"
-                                           id="living-room-edit"/>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <label
-                                    class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.wc')}}</label>
-
-                                <div class="col-sm-4">
-                                    <input type="number" class="form-control" name="wc_edit" id="wc-edit"/>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group clearfix collapse" id="areaEdit">
-
-                        <label
-                            class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.areaOfPremises')}} </label>
-
-                        <div class="col-sm-4">
-                            <input type="number" class="form-control" id="area-of-premises-edit"
-                                   name="area_of_premises_edit" step="0.01"/>
-                            <p class="text-red error"></p>
-                        </div>
-                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.areaOfUse')}}</label>
-
-                        <div class="col-sm-4">
-                            <input type="number" class="form-control" name="area_of_use_edit" id="area-of-use-edit"
-                                   step="0.01"/>
-                        </div>
-
-                    </div>
-                    <div class="form-group clearfix collapse" id="mattienEdit">
-
-                        <label
-                            class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.width')}} </label>
-
-                        <div class="col-sm-4">
-                            <input type="number" class="form-control" id="width-edit"
-                                   name="width_edit"/>
-                            <p class="text-red error"></p>
-                        </div>
-                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.length')}}</label>
-
-                        <div class="col-sm-4">
-                            <input type="number" class="form-control" name="length_edit" id="length-edit"
-                            />
-                        </div>
-
-                    </div>
-                    <div class="form-group clearfix collapse" id="floorSelectEdit">
-                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.floor')}}</label>
-
-                        <div class="col-sm-4">
-                            <input type="number" class="form-control" name="floor_edit" id="floor-edit"/>
-                        </div>
-                    </div>
                     <div class="form-group clearfix collapse" id="priceSelectEdit">
-                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.price')}}</label>
-                        <div class="col-sm-4">
-                            <input type="number" class="form-control" name="price_edit" id="price-edit" step="1"/>
-                            <span id="price_format_edit"></span>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.price')}}</label>
+                                <div class="col-sm-4">
+                                    <input type="number" class="form-control" name="price_edit" id="price-edit" step="1"/>
+                                    <span id="price_format_edit"></span>
+                                </div>
+
+                                <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.don_vi')}}</label>
+                                <div class="col-sm-4">
+                                    <select class="form-control" name="unit_id" id="don_vi_edit">
+                                        <option value="1">VNĐ</option>
+                                        <option value="2">USD</option>
+                                        <option value="4">VNĐ/m2</option>
+                                        <option value="6">USD/m2</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
-                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.don_vi')}}</label>
-                        <div class="col-sm-4">
-                            <select class="form-control" name="unit_id" id="don_vi_edit">
-                                <option value="1">VNĐ</option>
-                                <option value="2">USD</option>
-                                <option value="4">VNĐ/m2</option>
-                                <option value="6">USD/m2</option>
-                            </select>
-                        </div>
-                        <div class="col-sm-10 col-sm-offset-2">
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" id="is-deal-edit"
-                                           name="is_deal_edit" {{ old('is_deal') == 'on' ? 'checked' : '' }}>
-                                    {{trans('real-estate.formCreateLabel.isDeal')}}
-                                </label>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" id="is-deal-edit"
+                                                   name="is_deal_edit" {{ old('is_deal') == 'on' ? 'checked' : '' }}>
+                                            {{trans('real-estate.formCreateLabel.isDeal')}}
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.rangePrice')}}</label>
+                                <div class="col-sm-4">
+                                    <select class="form-control" id="range-price-edit" name="range_price_id_edit">
+                                        <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
+                                        @foreach($rangePrices as $r)
+                                            <option value="{{$r->id}}">{{$r->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group clearfix collapse" id="mapSelectEdit">
-                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.map')}}</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="map_edit" id="map-edit" readonly/>
-                            <span class="help-block"><i>{{trans('real-estate.formCreateLabel.mapHelpBlock')}}</i></span>
-                        </div>
-                        <div class="col-sm-12">
-                            <div id="map-view-edit" style="width: 100%; height: 250px;"></div>
-                        </div>
-                    </div>
+
                     <div class="form-group clearfix collapse" id="imageSelectEdit">
                         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.image')}}</label>
                         <div class="col-sm-10">
@@ -297,67 +331,116 @@
 
                         </div>
                     </div>
+
+                    <div class="form-group clearfix collapse" id="linkYoutubeEdit">
+
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.linkYoutube')}} </label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="link-video-edit" name="link_video" placeholder=""/>
+                        </div>
+                    </div>
+
+                    <div class="form-group clearfix collapse" id="mapSelectEdit">
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.map')}}</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="map_edit" id="map-edit" readonly/>
+                            <span class="help-block"><i>{{trans('real-estate.formCreateLabel.mapHelpBlock')}}</i></span>
+                        </div>
+                        <div class="col-sm-12">
+                            <div id="map-view-edit" style="width: 100%; height: 250px;"></div>
+                        </div>
+                    </div>
+                    {{--<div class="form-group clearfix collapse" id="roomEdit">--}}
+                        {{--<div class="row">--}}
+                            {{--<div class="col-xs-12">--}}
+
+                            {{--</div>--}}
+                        {{--</div>--}}
+                        {{--<div class="row">--}}
+                            {{--<div class="col-xs-12">--}}
+
+                            {{--</div>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+
+                    {{--<div class="form-group clearfix collapse" id="floorSelectEdit">--}}
+                        {{----}}
+                    {{--</div>--}}
+
+                    {{--<div class="form-group clearfix collapse" id="mattienEdit">--}}
+                        {{----}}
+                    {{--</div>--}}
+
+                    {{--<div class="form-group clearfix collapse" id="nearByEdit">--}}
+                        {{--<label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.position')}}</label>--}}
+                        {{--<div class="col-sm-10">--}}
+                            {{--<input type="text" class="form-control" name="position_edit" id="position-edit"--}}
+                                   {{--placeholder="VD: gần chợ 200m,"/>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+
                     <div class="form-group clearfix">
                         <div class="col-xs-12">
+                            <button type="button" class="btn btn-default btn-collapse" data-target="#contactInfoEdit">Liên hệ
+                            </button>
                             <button type="button" class="btn btn-default btn-collapse" data-target="#addressSelectEdit">
-                                <i class="fa fa-road" aria-hidden="true"></i> Khu vực
+                                Khu vực
                             </button>
                             <button type="button" class="btn btn-default btn-collapse" data-target="#catSelectEdit">Danh
                                 mục
                             </button>
+                            <button type="button" class="btn btn-default btn-collapse" data-target="#areaEdit">Thông số
+                            </button>
 
-                            <button type="button" class="btn btn-default btn-collapse" data-target="#priceSelectEdit">
-                                Giá
-                            </button>
-                            <button type="button" class="btn btn-default btn-collapse" data-target="#contactInfoEdit">Liên hệ
-                            </button>
                         </div>
                     </div>
                     <div class="form-group clearfix">
                         <div class="col-xs-12">
-                            <button type="button" class="btn btn-default btn-collapse" data-target="#nearByEdit">Gần
-                            </button>
                             <button type="button" class="btn btn-default btn-collapse"
                                     data-target="#directionSelectEdit">Hướng
                             </button>
                             <button type="button" class="btn btn-default btn-collapse" data-target="#exhibitSelectEdit">
                                 Giấy tờ
                             </button>
+                            <button type="button" class="btn btn-default btn-collapse" data-target="#priceSelectEdit">
+                                Giá
+                            </button>
+                            <button type="button" class="btn btn-default btn-collapse" data-target="#imageSelectEdit">Hình ảnh
+                            </button>
+
+                        </div>
+                    </div>
+                    <div class="form-group clearfix">
+                        <div class="col-xs-12">
                             <button type="button" class="btn btn-default btn-collapse" data-target="#linkYoutubeEdit">
-                                <i class="fa fa-youtube-square" aria-hidden="true"></i> Youtube
+                                Video
                             </button>
+                            <button type="button" class="btn btn-default btn-collapse" data-target="#mapSelectEdit">Bản đồ
+                            </button>
+
                         </div>
                     </div>
-                    <div class="form-group clearfix">
-                        <div class="col-xs-12">
-                            <button type="button" class="btn btn-default btn-collapse" data-target="#roomEdit"><i
-                                    class="fa fa-bed" aria-hidden="true"></i> Phòng
-                            </button>
-                            <button type="button" class="btn btn-default btn-collapse" data-target="#areaEdit"><i
-                                    class="fa fa-area-chart" aria-hidden="true"></i> Diện tích
-                            </button>
-                            <button type="button" class="btn btn-default btn-collapse" data-target="#mattienEdit"> Mặt tiền
-                            </button>
-                            <button type="button" class="btn btn-default btn-collapse" data-target="#floorSelectEdit">Số
-                                tầng
-                            </button>
-                        </div>
-                    </div>
-                    <div class="form-group clearfix">
-                        <div class="col-xs-12">
-                            <button type="button" class="btn btn-default btn-collapse" data-target="#mapSelectEdit"><i
-                                    class="fa fa-map-marker"></i> Vị ví
-                            </button>
-                            <button type="button" class="btn btn-default btn-collapse" data-target="#imageSelectEdit"><i
-                                    class="fa fa-picture-o"></i> Hình ảnh
-                            </button>
-                        </div>
-                    </div>
-                    <div class="form-group clearfix">
+                    {{--<div class="form-group clearfix">--}}
+                        {{--<div class="col-xs-12">--}}
+                            {{--<button type="button" class="btn btn-default btn-collapse" data-target="#nearByEdit">Gần--}}
+                            {{--</button>--}}
+                            {{--<button type="button" class="btn btn-default btn-collapse" data-target="#roomEdit"><i--}}
+                                    {{--class="fa fa-bed" aria-hidden="true"></i> Phòng--}}
+                            {{--</button>--}}
+
+                            {{--<button type="button" class="btn btn-default btn-collapse" data-target="#mattienEdit"> Mặt tiền--}}
+                            {{--</button>--}}
+                            {{--<button type="button" class="btn btn-default btn-collapse" data-target="#floorSelectEdit">Số--}}
+                                {{--tầng--}}
+                            {{--</button>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+
+                    <div class="form-group clearfix hidden">
                         <label class="col-sm-2 control-label">Đăng lên</label>
 
                         <div class="col-sm-4">
-                            <select class="form-control hidden" id="is-private-edit" name="is_private"
+                            <select class="form-control" id="is-private-edit" name="is_private"
                                     value="{{ old('is_private') }}">
                                 <option value="1">Đăng trên trang cá nhân</option>
                                 <option value="2">Đăng trên web cá nhân</option>
@@ -712,7 +795,7 @@
             let contactPerson = $('#contact-person-edit').val();
             let contactAddress = $('#contact-address-edit').val();
 
-            let position = $('#position-edit').val();
+            // let position = $('#position-edit').val();
 
             let directionId = $('#direction-edit').val();
 
@@ -727,6 +810,10 @@
             let livingroom = $('#living-room-edit').val();
 
             let wc = $('#wc-edit').val();
+
+            let blockId = $('#block-edit').val();
+
+            let constructionType = $('#construction-type-edit').val();
 
             let aop = $('#area-of-premises-edit').val();
 
@@ -743,6 +830,8 @@
             let donvi = $('#don-vi-edit').val();
 
             let isDeal = $('#is-deal-edit').is(":checked") ? 1 : 0;
+
+            let rangePrice = $('#range-price-edit').val();
 
             let map = $('#map-edit').val();
 
@@ -780,7 +869,7 @@
             formDataEdit.append('contact_person', contactPerson);
             formDataEdit.append('contact_phone_number', contactPhone);
             formDataEdit.append('contact_address', contactAddress);
-            formDataEdit.append('position', position);
+            // formDataEdit.append('position', position);
             formDataEdit.append('direction_id', directionId);
             formDataEdit.append('exhibit_id', exhibitId);
             if (projectId) {
@@ -789,6 +878,8 @@
             formDataEdit.append('bedroom', bedroom);
             formDataEdit.append('living_room', livingroom);
             formDataEdit.append('wc', wc);
+            formDataEdit.append('block_id', blockId);
+            formDataEdit.append('construction_type_id', constructionType);
             formDataEdit.append('area_of_premises', aop);
             formDataEdit.append('area_of_use', aou);
             formDataEdit.append('width', width);
@@ -797,6 +888,7 @@
             formDataEdit.append('price', price);
             formDataEdit.append('don_vi', donvi);
             formDataEdit.append('is_deal', isDeal);
+            formDataEdit.append('range_price_id', rangePrice);
             formDataEdit.append('map', map);
             formDataEdit.append('is_private', isPrivate);
             formDataEdit.append('link_video', linkVideo);
