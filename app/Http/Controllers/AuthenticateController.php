@@ -11,6 +11,7 @@ use App\Http\Requests\LoginRequest;
 use App\Http\Requests\ResetPasswordRequest;
 use App\Menu;
 use App\PasswordReset;
+use App\ReCategory;
 use App\Services\ProvinceService;
 use App\TransactionLog;
 use App\User;
@@ -27,7 +28,7 @@ use Sabberworm\CSS\Settings;
 
 class AuthenticateController extends Controller
 {
-    protected $menuFE, $provinceService;
+    protected $menuFE, $provinceService,$categories;
 
     public function __construct(
         ProvinceService $provinceService
@@ -37,11 +38,15 @@ class AuthenticateController extends Controller
         $web_id = get_web_id();
         $mmfe = config('menu.mainMenuFE');
         $this->menuFE = Menu::where('web_id', $web_id)->where('menu_type', $mmfe)->first();
+        $this->categories = ReCategory::select('id', 'name', 'slug')
+            ->orderBy('id', 'asc')
+//            ->where('web_id', $web_id)
+            ->get();
     }
 
     public function getLogin()
     {
-        return v('authenticate.login', ['menuData' => $this->menuFE]);
+        return v('authenticate.login', ['menuData' => $this->menuFE, 'categories' => $this->categories,]);
     }
 
     public function login($username, $password, $remember=false,$api=false)
