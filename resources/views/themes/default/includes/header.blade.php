@@ -59,7 +59,7 @@
             </button>
             <a class="navbar-brand visible-xs" href="{{ route('home') }}">Recbook.vn</a>
         </div>
-        <div class="main-menu-list" id="myNavbar">
+        <div class="collapse navbar-collapse main-menu-list" id="myNavbar">
             <ul class="nav navbar-nav">
                 @php
                     $menuData = json_decode($menuData->data);
@@ -105,7 +105,7 @@
                                 <span class="caret"></span>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="dLabel" style="background: #0856ac">
-                                <div class="smart-search hidden-xs">
+                                <div class="smart-search">
                                     <form action="{{route('smart-search')}}" method="get">
                                         <div class=" search-wrap">
                                             <div class="search_slide">
@@ -137,7 +137,7 @@
                                                     @endphp
                                                     <input name="Search[cat_id]" id="Search_kind_id" type="hidden" value="{{ $firstCat ? $firstCat->id : 1 }}">
                                                     <div class="row search-select-wrap">
-                                                        <div class="col-xs-2 item">
+                                                        <div class="col-md-2 col-xs-12 item">
                                                             <select id="re-type" name="Search[type_id]">
                                                                 <option value="0">Tất cả loại hình</option>
                                                                 @foreach(\App\ReType::get() as $reType)
@@ -147,7 +147,7 @@
                                                         </div>
 
                                                         <input value="{{session('tinhthanhquantam', 0)}}" name="Search[province_id]" id="Search_province_id" type="hidden">
-                                                        <div class="col-xs-2 item">
+                                                        <div class="col-md-2 col-xs-12  item">
                                                             <select name="Search[district_id]" id="Search_district_id">
                                                                 <option value="0">Tất cả quận huyện</option>
                                                                 @foreach(\App\District::where('province_id', session('tinhthanhquantam', 0))->get() as $district)
@@ -163,7 +163,7 @@
                                                                 {{--@endforeach--}}
                                                             {{--</select>--}}
                                                         {{--</div>--}}
-                                                        <div class="col-xs-2 item">
+                                                        <div class="col-md-2 col-xs-12 item">
                                                             <select name="Search[direction_id]" id="Search_direction_id">
                                                                 <option value="0">Tất cả các hướng</option>
                                                                 @foreach(\App\Direction::all() as $direction)
@@ -178,7 +178,7 @@
                                                         {{--@endforeach--}}
                                                         {{--</select>--}}
                                                         {{--</div>--}}
-                                                        <div class="col-xs-2 item">
+                                                        <div class="col-md-2 col-xs-12 item">
                                                             <select id="range-price" name="Search[range_price_id]">
                                                                 <option value="0">Không lọc theo giá</option>
                                                                 @foreach(\App\RangePrice::all() as $rangePrice)
@@ -186,7 +186,7 @@
                                                                 @endforeach
                                                             </select>
                                                         </div>
-                                                        <div class="col-xs-2 item">
+                                                        <div class="col-md-2 col-xs-12 item">
                                                             <div class="input-group"> <input class="form-control" name="Search[keyword]" placeholder="Tên/SDT.." style="width: 100%;">
                                                                 <span class="input-group-btn"> <button class="btn btn-default" type="submit" style="    height: 30px;top: 0;margin-bottom: 9px;">
                                                                     <i class="fa fa-search"></i></button>

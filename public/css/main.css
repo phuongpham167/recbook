@@ -1035,6 +1035,9 @@ p.more a {
     line-height: 18px;
     max-width: 180px !important;
 }
+@media (min-width: 968px){
+
+}
 .menu-search .dropdown-menu{
     width: 1000px;
 }
@@ -1071,6 +1074,7 @@ p.more a {
 }
 .search_slide .row {
     padding: 30px;
+    padding-top: 0;
 }
 .search_slide .row .item {
     padding: 5px;
@@ -1083,4 +1087,16 @@ p.more a {
 }
 .search_slide .item select {
     width: 100% !important;
+}
+
+@media (max-width: 968px){
+    .menu-search .dropdown, .menu-search .dropdown>a.btn {
+        width: 100%;
+    }
+    menu-search .dropdown-menu .search-select-wrap{
+        padding-top: 0;
+    }
+    .main-menu .main-menu-list {
+        padding: 2px 30px 0 15px;
+    }
 }
