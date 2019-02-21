@@ -925,6 +925,17 @@
                         displayValueAfterUpdate(re);
                         $('#street-id-hidden').val('');
                         $('#street-name-hidden').val('');
+                        $.get('{{route('getPublicPostLeft')}}', {}, function(r){
+                            $('#public_left').html(r);
+                            $('#edit_public_left').html(r);
+                            if(r<=0){
+                                $('input[name=public_site]').attr('disabled', 'disabled');
+                                $('input[name=editpublic_site]').attr('disabled', 'disabled');
+                            } else {
+                                $('input[name=public_site]').removeAttr('disabled');
+                                $('input[name=editpublic_site]').removeAttr('disabled');
+                            }
+                        });
                         $('#modalEditRe').modal('hide');
                     } else {
                         toastr.error(res.message);
