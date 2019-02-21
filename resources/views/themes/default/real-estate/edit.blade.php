@@ -100,13 +100,40 @@ if ($user->group_id != $adminGroup) {
                             </select>
                         </div>
                         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.reType')}} </label>
-                        <div class="col-sm-4">
-                            <select class="form-control" id="re-type" name="re_type_id" value="{{ $realEstate->re_type_id }}">
+                        <div class="col-sm-2">
+                            <select class="form-control" id="loai-bds" name="loai_bds" value="{{ $realEstate->loai_bds }}" onChange="changeLoaiBDS(this)">
                                 <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
-                                @foreach($reTypes as $reType)
-                                    <option value="{{$reType->id}}" {{$reType->id == $realEstate->re_type_id ? 'selected' : ''}}>{{$reType->name}}</option>
-                                @endforeach
+                                <option value="1" {{ $realEstate->loai_bds == 1 ? 'selected' : '' }}>Thổ cư</option>
+                                <option value="2" {{ $realEstate->loai_bds == 2 ? 'selected' : '' }}>Dự án</option>
                             </select>
+                        </div>
+                        <div class="row" >
+                            <div class="col-xs-12 {{ (!$realEstate->loai_bds || ($realEstate->loai_bds && $realEstate->loai_bds == 2)) ? 'hidden' : ''}}" id="thocu-select-wrap" style="margin-top: 20px;">
+                                <label class="col-sm-2 control-label">Thổ cư</label>
+                                <div class="col-sm-2" id="thocu-select">
+                                    @if($realEstate->loai_bds && $realEstate->loai_bds == 1)
+                                        <select class="form-control" name="re_type_id" value="{{$realEstate->re_type_id}}">
+                                            @foreach($reTypes as $reType)
+                                                <option value="{{$reType->id}}" {{ $realEstate->re_type_id == $reType->id ? 'selected' : '' }}>{{$reType->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 {{(!$realEstate->loai_bds || ($realEstate->loai_bds && $realEstate->loai_bds == 1)) ? 'hidden' : ''}}" id="duan-select-wrap" style="margin-top: 20px;">
+                                <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.project')}}</label>
+                                <div class="col-sm-2" id="duan-select">
+                                    @if($realEstate->loai_bds && $realEstate->loai_bds == 2)
+                                        <select class="form-control" name="project_id" value="{{$realEstate->project_id}}">
+                                            @foreach($projects as $project)
+                                                <option value="{{$project->id}}" {{$realEstate->project_id == $project->id ? 'selected' : ''}}>{{$project->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    @endif
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
@@ -350,7 +377,7 @@ if ($user->group_id != $adminGroup) {
                     <div class="form-group">
                         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.detail')}} <span class="text-red">*</span> </label>
                         <div class="col-sm-10">
-                            <textarea name="detail" class="form-control" id="editor">{!! $realEstate->detail !!}
+                            <textarea name="detail" class="form-control" id="editor">{{ strip_tags($realEstate->detail) }}
                             </textarea>
                         </div>
                     </div>
@@ -500,6 +527,69 @@ if ($user->group_id != $adminGroup) {
                     $('#range-price').html(html);
                 }
             });
+        }
+
+        function changeLoaiBDS(e) {
+            if ( !$('#thocu-select-wrap').hasClass('hidden') ) {
+                $('#thocu-select-wrap').addClass('hidden');
+            }
+            $('#thocu-select').html('');
+
+            if ( !$('#duan-select-wrap').hasClass('hidden') ) {
+                $('#duan-select-wrap').addClass('hidden');
+            }
+            $('#duan-select').html('');
+
+            console.log($(e).val());
+            let loaiBDS = $(e).val();
+
+            if (loaiBDS == 1) {
+                $.ajax({
+                    url: "/re-type/list-dropdown",
+                    method: 'GET',
+                    success: function (result) {
+                        console.log('success');
+                        console.log(result);
+                        let html = '<select class="form-control" name="re_type_id">';
+                        if (result) {
+                            for (let r of result) {
+                                html += '<option value="' + r.id + '">' + r.name + '</option>';
+                            }
+                        }
+                        html += '</select>';
+                        if (html) {
+                            $('#thocu-select-wrap').removeClass('hidden');
+                            $('#thocu-select').html(html);
+                        }
+                    }
+                });
+            } else if (loaiBDS == 2) {
+                let provinceId = $('#province').val();
+                if (!provinceId) {
+                    provinceId = '{{auth()->user()->userinfo->province_id}}';
+                }
+                provinceId = parseInt(provinceId);
+                $.ajax({
+                    url: '/project-by-province/' + provinceId,
+                    method: 'GET',
+                    success: function (result) {
+                        console.log('success');
+                        console.log(result);
+                        let html = '' +
+                            '<select class="form-control" name="project_id">';
+                        if (result) {
+                            for (let r of result) {
+                                html += '<option value="' + r.id + '">' + r.name + '</option>';
+                            }
+                        }
+                        html += '</select>';
+                        if (html) {
+                            $('#duan-select-wrap').removeClass('hidden');
+                            $('#duan-select').html(html);
+                        }
+                    }
+                });
+            }
         }
 
         function changeProvince(e) {
