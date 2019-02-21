@@ -913,6 +913,7 @@
                     if (res.success) {
                         toastr.success(res.message);
                         const re = res.data.re;
+                        re.detail = res.data.content;
                         displayValueAfterUpdate(re);
                         $('#street-id-hidden').val('');
                         $('#street-name-hidden').val('');

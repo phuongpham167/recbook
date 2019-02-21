@@ -518,7 +518,8 @@ class RealEstateController extends Controller
                 'success' => true,
                 'message' => 'Cập nhật thành công',
                 'data' => [
-                    're' => $result
+                    're' => $result,
+                    'content'   =>  nl2br($result->detail)
                 ]
             ]);
         }
