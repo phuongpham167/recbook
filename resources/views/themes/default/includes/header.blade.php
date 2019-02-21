@@ -90,7 +90,7 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li >
-                    <a href="#a" data-toggle="modal" data-target="#myModal">Khu vực: {{$tentinh}} <i class="fa fa-sort"></i></a>
+                    <a href="#a" data-toggle="modal" data-target="#quantamtinhthanhModal">Khu vực: {{$tentinh}} <i class="fa fa-sort"></i></a>
                 </li>
                 <div class="menu-search">
                     <div class="pull-right wrap">
