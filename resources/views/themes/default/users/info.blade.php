@@ -188,6 +188,36 @@
                                     @endif
 
                                     <div class="col-xs-12">
+                                        <hr/>
+                                    </div>
+                                    <div class="col-xs-12">
+                                        <dl>
+                                            <dt class="txt_right">Tiêu đề </dt>
+                                            <dd>
+                                                <input type="text" class="" name="seo_title" id="seo_title" maxlength="191" value="{{auth()->user()->userinfo->seo_title}}">
+                                            </dd>
+                                        </dl>
+                                    </div>
+
+                                    <div class="col-xs-12">
+                                        <dl>
+                                            <dt class="txt_right">Từ khóa </dt>
+                                            <dd>
+                                                <textarea name="seo_keyword">{{  auth()->user()->userinfo->seo_keyword }}</textarea>
+                                            </dd>
+                                        </dl>
+                                    </div>
+
+                                    <div class="col-xs-12">
+                                        <dl>
+                                            <dt class="txt_right">Mô tả </dt>
+                                            <dd>
+                                                <textarea name="seo_description">{{ auth()->user()->userinfo->seo_description }}</textarea>
+                                            </dd>
+                                        </dl>
+                                    </div>
+
+                                    <div class="col-xs-12">
                                         <dl>
                                             <dt></dt>
                                             <dd>
