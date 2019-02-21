@@ -13,7 +13,7 @@
         </div>
         <div class="collapse navbar-collapse main-menu-list" id="myNavbar">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="{{ route('home') }}"><i class="fa fa-home fa-lg fa-fw"></i></a></li>
+                <li><a href="{{ route('home') }}"><i class="fa fa-home fa-lg fa-fw"></i></a></li>
                 <li>
                     <form class="menu-search" action="{{route('search')}}" method="get">
                         <div class="pull-right wrap">

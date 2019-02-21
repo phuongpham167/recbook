@@ -125,8 +125,8 @@
                                 <div class="short-des">{{$item->short_description ? $item->short_description : ($shortDes ? $shortDes : '')}}...
                                 </div>
                                 <div class="row area">
-                                    <div class="col-xs-6 larea">DTMB: {{$item->area_of_premises ? $item->area_of_premises . 'm2' : '0m2'}}</div>
-                                    <div class="col-xs-6 rarea">DTSD: {{$item->area_of_use ? $item->area_of_use . 'm2' : '0m2'}}</div>
+                                    <div class="col-xs-6 larea">DTMB: {{$item->area_of_premises ? round($item->area_of_premises) . 'm2' : '0m2'}}</div>
+                                    <div class="col-xs-6 rarea">DTSD: {{$item->area_of_use ? round($item->area_of_use) . 'm2' : '0m2'}}</div>
                                 </div>
                                 <div class="row price">
                                     <div class="col-xs-12 lprice">
@@ -619,17 +619,17 @@
                 <div class="modal-content" style="border-radius: 0 !important;">
                     <div class="modal-header" style="background: #0c4da2; color: white">
                         {{--<button type="button" class="close" data-dismiss="modal" aria-label="Close">--}}
-                            {{--<span aria-hidden="true">&times;</span>--}}
+                        {{--<span aria-hidden="true">&times;</span>--}}
                         {{--</button>--}}
                         <h4 class="modal-title">Bạn quan tâm đến bất động sản ở tỉnh thành nào?</h4>
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                        @foreach($province_list as $item)
+                            @foreach(\App\Province::orderBy('order', 'ASC')->get() as $item)
                                 <div class="col-xs-2" style="margin-bottom: 2px">
                                     <button type="submit" name="provinces" value="{{$item->id}}" class="btn btn-default btn-xs">{{str_replace('Tỉnh ', '', str_replace('Thành phố', '', $item->name))}}</button>
                                 </div>
-                        @endforeach
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -818,6 +818,8 @@
         });
 
         $(document).ready(function(){
+
+
             @if (empty(session('tinhthanhquantam')))
             // $(window).load(function() {
             $('#myModal').modal({backdrop: 'static', keyboard: false});
@@ -832,6 +834,7 @@
                     $('#method').val(r.method);
                 }
             });
+
             // });
             @endif
             $('.vip3').bxSlider({

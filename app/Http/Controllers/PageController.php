@@ -687,18 +687,23 @@ class PageController extends Controller
     public function search()
     {
         $searchText = \request('txtkeyword');
-        if(!$searchText) {
-            return redirect()->route('home');
-        }
+//        if(!$searchText) {
+//            return redirect()->route('home');
+//        }
         $query = RealEstate::filterprovince()->select('id', 'title', 'short_description', 'detail', 'slug', 'code', 'district_id', 'don_vi',
             'area_of_premises', 'area_of_use', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date');
 
-        $query->where('title', 'like', '%' . $searchText . '%');
-        $query->orWhere('code', 'like', '%' . $searchText . '%');
-        $query->orWhere('contact_phone_number', 'like', '%' . $searchText . '%');
+        $query  =   $query->where(function($q) use ($searchText){
+            $q->where('title', 'like', '%' . $searchText . '%');
+            $q->orWhere('code', 'like', '%' . $searchText . '%');
+            $q->orWhere('contact_phone_number', 'like', '%' . $searchText . '%');
+        });
+
         $query->where('web_id', $this->web_id);
         $query->where('post_date', '<=', Carbon::now());
         $query->orderBy('post_date', 'desc');
+        if(!empty(request('project_id')))
+            $query  =   $query->where('project_id', request('project_id'));
 //        $query = $this->checkRegisterDate($query);
 
         $results = $query->paginate(get_config('itemsPerPage', 30));
@@ -732,32 +737,32 @@ class PageController extends Controller
             $query = RealEstate::filterprovince()->select('id', 'title', 'short_description', 'detail', 'slug', 'code', 'district_id','province_id','ward_id','street_id', 'don_vi',
                 'area_of_premises', 'area_of_use', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date');
 
-            if (isset($filter['Search']['cat_id']) && $filter['Search']['cat_id']) {
+            if (isset($filter['Search']['cat_id']) && $filter['Search']['cat_id']!=0) {
                 $query->where('re_category_id', $filter['Search']['cat_id']);
             }
-            if (isset($filter['Search']['type_id']) && $filter['Search']['type_id']) {
+            if (isset($filter['Search']['type_id']) && $filter['Search']['type_id']!=0) {
                 $query->where('re_type_id', $filter['Search']['type_id']);
             }
-            if (isset($filter['Search']['province_id']) && $filter['Search']['province_id']) {
+            if (isset($filter['Search']['province_id']) && $filter['Search']['province_id']!=0) {
                 $query->where('province_id', $filter['Search']['province_id']);
             }
-            if (isset($filter['Search']['district_id']) && $filter['Search']['district_id']) {
+            if (isset($filter['Search']['district_id']) && $filter['Search']['district_id']!=0) {
                 $query->where('district_id', $filter['Search']['district_id']);
             }
-            if (isset($filter['Search']['ward_id']) && $filter['Search']['ward_id']) {
+            if (isset($filter['Search']['ward_id']) && $filter['Search']['ward_id']!=0) {
                 $query->where('ward_id', $filter['Search']['ward_id']);
             }
-            if (isset($filter['Search']['street_id']) && $filter['Search']['street_id']) {
+            if (isset($filter['Search']['street_id']) && $filter['Search']['street_id']!=0) {
                 $query->where('street_id', $filter['Search']['street_id']);
             }
-            if (isset($filter['Search']['direction_id']) && $filter['Search']['direction_id']) {
+            if (isset($filter['Search']['direction_id']) && $filter['Search']['direction_id']!=0) {
                 $query->where('direction_id', $filter['Search']['direction_id']);
             }
-            if (isset($filter['Search']['range_price_id']) && $filter['Search']['range_price_id']) {
+            if (isset($filter['Search']['range_price_id']) && $filter['Search']['range_price_id']!=0) {
                 $query->where('range_price_id', $filter['Search']['range_price_id']);
             }
 
-            if (isset($filter['Search']['project_id']) && $filter['Search']['project_id']) {
+            if (isset($filter['Search']['project_id']) && $filter['Search']['project_id']!=0) {
                 $query->where('project_id', $filter['Search']['project_id']);
             }
             if (isset($filter['Search']['phone']) && $filter['Search']['phone']) {
@@ -770,7 +775,13 @@ class PageController extends Controller
                 $query->where('area_of_premises', '<=', floatval($filter['Search']['dtmb_to']));
             }
 //            $query = $this->checkRegisterDate($query);
-
+            if(isset($filter['Search']['keyword']) && $keyword = $filter['Search']['keyword'] ){
+                $query  =   $query->where(function($q) use ($keyword){
+                    $q->where('title', 'like', '%' . $keyword . '%');
+                    $q->orWhere('code', 'like', '%' . $keyword . '%');
+                    $q->orWhere('contact_phone_number', 'like', '%' . $keyword . '%');
+                });
+            }
             $results = $query->paginate(get_config('itemsPerPage', 30));
 
             $this->vipRealEstates = $this->getVipRealEstates();

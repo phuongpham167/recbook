@@ -65,13 +65,11 @@
                     $menuData = json_decode($menuData->data);
                     $quantam    =   session('tinhthanhquantam',0);
                     if($quantam!=0)
-                        $tentinh = \App\Province::findOrFail(session('tinhthanhquantam', 1))?str_replace('Tỉnh ', '', str_replace('Thành phố', '', \App\Province::find(session('tinhthanhquantam'))->name)):'Tất cả';
+                        $tentinh = \App\Province::findOrFail(session('tinhthanhquantam', 0))?str_replace('Tỉnh ', '', str_replace('Thành phố', '', \App\Province::find(session('tinhthanhquantam'))->name)):'Tất cả';
                     else
                         $tentinh    =   'Tất cả';
                 @endphp
-                <li class="active">
-                    <a href="#a" data-toggle="modal" data-target="#myModal">Khu vực: {{$tentinh}} <i class="fa fa-sort"></i></a>
-                </li>
+                <li class=""><a href="{{ route('home') }}"><i class="fa fa-home"></i> Trang chủ</a></li>
                 @foreach($menuData as $md)
                     @if (isset($md->children) && $children = $md->children)
                         <li class="dropdown">
@@ -91,30 +89,119 @@
                 {{--<li class=""><a href="{{ route('get.create-real-estate') }}">{{ trans('menu.create_real_estate') }}</a></li>--}}
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <form class="menu-search" action="{{route('smart-search')}}" method="get">
+                <li >
+                    <a href="#a" data-toggle="modal" data-target="#quantamtinhthanhModal">Khu vực: {{$tentinh}} <i class="fa fa-sort"></i></a>
+                </li>
+                <div class="menu-search">
                     <div class="pull-right wrap">
-                        <select class="form-control" name="Search[cat_id]">
-                            <option value="">Loại BĐS</option>
-                            @foreach(\App\ReCategory::get() as $item)
-                                <option value="{{$item->id}}">{{$item->name}}</option>
-                            @endforeach
-                        </select>
-                        <select class="form-control" name="Search[direction_id]">
-                            <option value="">Hướng</option>
-                            @foreach(\App\Direction::get() as $item)
-                                <option value="{{$item->id}}">{{$item->name}}</option>
-                            @endforeach
-                        </select>
-                        <select class="form-control" name="Search[range_price_id]">
-                            <option value="0">Giá</option>
-                            @foreach(\App\RangePrice::get() as $item)
-                                <option value="{{$item->id}}">{{$item->name}}</option>
-                            @endforeach
-                        </select>
-                        <input id="ip-kw" name="txtkeyword" class="form-control pull-left" type="text" placeholder="{{trans('system.searchPlaceholder')}}">
+                    <form action="{{route('search')}}" method="get" style="float: left">
+                        <input id="ip-kw" name="project_id" class="form-control pull-left" type="text" data-province="{{session('tinhthanhquantam', 0)}}" placeholder="Tìm theo tên dự án">
+                        <input id="ip-keyword" name="txtkeyword" class="form-control pull-left" type="text" placeholder="{{trans('system.searchPlaceholder')}}">
                         <button type="submit" class="pull-left"><i class="fa fa-search"></i></button>
+                    </form>
+                        <div class="dropdown" style="float: left">
+                            <a class="pull-left btn btn-sm btn-primary" id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Tìm kiếm nâng cao
+                                <span class="caret"></span>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="dLabel" style="background: #0856ac">
+                                <div class="smart-search hidden-xs">
+                                    <form action="{{route('smart-search')}}" method="get">
+                                    <div class=" search-wrap">
+                                        <div class="search_slide">
+                                            <ul>
+                                                @foreach($categories as $key => $category)
+                                                    <li @if($key == 0) class="active" @endif>
+                                                        <a href="{{ $category->id }}">{{$category->name}}</a><span></span>
+                                                    </li>
+                                                @endforeach
+                                                {{--<li class="active">--}}
+                                                {{--<a href="#">Cần bán</a><span></span>--}}
+                                                {{--</li>--}}
+                                                {{--<li>--}}
+                                                {{--<a href="#">Cho thuê</a><span></span>--}}
+                                                {{--</li>--}}
+                                                {{--<li>--}}
+                                                {{--<a href="#">Cần mua</a><span></span>--}}
+                                                {{--</li>--}}
+                                                {{--<li>--}}
+                                                {{--<a href="#">Cần thuê</a><span></span>--}}
+                                                {{--</li>--}}
+                                            </ul>
+                                            <div class="clearfix"></div>
+                                            <form action="{{route('smart-search')}}" method="GET">
+                                                @php
+                                                    if($categories) {
+                                                        $firstCat = $categories[0];
+                                                    }
+                                                @endphp
+                                                <input name="Search[cat_id]" id="Search_kind_id" type="hidden" value="{{ $firstCat ? $firstCat->id : 1 }}">
+                                                <div class="row search-select-wrap">
+                                                    <div class="col-xs-2 item">
+                                                        <select id="re-type" name="Search[type_id]">
+                                                            <option value="0">Tất cả loại hình</option>
+                                                            @foreach($reTypes as $reType)
+                                                                <option value="{{$reType->id}}">{{$reType->name}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+
+                                                    <input value="{{session('tinhthanhquantam', 0)}}" name="Search[province_id]" id="Search_province_id" type="hidden">
+                                                    <div class="col-xs-2 item">
+                                                        <select name="Search[district_id]" id="Search_district_id">
+                                                            <option value="0">Tất cả quận huyện</option>
+                                                            @foreach(\App\District::where('province_id', session('tinhthanhquantam', 0))->get() as $district)
+                                                                <option value="{{$district->id}}">{{$district->name}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-xs-2 item">
+                                                        <select name="Search[street_id]" id="Search_street_id">
+                                                            <option value="0">Tất cả đường phố</option>
+                                                            @foreach($streets as $street)
+                                                                <option value="{{$street->id}}">{{$street->name}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-xs-2 item">
+                                                        <select name="Search[direction_id]" id="Search_direction_id">
+                                                            <option value="0">Tất cả các hướng</option>
+                                                            @foreach($directions as $direction)
+                                                                <option value="{{$direction->id}}">{{$direction->name}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                    {{--<div class="col-xs-2 item">--}}
+                                                    {{--<select name="Search[direction_id]" id="Search_direction_id">--}}
+                                                    {{--@foreach($directions as $direction)--}}
+                                                    {{--<option value="{{$direction->id}}">{{$direction->name}}</option>--}}
+                                                    {{--@endforeach--}}
+                                                    {{--</select>--}}
+                                                    {{--</div>--}}
+                                                    <div class="col-xs-2 item">
+                                                        <select id="range-price" name="Search[range_price_id]">
+                                                            <option value="0">Không lọc theo giá</option>
+                                                            @foreach($rangePrices as $rangePrice)
+                                                                <option value="{{$rangePrice->id}}">{{$rangePrice->name}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-xs-2 item">
+                                                        <div class="input-group"> <input class="form-control" name="Search[keyword]" placeholder="Tên/SDT.." style="width: 100%;">
+                                                            <span class="input-group-btn"> <button class="btn btn-default" type="submit" style="    height: 30px;top: 0;margin-bottom: 9px;">
+                                                                    <i class="fa fa-search"></i></button>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </form>
+                </div>
             </ul>
         </div>
     </div>

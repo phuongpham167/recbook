@@ -350,53 +350,7 @@
     <script src="{{ asset('plugins/OwlCarousel2-2.3.4/dist/owl.carousel.js') }}"></script>
     <script src="{{ asset('js/jquery.flexslider.js') }}"></script>
     <script>
-        $('.search_slide ul li a').click(function() {
-            $('.search_slide ul li').removeClass('active');
-            $(this).parent().addClass('active');
-            $('.search_slide>form>input[type="hidden"]').val($(this).attr('href'));
-            // getCatPrice('.search_slide>form>input[type="hidden"]', '#search_cat_id', '#search_price_id', '/site/LoadCat');
-            changeReCategory($(this).attr('href'));
-            return false;
-        });
 
-        function changeReCategory(cat) {
-            console.log(cat);
-            let catId = cat;
-
-            $.ajax({
-                url: "/re-type/list-dropdown/" + catId,
-                method: 'GET',
-                success: function (result) {
-                    console.log('success');
-                    console.log(result);
-                    let html = '';
-                    if (result) {
-                        for (let r of result) {
-                            html += '<option value="'+ r.id +'">' + r.name + '</option>';
-                        }
-                    }
-                    if (html) {
-                        $('#re-type').html(html);
-                    }
-                }
-            });
-
-            $.ajax({
-                url: '/range-price/list-dropdown/' + catId,
-                method: 'GET',
-                success: function (result) {
-                    console.log('success');
-                    console.log(result);
-                    let html = '';
-                    if (result) {
-                        for (let r of result) {
-                            html += '<option value="'+ r.id +'">' + r.name + '</option>';
-                        }
-                    }
-                    $('#range-price').html(html);
-                }
-            });
-        }
 
         $(window).on('load', function(){
             $('.flexslider').flexslider({

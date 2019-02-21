@@ -90,11 +90,14 @@ class AjaxController extends Controller
     public function ajaxProject() {
         $name   = request()->input('term');
         $province_id   = request('province_id');
+        $addnew = request('addnew', 1);
         $result =   [];
-        $result[]   =   [
-            'id'    =>  ucwords($name),
-            'name'  =>  trans('area.new_project').': '.ucwords($name)
-        ];
+        if($addnew==1){
+            $result[]   =   [
+                'id'    =>  ucwords($name),
+                'name'  =>  trans('area.new_project').': '.ucwords($name)
+            ];
+        }
         foreach(\App\Project::where('name','LIKE',"%{$name}%")->where('province_id',$province_id)->get() as $item){
             $result[]   =   [
                 'id'    =>  $item->id,
@@ -125,5 +128,9 @@ class AjaxController extends Controller
             ];
         }
         return response()->json($result);
+    }
+    public function getPostleft()
+    {
+        return post_left(auth()->user());
     }
 }

@@ -203,7 +203,7 @@
                                                                             <p class="text-red error"></p>
                                                                             <div class="row">
                                                                                 @if(auth()->check())
-                                                                                <div class="col-sm-7" style="padding-top: 4px"><strong>@if(post_left(auth()->user()) !== null) Bạn còn {{post_left(auth()->user())}} lượt tin đăng trên trang cộng đồng. @endif </strong></div>
+                                                                                    <div class="col-sm-7" style="padding-top: 4px"><strong>@if(post_left(auth()->user()) !== null) Bạn còn <span id="public_left">{{post_left(auth()->user())}}</span> lượt tin đăng trên trang cộng đồng. @endif </strong></div>
                                                                                 <div class="col-sm-5">
                                                                                     <input type="checkbox" name="public_site" value="1" @if(post_left(auth()->user())===0) disabled @endif/> Đăng lên trang cộng đồng
                                                                                 </div>
@@ -1022,6 +1022,18 @@
                         setValueForEditRe(result);
                         $('#is-edit').val('edit');
                         initMapEdit(result.re.lat, result.re.long);
+                        $.get('{{route('getPublicPostLeft')}}', {}, function(r){
+                            $('#public_left').html(r);
+                            $('#edit_public_left').html(r);
+                            if(r<=0){
+                                $('input[name=public_site]').attr('disabled', 'disabled');
+                                $('input[name=editpublic_site]').attr('disabled', 'disabled');
+                            } else {
+                                $('input[name=public_site]').removeAttr('disabled');
+                                $('input[name=editpublic_site]').removeAttr('disabled');
+                            }
+                        });
+
                         $('#modalEditRe').modal('show');
                     }
                     hideLoader();
@@ -1036,6 +1048,12 @@
             console.log('re here');
             console.log(re);
             const districtsByProvince = data.districtsByProvince;
+            console.log(re.public_site);
+            if(re.public_site != 1){
+                $('input[name=edit_public_site]').attr('checked', false);
+            }else {
+                $('input[name=edit_public_site]').attr('checked', true);
+            }
             if (districtsByProvince.length) {
                 let html = '<option value="">{{trans('real-estate.selectFirstOpt')}}</option>';
                 for (let r of districtsByProvince) {

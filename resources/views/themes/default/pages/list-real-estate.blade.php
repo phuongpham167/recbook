@@ -35,7 +35,7 @@
                     </p>
                     @if(isset($isSearch) && $isSearch)
                     <div>
-                        <p style="margin: 10px 0 20px 0; font-weight: bold;">Có <strong style="color: #e00;">80</strong> kết quả tìm kiếm cho từ khóa hoặc mã số tin: <strong style="color: #e00;">"{{\request('txtkeyword')}}"</strong></p>
+                        <p style="margin: 10px 0 20px 0; font-weight: bold;">Có <strong style="color: #e00;">{{$data->count()}}</strong> kết quả tìm kiếm phù hợp.</p>
                     </div>
                     @endif
                     <div class="row list-re-item" style="margin-left: -15px; margin-right: -15px;">
