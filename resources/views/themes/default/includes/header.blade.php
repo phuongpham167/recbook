@@ -109,7 +109,7 @@
                                     <form action="{{route('smart-search')}}" method="get">
                                         <div class=" search-wrap">
                                             <div class="search_slide">
-                                                <ul>
+                                                <ul style="padding-inline-start: 16px;">
                                                     @foreach($categories as $key => $category)
                                                         <li @if($key == 0) class="active" @endif>
                                                             <a href="{{ $category->id }}">{{$category->name}}</a><span></span>
