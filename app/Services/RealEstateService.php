@@ -369,7 +369,6 @@ class RealEstateService
                 $input['street_id'] = $street->id;
             }
         }
-
         //
         $projectId = isset($input['project_id']) ? $input['project_id'] : '';
         if ($provinceId && $projectId) {
@@ -408,7 +407,7 @@ class RealEstateService
                     $projectIdEdit = ($provinceId) ? (isset($input['project_id']) ? $input['project_id'] : null) : null;
                 }
             }
-
+            $public_input   =   !empty($input['public_site'])?$input['public_site']:0;
 
             $realEstate->title = $input['title'];
             $realEstate->slug = $slug;
@@ -441,7 +440,6 @@ class RealEstateService
             $realEstate->unit_id = isset($input['unit_id']) ? $input['unit_id'] : null;
             $realEstate->range_price_id = isset($input['range_price_id']) ? $input['range_price_id'] : null;
             $realEstate->is_deal = isset($input['is_deal']) ? ( $input['is_deal'] ? 1 : 0 ) : 0;
-            $realEstate->post_date = isset($input['post_date']) ? $input['post_date'] : null;
             $realEstate->expire_date = isset($input['expire_date']) ? $input['expire_date'] : null;
             $realEstate->images = json_encode($imagesVal);
             $realEstate->lat = $lat;
@@ -452,6 +450,7 @@ class RealEstateService
             $realEstate->web_id = $this->web_id;
             $realEstate->approved = $approve;
             $realEstate->link_video = isset($input['link_video']) ? $input['link_video'] : null;
+            $realEstate->public_site =  post_left(auth()->user())==0?0:$public_input;
 //            if (isset($input['add_draft'])) {
 //                $realEstate->approved = 0;
 //                $realEstate->draft = 1;

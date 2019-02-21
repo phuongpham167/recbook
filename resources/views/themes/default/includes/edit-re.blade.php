@@ -28,8 +28,14 @@
                                       id="detail-edit"></textarea>
                             <p class="text-red error"></p>
                         </div>
+                        <div class="row">
+                            <div class="col-sm-7" style="padding-top: 4px"><strong> Bạn còn <span id="edit_public_left">{{post_left(auth()->user())}}</span> lượt tin đăng trên trang cộng đồng.  </strong></div>
+                            <div class="col-sm-5">
+                                <input type="checkbox" name="edit_public_site" value="1"> Đăng lên trang cộng đồng
+                            </div>
+                        </div>
                     </div>
-
+                    <hr/>
                     <div class="form-group clearfix collapse" id="contactInfoEdit">
                         <div class="row form-group">
                             <div class="col-xs-12">
@@ -892,7 +898,9 @@
             formDataEdit.append('map', map);
             formDataEdit.append('is_private', isPrivate);
             formDataEdit.append('link_video', linkVideo);
-
+            if($('input[name=edit_public_site]').is(':checked')){
+                formDataEdit.append('public_site', 1);
+            }
             console.log(formDataEdit);
 
             showLoader();

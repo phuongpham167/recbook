@@ -129,4 +129,8 @@ class AjaxController extends Controller
         }
         return response()->json($result);
     }
+    public function getPostleft()
+    {
+        return post_left(auth()->user());
+    }
 }

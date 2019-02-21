@@ -139,6 +139,7 @@ Route::group(['middleware'=>'auth'], function(){
         Route::get('province', 'AjaxController@ajaxProvince')->name('ajaxProvince');
         Route::get('/get-unread-message', ['as' => 'ajax.getUnreadMessage', 'uses' => 'ConversationController@getUnreadMessage']);
         Route::post('/add-cil', ['as'=> 'ajax.addCil', 'uses' => 'RealEstateController@addCil']);
+        Route::get('post_left', ['as'=>'getPublicPostLeft', 'uses'=>'AjaxController@getPostleft']);
     });
 
     Route::post('search-area', 'AreaController@searchArea');
@@ -185,7 +186,6 @@ Route::group(['middleware'=>'auth'], function(){
             Route::post('/tao-moi', ['as'=>'scheduleCreate', 'uses'=>'ScheduleController@postCreate']);
         });
     });
-
 });
 Route::group(['prefix' => 'ajax'], function() {
     Route::get('province', 'AjaxController@ajaxProvince')->name('ajaxProvince');
