@@ -110,6 +110,12 @@
                                         <div class=" search-wrap">
                                             <div class="search_slide">
                                                 <ul style="padding-inline-start: 16px;">
+                                                    @php
+                                                        $categories =   \App\ReCategory::select('id', 'name', 'slug')
+                    ->orderBy('id', 'asc')
+        //            ->where('web_id', $web_id)
+                    ->get();
+                                                    @endphp
                                                     @foreach($categories as $key => $category)
                                                         <li @if($key == 0) class="active" @endif>
                                                             <a href="{{ $category->id }}">{{$category->name}}</a><span></span>
@@ -131,9 +137,10 @@
                                                 <div class="clearfix"></div>
                                                 <form action="{{route('smart-search')}}" method="GET">
                                                     @php
-                                                        if($categories) {
-                                                            $firstCat = $categories[0];
-                                                        }
+
+                                                            if($categories) {
+                                                                $firstCat = $categories[0];
+                                                            }
                                                     @endphp
                                                     <input name="Search[cat_id]" id="Search_kind_id" type="hidden" value="{{ $firstCat ? $firstCat->id : 1 }}">
                                                     <div class="row search-select-wrap">
