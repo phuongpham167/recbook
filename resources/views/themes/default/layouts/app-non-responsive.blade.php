@@ -15,6 +15,30 @@
 <body>
 
     @yield('content')
+    <form method="post" action="{{route('interested-provinces')}}">
+        {{csrf_field()}}
+        <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="quantamtinhthanhModal" style="margin-top: 100px; border-radius: 0 !important;">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content" style="border-radius: 0 !important;">
+                    <div class="modal-header" style="background: #0c4da2; color: white">
+                        {{--<button type="button" class="close" data-dismiss="modal" aria-label="Close">--}}
+                        {{--<span aria-hidden="true">&times;</span>--}}
+                        {{--</button>--}}
+                        <h4 class="modal-title">Bạn quan tâm đến bất động sản ở tỉnh thành nào?</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            @foreach(\App\Province::orderBy('order', 'ASC')->get() as $item)
+                                <div class="col-xs-2" style="margin-bottom: 2px">
+                                    <button type="submit" name="provinces" value="{{$item->id}}" class="btn btn-default btn-xs">{{str_replace('Tỉnh ', '', str_replace('Thành phố', '', $item->name))}}</button>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
     <div class="loading"></div>
     {{--<script src="{{ asset('js/jquery.min.js') }}"></script>--}}
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
