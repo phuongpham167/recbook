@@ -110,7 +110,7 @@
                                     <img src="{{asset($imgThumbnail)}}" alt="{{ $imgAlt }}">
                                 </a>
                                 <div class="icon_viphot">
-                                    <img src="{{ asset('images/vip1.gif') }}" alt="Bán nhà số 23/11 Hàng Kênh, Lê Chân, Hải Phòng">
+                                    <img src="{{ asset('images/vip1.gif') }}" alt="vip">
                                 </div>
 
                                 <div class="code_row">{{ $item->code }}</div>
@@ -120,9 +120,9 @@
                                 </h3>
 
                                 @php
-                                    $shortDes = substr($item->detail, 0, 150);
+                                    $shortDes = substr($item->detail, 0, 160);
                                 @endphp
-                                <div class="short-des">{{$item->short_description ? $item->short_description : ($shortDes ? $shortDes : '')}}...
+                                <div class="short-des">{!! $item->short_description ? $item->short_description : ($shortDes ? $shortDes : '') !!}
                                 </div>
                                 <div class="row area">
                                     <div class="col-xs-6 larea">DTMB: {{$item->area_of_premises ? round($item->area_of_premises) . 'm2' : '0m2'}}</div>
@@ -133,7 +133,11 @@
                                         <i class="fa fa-map-marker"></i> {{$item->district?$item->district->name:''}}
                                     </div>
                                     <div class="col-xs-12 rprice">
-                                        {{convert_number_to_words($item->price)}} {{$item->unit ? $item->unit->name : 'VND'}}
+                                        @if($item->price)
+                                            {{convert_number_to_words($item->price)}} {{$item->unit ? $item->unit->name : 'VND'}}
+                                        @else
+                                            {{'Thỏa thuận'}}
+                                        @endif
                                     </div>
                                 </div>
                             </div>
