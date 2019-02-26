@@ -1,11 +1,12 @@
 @extends(theme(TRUE).'.layouts.app')
 
 @section('meta-description')
-    <meta name="description" content="{{object_get($data->userinfo, 'full_name')}}">
+    <meta name="description" content="{{$data->userinfo->seo_description ? $data->userinfo->seo_description : $data->userinfo->full_name }}">
+    <meta name="keywords" content="{{object_get($data->userinfo, 'seo_keyword')}}">
 @endsection
 
 @section('title')
-    {{object_get($data->userinfo, 'full_name')}}
+    {{$data->userinfo->seo_title ? $data->userinfo->seo_title : $data->userinfo->full_name}}
 @endsection
 
 @push('style')

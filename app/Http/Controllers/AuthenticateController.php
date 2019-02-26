@@ -159,6 +159,9 @@ class AuthenticateController extends Controller
             $request->certificate->move(public_path('uploads/certificate/'.$userInfo->id), $request->certificate->getClientOriginalName());
             $userInfo->certificate    =   'uploads/certificate/'.$userInfo->id.'/'.$request->certificate->getClientOriginalName();
         }
+        $userInfo->seo_title = isset($request->seo_title) ? $request->seo_title : '';
+        $userInfo->seo_keyword = isset($request->seo_keyword) ? $request->seo_keyword : '';
+        $userInfo->seo_description = isset($request->seo_description) ? $request->seo_description : '';
         $userInfo->save();
         $user   =   auth()->user();
         $user->phone    =   $request->phone;

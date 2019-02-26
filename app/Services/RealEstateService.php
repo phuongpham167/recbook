@@ -240,24 +240,38 @@ class RealEstateService
             if (!$realEstate->code) {
                 $realEstate->code = config('real-estate.codePrefix') . '-' . $realEstate->id;
             }
+
+            // handle project id
+            $reTypeIdEdit = null;
+            $projectIdEdit = null;
+            if (isset($input['loai_bds'])) {
+                if ($input['loai_bds'] == 1) {
+                    $reTypeIdEdit = isset($input['re_type_id']) ? $input['re_type_id'] : null;
+                }
+                if ($input['loai_bds'] == 2) {
+                    $projectIdEdit = ($provinceId) ? (isset($input['project_id']) ? $input['project_id'] : null) : null;
+                }
+            }
+
             $realEstate->title = $input['title'];
             $realEstate->slug = $slug;
-            $realEstate->short_description = $input['short_description'];
+            $realEstate->short_description = isset($input['short_description']) ? $input['short_description'] : null;
             $realEstate->contact_person = $input['contact_person'];
             $realEstate->contact_phone_number = $input['contact_phone_number'];
             $realEstate->contact_address = $input['contact_address'];
-            $realEstate->re_category_id = $input['re_category_id'];
-            $realEstate->re_type_id = $input['re_type_id'];
-            $realEstate->province_id = $input['province_id'];
-            $realEstate->district_id = $input['district_id'];
-            $realEstate->ward_id = $input['ward_id'];
-            $realEstate->address = $input['address'];
+            $realEstate->re_category_id = isset($input['re_category_id']) ? $input['re_category_id'] : null;
+            $realEstate->loai_bds = isset($input['loai_bds']) ? $input['loai_bds'] : null;
+            $realEstate->re_type_id = $reTypeIdEdit;
+            $realEstate->province_id = isset($input['province_id']) ? $input['province_id'] : null;
+            $realEstate->district_id = isset($input['district_id']) ? $input['district_id'] : null;
+            $realEstate->ward_id = isset($input['ward_id']) ? $input['ward_id'] : null;
+            $realEstate->address = isset($input['address']) ? $input['address'] : null;
             $realEstate->position = isset($input['position']) ? $input['position'] : '';
-            $realEstate->street_id = $input['street_id'];
-            $realEstate->direction_id = $input['direction_id'];
-            $realEstate->exhibit_id = $input['exhibit_id'];
-            $realEstate->project_id = $input['project_id'];
-            $realEstate->block_id = $input['block_id'];
+            $realEstate->street_id = isset($input['street_id']) ? $input['street_id'] : null;
+            $realEstate->direction_id = isset($input['direction_id']) ? $input['direction_id'] : null;
+            $realEstate->exhibit_id = isset($input['exhibit_id']) ? $input['exhibit_id'] : null;
+            $realEstate->project_id = $projectIdEdit;
+            $realEstate->block_id = isset($input['block_id']) ? $input['block_id'] : null;
             $realEstate->construction_type_id = $input['construction_type_id'];
             $realEstate->width = $input['width'];
             $realEstate->length = $input['length'];
