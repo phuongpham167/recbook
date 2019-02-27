@@ -419,6 +419,8 @@
                                                                     <p class="price">
                                                                         @if($re->price)
                                                                             <b class="text-red"><span class="text-upper" style="font-size: 12px;">Giá:</span> <span class="price-val">{{ convert_number_to_words($re->price) }}</span> <span style="font-size: 12px;">{{$re->unit ? $re->unit->name : 'VND'}}</span></b>
+                                                                        @else
+                                                                            <b class="text-red"><span class="text-upper" style="font-size: 12px;">Giá:</span> <span class="price-val">Thỏa thuận</span></b>
                                                                         @endif
                                                                     </p>
                                                                 </div>

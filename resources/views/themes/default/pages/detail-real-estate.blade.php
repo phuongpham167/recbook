@@ -233,20 +233,28 @@
                                         <p><strong>- Ngày hết hạn:</strong> {{ $data->expire_date ? \Carbon\Carbon::parse($data->expire_date)->format('d/m/Y') : ''}}</p>
                                     </div>
                                     <div class="col-xs-12 col-sm-6">
-                                        <p><strong>- DTMB:</strong> {{ $data->area_of_premises ? $data->area_of_premises . 'm2' : '0m2' }}</p>
+                                        <p><strong>- DTMB:</strong> {{ $data->area_of_premises ? ( (ceil($data->area_of_premises) - $data->area_of_premises) != 0 ? $data->area_of_premises : ceil($data->area_of_premises)) . 'm2' : '0m2' }}</p>
                                     </div>
                                     <div class="col-xs-12 col-sm-6">
-                                        <p><strong>- DTSD:</strong> {{ $data->area_of_use ? $data->area_of_use . 'm2' : '0m2' }}</p>
+                                        <p><strong>- DTSD:</strong> {{ $data->area_of_use ? ( (ceil($data->area_of_use) - $data->area_of_use) != 0 ? $data->area_of_use : ceil($data->area_of_use)) . 'm2' : '0m2' }}</p>
                                     </div>
                                     <div class="col-xs-12 col-sm-6">
                                         <p><strong>- Danh mục:</strong> {{ $data->reCategory ? $data->reCategory->name : '' }}</p>
                                     </div>
                                     <div class="col-xs-12 col-sm-6">
-                                        <p><strong>- Loại BĐS:</strong> {{ $data->reType ? $data->reType->name : '' }}</p>
-                                    </div>
-                                    <div class="col-xs-12">
-                                        <p><strong>- Địa chỉ:</strong> {{ $data->address }}
-                                        </p>
+                                        @php
+                                            $txtLoaiBDS = '';
+                                            if ($data->loai_bds) {
+                                                if ($data->loai_bds == 1) {
+                                                    $txtLoaiBDS = $data->reType ? $data->reType->name : '';
+                                                }
+                                                if ($data->loai_bds == 2) {
+                                                    $txtLoaiBDS = $data->project ? $data->project->name : '';
+                                                }
+                                            }
+
+                                        @endphp
+                                        <p><strong>- Loại BĐS:</strong> {{ $txtLoaiBDS }}</p>
                                     </div>
                                     <div class="col-xs-12">
                                         <p>{!! $seeMore !!}</p>
@@ -266,23 +274,18 @@
                         <div class="title-short-section">Mô tả chi tiết:</div>
                         <div class="description short-section">
                             <div class="row margin-0">
-                                <div class="col-xs-12 col-sm-4 description__item"><strong>Chiều rộng:</strong> {{ $data->width ? $data->width : '0m' }}</div>
-                                <div class="col-xs-12 col-sm-4 description__item"><strong>Chiều dài:</strong> {{ $data->length ? $data->length : '0m' }}</div>
+                                <div class="col-xs-12 col-sm-4 description__item"><strong>Chiều rộng:</strong> {{ $data->width ? $data->width . 'm' : '0m' }}</div>
+                                <div class="col-xs-12 col-sm-4 description__item"><strong>Chiều dài:</strong> {{ $data->length ? $data->length . 'm' : '0m' }}</div>
                                 <div class="col-xs-12 col-sm-4 description__item"><strong>Giấy tờ:</strong> Sổ đỏ Chính
                                     Chủ
                                 </div>
                             </div>
                             <div class="row margin-0">
-                                <div class="col-xs-12 col-sm-4 description__item"><strong>Diện tích MB:</strong> {{ $data->area_of_premises ? $data->area_of_premises . 'm2' : '0m2' }}
+                                <div class="col-xs-12 col-sm-4 description__item"><strong>Diện tích MB:</strong> {{ $data->area_of_premises ? ( (ceil($data->area_of_premises) - $data->area_of_premises) != 0 ? $data->area_of_premises : ceil($data->area_of_premises)) . 'm2' : '0m2' }}
                                 </div>
-                                <div class="col-xs-12 col-sm-4 description__item"><strong>Diện tích SD:</strong> {{ $data->area_of_use ? $data->area_of_use . 'm2' : '0m2' }}
+                                <div class="col-xs-12 col-sm-4 description__item"><strong>Diện tích SD:</strong> {{ $data->area_of_use ? ( (ceil($data->area_of_use) - $data->area_of_use) != 0 ? $data->area_of_use : ceil($data->area_of_use)) . 'm2' : '0m2' }}
                                 </div>
                                 <div class="col-xs-12 col-sm-4 description__item"><strong>Hướng:</strong> {{ $data->direction ? $data->direction->name : '' }}</div>
-                            </div>
-                            <div class="row margin-0">
-                                <div class="col-xs-12 description__item">
-                                    <strong>Tên dự án:</strong> {{ $data->project ? $data->project->name : '' }}
-                                </div>
                             </div>
                             <div class="row margin-0">
                                 <div class="col-xs-12 description__item">

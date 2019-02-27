@@ -110,7 +110,7 @@
                                     <img src="{{asset($imgThumbnail)}}" alt="{{ $imgAlt }}">
                                 </a>
                                 <div class="icon_viphot">
-                                    <img src="{{ asset('images/vip1.gif') }}" alt="Bán nhà số 23/11 Hàng Kênh, Lê Chân, Hải Phòng">
+                                    <img src="{{ asset('images/vip1.gif') }}" alt="vip">
                                 </div>
 
                                 <div class="code_row">{{ $item->code }}</div>
@@ -123,6 +123,7 @@
                                     $shortDes = trim_text($item->detail, 130);
                                 @endphp
                                 <div class="short-des">{{$item->short_description ? $item->short_description : ($shortDes ? $shortDes : '')}}
+
                                 </div>
                                 <div class="row area">
                                     <div class="col-xs-6 larea">DTMB: {{$item->area_of_premises ? round($item->area_of_premises) . 'm2' : '0m2'}}</div>
@@ -133,7 +134,11 @@
                                         <i class="fa fa-map-marker"></i> {{$item->district?$item->district->name:''}}
                                     </div>
                                     <div class="col-xs-12 rprice">
-                                        {{convert_number_to_words($item->price)}} {{$item->unit ? $item->unit->name : 'VND'}}
+                                        @if($item->price)
+                                            {{convert_number_to_words($item->price)}} {{$item->unit ? $item->unit->name : 'VND'}}
+                                        @else
+                                            {{'Thỏa thuận'}}
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -247,7 +252,11 @@
                                                         <p>
                                                             <strong>DTMB:</strong> {{$item->area_of_premises ? $item->area_of_premises . 'm2' : '0m2'}} </p><p><strong>Giá:</strong>
                                                             <span>
+                                                                @if ($item->price)
                                                                 {{convert_number_to_words($item->price)}} {{$item->unit ? $item->unit->name : 'VND'}}
+                                                                @else
+                                                                    {{'Thỏa thuận'}}
+                                                                @endif
                                                             </span>
                                                         </p>
                                                     </div>
@@ -299,8 +308,12 @@
                                                         <p>
                                                             <strong>DTMB:</strong> {{$item->area_of_premises ? $item->area_of_premises . 'm2' : '0m2'}}</p><p> <strong>Giá:</strong>
                                                             <span>
-                                                            {{convert_number_to_words($item->price)}} {{$item->unit ? $item->unit->name : 'VND'}}
-                                                        </span>
+                                                                @if ($item->price)
+                                                                {{convert_number_to_words($item->price)}} {{$item->unit ? $item->unit->name : 'VND'}}
+                                                                @else
+                                                                    {{'Thỏa thuận'}}
+                                                                @endif
+                                                            </span>
                                                         </p>
                                                     </div>
                                                 </div>
@@ -351,8 +364,12 @@
                                                         <p>
                                                             <strong>DTMB:</strong> {{$item->area_of_premises ? $item->area_of_premises . 'm2' : '0m2'}} </p><p><strong>Giá:</strong>
                                                             <span>
-                                                            {{convert_number_to_words($item->price)}} {{$item->unit ? $item->unit->name : 'VND'}}
-                                                        </span>
+                                                                @if ($item->price)
+                                                                {{convert_number_to_words($item->price)}} {{$item->unit ? $item->unit->name : 'VND'}}
+                                                                @else
+                                                                    {{'Thỏa thuận'}}
+                                                                @endif
+                                                            </span>
                                                         </p>
                                                     </div>
                                                 </div>
@@ -459,8 +476,12 @@
                                                         <p>
                                                             <strong>DTMB:</strong> {{$item->area_of_premises ? $item->area_of_premises . 'm2' : '0m2'}} </p><p> <strong>Giá:</strong>
                                                             <span>
-                                                            {{convert_number_to_words($item->price)}} {{$item->unit ? $item->unit->name : 'VND'}}
-                                                        </span>
+                                                                @if ($item->price)
+                                                                {{convert_number_to_words($item->price)}} {{$item->unit ? $item->unit->name : 'VND'}}
+                                                                @else
+                                                                    {{'Thỏa thuận'}}
+                                                                @endif
+                                                            </span>
                                                         </p>
                                                     </div>
                                                 </div>
@@ -498,6 +519,7 @@
                         <div class="col-xs-8">
                             <p class="title_box">
                                 <strong>YÊU CẦU</strong>
+                            </p>
                             <div>
 
                                 <!-- Nav tabs -->
@@ -604,7 +626,6 @@
                                 </div>
 
                             </div>
-                            </p>
                         </div>
 
                     </div>
