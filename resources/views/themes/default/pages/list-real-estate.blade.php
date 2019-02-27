@@ -72,9 +72,9 @@
                                     </h3>
 
                                     @php
-                                        $shortDes = substr($item->detail, 0, 150);
+                                        $shortDes = trim_text($item->detail, 130);
                                     @endphp
-                                    <div class="short-des">{{$item->short_description ? $item->short_description : ($shortDes ? $shortDes : '')}}...
+                                    <div class="short-des">{{$item->short_description ? $item->short_description : ($shortDes ? $shortDes : '')}}
                                     </div>
                                     <div class="row area">
                                         <div class="col-xs-6 larea">DTMB: {{$item->area_of_premises ? $item->area_of_premises . 'm2' : '0m2'}}</div>
