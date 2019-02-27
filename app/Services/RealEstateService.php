@@ -154,8 +154,8 @@ class RealEstateService
             'post_date' => $post_date,
             'expire_date' => Carbon::parse($post_date)->addDays(get_config('expireRealEstate', 30)),
             'images' => json_encode($imagesVal),
-            'lat' => $lat,
-            'long' => $long,
+            'lat' => trim($lat),
+            'long' => trim($long),
             'detail' => isset($input['detail']) ? $input['detail'] : null,
             'is_private' => $input['is_private'],
             'customer_id' => $customer ? $customer->id : null,
@@ -288,8 +288,8 @@ class RealEstateService
 //            $realEstate->post_date = $input['post_date'];
 //            $realEstate->expire_date = $input['expire_date'];
             $realEstate->images = json_encode($imagesVal);
-            $realEstate->lat = $lat;
-            $realEstate->long = $long;
+            $realEstate->lat = trim($lat);
+            $realEstate->long = trim($long);
             $realEstate->detail = $input['detail'];
             $realEstate->customer_id = $customer ? $customer->id : null;
             $realEstate->is_private = $input['is_private'];
@@ -456,8 +456,8 @@ class RealEstateService
             $realEstate->is_deal = isset($input['is_deal']) ? ( $input['is_deal'] ? 1 : 0 ) : 0;
             $realEstate->expire_date = isset($input['expire_date']) ? $input['expire_date'] : null;
             $realEstate->images = json_encode($imagesVal);
-            $realEstate->lat = $lat;
-            $realEstate->long = $long;
+            $realEstate->lat = trim($lat);
+            $realEstate->long = trim($long);
             $realEstate->detail = isset($input['detail']) ? $input['detail'] : null;
             $realEstate->customer_id = $customer ? $customer->id : null;
             $realEstate->updated_by = \Auth::user()->id;
