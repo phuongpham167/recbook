@@ -120,9 +120,9 @@
                                 </h3>
 
                                 @php
-                                    $shortDes = substr($item->detail, 0, 150);
+                                    $shortDes = trim_text($item->detail, 130);
                                 @endphp
-                                <div class="short-des">{{$item->short_description ? $item->short_description : ($shortDes ? $shortDes : '')}}...
+                                <div class="short-des">{{$item->short_description ? $item->short_description : ($shortDes ? $shortDes : '')}}
                                 </div>
                                 <div class="row area">
                                     <div class="col-xs-6 larea">DTMB: {{$item->area_of_premises ? round($item->area_of_premises) . 'm2' : '0m2'}}</div>
@@ -170,7 +170,7 @@
                                             </h3>
 
                                             @php
-                                                $shortDes = substr($item->detail, 0, 150);
+                                                $shortDes = trim_text($item->detail, 130);
                                             @endphp
 
                                         </div>
@@ -240,9 +240,9 @@
                                                             <span></span>
                                                         </h3>
                                                         @php
-                                                            $shortDes = substr($item->detail, 0, 150);
+                                                            $shortDes = trim_text($item->detail, 130);
                                                         @endphp
-                                                        <div class="short-des">{{$item->short_description ? $item->short_description : ($shortDes ? $shortDes : '')}}...
+                                                        <div class="short-des">{{$item->short_description ? $item->short_description : ($shortDes ? $shortDes : '')}}
                                                         </div>
                                                         <p>
                                                             <strong>DTMB:</strong> {{$item->area_of_premises ? $item->area_of_premises . 'm2' : '0m2'}} </p><p><strong>Giá:</strong>
@@ -292,9 +292,9 @@
                                                             <span></span>
                                                         </h3>
                                                         @php
-                                                            $shortDes = substr($item->detail, 0, 150);
+                                                            $shortDes = trim_text($item->detail, 130);
                                                         @endphp
-                                                        <div class="short-des">{{$item->short_description ? $item->short_description : ($shortDes ? $shortDes : '')}}...
+                                                        <div class="short-des">{{$item->short_description ? $item->short_description : ($shortDes ? $shortDes : '')}}
                                                         </div>
                                                         <p>
                                                             <strong>DTMB:</strong> {{$item->area_of_premises ? $item->area_of_premises . 'm2' : '0m2'}}</p><p> <strong>Giá:</strong>
@@ -344,9 +344,9 @@
                                                             <span></span>
                                                         </h3>
                                                         @php
-                                                            $shortDes = substr($item->detail, 0, 150);
+                                                            $shortDes = trim_text($item->detail, 130);
                                                         @endphp
-                                                        <div class="short-des">{{$item->short_description ? $item->short_description : ($shortDes ? $shortDes : '')}}...
+                                                        <div class="short-des">{{$item->short_description ? $item->short_description : ($shortDes ? $shortDes : '')}}
                                                         </div>
                                                         <p>
                                                             <strong>DTMB:</strong> {{$item->area_of_premises ? $item->area_of_premises . 'm2' : '0m2'}} </p><p><strong>Giá:</strong>
@@ -395,7 +395,7 @@
                                         </h3>
 
                                         @php
-                                            $shortDes = substr($item->detail, 0, 150);
+                                            $shortDes = trim_text($item->detail, 130);
                                         @endphp
                                     </div>
                                 </div>
@@ -452,9 +452,9 @@
                                                             <span></span>
                                                         </h3>
                                                         @php
-                                                            $shortDes = substr($item->detail, 0, 150);
+                                                            $shortDes = trim_text($item->detail, 130);
                                                         @endphp
-                                                        <div class="short-des">{{$item->short_description ? $item->short_description : ($shortDes ? $shortDes : '')}}...
+                                                        <div class="short-des">{{$item->short_description ? $item->short_description : ($shortDes ? $shortDes : '')}}
                                                         </div>
                                                         <p>
                                                             <strong>DTMB:</strong> {{$item->area_of_premises ? $item->area_of_premises . 'm2' : '0m2'}} </p><p> <strong>Giá:</strong>
@@ -489,7 +489,7 @@
                                             <dd class="col-xs-8">
                                                 <a style="color: #0c4da2; font-size: 14px; font-weight: bold; text-transform: uppercase" href="{{ route('postdetail', ['slugchitiet' => $item->slugchitiet]) }}">{{$item->title}}</a>
                                                 <p style="color: grey"><em>{{\Carbon\Carbon::parse($item->created_at)->format('d/m/Y')}}</em></p>
-                                                <div>{!! trim_text($item->content,100) !!}</div>
+                                                <div>{!! trim_text($item->content,130) !!}</div>
                                             </dd>
                                         </div>
                                     </dl>
