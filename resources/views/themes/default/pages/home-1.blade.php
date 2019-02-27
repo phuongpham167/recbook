@@ -865,7 +865,7 @@
                 minSlides: 1,
                 maxSlides: 5,
                 moveSlides: 5,
-                slideWidth: 250,
+                slideWidth: 225,
                 pager: false
             });
         });
