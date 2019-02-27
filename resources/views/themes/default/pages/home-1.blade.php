@@ -110,7 +110,7 @@
                                     <img src="{{asset($imgThumbnail)}}" alt="{{ $imgAlt }}">
                                 </a>
                                 <div class="icon_viphot">
-                                    <img src="{{ asset('images/vip1.gif') }}" alt="Bán nhà số 23/11 Hàng Kênh, Lê Chân, Hải Phòng">
+                                    <img src="{{ asset('images/vip1.gif') }}" alt="vip">
                                 </div>
 
                                 <div class="code_row">{{ $item->code }}</div>
@@ -120,9 +120,10 @@
                                 </h3>
 
                                 @php
-                                    $shortDes = substr($item->detail, 0, 150);
+                                    $shortDes = trim_text($item->detail, 130);
                                 @endphp
-                                <div class="short-des">{{$item->short_description ? $item->short_description : ($shortDes ? $shortDes : '')}}...
+                                <div class="short-des">{{$item->short_description ? $item->short_description : ($shortDes ? $shortDes : '')}}
+
                                 </div>
                                 <div class="row area">
                                     <div class="col-xs-6 larea">DTMB: {{$item->area_of_premises ? round($item->area_of_premises) . 'm2' : '0m2'}}</div>
@@ -133,7 +134,11 @@
                                         <i class="fa fa-map-marker"></i> {{$item->district?$item->district->name:''}}
                                     </div>
                                     <div class="col-xs-12 rprice">
-                                        {{convert_number_to_words($item->price)}} {{$item->unit ? $item->unit->name : 'VND'}}
+                                        @if($item->price)
+                                            {{convert_number_to_words($item->price)}} {{$item->unit ? $item->unit->name : 'VND'}}
+                                        @else
+                                            {{'Thỏa thuận'}}
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -170,7 +175,7 @@
                                             </h3>
 
                                             @php
-                                                $shortDes = substr($item->detail, 0, 150);
+                                                $shortDes = trim_text($item->detail, 130);
                                             @endphp
 
                                         </div>
@@ -240,14 +245,18 @@
                                                             <span></span>
                                                         </h3>
                                                         @php
-                                                            $shortDes = substr($item->detail, 0, 150);
+                                                            $shortDes = trim_text($item->detail, 130);
                                                         @endphp
-                                                        <div class="short-des">{{$item->short_description ? $item->short_description : ($shortDes ? $shortDes : '')}}...
+                                                        <div class="short-des">{{$item->short_description ? $item->short_description : ($shortDes ? $shortDes : '')}}
                                                         </div>
                                                         <p>
                                                             <strong>DTMB:</strong> {{$item->area_of_premises ? $item->area_of_premises . 'm2' : '0m2'}} </p><p><strong>Giá:</strong>
                                                             <span>
+                                                                @if ($item->price)
                                                                 {{convert_number_to_words($item->price)}} {{$item->unit ? $item->unit->name : 'VND'}}
+                                                                @else
+                                                                    {{'Thỏa thuận'}}
+                                                                @endif
                                                             </span>
                                                         </p>
                                                     </div>
@@ -292,15 +301,19 @@
                                                             <span></span>
                                                         </h3>
                                                         @php
-                                                            $shortDes = substr($item->detail, 0, 150);
+                                                            $shortDes = trim_text($item->detail, 130);
                                                         @endphp
-                                                        <div class="short-des">{{$item->short_description ? $item->short_description : ($shortDes ? $shortDes : '')}}...
+                                                        <div class="short-des">{{$item->short_description ? $item->short_description : ($shortDes ? $shortDes : '')}}
                                                         </div>
                                                         <p>
                                                             <strong>DTMB:</strong> {{$item->area_of_premises ? $item->area_of_premises . 'm2' : '0m2'}}</p><p> <strong>Giá:</strong>
                                                             <span>
-                                                            {{convert_number_to_words($item->price)}} {{$item->unit ? $item->unit->name : 'VND'}}
-                                                        </span>
+                                                                @if ($item->price)
+                                                                {{convert_number_to_words($item->price)}} {{$item->unit ? $item->unit->name : 'VND'}}
+                                                                @else
+                                                                    {{'Thỏa thuận'}}
+                                                                @endif
+                                                            </span>
                                                         </p>
                                                     </div>
                                                 </div>
@@ -344,15 +357,19 @@
                                                             <span></span>
                                                         </h3>
                                                         @php
-                                                            $shortDes = substr($item->detail, 0, 150);
+                                                            $shortDes = trim_text($item->detail, 130);
                                                         @endphp
-                                                        <div class="short-des">{{$item->short_description ? $item->short_description : ($shortDes ? $shortDes : '')}}...
+                                                        <div class="short-des">{{$item->short_description ? $item->short_description : ($shortDes ? $shortDes : '')}}
                                                         </div>
                                                         <p>
                                                             <strong>DTMB:</strong> {{$item->area_of_premises ? $item->area_of_premises . 'm2' : '0m2'}} </p><p><strong>Giá:</strong>
                                                             <span>
-                                                            {{convert_number_to_words($item->price)}} {{$item->unit ? $item->unit->name : 'VND'}}
-                                                        </span>
+                                                                @if ($item->price)
+                                                                {{convert_number_to_words($item->price)}} {{$item->unit ? $item->unit->name : 'VND'}}
+                                                                @else
+                                                                    {{'Thỏa thuận'}}
+                                                                @endif
+                                                            </span>
                                                         </p>
                                                     </div>
                                                 </div>
@@ -395,7 +412,7 @@
                                         </h3>
 
                                         @php
-                                            $shortDes = substr($item->detail, 0, 150);
+                                            $shortDes = trim_text($item->detail, 130);
                                         @endphp
                                     </div>
                                 </div>
@@ -452,15 +469,19 @@
                                                             <span></span>
                                                         </h3>
                                                         @php
-                                                            $shortDes = substr($item->detail, 0, 150);
+                                                            $shortDes = trim_text($item->detail, 130);
                                                         @endphp
-                                                        <div class="short-des">{{$item->short_description ? $item->short_description : ($shortDes ? $shortDes : '')}}...
+                                                        <div class="short-des">{{$item->short_description ? $item->short_description : ($shortDes ? $shortDes : '')}}
                                                         </div>
                                                         <p>
                                                             <strong>DTMB:</strong> {{$item->area_of_premises ? $item->area_of_premises . 'm2' : '0m2'}} </p><p> <strong>Giá:</strong>
                                                             <span>
-                                                            {{convert_number_to_words($item->price)}} {{$item->unit ? $item->unit->name : 'VND'}}
-                                                        </span>
+                                                                @if ($item->price)
+                                                                {{convert_number_to_words($item->price)}} {{$item->unit ? $item->unit->name : 'VND'}}
+                                                                @else
+                                                                    {{'Thỏa thuận'}}
+                                                                @endif
+                                                            </span>
                                                         </p>
                                                     </div>
                                                 </div>
@@ -489,7 +510,7 @@
                                             <dd class="col-xs-8">
                                                 <a style="color: #0c4da2; font-size: 14px; font-weight: bold; text-transform: uppercase" href="{{ route('postdetail', ['slugchitiet' => $item->slugchitiet]) }}">{{$item->title}}</a>
                                                 <p style="color: grey"><em>{{\Carbon\Carbon::parse($item->created_at)->format('d/m/Y')}}</em></p>
-                                                <div>{!! trim_text($item->content,100) !!}</div>
+                                                <div>{!! trim_text($item->content,130) !!}</div>
                                             </dd>
                                         </div>
                                     </dl>
@@ -498,6 +519,7 @@
                         <div class="col-xs-8">
                             <p class="title_box">
                                 <strong>YÊU CẦU</strong>
+                            </p>
                             <div>
 
                                 <!-- Nav tabs -->
@@ -604,7 +626,6 @@
                                 </div>
 
                             </div>
-                            </p>
                         </div>
 
                     </div>
