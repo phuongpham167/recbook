@@ -85,7 +85,11 @@
                                             <i class="fa fa-map-marker"></i> {{$item->district?$item->district->name:''}}
                                         </div>
                                         <div class="col-xs-12 rprice">
-                                            {{convert_number_to_words($item->price)}} {{$item->unit ? $item->unit->name : 'VND'}}
+                                            @if ($item->price)
+                                                {{convert_number_to_words($item->price)}} {{$item->unit ? $item->unit->name : 'VND'}}
+                                            @else
+                                                {{'Thỏa thuận'}}
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
