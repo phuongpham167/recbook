@@ -377,7 +377,7 @@ if ($user->group_id != $adminGroup) {
                     <div class="form-group">
                         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.detail')}} <span class="text-red">*</span> </label>
                         <div class="col-sm-10">
-                            <textarea name="detail" class="form-control" id="editor">{{ strip_tags($realEstate->detail) }}
+                            <textarea name="detail" class="form-control autoExpand" id="editor">{!! strip_tags($realEstate->detail) !!}
                             </textarea>
                         </div>
                     </div>
@@ -426,6 +426,50 @@ if ($user->group_id != $adminGroup) {
     <script src="{{asset('plugins/bootstrap-datetimepicker-master/build/js/bootstrap-datetimepicker.min.js')}}"></script>
     <script src="{{asset('plugins/ckeditor-4/ckeditor.js')}}"></script>
     <script>
+        function initMap() {
+            let uLat = '{{auth()->user()->userinfo->province->lat}}';
+            let uLong = '{{auth()->user()->userinfo->province->long}}';
+            var myLatLng = {lat: parseFloat(uLat), lng: parseFloat(uLong)};
+            let rLat = '{{$realEstate->lat}}';
+            let rLong = '{{$realEstate->long}}';
+            if (rLat && rLong) {
+                myLatLng = {lat: parseFloat(rLat), lng: parseFloat(rLong)};
+            }
+
+            var map = new google.maps.Map(document.getElementById('map-view'), {
+                zoom: 11,
+                center: myLatLng
+            });
+
+            var marker = new google.maps.Marker({
+                position: myLatLng,
+                map: map,
+                draggable:true,
+                title: 'Hello World!'
+            });
+            // marker.addListener('drag', handleEvent);
+            marker.addListener('dragend', handleEvent);
+        }
+        function handleEvent(event) {
+            // console.log(event.latLng.lat());
+            // console.log(event.latLng.lng());
+            $('#map').val(event.latLng.lat() + ',' + event.latLng.lng());
+        }
+
+        $(document)
+            .one('focus.autoExpand', 'textarea.autoExpand', function () {
+                var savedValue = this.value;
+                this.value = '';
+                this.baseScrollHeight = this.scrollHeight;
+                this.value = savedValue;
+            })
+            .on('input.autoExpand', 'textarea.autoExpand', function () {
+                var minRows = this.getAttribute('data-min-rows') | 0, rows;
+                this.rows = minRows;
+                rows = Math.ceil((this.scrollHeight - this.baseScrollHeight) / 16);
+                this.rows = minRows + rows;
+            });
+
         $(function() {
             $('#contact_phone_number').keyup(function() {
                 emptyContactInfo();
@@ -464,24 +508,12 @@ if ($user->group_id != $adminGroup) {
                 $('#post-date').data("DateTimePicker").maxDate(e.date);
             });
 
-            $('#map-view').locationpicker({
-                location: {
-                    latitude: 10.774839,
-                    longitude: 106.700766
-                },
-                radius: 0,
-                onchanged: function (currentLocation, radius, isMarkerDropped) {
-                    console.log("Location changed. New location (" + currentLocation.latitude + ", " + currentLocation.longitude + ")");
-                    $('#map').val(currentLocation.latitude + ", " + currentLocation.longitude);
-                }
-            });
-
-            var options = {
-                filebrowserBrowseUrl : '/plugins/filemanager/dialog.php?type=2&editor=ckeditor&fldr=',
-                filebrowserUploadUrl : '/plugins/filemanager/dialog.php?type=2&editor=ckeditor&fldr=',
-                filebrowserImageBrowseUrl : '/plugins/filemanager/dialog.php?type=1&editor=ckeditor&fldr='
-            };
-            CKEDITOR.replace('editor', options);
+            // var options = {
+            //     filebrowserBrowseUrl : '/plugins/filemanager/dialog.php?type=2&editor=ckeditor&fldr=',
+            //     filebrowserUploadUrl : '/plugins/filemanager/dialog.php?type=2&editor=ckeditor&fldr=',
+            //     filebrowserImageBrowseUrl : '/plugins/filemanager/dialog.php?type=1&editor=ckeditor&fldr='
+            // };
+            // CKEDITOR.replace('editor', options);
 
             let totalShortDesLetter = 150;
             $('#short-description').keyup(function() {
@@ -775,4 +807,5 @@ if ($user->group_id != $adminGroup) {
             @endif
         });
     </script>
+    <script type="text/javascript" src='https://maps.googleapis.com/maps/api/js?sensor=false&key=AIzaSyAxgnRkMsWPSqlxOz_kLga0hJ4eG2l0Vmo&callback=initMap'></script>
 @endpush
