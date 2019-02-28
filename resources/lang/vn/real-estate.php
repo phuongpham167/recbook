@@ -88,6 +88,7 @@ return [
         'tableTitle' => 'Danh sách tin BĐS',
         'column' => [
             'id' => 'Id',
+            'code' => 'Mã tin',
             'title' => 'Tiêu đề tin',
             'short_description' => 'Mô tả ngắn',
             'post_date' => 'Ngày đăng',
