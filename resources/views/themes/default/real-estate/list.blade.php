@@ -156,6 +156,7 @@
                             <table class="table table-bordered" id="datatable">
                                 <thead>
                                     <tr>
+                                        <th>{{trans('real-estate.list.column.code')}}</th>
                                         <th>{{trans('real-estate.list.column.title')}}</th>
                                         <th>{{trans('real-estate.list.column.category')}}</th>
                                         <th>{{trans('real-estate.list.column.type')}}</th>
@@ -301,6 +302,7 @@
                     }
                 },
                 columns: [
+                    { data: 'code', name: 'code' },
                     { data: 'title', name: 'title' },
                     { data: 're_category_id', name: 're_category_id' },
                     { data: 're_type_id', name: 're_type_id' },

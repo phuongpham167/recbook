@@ -649,12 +649,7 @@ class PageController extends Controller
             $realEstate = RealEstate::withoutGlobalScope(PrivateScope::class)->where('id', $id);
 //        $realEstate = $this->checkRegisterDate($realEstate);
             $realEstate = $realEstate->first();
-
-            /*
-             * TODO: -get list same search option
-             * TODO: - get list related real estate
-             * */
-
+            
             /*
              * get list same search option
              * */
@@ -667,8 +662,8 @@ class PageController extends Controller
 
             $this->vipRealEstates = $this->getVipRealEstates();
 
-            session(['comment.id' => $realEstate->id, 'comment.type' => 'realestate']);
-
+            session(['comment.id'=>$realEstate->id, 'comment.type'=>'realestate']);
+            activity('RealEstate','view', $id);
             return v('pages.detail-real-estate', [
                 'data' => $realEstate,
                 'sameSearchOptions' => $sameSearchOptions,
