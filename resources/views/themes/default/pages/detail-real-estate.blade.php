@@ -337,9 +337,9 @@
                             <div class="row margin-0">
                                 <div class="col-xs-12 padding-0">
                                     <div class="col-xs-12 col-sm-3 no-padding-left post-by-info__left">
-                                        <a  href="{{ route('user.info', [$data->user->id])}}">
+                                        <a href="{{ route('user.info', [$data->user->id])}} ">
                                             <img src="{{$data->user->avatar()}}"
-                                                 class="img-responsive post-by-info__avatar"/>
+                                             class="img-responsive post-by-info__avatar"/>
                                         </a>
                                     </div>
                                     <div class="col-xs-12 col-sm-9 post-by-info__right">
