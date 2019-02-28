@@ -305,9 +305,9 @@ class AuthenticateController extends Controller
         $result = Datatables::of($data)
             ->addColumn('type', function($transaction) {
                 if($transaction->type==0)
-                    return '-';
-                if($transaction->type==1)
                     return '+';
+                if($transaction->type==1)
+                    return '-';
                 return '';
             })
             ->addColumn('user_id', function($transaction) {

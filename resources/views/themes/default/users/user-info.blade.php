@@ -608,7 +608,7 @@
     @endif
 
     {{-- Include footer --}}
-    @include(theme(TRUE).'.includes.user-info-footer')
+    @include(theme(TRUE).'.includes.footer')
 @endsection
 
 @push('js')
