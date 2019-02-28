@@ -170,7 +170,11 @@
                 '                                </a>\n' +
                 '\n' +
                 '                            </li>');
-            $('#unread_label').html(parseInt($('#unread_label').html())+1);
+            var current_unread  =   $('#unread_label').html();
+            if(current_unread!='undefined')
+                $('#unread_label').html(parseInt($('#unread_label').html())+1);
+            else
+                $('#unread_label').html('1');
         }
 
         // Enable pusher logging - don't include this in production
