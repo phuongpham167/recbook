@@ -103,7 +103,7 @@ class PageController extends Controller
         $this->projects = $this->projectService->getListDropDown();
         $this->agencies =   User::whereHas('group', function($q){
             $q->where('is_agency', 1);
-        })->inRandomOrder()->take(get_config('homeAgency', 8))->get();
+        })->whereIn('province_id', explode(",",session('tinhthanhquantam')))->inRandomOrder()->take(get_config('homeAgency', 8))->get();
     }
 
     public function index1()
@@ -850,7 +850,7 @@ class PageController extends Controller
                 $reCategories = $this->reCategoryService->getListDropDown();
 
                 $provinces = $this->provinceService->getListOrderByWishList();
-                
+
                 $streets = $this->streetService->getListDropDown();
                 $directions = $this->directionService->getListDropDown();
                 $exhibits = $this->exhibitService->getListDropDown();
