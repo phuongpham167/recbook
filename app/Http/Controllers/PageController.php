@@ -643,45 +643,50 @@ class PageController extends Controller
 
     public function detailRealEstate($slug)
     {
-        $explodeSlug = explode('-', $slug);
-        $id = $explodeSlug[count($explodeSlug)-1];
-        $realEstate = RealEstate::withoutGlobalScope(PrivateScope::class)->where('id', $id);
+        try {
+            $explodeSlug = explode('-', $slug);
+            $id = $explodeSlug[count($explodeSlug) - 1];
+            $realEstate = RealEstate::withoutGlobalScope(PrivateScope::class)->where('id', $id);
 //        $realEstate = $this->checkRegisterDate($realEstate);
-        $realEstate = $realEstate->first();
+            $realEstate = $realEstate->first();
 
-        /*
-         * TODO: -get list same search option
-         * TODO: - get list related real estate
-         * */
+            /*
+             * TODO: -get list same search option
+             * TODO: - get list related real estate
+             * */
 
-        /*
-         * get list same search option
-         * */
-        $sameSearchOptions = $this->service->getListBelowDetailPage(RealEstate::same_search, [], $realEstate);
+            /*
+             * get list same search option
+             * */
+            $sameSearchOptions = $this->service->getListBelowDetailPage(RealEstate::same_search, [], $realEstate);
 
-        $relatedItems = $this->service->getListBelowDetailPage(RealEstate::related_item, [], $realEstate);
+            $relatedItems = $this->service->getListBelowDetailPage(RealEstate::related_item, [], $realEstate);
 
-        $realEstate->views += 1;
-        $realEstate->save();
+            $realEstate->views += 1;
+            $realEstate->save();
 
-        $this->vipRealEstates = $this->getVipRealEstates();
+            $this->vipRealEstates = $this->getVipRealEstates();
 
-        session(['comment.id'=>$realEstate->id, 'comment.type'=>'realestate']);
+            session(['comment.id' => $realEstate->id, 'comment.type' => 'realestate']);
 
-        return v('pages.detail-real-estate', [
-            'data' => $realEstate,
-            'sameSearchOptions' => $sameSearchOptions,
-            'relatedItems' => $relatedItems,
-            'vipRealEstates' => $this->vipRealEstates,
-            'categories' => $this->categories,
-            'provinces' => $this->provinces,
-            'districts' => $this->districts,
-            'wards' => $this->wards,
-            'streets' => $this->streets,
-            'directions' => $this->directions,
-            'projects' => $this->projects,
-            'menuData' => $this->menuFE
-        ]);
+            return v('pages.detail-real-estate', [
+                'data' => $realEstate,
+                'sameSearchOptions' => $sameSearchOptions,
+                'relatedItems' => $relatedItems,
+                'vipRealEstates' => $this->vipRealEstates,
+                'categories' => $this->categories,
+                'provinces' => $this->provinces,
+                'districts' => $this->districts,
+                'wards' => $this->wards,
+                'streets' => $this->streets,
+                'directions' => $this->directions,
+                'projects' => $this->projects,
+                'menuData' => $this->menuFE
+            ]);
+        } catch (\Exception $exception) {
+            \Log::info($exception->getMessage());
+            return redirect(route('404', [], 404));
+        }
     }
 
     public function search()
