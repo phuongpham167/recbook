@@ -175,7 +175,7 @@
             if(current_unread!='undefined')
                 $('#unread_label').html(parseInt($('#unread_label').html())+1);
             else
-                $('#unread_label').html('1');
+                $('.fa.fa-bell').parent().append('<span class="label label-success" id="unread_label">1</span>');
         }
 
         // Enable pusher logging - don't include this in production
