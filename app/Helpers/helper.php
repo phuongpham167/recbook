@@ -5513,3 +5513,20 @@ function build_url($type, $id){
             break;
     }
 }
+function sendToPusher($channel, $data){
+    $pusher = new Pusher\Pusher( env('PUSHER_APP_KEY'), env('PUSHER_APP_SECRET'), env('PUSHER_APP_ID'), array('cluster' => env('PUSHER_APP_CLUSTER')) );
+    $pusher->trigger( $channel, 'new_notification', $data);
+}
+function notify($user, $title, $content, $url){
+    foreach($user as $u){
+        $notify =   new \App\Notification();
+        $notify->user_id    =   $u;
+        $notify->title  =   $title;
+        $notify->content    =   $content;
+        $notify->url    =   $url;
+        $notify->is_read    =   0;
+        $notify->save();
+        $channels =   'user-channel-'.$u;
+        sendToPusher($channels, $notify->toArray());
+    }
+}

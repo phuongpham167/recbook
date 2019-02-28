@@ -74,8 +74,36 @@
                         {{--</ul>--}}
                     </li>
                     <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" title="Thông báo"><i class="fa fa-bell" aria-hidden="true"></i></a>
+                        @php
+                            $unread_notify  =   \App\Notification::where('user_id', auth()->user()->id)->where('is_read', 0)->orderBy('id', 'DESC')->get();
+                        @endphp
+                        <a class="dropdown-toggle" id="notify-bell" data-toggle="dropdown" href="#" title="Thông báo">
+                            <i class="fa fa-bell" aria-hidden="true"></i>
+                            @if($unread_notify->count() > 0)<span class="label label-success" id="unread_label">{{$unread_notify->count()}}</span> @endif
+                        </a>
+                        <ul class="dropdown-menu notify_dropdown">
 
+                            @if($unread_notify->count() >0)
+                            @foreach($unread_notify as $noti)
+                            <li class="notification" style="color: #fff; border-bottom: 1px dotted; padding: 0">
+                                <a href="{{route('readNotification', ['id'=>$noti->id])}}">
+                                    <div class="media" style="line-height: 26px">
+                                        <div class="media-body">
+                                            <strong class="notification-title">{{$noti->title}}</strong>
+                                            <p class="notification-desc">{{text_limit($noti->content, 12)}}</p>
+                                            <div class="notification-meta">
+                                                <small class="timestamp">{{\Carbon\Carbon::parse($noti->created_at)->diffForHumans(\Carbon\Carbon::now())}}</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+
+                            </li>
+                                @endforeach
+                            @else
+                                <li class="footer"><a style="color: white" href="#">Không có thông báo nào chưa đọc</a></li>
+                            @endif
+                        </ul>
                     </li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#" title="Thêm"><span class="caret"></span></a>
@@ -107,9 +135,65 @@
         padding: 2px 3px;
         line-height: .9;
    }
+    .notification-desc {
+        margin-bottom: 0;
+        line-height: 12px;
+    }
+    .notification a {
+        background: none;
+        padding: none;
+    }
+    .notification a:hover{
+        background-color: #0856ac !important;
+    }
 </style>
 
 @push('js')
+    @if(auth()->check())
+    <script src="https://js.pusher.com/4.4/pusher.min.js"></script>
+    <script>
+        function showNotification(data){
+            id  =   data.id;
+            title   =   data.title;
+            content     =   data.content;
+            $('.notify_dropdown').prepend('<li class="notification" style="color: #fff; border-bottom: 1px dotted; padding: 0">\n' +
+                '                                <a href="{{route('readNotification')}}/'+id+'">\n' +
+                '                                    <div class="media" style="line-height: 26px">\n' +
+                '                                        <div class="media-body">\n' +
+                '                                            <strong class="notification-title">'+title+'</strong>\n' +
+                '                                            <p class="notification-desc">'+content+'</p>\n' +
+                '                                            <div class="notification-meta">\n' +
+                '                                                <small class="timestamp">Vừa xong</small>\n' +
+                '                                            </div>\n' +
+                '                                        </div>\n' +
+                '                                    </div>\n' +
+                '                                </a>\n' +
+                '\n' +
+                '                            </li>');
+            var current_unread  =   $('#unread_label').html();
+            console.log(current_unread);
+            if(current_unread!='undefined' && current_unread!=undefined){
+                console.log('dmm');
+                $('#unread_label').html(parseInt($('#unread_label').html())+1);
+            }
+            else
+                $('#notify-bell').append('<span class="label label-success" id="unread_label">1</span>');
+        }
+
+        // Enable pusher logging - don't include this in production
+        Pusher.logToConsole = true;
+
+        var pusher = new Pusher('04784854461e84909088', {
+            cluster: 'ap1',
+            forceTLS: true
+        });
+
+        var channel = pusher.subscribe('user-channel-{{auth()->user()->id}}');
+        channel.bind('new_notification', function(data) {
+            showNotification(data);
+        });
+    </script>
+    @endif
     <script>
         $('#drop-message').on('click', function (e) {
             $('.spin-message').removeClass('hidden');
@@ -160,5 +244,6 @@
                 }
             });
         });
+
     </script>
 @endpush
