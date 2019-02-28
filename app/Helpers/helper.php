@@ -5225,7 +5225,6 @@ function activity($type, $action, $object_id){
     else{
         $data   =   new \App\Activity();
         $data->type     =   $type;
-        $data->action   =   $action;
         $data->user_id  =   $user_id;
         $data->object_id    =   $object_id;
         $data->created_at   =   Carbon\Carbon::now();
