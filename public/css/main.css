@@ -185,8 +185,8 @@ button {
   text-transform: capitalize;
 }
 
-.main-menu .main-menu-list ul li.active a,
-.main-menu .main-menu-list ul li.open a {
+.main-menu .search_slide li.active a,
+.main-menu .search_slide li.open a {
   background: #038fe3 !important;
 }
 
