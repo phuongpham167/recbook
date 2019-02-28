@@ -171,6 +171,7 @@
                 '\n' +
                 '                            </li>');
             var current_unread  =   $('#unread_label').html();
+            console.log(current_unread);
             if(current_unread!='undefined')
                 $('#unread_label').html(parseInt($('#unread_label').html())+1);
             else
