@@ -241,10 +241,10 @@
                         <table class="table table-bordered" id="datatable-price">
                             <thead>
                             <tr>
-                                <th>Giá tin hot</th>
-                                <th>Giá tin hot nổi bật</th>
                                 <th>Giá tin vip</th>
                                 <th>Giá tin vip nổi bật</th>
+                                <th>Giá tin hot</th>
+                                <th>Giá tin hot nổi bật</th>
                                 <th>Giá tin hấp dẫn</th>
                                 <th>Giá tin vip bên phải</th>
                             </tr>
