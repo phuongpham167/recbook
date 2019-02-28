@@ -172,8 +172,9 @@
                 '                            </li>');
             var current_unread  =   $('#unread_label').html();
             console.log(current_unread);
-            if(current_unread!='undefined')
+            if(current_unread!='undefined' || current_unread!=undefined){
                 $('#unread_label').html(parseInt($('#unread_label').html())+1);
+            }
             else
                 $('.fa.fa-bell').parent().append('<span class="label label-success" id="unread_label">1</span>');
         }
