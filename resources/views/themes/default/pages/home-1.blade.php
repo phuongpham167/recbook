@@ -153,7 +153,7 @@
                     <div class="col-xs-12 col-sm-12 three_i brokers">
 
                         <p class="title_col">
-                            <a href="#"><i class="fa fa-users"></i> BẤT ĐỘNG SẢN VIP NỔI BẬT</a>
+                            <a href="#"><i class="fa fa-users"></i> BẤT ĐỘNG SẢN NỔI BẬT</a>
                         </p>
                         <div class="" style="margin-top: 10px">
                             <div class="vip3 list-re-item list-hot">
