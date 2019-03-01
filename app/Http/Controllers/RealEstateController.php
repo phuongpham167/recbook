@@ -143,6 +143,9 @@ class RealEstateController extends Controller
             ->addColumn('re_category_id', function($dt) {
                 return $dt->reCategory ? $dt->reCategory->name : '';
             })
+            ->addColumn('code', function($dt) {
+                return $dt->code ? $dt->code : '';
+            })
             ->addColumn('title', function($dt) {
                 $title = null;
                 if($dt->vip_expire_at >= Carbon::now()){

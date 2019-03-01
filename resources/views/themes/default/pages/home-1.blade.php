@@ -153,7 +153,7 @@
                     <div class="col-xs-12 col-sm-12 three_i brokers">
 
                         <p class="title_col">
-                            <a href="#"><i class="fa fa-users"></i> BẤT ĐỘNG SẢN VIP NỔI BẬT</a>
+                            <a href="#"><i class="fa fa-users"></i> BẤT ĐỘNG SẢN NỔI BẬT</a>
                         </p>
                         <div class="" style="margin-top: 10px">
                             <div class="vip3 list-re-item list-hot">
@@ -404,8 +404,8 @@
                                 <div class="col-xs-6 no-padding-left no-padding-right">
                                     <div class="col-xs-12 re-item hot" style="border: 1px solid #eee;
     background: #fffce6;">
-                                        <a href="{{asset('user/'.$agency->id)}}" style="height: 100px">
-                                            <img src="{{$agency->avatar()}}" alt="">
+                                        <a href="{{asset('user/'.$agency->id)}}" style="height: 100px" class="text-center">
+                                            <img src="{{$agency->avatar()}}" alt="" style="height: 100% !important; width: auto !important;">
                                         </a>
                                         <h3>
                                             <a style="font-size: 12px" href="{{asset('user/'.$agency->id)}}">{{$agency->userinfo?$agency->userinfo->full_name:$agency->name}}</a>

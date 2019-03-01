@@ -279,7 +279,9 @@
                 <div class="ribbon ribbon-top-left"><span>Được chọn</span></div>
             @endif
             <div class="col-md-2">
-                <img src="{{$item->dealer()->first()?$item->dealer()->first()->avatar():''}}" class="img-responsive"/>
+                <a href="{{asset('user/'.$item->user_id)}}" title="">
+                    <img src="{{$item->dealer()->first()?$item->dealer()->first()->avatar():''}}" class="img-responsive"/>
+                </a>
                 <p class="rateStar" style="text-align: center">
                     @for($i=1;$i<6;$i++)
                         @if($item->dealer()->first()->dealer_rate()>=$i)

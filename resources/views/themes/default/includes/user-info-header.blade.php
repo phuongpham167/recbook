@@ -77,7 +77,7 @@
                         @php
                             $unread_notify  =   \App\Notification::where('user_id', auth()->user()->id)->where('is_read', 0)->orderBy('id', 'DESC')->get();
                         @endphp
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" title="Thông báo">
+                        <a class="dropdown-toggle" id="notify-bell" data-toggle="dropdown" href="#" title="Thông báo">
                             <i class="fa fa-bell" aria-hidden="true"></i>
                             @if($unread_notify->count() > 0)<span class="label label-success" id="unread_label">{{$unread_notify->count()}}</span> @endif
                         </a>
@@ -170,7 +170,14 @@
                 '                                </a>\n' +
                 '\n' +
                 '                            </li>');
-            $('#unread_label').html(parseInt($('#unread_label').html())+1);
+            var current_unread  =   $('#unread_label').html();
+            console.log(current_unread);
+            if(current_unread!='undefined' && current_unread!=undefined){
+                console.log('dmm');
+                $('#unread_label').html(parseInt($('#unread_label').html())+1);
+            }
+            else
+                $('#notify-bell').append('<span class="label label-success" id="unread_label">1</span>');
         }
 
         // Enable pusher logging - don't include this in production
