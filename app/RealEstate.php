@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Scopes\OrderByDateDescScope;
 use App\Scopes\PrivateScope;
 use App\Scopes\ProvinceScope;
 use App\Scopes\PublicScope;
@@ -139,5 +140,6 @@ class RealEstate extends Model
         parent::boot();
 
         static::addGlobalScope(new PrivateScope());
+        static::addGlobalScope(new OrderByDateDescScope());
     }
 }
