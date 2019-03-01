@@ -240,7 +240,7 @@ Route::group(['prefix'=>'ajax'], function(){
 Route::get('/t', function (){
 //    var_dump(session('tinhthanhquantam'));
     print_r( 'session: '.session('tinhthanhquantam'));
-    print_r(auth()->user()->subcribes()->pluck('province_subcribes.province_id')->toArray());
+//    print_r(auth()->user()->subcribes()->pluck('province_subcribes.province_id')->toArray());
 });
 
 Route::group(['prefix'=>'notify'], function(){
