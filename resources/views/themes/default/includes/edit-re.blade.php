@@ -224,14 +224,17 @@
                             <div class="col-xs-12">
                                 <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.block')}}</label>
                                 <div class="col-sm-4">
-                                    <select class="form-control" id="block-edit" name="block_id_edit">
-                                        <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
-                                        @foreach($blocks as $block)
-                                            <option value="{{$block->id}}">{{$block->name}}</option>
-                                        @endforeach
-                                    </select>
+                                    <input type="text" class="form-control" id="block-edit" name="block_id" autocomplete="off">
+                                    {{--<select class="form-control" id="block-edit" name="block_id_edit">--}}
+                                        {{--<option value="">{{trans('real-estate.selectFirstOpt')}}</option>--}}
+                                        {{--@foreach($blocks as $block)--}}
+                                            {{--<option value="{{$block->id}}">{{$block->name}}</option>--}}
+                                        {{--@endforeach--}}
+                                    {{--</select>--}}
                                     <p class="text-red error"></p>
                                 </div>
+                                <input type="text" class="hidden" id="block-id-hidden" value=""/>
+                                <input type="text" class="hidden" id="block-name-hidden" value=""/>
 
                                 <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.constructionType')}}</label>
                                 <div class="col-sm-4">

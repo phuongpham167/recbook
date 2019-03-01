@@ -694,6 +694,29 @@
             }
         });
 
+        $('#block').tokenInput(function(){
+            return "{{asset('/ajax/block')}}";
+        }, {
+            theme: "bootstrap",
+            queryParam: "term",
+            zindex  :   1005,
+            tokenLimit  :   1,
+            onAdd   :   function(r){
+                $('#method').val(r.method);
+            }
+        });
+        $('#block-edit').tokenInput(function(){
+            return "{{asset('/ajax/block')}}";
+        }, {
+            theme: "bootstrap",
+            queryParam: "term",
+            zindex  :   1005,
+            tokenLimit  :   1,
+            onAdd   :   function(r){
+                $('#method').val(r.method);
+            }
+        });
+
         $(document).on('click', '.panel-heading span.clickable', function (e) {
             var $this = $(this);
             if (!$this.hasClass('panel-collapsed')) {
@@ -1205,6 +1228,13 @@
             }
             if (re.block_id) {
                 $('#block-edit').val(re.block_id);
+                $('#block-id-hidden').val(re.block_id);
+            }
+            if (re.block) {
+                $('#block-name-hidden').val(re.block.name);
+            }
+            if ($('#block-id-hidden').val() && $('#block-name-hidden').val()) {
+                $('#block-edit').tokenInput('add', {id: $('#block-id-hidden').val(), name: $('#block-name-hidden').val()});
             }
             if (re.construction_type_id) {
                 $('#construction-type-edit').val(re.construction_type_id);
@@ -1302,6 +1332,7 @@
             $('#wc-edit').val('');
 
             $('#block-edit').val('');
+            $('#block-edit').tokenInput("clear");
 
             $('#construction-type-edit').val('');
 
