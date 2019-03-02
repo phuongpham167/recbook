@@ -9,6 +9,7 @@ use App\HotVip;
 use App\Http\Requests\HotVipRequest;
 use App\Http\Requests\RealEstateRequest;
 use App\Menu;
+use App\ReCategory;
 use App\Province;
 use App\RealEstate;
 use App\Receipt;
@@ -57,6 +58,8 @@ class RealEstateController extends Controller
     protected $reSourceService;
     protected $menuFE;
 
+    protected $categories, $provinces, $districts, $wards, $streets, $directions, $projects, $reTypes, $rangePrices;
+
     public function __construct(
         RealEstateService $realEstateService,
         ReCategoryService $reCategoryService,
@@ -100,11 +103,36 @@ class RealEstateController extends Controller
             ->where('is_vip',  1)
             ->where('vip_expire_at',  '<=', Carbon::now())
             ->get();
+
+        $this->categories = ReCategory::select('id', 'name', 'slug')
+            ->orderBy('id', 'asc')
+            ->get();
+
+        $this->provinces = $this->provinceService->getListDropDown();
+        $this->districts = $this->districtService->getListDropDown();
+        $this->wards = $this->wardService->getListDropDown();
+        $this->streets = $this->streetService->getListDropDown();
+        $this->directions = $this->directionService->getListDropDown();
+        $this->projects = $this->projectService->getListDropDown();
+
+        $firstCat = $this->categories->first();
+        $this->reTypes = $this->reTypeService->getReTypeByCat($firstCat->id);
+
+        $this->rangePrices = $this->rangePriceService->getListDropDown();
     }
 
     public function list($filter = null)
     {
-        return v('real-estate.list',['menuData' => $this->menuFE], compact('filter'));
+        return v('real-estate.list',
+            [
+                'menuData' => $this->menuFE,
+                'categories' => $this->categories,
+                'reTypes' => $this->reTypes,
+                'streets' => $this->streets,
+                'directions' => $this->directions,
+                'rangePrices' => $this->rangePrices
+            ],
+            compact('filter'));
     }
 
     public function data()
