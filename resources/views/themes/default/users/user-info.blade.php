@@ -1267,6 +1267,12 @@
             if (re.floor) {
                 $('#floor-edit').val(re.floor);
             }
+            if(re.width_lane) {
+                $('#width-lane-edit').val(re.width_lane);
+            }
+            if (re.gara) {
+                $('#gara-edit').prop('checked', true);
+            }
             if (re.price) {
                 $('#price-edit').val(re.price);
             }
@@ -1360,6 +1366,10 @@
             $('#length-edit').val('');
 
             $('#floor-edit').val('');
+
+            $('#width-lane-edit').val('');
+
+            $('#gara-edit').prop('checked', false);
 
             $('#price-edit').val('');
 

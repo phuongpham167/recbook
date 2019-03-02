@@ -249,23 +249,25 @@
                                 </div>
                             </div>
                         </div>
-
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.lane_width')}}</label>
+                                <div class="col-sm-4">
+                                    <input type="number" id="width-lane-edit" class="form-control" name="width_lane" />
+                                    <p class="text-red error"></p>
+                                </div>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="col-sm-4 col-sm-offset-2">
                                     <div class="checkbox">
                                         <label>
-                                            <input type="checkbox" id="is-deal-edit"
-                                                   name="gara_edit" {{ old('gara') == 'on' ? 'checked' : '' }}>
+                                            <input type="checkbox" id="gara-edit"
+                                                   name="gara" {{ old('gara') == 'on' ? 'checked' : '' }}>
                                             {{trans('real-estate.formCreateLabel.gara')}}
                                         </label>
                                     </div>
-                                </div>
-
-                                <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.lane_width')}}</label>
-                                <div class="col-sm-4">
-                                    <input type="number" class="form-control" name="width_lane_edit" id="width-lane-edit"/>
-                                    <p class="text-red error"></p>
                                 </div>
                             </div>
                         </div>
