@@ -133,4 +133,21 @@ class AjaxController extends Controller
     {
         return post_left(auth()->user());
     }
+
+    public function ajaxBlock()
+    {
+        $name   = request()->input('term');
+        $result =   [];
+        $result[]   =   [
+            'id'    =>  ucwords($name),
+            'name'  =>  trans('area.new_block').': '.ucwords($name)
+        ];
+        foreach(\App\Block::where('name','LIKE',"%{$name}%")->get() as $item){
+            $result[]   =   [
+                'id'    =>  $item->id,
+                'name'  =>  $item->name
+            ];
+        }
+        return response()->json($result);
+    }
 }
