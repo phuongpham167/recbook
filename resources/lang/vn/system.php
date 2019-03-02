@@ -84,6 +84,7 @@ return [
     'set_hot_success'   =>  'Đăng ký tin hot ',
     'not_enough_info'   =>  'Bạn chưa điền đầy đủ thông tin!',
     'up_post_success'   =>  'Up tin thành công!',
+    'up_post_fail'   =>  'Đã hết số lượt up tin cho phép, hãy nâng cấp nhóm thành viên để up nhiều tin hơn!',
     'expired'   =>  'Đã hết hạn!',
     'sold_confirm'   =>  'Xác nhận đã bán?',
     'close_confirm'   =>  'Xác nhận đóng dự án?',

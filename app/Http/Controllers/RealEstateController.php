@@ -443,10 +443,15 @@ class RealEstateController extends Controller
         $data   =   RealEstate::find($request->id);
         if(!empty($data)){
             $user = User::find($data->posted_by);
-            $user->up_limit++;
-            $data->updated_at = Carbon::now();
-            $data->save();
-            set_notice(trans('system.up_post_success'), 'success');
+            if($user->up_limit < $user->group->up_limit){
+                $user->up_limit++;
+                $user->save();
+                $data->updated_at = Carbon::now();
+                $data->save();
+                set_notice(trans('system.up_post_success'), 'success');
+            }
+            else
+                set_notice(trans('system.up_post_fail'), 'warning');
         }else
             set_notice(trans('system.not_exist'), 'warning');
         return redirect()->back();
