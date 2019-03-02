@@ -33,7 +33,7 @@
 
 @section('content')
     {{-- Include Header --}}
-    @include(theme(TRUE).'.includes.user-info-header')
+    @include(theme(TRUE).'.includes.user-info-header-1')
     <div class="content-body">
         <div class="container padding-bottom-30">
             <div class="row">
