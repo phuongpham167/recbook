@@ -102,13 +102,16 @@ class RealEstateService
             }
         }
 
-        if(empty(Block::find($input['block_id'])))
-        {
-            $block = new Block();
+        $blockId = isset($input['block_id']) ? $input['block_id'] : '';
+        if ($blockId) {
+            if(empty(Block::find($input['block_id'])))
+            {
+                $block = new Block();
 
-            $block->name = $input['block_id'];
-            $block->save();
-            $input['block_id'] = $block->id;
+                $block->name = $input['block_id'];
+                $block->save();
+                $input['block_id'] = $block->id;
+            }
         }
 
         //
@@ -407,13 +410,15 @@ class RealEstateService
             }
         }
 
-        if(empty(Block::find($input['block_id'])))
-        {
-            $block = new Block();
+        $blockId = isset($input['block_id']) ? $input['block_id'] : '';
+        if ($blockId) {
+            if (empty(Block::find($input['block_id']))) {
+                $block = new Block();
 
-            $block->name = $input['block_id'];
-            $block->save();
-            $input['block_id'] = $block->id;
+                $block->name = $input['block_id'];
+                $block->save();
+                $input['block_id'] = $block->id;
+            }
         }
 
         $realEstate = RealEstate::withoutGlobalScope(PrivateScope::class)->find($input['id']);

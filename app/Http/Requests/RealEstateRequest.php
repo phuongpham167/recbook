@@ -24,7 +24,7 @@ class RealEstateRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required',
+            'title' => 'required|max:191',
 //            're_category_id' => 'required',
 //            're_type_id' => 'required',
 //            'district_id' => 'required',
@@ -58,6 +58,7 @@ class RealEstateRequest extends FormRequest
     {
         return [
             'title.required' => 'Nhập tiêu đề tin',
+            'title.max' => 'Tiêu đề tối đa 191 ký tự',
             'short_description.required' => 'Nhập mô tả ngắn',
             'short_description.max' => 'Mô tả ngắn không nhiều hơn 150 ký tự',
             'contact_person.required' => 'Nhập người liên hệ',

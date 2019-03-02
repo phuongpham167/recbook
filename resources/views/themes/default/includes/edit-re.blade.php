@@ -15,7 +15,7 @@
                         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.title')}} <span
                                 class="text-red">*</span></label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="title-edit" id="title-edit"/>
+                            <input type="text" class="form-control" name="title-edit" id="title-edit" maxlength="191"/>
                             <p class="text-red error"></p>
                         </div>
                     </div>
@@ -784,6 +784,13 @@
                 }
 
                 return;
+            }
+
+            if (title.length > 191) {
+                $('#title-edit').parent().find('.error').html('Tiêu đề tối đa 191 ký tự');
+                return;
+            } else {
+                $('#title-edit').parent().find('.error').html('');
             }
 
             let reCatId = $('#re-category-edit').val();

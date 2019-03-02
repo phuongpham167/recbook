@@ -189,7 +189,7 @@
                                                                             <input type="text" class="form-control"
                                                                                    name="title" id="title"
                                                                                    value="{{ old('title') }}"
-                                                                                   placeholder="Tiêu đề *"/>
+                                                                                   placeholder="Tiêu đề *" maxlength="191"/>
                                                                             <p class="text-red error"></p>
                                                                         </div>
                                                                     </div>
@@ -825,6 +825,12 @@
                 }
 
                 return;
+            }
+            if (title.length > 191) {
+                $('#title').parent().find('.error').html('Tiêu đề tối đa 191 ký tự');
+                return;
+            } else {
+                $('#title').parent().find('.error').html('');
             }
             $(this).closest('form').submit();
         });
