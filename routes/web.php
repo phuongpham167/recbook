@@ -140,6 +140,7 @@ Route::group(['middleware'=>'auth'], function(){
         Route::get('/get-unread-message', ['as' => 'ajax.getUnreadMessage', 'uses' => 'ConversationController@getUnreadMessage']);
         Route::post('/add-cil', ['as'=> 'ajax.addCil', 'uses' => 'RealEstateController@addCil']);
         Route::get('post_left', ['as'=>'getPublicPostLeft', 'uses'=>'AjaxController@getPostleft']);
+        Route::get('block', 'AjaxController@ajaxBlock');
     });
 
     Route::post('search-area', 'AreaController@searchArea');
@@ -240,7 +241,7 @@ Route::group(['prefix'=>'ajax'], function(){
 Route::get('/t', function (){
 //    var_dump(session('tinhthanhquantam'));
     print_r( 'session: '.session('tinhthanhquantam'));
-    print_r(auth()->user()->subcribes()->pluck('province_subcribes.province_id')->toArray());
+//    print_r(auth()->user()->subcribes()->pluck('province_subcribes.province_id')->toArray());
 });
 
 Route::group(['prefix'=>'notify'], function(){

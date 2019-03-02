@@ -101,13 +101,12 @@ class PageController extends Controller
         $this->streets = $this->streetService->getListDropDown();
         $this->directions = $this->directionService->getListDropDown();
         $this->projects = $this->projectService->getListDropDown();
-        $this->agencies =   User::whereHas('group', function($q){
-            $q->where('is_agency', 1);
-        })->whereIn('province_id', explode(",",session('tinhthanhquantam')))->inRandomOrder()->take(get_config('homeAgency', 8))->get();
     }
 
     public function index1()
     {
+//        var_dump(session('tinhthanhquantam'));
+//        exit();
         $vip    =   [];
         for($i=1; $i<7; $i++){
             $query    = RealEstate::filterprovince()->where('public_site', 1)->select('id', 'title', 'slug', 'short_description', 'detail', 'code', 'don_vi',
@@ -234,6 +233,12 @@ class PageController extends Controller
         $freelancer_phongthuy    =   Freelancer::where('status', 'open')->where('category_id', 4)->take(9)->get();
         $province_list = Province::whereNotNull('id')->orderBy('order','asc')->get();
         Carbon::setLocale('vi');
+
+        $this->agencies =   User::whereHas('group', function($q){
+                $q->where('is_agency', 1);
+            })->whereHas('userinfo', function ($q) {
+                $q->where('province_id', session('tinhthanhquantam'));
+            })->inRandomOrder()->take(get_config('homeAgency', 8))->get();
         return v('pages.home-1', [
             'vip'   =>  $vip,
             'hotHLRealEstates' => $hotHLRealEstates,
@@ -649,7 +654,7 @@ class PageController extends Controller
             $realEstate = RealEstate::withoutGlobalScope(PrivateScope::class)->where('id', $id);
 //        $realEstate = $this->checkRegisterDate($realEstate);
             $realEstate = $realEstate->first();
-            
+
             /*
              * get list same search option
              * */

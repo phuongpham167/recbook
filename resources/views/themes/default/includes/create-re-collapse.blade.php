@@ -159,12 +159,13 @@
         <div class="col-xs-12">
             <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.block')}}</label>
             <div class="col-sm-4">
-                <select class="form-control" id="block" name="block_id" value="{{ old('block_id') }}">
-                    <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
-                    @foreach($blocks as $block)
-                        <option value="{{$block->id}}">{{$block->name}}</option>
-                    @endforeach
-                </select>
+                <input type="text" class="form-control" id="block" name="block_id" autocomplete="off">
+                {{--<select class="form-control" id="block" name="block_id" value="{{ old('block_id') }}">--}}
+                    {{--<option value="">{{trans('real-estate.selectFirstOpt')}}</option>--}}
+                    {{--@foreach($blocks as $block)--}}
+                        {{--<option value="{{$block->id}}">{{$block->name}}</option>--}}
+                    {{--@endforeach--}}
+                {{--</select>--}}
             </div>
 
             <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.constructionType')}}</label>
@@ -177,6 +178,20 @@
                     @endforeach
                 </select>
             </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="col-sm-4 col-sm-offset-2">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="gara" {{ old('gara') == 'on' ? 'checked' : '' }}>
+                        {{trans('real-estate.formCreateLabel.gara')}}
+                    </label>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>

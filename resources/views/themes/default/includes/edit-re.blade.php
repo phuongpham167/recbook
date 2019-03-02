@@ -224,14 +224,17 @@
                             <div class="col-xs-12">
                                 <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.block')}}</label>
                                 <div class="col-sm-4">
-                                    <select class="form-control" id="block-edit" name="block_id_edit">
-                                        <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
-                                        @foreach($blocks as $block)
-                                            <option value="{{$block->id}}">{{$block->name}}</option>
-                                        @endforeach
-                                    </select>
+                                    <input type="text" class="form-control" id="block-edit" name="block_id" autocomplete="off">
+                                    {{--<select class="form-control" id="block-edit" name="block_id_edit">--}}
+                                        {{--<option value="">{{trans('real-estate.selectFirstOpt')}}</option>--}}
+                                        {{--@foreach($blocks as $block)--}}
+                                            {{--<option value="{{$block->id}}">{{$block->name}}</option>--}}
+                                        {{--@endforeach--}}
+                                    {{--</select>--}}
                                     <p class="text-red error"></p>
                                 </div>
+                                <input type="text" class="hidden" id="block-id-hidden" value=""/>
+                                <input type="text" class="hidden" id="block-name-hidden" value=""/>
 
                                 <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.constructionType')}}</label>
                                 <div class="col-sm-4">
@@ -242,6 +245,26 @@
                                             <option value="{{$constructionType->id}}">{{$constructionType->name}}</option>
                                         @endforeach
                                     </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" id="is-deal-edit"
+                                                   name="gara_edit" {{ old('gara') == 'on' ? 'checked' : '' }}>
+                                            {{trans('real-estate.formCreateLabel.gara')}}
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.lane_width')}}</label>
+                                <div class="col-sm-4">
+                                    <input type="number" class="form-control" name="width_lane_edit" id="width-lane-edit"/>
+                                    <p class="text-red error"></p>
                                 </div>
                             </div>
                         </div>
@@ -829,6 +852,8 @@
 
             let length = $('#length-edit').val();
 
+            let width_lane = $('#width-lane-edit').val();
+
             let floor = $('#floor-edit').val();
 
             let price = $('#price-edit').val();
@@ -836,6 +861,8 @@
             let donvi = $('#don-vi-edit').val();
 
             let isDeal = $('#is-deal-edit').is(":checked") ? 1 : 0;
+
+            let gara = $('#gara-edit').is(":checked") ? 1 : 0;
 
             let rangePrice = $('#range-price-edit').val();
 
@@ -890,10 +917,12 @@
             formDataEdit.append('area_of_use', aou);
             formDataEdit.append('width', width);
             formDataEdit.append('length', length);
+            formDataEdit.append('width_lane', width_lane);
             formDataEdit.append('floor', floor);
             formDataEdit.append('price', price);
             formDataEdit.append('don_vi', donvi);
             formDataEdit.append('is_deal', isDeal);
+            formDataEdit.append('gara', gara);
             formDataEdit.append('range_price_id', rangePrice);
             formDataEdit.append('map', map);
             formDataEdit.append('is_private', isPrivate);

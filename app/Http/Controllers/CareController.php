@@ -6,6 +6,7 @@ use App\Care;
 use App\Customer;
 use App\Http\Requests\CreateCareRequest;
 use App\RealEstate;
+use App\Scopes\PrivateScope;
 use App\Services\BlockService;
 use App\Services\DirectionService;
 use App\Services\DistrictService;
@@ -53,11 +54,16 @@ class CareController extends Controller
         $this->blockService = $blockService;
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index(){
         $id =   \request('id');
-        if(!empty($customer = Customer::find($id))){
+        if(!empty($customer = Customer::find($id)) && $customer->user_id == auth()->user()->id){
             $data   =   new RealEstate();
-            $data   =   $data->where('customer_id', $id);
+            $data   =   $data->where('customer_id', $id)->withoutGlobalScope(PrivateScope::class)->where(function ($q){
+                $q->where('posted_by', auth()->user()->id)->orWhere('is_private',0);
+            });
             if(!empty(request('re_id'))){
                 $data   =   $data->where('id', request('re_id'));
             }
