@@ -1331,6 +1331,8 @@
 
             $('#wc-edit').val('');
 
+            $('#block-id-hidden').val('');
+            $('#block-name-hidden').val('');
             $('#block-edit').val('');
             $('#block-edit').tokenInput("clear");
 
