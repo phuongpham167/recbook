@@ -7,6 +7,7 @@
  */
 
 namespace App\Services;
+use App\Block;
 use App\Customer;
 use App\Project;
 use App\RealEstate;
@@ -99,6 +100,15 @@ class RealEstateService
                 $street->save();
                 $input['street_id'] = $street->id;
             }
+        }
+
+        if(empty(Block::find($input['block_id'])))
+        {
+            $block = new Block();
+
+            $block->name = $input['block_id'];
+            $block->save();
+            $input['block_id'] = $block->id;
         }
 
         //
@@ -399,6 +409,15 @@ class RealEstateService
                 $project->save();
                 $input['project_id'] = $project->id;
             }
+        }
+
+        if(empty(Block::find($input['block_id'])))
+        {
+            $block = new Block();
+
+            $block->name = $input['block_id'];
+            $block->save();
+            $input['block_id'] = $block->id;
         }
 
         $realEstate = RealEstate::withoutGlobalScope(PrivateScope::class)->find($input['id']);
