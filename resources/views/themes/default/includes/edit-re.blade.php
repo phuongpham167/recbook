@@ -15,7 +15,8 @@
                         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.title')}} <span
                                 class="text-red">*</span></label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="title-edit" id="title-edit" maxlength="191"/>
+                            <input type="text" class="form-control" name="title-edit" id="title-edit" maxlength="180"/>
+                            <span class="help-block"><span id="count-title-edit">180</span>{{trans('real-estate.formCreateLabel.titleHelpBlock')}}</span>
                             <p class="text-red error"></p>
                         </div>
                     </div>
@@ -481,6 +482,11 @@
 
 @push('js')
     <script>
+        const totalTitleELetter = 180;
+        $('#title-edit').keyup(function() {
+            const txtLength = $(this).val().length;
+            $('#count-title-edit').text(totalTitleELetter - txtLength);
+        });
         function changeEditUnit(){
             var type    =   $('#re-category-edit').val();
             console.log(type);
@@ -786,8 +792,8 @@
                 return;
             }
 
-            if (title.length > 191) {
-                $('#title-edit').parent().find('.error').html('Tiêu đề tối đa 191 ký tự');
+            if (title.length > 180) {
+                $('#title-edit').parent().find('.error').html('Tiêu đề tối đa 180 ký tự');
                 return;
             } else {
                 $('#title-edit').parent().find('.error').html('');

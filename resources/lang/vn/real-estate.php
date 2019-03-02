@@ -14,6 +14,7 @@ return [
     'post_type' => 'Loại tin',
     'formCreateLabel' => [
         'title' => 'Tiêu đề tin',
+        'titleHelpBlock' => ' - (Không vượt quá 180 ký tự)',
         'shortDescription' => 'Mô tả ngắn',
         'shortDescriptionHelpBlock' => ' - (Không vượt quá 150 ký tự)',
         'contactPerson' => 'Người liên hệ',

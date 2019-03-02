@@ -189,7 +189,8 @@
                                                                             <input type="text" class="form-control"
                                                                                    name="title" id="title"
                                                                                    value="{{ old('title') }}"
-                                                                                   placeholder="Tiêu đề *" maxlength="191"/>
+                                                                                   placeholder="Tiêu đề *" maxlength="180"/>
+                                                                            <span class="help-block"><span id="count-title">180</span>{{trans('real-estate.formCreateLabel.titleHelpBlock')}}</span>
                                                                             <p class="text-red error"></p>
                                                                         </div>
                                                                     </div>
@@ -616,6 +617,11 @@
     <script src="{{asset('plugins/toastr/toastr.min.js')}}"></script>
     <script src="{{asset('plugins/loopj-jquery-tokeninput/src/jquery.tokeninput.js')}}"></script>
     <script>
+        const totalTitleLetter = 180;
+        $('#title').keyup(function() {
+            const txtLength = $(this).val().length;
+            $('#count-title').text(totalTitleLetter - txtLength);
+        });
         showLoader();
         $(document).ready(function () {
             hideLoader();
@@ -826,8 +832,8 @@
 
                 return;
             }
-            if (title.length > 191) {
-                $('#title').parent().find('.error').html('Tiêu đề tối đa 191 ký tự');
+            if (title.length > 180) {
+                $('#title').parent().find('.error').html('Tiêu đề tối đa 180 ký tự');
                 return;
             } else {
                 $('#title').parent().find('.error').html('');
@@ -1179,6 +1185,7 @@
 
             $('#id-edit').val(re.id);
             $('#title-edit').val(re.title);
+            $('#count-title-edit').text(totalTitleLetter - re.title.length);
             $('#detail-edit').val(re.detail).focus().blur();
             if (re.re_category_id) {
                 $('#re-category-edit').val(re.re_category_id);
