@@ -245,6 +245,26 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" id="is-deal-edit"
+                                                   name="gara_edit" {{ old('gara') == 'on' ? 'checked' : '' }}>
+                                            {{trans('real-estate.formCreateLabel.gara')}}
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.lane_width')}}</label>
+                                <div class="col-sm-4">
+                                    <input type="number" class="form-control" name="width_lane_edit" id="width-lane-edit"/>
+                                    <p class="text-red error"></p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="form-group clearfix collapse" id="directionSelectEdit">
@@ -829,6 +849,8 @@
 
             let length = $('#length-edit').val();
 
+            let width_lane = $('#width-lane-edit').val();
+
             let floor = $('#floor-edit').val();
 
             let price = $('#price-edit').val();
@@ -836,6 +858,8 @@
             let donvi = $('#don-vi-edit').val();
 
             let isDeal = $('#is-deal-edit').is(":checked") ? 1 : 0;
+
+            let gara = $('#gara-edit').is(":checked") ? 1 : 0;
 
             let rangePrice = $('#range-price-edit').val();
 
@@ -890,10 +914,12 @@
             formDataEdit.append('area_of_use', aou);
             formDataEdit.append('width', width);
             formDataEdit.append('length', length);
+            formDataEdit.append('width_lane', width_lane);
             formDataEdit.append('floor', floor);
             formDataEdit.append('price', price);
             formDataEdit.append('don_vi', donvi);
             formDataEdit.append('is_deal', isDeal);
+            formDataEdit.append('gara', gara);
             formDataEdit.append('range_price_id', rangePrice);
             formDataEdit.append('map', map);
             formDataEdit.append('is_private', isPrivate);

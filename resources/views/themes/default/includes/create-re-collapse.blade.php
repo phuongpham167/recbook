@@ -179,6 +179,20 @@
             </div>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="col-sm-4 col-sm-offset-2">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="gara" {{ old('gara') == 'on' ? 'checked' : '' }}>
+                        {{trans('real-estate.formCreateLabel.gara')}}
+                    </label>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </div>
 <div class="form-group collapse collapse1" id="directionSelect">
 
