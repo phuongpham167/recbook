@@ -243,6 +243,17 @@ class RealEstateService
             }
         }
 
+        $blockId = isset($input['block_id']) ? $input['block_id'] : '';
+        if ($blockId) {
+            if (empty(Block::find($input['block_id']))) {
+                $block = new Block();
+
+                $block->name = $input['block_id'];
+                $block->save();
+                $input['block_id'] = $block->id;
+            }
+        }
+
         $realEstate = RealEstate::withoutGlobalScope(PrivateScope::class)->find($input['id']);
         if ($realEstate) {
             $approve = $realEstate->draft ? 0 : ( $this->needApprove ? 0 : 1 );
