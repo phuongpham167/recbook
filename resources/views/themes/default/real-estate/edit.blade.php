@@ -232,6 +232,12 @@ if ($user->group_id != $adminGroup) {
                         <div class="col-sm-2">
                             <input type="number" class="form-control" name="length" value="{{ $realEstate->length }}"/>
                         </div>
+
+                        <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.lane_width')}}</label>
+
+                        <div class="col-sm-2">
+                            <input type="number" class="form-control" name="width_lane" value="{{ $realEstate->width_lane }}"/>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.bedroom')}}</label>
@@ -305,6 +311,16 @@ if ($user->group_id != $adminGroup) {
                                 <label>
                                     <input type="checkbox" name="is_deal" {{ $realEstate->is_deal === 1 ? 'checked' : '' }}>
                                     {{trans('real-estate.formCreateLabel.isDeal')}}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-10 col-sm-offset-2">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="gara" {{ $realEstate->gara === 1 ? 'checked' : '' }}>
+                                    {{trans('real-estate.formCreateLabel.gara')}}
                                 </label>
                             </div>
                         </div>

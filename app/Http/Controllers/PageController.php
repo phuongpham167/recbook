@@ -101,7 +101,6 @@ class PageController extends Controller
         $this->streets = $this->streetService->getListDropDown();
         $this->directions = $this->directionService->getListDropDown();
         $this->projects = $this->projectService->getListDropDown();
-//        var_dump( session('tinhthanhquantam'));
     }
 
     public function index1()
@@ -655,7 +654,7 @@ class PageController extends Controller
             $realEstate = RealEstate::withoutGlobalScope(PrivateScope::class)->where('id', $id);
 //        $realEstate = $this->checkRegisterDate($realEstate);
             $realEstate = $realEstate->first();
-            
+
             /*
              * get list same search option
              * */
@@ -856,7 +855,7 @@ class PageController extends Controller
                 $reCategories = $this->reCategoryService->getListDropDown();
 
                 $provinces = $this->provinceService->getListOrderByWishList();
-                
+
                 $streets = $this->streetService->getListDropDown();
                 $directions = $this->directionService->getListDropDown();
                 $exhibits = $this->exhibitService->getListDropDown();

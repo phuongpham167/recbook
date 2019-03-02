@@ -153,6 +153,7 @@ class RealEstateService
             'construction_type_id' => isset($input['construction_type_id']) ? $input['construction_type_id'] : null,
             'width' => isset($input['width']) ? $input['width'] : null,
             'length' => isset($input['length']) ? $input['length'] : null,
+            'width_lane' => isset($input['width_lane']) ? $input['width_lane'] : null,
             'bedroom' => isset($input['bedroom']) ? $input['bedroom']  : null,
             'living_room' => isset($input['living_room']) ? $input['living_room'] : null,
             'wc' => isset($input['wc'])  ?$input['wc'] : null,
@@ -164,6 +165,7 @@ class RealEstateService
             'unit_id' => isset($input['unit_id']) ? $input['unit_id'] : null,
             'range_price_id' => isset($input['range_price_id']) ? $input['range_price_id'] : null,
             'is_deal' => isset($input['is_deal']) ? 1 : 0,
+            'gara' => isset($input['gara']) ? 1 : 0,
             'post_date' => $post_date,
             'expire_date' => Carbon::parse($post_date)->addDays(get_config('expireRealEstate', 30)),
             'images' => json_encode($imagesVal),
@@ -299,6 +301,7 @@ class RealEstateService
             $realEstate->construction_type_id = $input['construction_type_id'];
             $realEstate->width = $input['width'];
             $realEstate->length = $input['length'];
+            $realEstate->width_lane = $input['width_lane'];
             $realEstate->bedroom = $input['bedroom'];
             $realEstate->living_room = $input['living_room'];
             $realEstate->wc = $input['wc'];
@@ -309,6 +312,7 @@ class RealEstateService
             $realEstate->unit_id = $input['unit_id'];
             $realEstate->range_price_id = $input['range_price_id'];
             $realEstate->is_deal = isset($input['is_deal']) ? 1 : 0;
+            $realEstate->gara = isset($input['gara']) ? 1 : 0;
 //            $realEstate->post_date = $input['post_date'];
 //            $realEstate->expire_date = $input['expire_date'];
             $realEstate->images = json_encode($imagesVal);
