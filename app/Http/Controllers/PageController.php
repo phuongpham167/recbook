@@ -236,8 +236,10 @@ class PageController extends Controller
         Carbon::setLocale('vi');
 
         $this->agencies =   User::whereHas('group', function($q){
-            $q->where('is_agency', 1);
-        })->where('province_id', session('tinhthanhquantam'))->inRandomOrder()->take(get_config('homeAgency', 8))->get();
+                $q->where('is_agency', 1);
+            })->whereHas('userinfo', function ($q) {
+                $q->where('province_id', session('tinhthanhquantam'));
+            })->inRandomOrder()->take(get_config('homeAgency', 8))->get();
         return v('pages.home-1', [
             'vip'   =>  $vip,
             'hotHLRealEstates' => $hotHLRealEstates,
