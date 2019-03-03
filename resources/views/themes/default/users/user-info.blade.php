@@ -33,7 +33,7 @@
 
 @section('content')
     {{-- Include Header --}}
-    @include(theme(TRUE).'.includes.user-info-header')
+    @include(theme(TRUE).'.includes.user-info-header-1')
     <div class="content-body">
         <div class="container padding-bottom-30">
             <div class="row">
@@ -189,7 +189,8 @@
                                                                             <input type="text" class="form-control"
                                                                                    name="title" id="title"
                                                                                    value="{{ old('title') }}"
-                                                                                   placeholder="Tiêu đề *"/>
+                                                                                   placeholder="Tiêu đề *" maxlength="180"/>
+                                                                            <span class="help-block"><span id="count-title">180</span>{{trans('real-estate.formCreateLabel.titleHelpBlock')}}</span>
                                                                             <p class="text-red error"></p>
                                                                         </div>
                                                                     </div>
@@ -616,6 +617,11 @@
     <script src="{{asset('plugins/toastr/toastr.min.js')}}"></script>
     <script src="{{asset('plugins/loopj-jquery-tokeninput/src/jquery.tokeninput.js')}}"></script>
     <script>
+        const totalTitleLetter = 180;
+        $('#title').keyup(function() {
+            const txtLength = $(this).val().length;
+            $('#count-title').text(totalTitleLetter - txtLength);
+        });
         showLoader();
         $(document).ready(function () {
             hideLoader();
@@ -825,6 +831,12 @@
                 }
 
                 return;
+            }
+            if (title.length > 180) {
+                $('#title').parent().find('.error').html('Tiêu đề tối đa 180 ký tự');
+                return;
+            } else {
+                $('#title').parent().find('.error').html('');
             }
             $(this).closest('form').submit();
         });
@@ -1173,6 +1185,7 @@
 
             $('#id-edit').val(re.id);
             $('#title-edit').val(re.title);
+            $('#count-title-edit').text(totalTitleLetter - re.title.length);
             $('#detail-edit').val(re.detail).focus().blur();
             if (re.re_category_id) {
                 $('#re-category-edit').val(re.re_category_id);
@@ -1253,6 +1266,12 @@
             }
             if (re.floor) {
                 $('#floor-edit').val(re.floor);
+            }
+            if(re.width_lane) {
+                $('#width-lane-edit').val(re.width_lane);
+            }
+            if (re.gara) {
+                $('#gara-edit').prop('checked', true);
             }
             if (re.price) {
                 $('#price-edit').val(re.price);
@@ -1347,6 +1366,10 @@
             $('#length-edit').val('');
 
             $('#floor-edit').val('');
+
+            $('#width-lane-edit').val('');
+
+            $('#gara-edit').prop('checked', false);
 
             $('#price-edit').val('');
 
