@@ -774,7 +774,7 @@
             formDataAdd.append('don_vi', donvi);
             formDataAdd.append('is_deal', isDeal);
             formDataAdd.append('map', map);
-            formDataAdd.append('is_private', 1);
+            formDataAdd.append('is_private', 2);
 
             console.log(formDataAdd);
             // return;
