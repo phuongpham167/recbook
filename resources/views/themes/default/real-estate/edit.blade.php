@@ -209,12 +209,7 @@ if ($user->group_id != $adminGroup) {
                         </div>
                         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.block')}}</label>
                         <div class="col-sm-2">
-                            <select class="form-control" id="block" name="block_id" value="{{ $realEstate->block_id }}">
-                                <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
-                                @foreach($blocks as $block)
-                                    <option value="{{$block->id}}" {{$block->id === $realEstate->block_id ? 'selected' : ''}}>{{$block->name}}</option>
-                                @endforeach
-                            </select>
+                            <input type="text" class="form-control" id="block" name="block_id" autocomplete="off">
                         </div>
                         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.constructionType')}}</label>
                         <div class="col-sm-2">
@@ -819,6 +814,22 @@ if ($user->group_id != $adminGroup) {
             @if(!empty($realEstate->street_id) && !empty(\App\Street::find($realEstate->street_id)))
             prePopulate: [
                 {id: '{{$realEstate->street_id}}', name: '{{\App\Street::find($realEstate->street_id)->name}}'}
+            ]
+            @endif
+        });
+        $('#block').tokenInput(function(){
+            return "{{asset('/ajax/block')}}";
+        }, {
+            theme: "bootstrap",
+            queryParam: "term",
+            zindex  :   1005,
+            tokenLimit  :   1,
+            onAdd   :   function(r){
+                $('#method').val(r.method);
+            },
+            @if(!empty($realEstate->block_id) && !empty(\App\Block::find($realEstate->block_id)))
+            prePopulate: [
+                {id: '{{$realEstate->block_id}}', name: '{{\App\Block::find($realEstate->block_id)->name}}'}
             ]
             @endif
         });
