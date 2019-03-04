@@ -148,11 +148,14 @@
                 </li>
                 <div class="menu-search">
                     <div class="pull-right wrap">
-                    <form action="{{route('search')}}" method="get" style="float: left">
-                        <input id="ip-kw" name="project_id" class="form-control pull-left" type="text" data-province="{{session('tinhthanhquantam', 0)}}" placeholder="Tìm theo tên dự án">
-                        <input id="ip-keyword" name="txtkeyword" class="form-control pull-left" type="text" placeholder="{{trans('system.searchPlaceholder')}}">
-                        <button type="submit" class="pull-left"><i class="fa fa-search"></i></button>
-                    </form>
+                        <form action="{{route('searchProject')}}" method="get" style="float: left">
+                            <input id="ip-kw" name="project_id" class="form-control pull-left" type="text" data-province="{{session('tinhthanhquantam', 0)}}" placeholder="Tìm theo tên dự án">
+                            <button type="submit" class="pull-left"><i class="fa fa-search"></i></button>
+                        </form>
+                        <form action="{{route('search')}}" method="get" style="float: left">
+                            <input id="ip-keyword" name="txtkeyword" class="form-control pull-left" type="text" placeholder="{{trans('system.searchPlaceholder')}}">
+                            <button type="submit" class="pull-left"><i class="fa fa-search"></i></button>
+                        </form>
                         <div class="dropdown" style="float: left">
                             <a class="pull-left btn btn-sm btn-primary" id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Tìm kiếm nâng cao
