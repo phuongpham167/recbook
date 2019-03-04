@@ -49,8 +49,17 @@ class RealEstateService
         if ($phone) {
             $customer = $this->checkCustomer($phone, $contactPerson, $contactAddress);
         }
-        if(!empty($input['force_customer_id']))
-            $customer = $input['force_customer_id'];
+
+        $customerId = $customer ? $customer->id : null;
+        if (!empty($input['force_customer_id'])) {
+            $customer = Customer::find($input['force_customer_id']);
+            if ($customer) {
+                $phone = $customer->phone;
+                $contactPerson = $customer->name;
+                $contactAddress = $customer->address;
+                $customerId = $customer->id;
+            }
+        }
 
         $imagesVal = [];
         if (isset($input['images'])) {
@@ -177,7 +186,7 @@ class RealEstateService
             'long' => trim($long),
             'detail' => isset($input['detail']) ? $input['detail'] : null,
             'is_private' => $input['is_private'],
-            'customer_id' => $customer ? $customer->id : null,
+            'customer_id' => $customerId,
             'posted_by' => \Auth::user()->id,
             'updated_by' => \Auth::user()->id,
             'web_id' => $this->web_id,
