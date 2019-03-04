@@ -332,6 +332,7 @@
                     </div>
                 </div>
             </div>
+            <input type="text" class="form-control hidden" name="force_customer_id" value="{{$customer->id}}"/>
             <div class="modal-footer clearfix">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
                 <button type="button" name="add_cil" id="add-cil" onclick="addCustomerInfoList(this)" class="_btn bg_red"><i

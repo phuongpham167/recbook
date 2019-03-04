@@ -49,6 +49,8 @@ class RealEstateService
         if ($phone) {
             $customer = $this->checkCustomer($phone, $contactPerson, $contactAddress);
         }
+        if(!empty($input['force_customer_id']))
+            $customer = $input['force_customer_id'];
 
         $imagesVal = [];
         if (isset($input['images'])) {
@@ -78,7 +80,8 @@ class RealEstateService
             $long = $maps[1] ? $maps[1] : '';
         }
 
-        $approve = isset($input['add_draft']) ? 0 : ($this->needApprove ? 0 : 1);
+//        $approve = isset($input['add_draft']) ? 0 : ($this->needApprove ? 0 : 1);
+//        $approve = 1;
 
         if ($input['is_private'] == RealEstate::USER_PAGE || $input['is_private'] == RealEstate::USER_WEB) {
             $approve = 1;
@@ -101,6 +104,7 @@ class RealEstateService
                 $input['street_id'] = $street->id;
             }
         }
+
 
         $blockId = isset($input['block_id']) ? $input['block_id'] : '';
         if ($blockId) {
@@ -177,7 +181,7 @@ class RealEstateService
             'posted_by' => \Auth::user()->id,
             'updated_by' => \Auth::user()->id,
             'web_id' => $this->web_id,
-            'approve' => $approve,
+            'approved' => 1,
             'draft' => isset($input['add_draft']) ? 1 : 0,
             'is_public' =>  1,
             'public_site' =>  post_left(auth()->user())==0?0:$public_input,
@@ -258,7 +262,8 @@ class RealEstateService
 
         $realEstate = RealEstate::withoutGlobalScope(PrivateScope::class)->find($input['id']);
         if ($realEstate) {
-            $approve = $realEstate->draft ? 0 : ( $this->needApprove ? 0 : 1 );
+//            $approve = $realEstate->draft ? 0 : ( $this->needApprove ? 0 : 1 );
+            $approve = 1;
             if ($input['is_private'] == RealEstate::USER_PAGE || $input['is_private'] == RealEstate::USER_WEB) {
                 $approve = 1;
             }
@@ -323,7 +328,7 @@ class RealEstateService
             $realEstate->is_private = $input['is_private'];
             $realEstate->updated_by = \Auth::user()->id;
             $realEstate->web_id = $this->web_id;
-            $realEstate->approved = $approve;
+            $realEstate->approved = 1;
 //            if (isset($input['add_draft'])) {
 //                $realEstate->approved = 0;
 //                $realEstate->draft = 1;
@@ -440,7 +445,8 @@ class RealEstateService
 
 
         if ($realEstate) {
-            $approve = $realEstate->draft ? 0 : ( $this->needApprove ? 0 : 1 );
+//            $approve = $realEstate->draft ? 0 : ( $this->needApprove ? 0 : 1 );
+            $approve = 1;
             if ($input['is_private'] == RealEstate::USER_PAGE || $input['is_private'] == RealEstate::USER_WEB) {
                 $approve = 1;
             }
@@ -503,7 +509,7 @@ class RealEstateService
             $realEstate->customer_id = $customer ? $customer->id : null;
             $realEstate->updated_by = \Auth::user()->id;
             $realEstate->web_id = $this->web_id;
-            $realEstate->approved = $approve;
+            $realEstate->approved = 1;
             $realEstate->link_video = isset($input['link_video']) ? $input['link_video'] : null;
             $realEstate->public_site =  post_left(auth()->user())==0?0:$public_input;
 //            if (isset($input['add_draft'])) {
