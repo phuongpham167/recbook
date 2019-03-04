@@ -122,7 +122,7 @@ class CareController extends Controller
 
     public function postCreate(CreateCareRequest $request)
     {
-        $realestate =   RealEstate::where('id', $request->realestate_id)->first();
+        $realestate =   RealEstate::withoutGlobalScope(PrivateScope::class)->where('id', $request->realestate_id)->first();
         if($realestate){
             $data   =   new Care();
             $data->realestate_id    =   $request->realestate_id;
@@ -137,12 +137,11 @@ class CareController extends Controller
             event_log('Tạo lịch sử chăm sóc mới id '.$data->id);
             return response()->json(['status'=>0, 'id'=>$realestate->id]);
         }
-
     }
     public function response(){
         $data   =   RealEstate::query();
         $ids    =   Care::where('realestate_id', request('id'))->pluck('response_id');
-        $data   =   $data->whereIn('id',$ids);
+        $data   =   $data->withoutGlobalScope(PrivateScope::class)->whereIn('id',$ids);
         $result = Datatables::of($data)->addColumn('type', function(RealEstate $item){
             return $item->reType?$item->reType->name:'';
         });
