@@ -15,7 +15,8 @@
                         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.title')}} <span
                                 class="text-red">*</span></label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="title-edit" id="title-edit"/>
+                            <input type="text" class="form-control" name="title-edit" id="title-edit" maxlength="180"/>
+                            <span class="help-block"><span id="count-title-edit">180</span>{{trans('real-estate.formCreateLabel.titleHelpBlock')}}</span>
                             <p class="text-red error"></p>
                         </div>
                     </div>
@@ -248,23 +249,25 @@
                                 </div>
                             </div>
                         </div>
-
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.lane_width')}}</label>
+                                <div class="col-sm-4">
+                                    <input type="number" id="width-lane-edit" class="form-control" name="width_lane" />
+                                    <p class="text-red error"></p>
+                                </div>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="col-sm-4 col-sm-offset-2">
                                     <div class="checkbox">
                                         <label>
-                                            <input type="checkbox" id="is-deal-edit"
-                                                   name="gara_edit" {{ old('gara') == 'on' ? 'checked' : '' }}>
+                                            <input type="checkbox" id="gara-edit"
+                                                   name="gara" {{ old('gara') == 'on' ? 'checked' : '' }}>
                                             {{trans('real-estate.formCreateLabel.gara')}}
                                         </label>
                                     </div>
-                                </div>
-
-                                <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.lane_width')}}</label>
-                                <div class="col-sm-4">
-                                    <input type="number" class="form-control" name="width_lane_edit" id="width-lane-edit"/>
-                                    <p class="text-red error"></p>
                                 </div>
                             </div>
                         </div>
@@ -501,6 +504,11 @@
 
 @push('js')
     <script>
+        const totalTitleELetter = 180;
+        $('#title-edit').keyup(function() {
+            const txtLength = $(this).val().length;
+            $('#count-title-edit').text(totalTitleELetter - txtLength);
+        });
         function changeEditUnit(){
             var type    =   $('#re-category-edit').val();
             console.log(type);
@@ -804,6 +812,13 @@
                 }
 
                 return;
+            }
+
+            if (title.length > 180) {
+                $('#title-edit').parent().find('.error').html('Tiêu đề tối đa 180 ký tự');
+                return;
+            } else {
+                $('#title-edit').parent().find('.error').html('');
             }
 
             let reCatId = $('#re-category-edit').val();

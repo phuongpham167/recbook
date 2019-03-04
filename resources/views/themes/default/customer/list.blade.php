@@ -111,8 +111,8 @@
                 },
                 columns: [
                     { data: 'id', name: 'id' },
-                    { data: 'name', name: 're_category_id' },
-                    { data: 'phone', name: 're_type_id' },
+                    { data: 'name', name: 'name' },
+                    { data: 'phone', name: 'phone' },
                     { data: 'type', name: 'type' },
                     { data: 'manage', name: 'manage'  , sortable:false, searchable: false}
                 ]
