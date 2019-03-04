@@ -85,6 +85,7 @@
                     @endif
                 @endforeach
                 <li class=""><a href="{{ route('freelancerList') }}"> Yêu cầu dịch vụ</a></li>
+                @if(auth()->check())
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true" title="Tin nhắn" id="drop-message"><i class="fa fa-comment font18" aria-hidden="true"></i>
                         <?php $unseen_conversation = \App\Conversation::whereHas('messages', function ($q) {$q->where('user_id','<>',auth()->user()->id)->where('is_read',0);})->where(function ($q) {
@@ -139,6 +140,7 @@
                         @endif
                     </ul>
                 </li>
+                @endif
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li >
