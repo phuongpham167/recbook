@@ -49,6 +49,8 @@ class RealEstateService
         if ($phone) {
             $customer = $this->checkCustomer($phone, $contactPerson, $contactAddress);
         }
+        if(!empty($input['force_customer_id']))
+            $customer = $input['force_customer_id'];
 
         $imagesVal = [];
         if (isset($input['images'])) {
