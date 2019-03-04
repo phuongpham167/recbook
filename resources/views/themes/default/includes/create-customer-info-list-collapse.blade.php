@@ -332,7 +332,7 @@
                     </div>
                 </div>
             </div>
-            <input type="text" class="form-control hidden" name="force_customer_id" value="{{$customer->id}}"/>
+            <input type="text" class="form-control hidden" id="force-customer-id" name="force_customer_id" value="{{$customer->id}}"/>
             <div class="modal-footer clearfix">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
                 <button type="button" name="add_cil" id="add-cil" onclick="addCustomerInfoList(this)" class="_btn bg_red"><i
@@ -735,6 +735,8 @@
 
             let isPrivate = $('.form-add-cil #is-private').val();
 
+            let forceCustomerId = $('#force-customer-id').val();
+
             $("input[name='images[]']")
                 .each(function(){
                     formDataAdd.append('images[]', $(this).val());
@@ -776,6 +778,7 @@
             formDataAdd.append('is_deal', isDeal);
             formDataAdd.append('map', map);
             formDataAdd.append('is_private', 2);
+            formDataAdd.append('force_customer_id', forceCustomerId);
 
             console.log(formDataAdd);
             // return;
