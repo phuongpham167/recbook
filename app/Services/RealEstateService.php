@@ -102,13 +102,16 @@ class RealEstateService
             }
         }
 
-        if(empty(Block::find($input['block_id'])))
-        {
-            $block = new Block();
+        $blockId = isset($input['block_id']) ? $input['block_id'] : '';
+        if ($blockId) {
+            if(empty(Block::find($input['block_id'])))
+            {
+                $block = new Block();
 
-            $block->name = $input['block_id'];
-            $block->save();
-            $input['block_id'] = $block->id;
+                $block->name = $input['block_id'];
+                $block->save();
+                $input['block_id'] = $block->id;
+            }
         }
 
         //
@@ -242,6 +245,17 @@ class RealEstateService
             }
         }
 
+        $blockId = isset($input['block_id']) ? $input['block_id'] : '';
+        if ($blockId) {
+            if (empty(Block::find($input['block_id']))) {
+                $block = new Block();
+
+                $block->name = $input['block_id'];
+                $block->save();
+                $input['block_id'] = $block->id;
+            }
+        }
+
         $realEstate = RealEstate::withoutGlobalScope(PrivateScope::class)->find($input['id']);
         if ($realEstate) {
             $approve = $realEstate->draft ? 0 : ( $this->needApprove ? 0 : 1 );
@@ -287,7 +301,7 @@ class RealEstateService
             $realEstate->construction_type_id = $input['construction_type_id'];
             $realEstate->width = $input['width'];
             $realEstate->length = $input['length'];
-            $realEstate->width_lane = $input['width_lane'];
+            $realEstate->width_lane = isset($input['width_lane']) ? $input['width_lane'] : null;
             $realEstate->bedroom = $input['bedroom'];
             $realEstate->living_room = $input['living_room'];
             $realEstate->wc = $input['wc'];
@@ -411,13 +425,15 @@ class RealEstateService
             }
         }
 
-        if(empty(Block::find($input['block_id'])))
-        {
-            $block = new Block();
+        $blockId = isset($input['block_id']) ? $input['block_id'] : '';
+        if ($blockId) {
+            if (empty(Block::find($input['block_id']))) {
+                $block = new Block();
 
-            $block->name = $input['block_id'];
-            $block->save();
-            $input['block_id'] = $block->id;
+                $block->name = $input['block_id'];
+                $block->save();
+                $input['block_id'] = $block->id;
+            }
         }
 
         $realEstate = RealEstate::withoutGlobalScope(PrivateScope::class)->find($input['id']);
@@ -473,10 +489,12 @@ class RealEstateService
             $realEstate->area_of_premises = isset($input['area_of_premises']) ? $input['area_of_premises'] : null;
             $realEstate->area_of_use = isset($input['area_of_use']) ? $input['area_of_use'] : null;
             $realEstate->floor = isset($input['floor']) ? $input['floor'] : null;
+            $realEstate->width_lane = isset($input['width_lane']) ? $input['width_lane'] : null;
             $realEstate->price = isset($input['price']) ? $input['price'] : null;
             $realEstate->unit_id = isset($input['unit_id']) ? $input['unit_id'] : null;
             $realEstate->range_price_id = isset($input['range_price_id']) ? $input['range_price_id'] : null;
             $realEstate->is_deal = isset($input['is_deal']) ? ( $input['is_deal'] ? 1 : 0 ) : 0;
+            $realEstate->gara = isset($input['gara']) ? ( $input['gara'] ? 1 : 0) : 0;
             $realEstate->expire_date = isset($input['expire_date']) ? $input['expire_date'] : null;
             $realEstate->images = json_encode($imagesVal);
             $realEstate->lat = trim($lat);

@@ -12,7 +12,21 @@ use App\Http\Requests\ResetPasswordRequest;
 use App\Menu;
 use App\PasswordReset;
 use App\ReCategory;
+use App\Services\BlockService;
+use App\Services\ConstructionTypeService;
+use App\Services\DirectionService;
+use App\Services\DistrictService;
+use App\Services\ExhibitService;
+use App\Services\ProjectService;
 use App\Services\ProvinceService;
+use App\Services\RangePriceService;
+use App\Services\RealEstateService;
+use App\Services\ReCategoryService;
+use App\Services\ReSourceService;
+use App\Services\ReTypeService;
+use App\Services\StreetService;
+use App\Services\UnitService;
+use App\Services\WardService;
 use App\TransactionLog;
 use App\User;
 use App\UserInfo;
@@ -28,20 +42,75 @@ use Sabberworm\CSS\Settings;
 
 class AuthenticateController extends Controller
 {
-    protected $menuFE, $provinceService,$categories;
+    protected $reCategoryService;
+    protected $reTypeService;
+    protected $provinceService;
+    protected $districtService;
+    protected $wardService;
+    protected $streetService;
+    protected $directionService;
+    protected $exhibitService;
+    protected $projectService;
+    protected $blockService;
+    protected $constructionTypeService;
+    protected $unitService;
+    protected $rangePriceService;
+    protected $reSourceService;
+
+    protected $menuFE,$categories;
+    protected $provinces, $districts, $wards, $streets, $directions, $projects, $reTypes, $rangePrices;
 
     public function __construct(
-        ProvinceService $provinceService
+        RealEstateService $realEstateService,
+        ReCategoryService $reCategoryService,
+        ReTypeService $reTypeService,
+        ProvinceService $provinceService,
+        DistrictService $districtService,
+        WardService $wardService,
+        StreetService $streetService,
+        DirectionService $directionService,
+        ExhibitService $exhibitService,
+        ProjectService $projectService,
+        BlockService $blockService,
+        ConstructionTypeService $constructionTypeService,
+        UnitService $unitService,
+        RangePriceService $rangePriceService,
+        ReSourceService $reSourceService
     )
     {
+        $this->reCategoryService = $reCategoryService;
+        $this->reTypeService = $reTypeService;
         $this->provinceService = $provinceService;
+        $this->districtService = $districtService;
+        $this->wardService = $wardService;
+        $this->streetService = $streetService;
+        $this->directionService = $directionService;
+        $this->exhibitService = $exhibitService;
+        $this->projectService = $projectService;
+        $this->blockService = $blockService;
+        $this->constructionTypeService = $constructionTypeService;
+        $this->unitService = $unitService;
+        $this->rangePriceService = $rangePriceService;
+        $this->reSourceService = $reSourceService;
+
         $web_id = get_web_id();
         $mmfe = config('menu.mainMenuFE');
         $this->menuFE = Menu::where('web_id', $web_id)->where('menu_type', $mmfe)->first();
         $this->categories = ReCategory::select('id', 'name', 'slug')
             ->orderBy('id', 'asc')
-//            ->where('web_id', $web_id)
             ->get();
+
+        $this->provinces = $this->provinceService->getListDropDown();
+        $this->districts = $this->districtService->getListDropDown();
+        $this->wards = $this->wardService->getListDropDown();
+        $this->streets = $this->streetService->getListDropDown();
+        $this->directions = $this->directionService->getListDropDown();
+        $this->projects = $this->projectService->getListDropDown();
+
+        $firstCat = $this->categories->first();
+        $this->reTypes = $this->reTypeService->getReTypeByCat($firstCat->id);
+
+        $this->rangePrices = $this->rangePriceService->getListDropDown();
     }
 
     public function getLogin()
@@ -96,7 +165,14 @@ class AuthenticateController extends Controller
     public function getChangepassword()
     {
 //        event_log('Truy cập trang ['.trans('page.editpassword').']');
-        return v('users.change-password',['menuData' => $this->menuFE]);
+        return v('users.change-password',[
+            'menuData' => $this->menuFE,
+            'categories' => $this->categories,
+            'reTypes' => $this->reTypes,
+            'streets' => $this->streets,
+            'directions' => $this->directions,
+            'rangePrices' => $this->rangePrices
+        ]);
     }
     public function postChangepassword()
     {
@@ -121,7 +197,14 @@ class AuthenticateController extends Controller
 
     public function getManage()
     {
-        return v('users.manage', ['menuData' => $this->menuFE]);
+        return v('users.manage', [
+            'menuData' => $this->menuFE,
+            'categories' => $this->categories,
+            'reTypes' => $this->reTypes,
+            'streets' => $this->streets,
+            'directions' => $this->directions,
+            'rangePrices' => $this->rangePrices
+        ]);
     }
 
     public function getInfo()
@@ -129,7 +212,12 @@ class AuthenticateController extends Controller
         $provinces = $this->provinceService->getListDropDown();
         return v('users.info', [
             'menuData' => $this->menuFE,
-            'provinces' => $provinces
+            'provinces' => $provinces,
+            'categories' => $this->categories,
+            'reTypes' => $this->reTypes,
+            'streets' => $this->streets,
+            'directions' => $this->directions,
+            'rangePrices' => $this->rangePrices
         ]);
     }
 
