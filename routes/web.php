@@ -10,6 +10,9 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+use App\RealEstate;
+
 Route::get( '/gui-mail', function(){
 
 });
@@ -17,6 +20,7 @@ Route::get('/', 'PageController@index1')->name('home');
 Route::get('/home', ['as'=>'Home1', 'uses'=>'PageController@index1']);
 Route::get('/danh-muc/{tag}', ['as' => 'danh-muc', 'uses' => 'PageController@getDanhmuc']);
 Route::get('/tim-kiem', ['as' => 'search' , 'uses' => 'PageController@search']);
+Route::get('/tim-kiem-du-an', ['as' => 'searchProject' , 'uses' => 'PageController@searchProject']);
 Route::get('/tim-kiem-thong-minh', ['as' => 'smart-search', 'uses' => 'PageController@smartSearch']);
 
 /*

@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="{{ asset('css/news.css') }}"/>
     <link rel="stylesheet" href="{{ asset('common-css/left-menu.css') }}"/>
     <link rel="stylesheet" href="{{asset('common-css/magnific-popup.css')}}"/>
+    <link rel="stylesheet" href="{{ asset('css/home-1.css') }}"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet"/>
     <style>
         .freelancer_tab {
@@ -33,6 +34,23 @@
 
         .select2-selection__rendered {
             line-height: 25px !important;
+        }
+
+    </style>
+    <style>
+        .search_slide {
+            position: relative;
+            bottom: 0;
+        }
+        .search_slide .row {
+            background: transparent;
+
+        }
+        .search_slide ul li a {
+            background: #333;
+        }
+        .menu-search .search_slide ul li {
+            margin-left: 0;
         }
     </style>
 @endpush
