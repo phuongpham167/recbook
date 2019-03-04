@@ -904,6 +904,8 @@ class PageController extends Controller
 //                $authUser = \Auth::user();
 //                $authFriendRequestLists = Friend::where('user2', $authUser->id)->where('confirmed', 0)->get();
 //                dd($authFriendRequestLists);
+                $firstCat = $this->categories->first();
+                $reTypes = $this->reTypeService->getReTypeByCat($firstCat->id);
 
                 $joinedFreeLances = $this->service->getJoinedFreelance($user->id);
 
@@ -929,7 +931,8 @@ class PageController extends Controller
                     'districtByUProvince' => $districtByUProvince,
 //                    'projectByUProvince' => $projectByUProvince,
                     'joinedFreeLances' => $joinedFreeLances,
-                    'menuData' => $this->menuFE
+                    'menuData' => $this->menuFE,
+                    'reTypes' => $reTypes
                 ]);
             }
             return response('Người dùng không tồn tại hoặc đã bị khóa');

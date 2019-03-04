@@ -29,7 +29,7 @@
 @endpush
 
 @section('content')
-    @include(theme(TRUE).'.includes.user-info-header')
+    @include(theme(TRUE).'.includes.user-info-header-1')
 
     <div class="container-vina">
         <div class="row subpage">
