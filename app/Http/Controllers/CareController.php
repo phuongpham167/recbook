@@ -139,9 +139,9 @@ class CareController extends Controller
         }
     }
     public function response(){
-        $data   =   RealEstate::withoutGlobalScope(PrivateScope::class)->query();
+        $data   =   RealEstate::query();
         $ids    =   Care::where('realestate_id', request('id'))->pluck('response_id');
-        $data   =   $data->whereIn('id',$ids);
+        $data   =   $data->withoutGlobalScope(PrivateScope::class)->whereIn('id',$ids);
         $result = Datatables::of($data)->addColumn('type', function(RealEstate $item){
             return $item->reType?$item->reType->name:'';
         });
