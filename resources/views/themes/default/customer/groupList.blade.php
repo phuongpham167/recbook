@@ -1,11 +1,11 @@
 @extends(theme(TRUE).'.layouts.app')
 
 @section('meta-description')
-    <meta name="description" content="Schedule Page" >
+    <meta name="description" content="Customer Group Page" >
 @endsection
 
 @section('title')
-    Danh sách lịch hẹn
+    Danh sách nhóm khách hàng
 @endsection
 
 @push('style')
@@ -40,26 +40,27 @@
 
             <!--Begin left-->
             <div class="col-xs-9 right">
-                <ul class="nav nav-tabs">
-                    <li role="presentation" @if(url()->current() == asset('khach-hang')) class="active" @endif><a class="freelancer_tab" href="/khach-hang">Danh sách khách hàng</a></li>
-                    <li role="presentation" @if(url()->current() == asset('khach-hang/lich-hen')) class="active" @endif><a class="freelancer_tab" href="/khach-hang/lich-hen">Danh sách lịch hẹn</a></li>
-                    <li role="presentation" @if(url()->current() == asset('khach-hang/nhom')) class="active" @endif><a class="freelancer_tab" href="/khach-hang/nhom">Quản lý nhóm khách hàng</a></li>
-                </ul>
-                @include('themes.default.includes.message')
-                <!--begin manage_page-->
+                <div>
+                    <ul class="nav nav-tabs">
+                        <li role="presentation" @if(url()->current() == asset('khach-hang')) class="active" @endif><a class="freelancer_tab" href="/khach-hang">Danh sách khách hàng</a></li>
+                        <li role="presentation" @if(url()->current() == asset('khach-hang/lich-hen')) class="active" @endif><a class="freelancer_tab" href="/khach-hang/lich-hen">Danh sách lịch hẹn</a></li>
+                        <li role="presentation" @if(url()->current() == asset('khach-hang/nhom')) class="active" @endif><a class="freelancer_tab" href="/khach-hang/nhom">Quản lý nhóm khách hàng</a></li>
+                    </ul>
+                </div>
+            @include('themes.default.includes.message')
+            <!--begin manage_page-->
                 <div class="listlandA_page">
-                    <p class="title_boxM"><strong><i class="fa fa-calendar-o"></i>Danh sách lịch hẹn</strong> <a href="{{route('scheduleCreate')}}" class="btn btn-xs btn-primary pull-right"><i class="fa fa-plus"></i> Thêm lịch hẹn</a></p>
+                    <p class="title_boxM"><strong><i class="fa fa-users"></i>Danh sách nhóm khách hàng</strong> <a href="{{route('customerCreateGroup')}}" class="btn btn-xs btn-primary pull-right"><i class="fa fa-plus"></i> Thêm nhóm</a></p>
                     <div>
                         <div class="box-body">
                             <div class="table-responsive">
                                 <table class="table" id="datatable">
                                     <thead>
-                                        <tr>
-                                            <th>Nội dung</th>
-                                            <th>Tên khách</th>
-                                            <th>Thời gian</th>
-                                            <th>Quản lý</th>
-                                        </tr>
+                                    <tr>
+                                        <th>Tên nhóm</th>
+                                        <th>Số thành viên</th>
+                                        <th>Quản lý</th>
+                                    </tr>
                                     </thead>
 
                                     <tbody>
@@ -80,7 +81,6 @@
         </div>
     </div>
 
-
     <link rel="stylesheet" href="{{asset('plugins/jquery.datatables/css/jquery.dataTables.min.css')}}" />
 
     @include(theme(TRUE).'.includes.footer')
@@ -97,17 +97,15 @@
                 processing: true,
                 serverSide: true,
                 ajax: {
-                    'url': urlDatatable ='{!! route('scheduleData') !!}',
+                    'url': urlDatatable ='{!! route('customerDataGroup') !!}',
                     'type': 'GET',
                     'data': function (d) {
-                        d.datefrom    =   $('#datefrom').val();
-                        d.datefrom    =   $('#dateto').val();
-                    }
+
+                    },
                 },
                 columns: [
-                    { data: 'content', name: 'content' },
-                    { data: 'customer_id', name: 'customer_id' },
-                    { data: 'time', name: 'time' },
+                    { data: 'name', name: 'name' },
+                    { data: 'count', name: 'count' },
                     { data: 'manage', name: 'manage'  , sortable:false, searchable: false}
                 ]
             });

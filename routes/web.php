@@ -161,12 +161,21 @@ Route::group(['middleware'=>'auth'], function(){
                 'type_id' => request('type_id')
             ])->render('themes.default.customer.list');
         })->name('customerList');
+
         Route::get('data', ['as'=>'customerData', 'uses'=>'CustomerController@dataList']);
         Route::get('them', ['as'=>'customerCreate', 'uses'=>'CustomerController@getCreate']);
-        Route::post('them', ['as'=>'customerCreate', 'uses'=>'CustomerController@postCreate']);
+        Route::post('them', ['as'=>'customerCreate', 'uses'=>'CustomerController@getCreate']);
         Route::get('xoa', ['as'=>'customerDelete', 'uses'=>'CustomerController@getDelete']);
         Route::get('sua', ['as'=>'customerEdit', 'uses'=>'CustomerController@getEdit']);
         Route::post('sua', ['as'=>'customerEdit', 'uses'=>'CustomerController@postEdit']);
+
+        Route::get('nhom', ['as'=>'customerListGroup', 'uses'=>'CustomerController@getListGroup']);
+        Route::get('nhom/data', ['as'=>'customerDataGroup', 'uses'=>'CustomerController@dataListGroup']);
+        Route::get('nhom/them', ['as'=>'customerCreateGroup', 'uses'=>'CustomerController@getCreateGroup']);
+        Route::post('nhom/them', ['as'=>'customerCreateGroup', 'uses'=>'CustomerController@postCreateGroup']);
+        Route::get('nhom/xoa', ['as'=>'customerDeleteGroup', 'uses'=>'CustomerController@getDeleteGroup']);
+        Route::get('nhom/sua', ['as'=>'customerEditGroup', 'uses'=>'CustomerController@getEditGroup']);
+        Route::post('nhom/sua', ['as'=>'customerEditGroup', 'uses'=>'CustomerController@postEditGroup']);
 
         Route::group(['prefix'=>'cham-soc'], function(){
             Route::get('', ['as'=>'customerCare', 'uses'=>'CareController@index']);

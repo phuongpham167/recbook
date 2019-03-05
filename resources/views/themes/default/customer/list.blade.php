@@ -44,12 +44,13 @@
                     <ul class="nav nav-tabs">
                         <li role="presentation" @if(url()->current() == asset('khach-hang')) class="active" @endif><a class="freelancer_tab" href="/khach-hang">Danh sách khách hàng</a></li>
                         <li role="presentation" @if(url()->current() == asset('khach-hang/lich-hen')) class="active" @endif><a class="freelancer_tab" href="/khach-hang/lich-hen">Danh sách lịch hẹn</a></li>
+                        <li role="presentation" @if(url()->current() == asset('khach-hang/nhom')) class="active" @endif><a class="freelancer_tab" href="/khach-hang/nhom">Quản lý nhóm khách hàng</a></li>
                     </ul>
                 </div>
                 @include('themes.default.includes.message')
                 <!--begin manage_page-->
                 <div class="listlandA_page">
-                    <p class="title_boxM"><strong><i class="fa fa-file-pdf-o"></i>Danh sách khách hàng</strong> <a href="{{route('customerCreate')}}" class="btn btn-xs btn-primary pull-right"><i class="fa fa-plus"></i> Thêm khách hàng</a></p>
+                    <p class="title_boxM"><strong><i class="fa fa-user-o"></i>Danh sách khách hàng</strong> <a href="{{route('customerCreate')}}" class="btn btn-xs btn-primary pull-right"><i class="fa fa-plus"></i> Thêm khách hàng</a></p>
                     <div>
                         <div class="box-body">
                             <div class="table-responsive">
