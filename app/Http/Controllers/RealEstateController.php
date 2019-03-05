@@ -203,7 +203,8 @@ class RealEstateController extends Controller
                     if(\request('filter') == 'tin-rao-nhap')
                         $manage .=   '  '.a('bat-dong-san/dang-bai', 'id='.$dt->id,trans('g.post'), ['class'=>'btn btn-xs btn-info']);
 
-                    $manage .= '  ' . a('#a', '', trans('g.hotvip'), ['class' => 'btn btn-xs btn-success btn-hotvip', 'id' => $dt->id, 'hot' => number_format(HotVip::where('province_id', $dt->province_id)->first()->hot_value)
+                    $manage .= '  ' . a('#a', '', trans('g.hotvip'), ['class' => 'btn btn-xs btn-success btn-hotvip', 'id' => $dt->id
+                            , 'hot' => number_format(HotVip::where('province_id', $dt->province_id)->first()->hot_value)
                         ,'hot_hl' => number_format(HotVip::where('province_id', $dt->province_id)->first()->hot_highlight_value)
                         ,'vip' => number_format(HotVip::where('province_id', $dt->province_id)->first()->vip_value)
                         ,'vip_hl' => number_format(HotVip::where('province_id', $dt->province_id)->first()->vip_highlight_value)
