@@ -106,5 +106,6 @@ return [
     'edit' => [
         'pageTitle' => 'Sửa tin BĐS',
         'formTitle' => 'Sửa tin BĐS',
-    ]
+    ],
+    'filter_tinh' => 'Tỉnh'
 ];
