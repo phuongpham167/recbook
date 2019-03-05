@@ -125,6 +125,33 @@
                         </div>
                         <div class="col-md-6">
                             <div class="panel panel-default">
+                                <div class="panel-heading">Thêm vào nhóm</div>
+                                <div class="panel-body">
+                                    <select class="form-control" name="customer_group" id="select_group">
+                                        <option value="">--Chọn nhóm--</option>
+                                        @foreach($customerGroup as $item)
+                                            <option value="{{$item->id}}">{{$item->name}}</option>
+                                        @endforeach
+                                    </select>
+
+                                    <table class="table table-bordered" id="datatable">
+                                        <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th style="min-width: 200px">Tên</th>
+                                            <th>SDT</th>
+                                            <th>Email</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="panel panel-default">
                                 <div class="panel-heading">Chi tiết yêu cầu</div>
                                 <div class="panel-body">
                                     <div class="form-group col-md-12">
@@ -568,6 +595,21 @@
 
             $('.panel-heading').on('click', '#addschedule', function () {
                 // console.log(check);
+                $('#myModal2').modal('show');
+            });
+
+            $('#select_group').on('change', function () {
+                $.get('{{route('getCustomer')}}', {_token: '{{csrf_token()}}'}, function(r){
+
+                });
+                $('#datatable-price').append('<tr class="price">\n' +
+                    '                                <td>'+vip+'</td>\n' +
+                    '                                <td>'+vip_hl+'</td>\n' +
+                    '                                <td>'+hot+'</td>\n' +
+                    '                                <td>'+hot_hl+'</td>\n' +
+                    '                                <td>'+i_value+'</td>\n' +
+                    '                                <td>'+vip_right+'</td>\n' +
+                    '                            </tr>');
                 $('#myModal2').modal('show');
             });
         });

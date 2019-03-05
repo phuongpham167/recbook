@@ -168,4 +168,18 @@ class CustomerController extends Controller
             set_notice(trans('system.not_exist'), 'warning');
         return redirect()->back();
     }
+
+    public function getCustomer(){
+        $id   = request()->input('customerGroup');
+        $result =   [];
+        foreach(\App\Customer::where('customer_group_id',$id)->get() as $item){
+            $result[]   =   [
+                'id'    =>  $item->id,
+                'name'  =>  $item->name,
+                'phone' =>  $item->phone,
+                'email' =>  $item->email
+            ];
+        }
+        return response()->json($result);
+    }
 }

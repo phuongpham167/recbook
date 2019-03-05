@@ -170,6 +170,7 @@ Route::group(['middleware'=>'auth'], function(){
         Route::post('sua', ['as'=>'customerEdit', 'uses'=>'CustomerController@postEdit']);
 
         Route::get('nhom', ['as'=>'customerListGroup', 'uses'=>'CustomerController@getListGroup']);
+        Route::get('nhom/thanh-vien', ['as'=>'getCustomer', 'uses'=>'CustomerController@getCustomer']);
         Route::get('nhom/data', ['as'=>'customerDataGroup', 'uses'=>'CustomerController@dataListGroup']);
         Route::get('nhom/them', ['as'=>'customerCreateGroup', 'uses'=>'CustomerController@getCreateGroup']);
         Route::post('nhom/them', ['as'=>'customerCreateGroup', 'uses'=>'CustomerController@postCreateGroup']);
