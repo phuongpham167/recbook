@@ -132,6 +132,19 @@
                                                 </select></dd>
                                         </dl>
                                     </div>
+                                    <div class="col-xs-4">
+                                        <dl>
+                                            <dt>{{trans('real-estate.filter_tinh')}}</dt>
+                                            <dd>
+                                                <select name="province_id" id="province_id">
+                                                    <option value="">Tất cả</option>
+                                                    @foreach(\App\Province::all() as $item)
+                                                        <option value="{{$item->id}}"  @if(request('province_id')==$item->id) selected @endif>{{$item->name}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </dd>
+                                        </dl>
+                                    </div>
                                 </div>
 
                                 <div class="row">
@@ -296,6 +309,7 @@
                         d.re_type_id = $('#re_type_id').val();
                         d.district_id = $('#district_id').val();
                         d.post_type = $('#post_type').val();
+                        d.province_id = $('#province_id').val();
                     }
                 },
                 columns: [
