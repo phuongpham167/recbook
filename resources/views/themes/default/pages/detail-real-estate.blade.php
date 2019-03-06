@@ -406,7 +406,10 @@
                                                     <h3><a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">{{ $item->title }}</a>
                                                         <span></span>
                                                     </h3>
-                                                    <div>{{$item->short_description ? $item->short_description : ''}}
+                                                    @php
+                                                        $shortDes = trim_text($item->detail, 130);
+                                                    @endphp
+                                                    <div>{!! $item->short_description ? $item->short_description : ($shortDes ? $shortDes : '') !!}
                                                     </div>
                                                     <p>
                                                         <strong>DTMB:</strong> {{$item->area_of_premises ? $item->area_of_premises . 'm2' : '0m2'}} - <strong>Giá:</strong>
@@ -489,7 +492,10 @@
                                                     <h3><a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">{{ $item->title }}</a>
                                                         <span></span>
                                                     </h3>
-                                                    <div>{{$item->short_description ? $item->short_description : ''}}
+                                                    @php
+                                                        $shortDes = trim_text($item->detail, 130);
+                                                    @endphp
+                                                    <div>{!! $item->short_description ? $item->short_description : ($shortDes ? $shortDes : '') !!}
                                                     </div>
                                                     <p>
                                                         <strong>DTMB:</strong> {{$item->area_of_premises ? $item->area_of_premises . 'm2' : '0m2'}} - <strong>Giá:</strong>
