@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Customer;
+use App\UserGroup;
+use App\Http\Requests\UserGroupRequest;
 use App\Http\Requests\FormCustomerRequest;
 use Carbon\Carbon;
 use Illuminate\Http\Request;

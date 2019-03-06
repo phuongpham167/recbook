@@ -5454,13 +5454,15 @@ function transaction_log($reason, $value, $type) {
 }
 
 function vip_type () {
+    $vip = \App\VipHot::first();
+
     $type = [
-      1 => 'Tin hot',
-        2 => 'Tin hot nổi bật',
-        3 => 'Tin vip',
-        4 => 'Tin vip nổi bật',
-        5 => 'Tin hấp dẫn',
-        6 => 'Tin vip phải',
+        1 => $vip->vip1,
+        2 => $vip->vip2,
+        3 => $vip->vip3,
+        4 => $vip->vip4,
+        5 => $vip->vip5,
+        6 => $vip->vip6,
     ];
 
     return $type;

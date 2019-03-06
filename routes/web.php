@@ -12,9 +12,54 @@
 */
 
 use App\RealEstate;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\URL;
+use App\UserGroup;
 
-Route::get( '/gui-mail', function(){
+Route::get('sitemap', function() {
 
+    // create new sitemap object
+    $sitemap = App::make('sitemap');
+
+    // set cache key (string), duration in minutes (Carbon|Datetime|int), turn on/off (boolean)
+    // by default cache is disabled
+    $sitemap->setCache('laravel.sitemap', 60);
+
+    // check if there is cached sitemap and build new only if is not
+    if (!$sitemap->isCached()) {
+        $time   =   \Carbon\Carbon::now();
+        // add item to the sitemap (url, date, priority, freq)
+        $sitemap->add(URL::to('/'), $time, '1.0', 'daily');
+        $sitemap->add(URL::to('tim-kiem'), $time, '0.9', 'monthly');
+        $sitemap->add(URL::to('tim-kiem-du-an'), $time, '0.9', 'monthly');
+        $sitemap->add(URL::to('tim-kiem-thong-minh'), $time, '0.9', 'monthly');
+        $sitemap->add(URL::to('tin-vip'), $time, '0.9', 'monthly');
+        $sitemap->add(URL::to('tin-noi-bat'), $time, '0.9', 'monthly');
+        $sitemap->add(URL::to('tin-rao-cong-dong-mien-phi'), $time, '0.9', 'monthly');
+        $sitemap->add(URL::to('bai-viet/danh-sach'), $time, '0.9', 'monthly');
+        $sitemap->add(URL::to('lien-he'), $time, '0.9', 'monthly');
+
+        $sitemap->add(URL::to('dang-nhap'), $time, '0.9', 'monthly');
+        $sitemap->add(URL::to('dang-xuat'), $time, '0.9', 'monthly');
+        $sitemap->add(URL::to('dang-ky'), $time, '0.9', 'monthly');
+        $sitemap->add(URL::to('quen-mat-khau'), $time, '0.9', 'monthly');
+        $sitemap->add(URL::to('dat-lai-mat-khau'), $time, '0.9', 'monthly');
+        $sitemap->add(URL::to(''), $time, '0.9', 'monthly');
+        $sitemap->add(URL::to(''), $time, '0.9', 'monthly');
+        $cats   =   \App\ReCategory::all();
+        foreach($cats as $cat){
+            $sitemap->add(URL::to('danh-muc/'.$cat->slug), $time, '0.9', 'monthly');
+        }
+        $re =   RealEstate::all();
+        foreach($re as $r){
+            $sitemap->add(URL::to('tin/'.$r->slug.'-'.$r->id), $time, '0.9', 'monthly');
+        }
+        $posts  =   \App\Post::all();
+
+    }
+
+    // show your sitemap (options: 'xml' (default), 'html', 'txt', 'ror-rss', 'ror-rdf')
+    return $sitemap->render('xml');
 });
 Route::get('/', 'PageController@index1')->name('home');
 Route::get('/home', ['as'=>'Home1', 'uses'=>'PageController@index1']);
@@ -84,6 +129,18 @@ Route::group(['middleware'=>'auth'], function(){
     Route::post('frontend/saveByParts', ['as'=>'saveProjectFrontend', 'uses'=>'FrontendController@saveProjectByParts']);
     Route::post('frontend/export', ['as'=>'saveProjectFrontend', 'uses'=>'FrontendController@exportProject']);
 
+    Route::get('nhom', ['as'=>'userListGroup', 'uses'=>'AuthenticateController@getListGroup']);
+    Route::get('nhom/data', ['as'=>'userDataGroup', 'uses'=>'AuthenticateController@dataListGroup']);
+    Route::get('nhom/them', ['as'=>'userCreateGroup', 'uses'=>'AuthenticateController@getCreateGroup']);
+    Route::post('nhom/them', ['as'=>'userCreateGroup', 'uses'=>'AuthenticateController@postCreateGroup']);
+    Route::get('nhom/xoa', ['as'=>'userDeleteGroup', 'uses'=>'AuthenticateController@getDeleteGroup']);
+    Route::get('nhom/sua', ['as'=>'userEditGroup', 'uses'=>'AuthenticateController@getEditGroup']);
+    Route::post('nhom/sua', ['as'=>'userEditGroup', 'uses'=>'AuthenticateController@postEditGroup']);
+
+    Route::get('nhom/thanh-vien', ['as'=>'getUser', 'uses'=>'AuthenticateController@getMember']);
+    Route::get('nhom/thanh-vien/data', ['as'=>'memberData', 'uses'=>'AuthenticateController@getDataMember']);
+    Route::get('nhom/thanh-vien/them', ['as'=>'addMember', 'uses'=>'AuthenticateController@postAddMember']);
+    Route::get('nhom/thanh-vien/xoa', ['as'=>'deleteMember', 'uses'=>'AuthenticateController@postDeleteMember']);
 
     Route::group(['prefix'=>'bat-dong-san'], function(){
         Route::get('/{filter?}', ['as' => 'realEstateList', 'uses' => 'RealEstateController@list'])->where('filter', 'tin-rao-het-han|tin-rao-cho-duyet|tin-rao-nhap|tin-rao-da-xoa');
@@ -161,9 +218,10 @@ Route::group(['middleware'=>'auth'], function(){
                 'type_id' => request('type_id')
             ])->render('themes.default.customer.list');
         })->name('customerList');
+
         Route::get('data', ['as'=>'customerData', 'uses'=>'CustomerController@dataList']);
         Route::get('them', ['as'=>'customerCreate', 'uses'=>'CustomerController@getCreate']);
-        Route::post('them', ['as'=>'customerCreate', 'uses'=>'CustomerController@postCreate']);
+        Route::post('them', ['as'=>'customerCreate', 'uses'=>'CustomerController@getCreate']);
         Route::get('xoa', ['as'=>'customerDelete', 'uses'=>'CustomerController@getDelete']);
         Route::get('sua', ['as'=>'customerEdit', 'uses'=>'CustomerController@getEdit']);
         Route::post('sua', ['as'=>'customerEdit', 'uses'=>'CustomerController@postEdit']);
@@ -244,10 +302,12 @@ Route::group(['prefix'=>'ajax'], function(){
 
 Route::get('/t', function (){
 //    var_dump(session('tinhthanhquantam'));
-    print_r( 'session: '.session('tinhthanhquantam'));
+//    print_r( 'session: '.session('tinhthanhquantam'));
 //    print_r(auth()->user()->subcribes()->pluck('province_subcribes.province_id')->toArray());
 });
 
 Route::group(['prefix'=>'notify'], function(){
     Route::get('read/{id?}', 'NotificationController@read')->name('readNotification');
 });
+
+
