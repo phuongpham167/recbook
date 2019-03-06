@@ -19,6 +19,9 @@
         .listlandA_page .form-control {
             font-size: 12px;
         }
+        tfoot {
+            display: table-header-group;
+        }
     </style>
 @endpush
 
@@ -217,6 +220,17 @@
                                                 <th>Thời gian</th>
                                             </tr>
                                             </thead>
+                                            <tfoot>
+                                            <tr>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                            </tfoot>
+                                            <tbody>
+
+                                            </tbody>
                                         </table>
                                     </div>
                                 </div>
@@ -476,7 +490,21 @@
                     {data: 'content', name: 'content'},
                     {data: 'feedback', name: 'feedback'},
                     {data: 'created_at', name: 'created_at'}
-                ]
+                ],
+                initComplete: function () {
+                    this.api().columns().every(function () {
+                        console.log(this);
+                        var column = this;
+                        var input = document.createElement("input");
+                        if(column.index() != 0){
+                            $(input).appendTo($(column.footer()).empty())
+                                .on('keyup', function () {
+                                    column.search($(this).val(), false, false, true).draw();
+                                });
+                        }
+
+                    });
+                }
             });
         }
 
