@@ -1,11 +1,11 @@
 @extends(theme(TRUE).'.layouts.app')
 
 @section('meta-description')
-    <meta name="description" content="Customer Group Page" >
+    <meta name="description" content="User Group Page" >
 @endsection
 
 @section('title')
-    Danh sách nhóm khách hàng
+    Danh sách nhóm thành viên
 @endsection
 
 @push('style')
@@ -44,13 +44,13 @@
                     <ul class="nav nav-tabs">
                         <li role="presentation" @if(url()->current() == asset('khach-hang')) class="active" @endif><a class="freelancer_tab" href="/khach-hang">Danh sách khách hàng</a></li>
                         <li role="presentation" @if(url()->current() == asset('khach-hang/lich-hen')) class="active" @endif><a class="freelancer_tab" href="/khach-hang/lich-hen">Danh sách lịch hẹn</a></li>
-                        <li role="presentation" @if(url()->current() == asset('khach-hang/nhom')) class="active" @endif><a class="freelancer_tab" href="/khach-hang/nhom">Quản lý nhóm khách hàng</a></li>
+                        <li role="presentation" @if(url()->current() == asset('nhom')) class="active" @endif><a class="freelancer_tab" href="nhom">Quản lý nhóm thành viên</a></li>
                     </ul>
                 </div>
             @include('themes.default.includes.message')
             <!--begin manage_page-->
                 <div class="listlandA_page">
-                    <p class="title_boxM"><strong><i class="fa fa-users"></i>Danh sách nhóm khách hàng</strong> <a href="{{route('customerCreateGroup')}}" class="btn btn-xs btn-primary pull-right"><i class="fa fa-plus"></i> Thêm nhóm</a></p>
+                    <p class="title_boxM"><strong><i class="fa fa-users"></i>Danh sách nhóm thành viên</strong> <a href="{{route('userCreateGroup')}}" class="btn btn-xs btn-primary pull-right"><i class="fa fa-plus"></i> Thêm nhóm</a></p>
                     <div>
                         <div class="box-body">
                             <div class="table-responsive">
@@ -97,7 +97,7 @@
                 processing: true,
                 serverSide: true,
                 ajax: {
-                    'url': urlDatatable ='{!! route('customerDataGroup') !!}',
+                    'url': urlDatatable ='{!! route('userDataGroup') !!}',
                     'type': 'GET',
                     'data': function (d) {
 

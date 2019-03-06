@@ -1,11 +1,11 @@
 @extends(theme(TRUE).'.layouts.app')
 
 @section('meta-description')
-    <meta name="description" content="Create Customer Group Page" >
+    <meta name="description" content="Edit Customer Group Page" >
 @endsection
 
 @section('title')
-    Tạo nhóm khách hàng mới
+    Sửa nhóm khách hàng
 @endsection
 
 @push('style')
@@ -33,30 +33,29 @@
                 @include('themes.default.includes.message')
                 <!--begin manage_page-->
                 <div class="listlandA_page">
-                    <p class="title_boxM"><strong><i class="fa fa-file-pdf-o"></i>Thêm mới nhóm khách hàng</strong> <a href="{{route('customerListGroup')}}" class="btn btn-xs btn-primary pull-right"><i class="fa fa-chevron-left"></i> Quay lại</a></p>
+                    <p class="title_boxM"><strong><i class="fa fa-file-pdf-o"></i>Sửa nhóm khách hàng</strong> <a href="{{route('userListGroup')}}" class="btn btn-xs btn-primary pull-right"><i class="fa fa-chevron-left"></i> Quay lại</a></p>
                     <div>
                         <div class="box-body">
                             <form class="form-horizontal" method="post">
                                 {{csrf_field()}}
+                                <div class="panel-body">
+                                    <div class="col-md-12">
+                                        <div class="box-body">
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label">{{trans('customer.nameGroup')}}</label>
 
-                                <div class="col-md-12">
-                                    <div class="box-body">
-                                        <div class="form-group">
-                                            <label class="col-md-2 control-label">{{trans('customer.name')}}</label>
-
-                                            <div class="col-sm-10">
-                                                <input type="text" class="form-control" name="name"
-                                                       placeholder="{{trans('customer.nameGroup')}}"
-                                                       value="{{old('name')}}"/>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" name="name" placeholder="{{trans('customer.name')}}" value="{{old('name', $data->name)}}"/>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+
                                 <!-- /.box-body -->
                                 <div class="box-footer">
                                     <button type="reset" class="btn btn-default">{{trans('system.cancel')}}</button>
-                                    <button type="submit"
-                                            class="btn btn-info pull-right">{{trans('system.submit')}}</button>
+                                    <button type="submit" class="btn btn-info pull-right">{{trans('system.submit')}}</button>
                                 </div>
                                 <!-- /.box-footer -->
                             </form>

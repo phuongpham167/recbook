@@ -91,4 +91,8 @@ class User extends Authenticatable
     public function subcribes(){
         return $this->belongsToMany(Province::class, 'province_subcribes');
     }
+
+    public function usergroups() {
+        return $this->belongsToMany(UserGroup::class,'member_group');
+    }
 }

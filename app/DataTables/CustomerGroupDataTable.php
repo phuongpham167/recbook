@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\CustomerGroup;
+use App\UserGroup;
 use App\User;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Services\DataTable;
@@ -21,13 +21,13 @@ class CustomerGroupDataTable extends DataTable
         $dataTable = new EloquentDataTable($query);
 
         $dataTable = $dataTable
-            ->editColumn('name', function(CustomerGroup $customerGroup){
+            ->editColumn('name', function(UserGroup $customerGroup){
                 return !empty($customerGroup->name)?$customerGroup->name:'';
             })
-            ->addColumn('count', function(CustomerGroup $customerGroup) {
+            ->addColumn('count', function(UserGroup $customerGroup) {
                 return $customerGroup->customers()->count();
             })
-            ->addColumn('manage', function(CustomerGroup $customerGroup) {
+            ->addColumn('manage', function(UserGroup $customerGroup) {
                 return a('khach-hang/nhom/del', 'id='.$customerGroup->id,trans('g.delete'), ['class'=>'btn btn-xs btn-danger'],'#',"return bootbox.confirm('".trans('system.delete_confirm')."', function(result){if(result==true){window.location.replace('".asset('system/customer/del?id='.$customerGroup->id)."')}})").' 
                  '.a('system/customer/edit', 'id='.$customerGroup->id,trans('g.edit'), ['class'=>'btn btn-xs btn-default']).' 
                   '.a('system/customer/care','id='.$customerGroup->id,trans('customer.care'), ['class'=>'btn btn-xs btn-info']);
