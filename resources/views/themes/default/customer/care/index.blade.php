@@ -19,6 +19,9 @@
         .listlandA_page .form-control {
             font-size: 12px;
         }
+        tfoot {
+            display: table-header-group;
+        }
     </style>
 @endpush
 
@@ -87,6 +90,18 @@
                                                     <th>Ngày tạo</th>
                                                 </tr>
                                                 </thead>
+                                                <tfoot>
+                                                <tr>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                </tr>
+                                                </tfoot>
                                                 <tbody>
                                                 @foreach($data as $item)
                                                     <?php
@@ -217,6 +232,17 @@
                                                 <th>Thời gian</th>
                                             </tr>
                                             </thead>
+                                            <tfoot>
+                                            <tr>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                            </tfoot>
+                                            <tbody>
+
+                                            </tbody>
                                         </table>
                                     </div>
                                 </div>
@@ -241,6 +267,19 @@
                                                 <th>Ngày tạo</th>
                                             </tr>
                                             </thead>
+                                            <tfoot>
+                                            <tr>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                            </tfoot>
                                         </table>
                                     </div>
                                 </div>
@@ -261,6 +300,12 @@
                                                 <th>Thời gian</th>
                                             </tr>
                                             </thead>
+                                            <tfoot>
+                                            <tr>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                            </tfoot>
                                         </table>
                                     </div>
                                 </div>
@@ -476,7 +521,21 @@
                     {data: 'content', name: 'content'},
                     {data: 'feedback', name: 'feedback'},
                     {data: 'created_at', name: 'created_at'}
-                ]
+                ],
+                initComplete: function () {
+                    this.api().columns().every(function () {
+                        console.log(this);
+                        var column = this;
+                        var input = document.createElement("input");
+                        if(column.index() != 0){
+                            $(input).appendTo($(column.footer()).empty())
+                                .on('keyup', function () {
+                                    column.search($(this).val(), false, false, true).draw();
+                                });
+                        }
+
+                    });
+                }
             });
         }
 
@@ -502,13 +561,39 @@
                     {data: 'contact_person', name: 'contact_person'},
                     {data: 'contact_phone_number', name: 'contact_phone_number'},
                     {data: 'created_at', name: 'created_at'}
-                ]
+                ],
+                initComplete: function () {
+                    this.api().columns().every(function () {
+                        var column = this;
+                        var input = document.createElement("input");
+                        if(column.index() != 0 && column.index() != 8){
+                            $(input).appendTo($(column.footer()).empty())
+                                .on('keyup', function () {
+                                    column.search($(this).val(), false, false, true).draw();
+                                });
+                        }
+
+                    });
+                }
             });
         }
         $(function() {
-            $('#datatable').dataTable();
+            $('#datatable').dataTable({
+                initComplete: function () {
+                this.api().columns().every(function () {
+                    console.log(this);
+                    var column = this;
+                    var input = document.createElement("input");
+                    if(column.index() != 0 && column.index() != 7){
+                        $(input).appendTo($(column.footer()).empty())
+                            .on('keyup', function () {
+                                column.search($(this).val(), false, false, true).draw();
+                            });
+                    }
 
-        $(function () {
+                });
+            }
+            });
             if ($('.get-detail').first().data('detail') != null) {
                 fill_detail($('.get-detail').first().data('detail'));
                 get_cares($('.get-detail').first().data('id'));
@@ -589,7 +674,18 @@
                 columns: [
                     {data: 'content', name: 'content'},
                     {data: 'time', name: 'time'},
-                ]
+                ],
+                initComplete: function () {
+                    this.api().columns().every(function () {
+                        console.log(this);
+                        var column = this;
+                        var input = document.createElement("input");
+                        $(input).appendTo($(column.footer()).empty())
+                            .on('keyup', function () {
+                                column.search($(this).val(), false, false, true).draw();
+                            });
+                    });
+                }
             });
 
             $('.panel-heading').on('click', '#addschedule', function () {

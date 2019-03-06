@@ -25,6 +25,9 @@
             padding: 10px 15px;
             text-transform: uppercase;
         }
+        tfoot {
+            display: table-header-group;
+        }
     </style>
 @endpush
 
@@ -64,10 +67,19 @@
                                             <th></th>
                                         </tr>
                                     </thead>
-
+                                    <tfoot>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                    </tfoot>
                                     <tbody>
 
                                     </tbody>
+
                                 </table>
                             </div>
                         </div>
@@ -111,12 +123,26 @@
                     },
                 },
                 columns: [
-                    { data: 'id', name: 'id' },
-                    { data: 'name', name: 'name' },
-                    { data: 'phone', name: 'phone' },
-                    { data: 'type', name: 'type' },
+                    { data: 'id', name: 'id' , sortable:false},
+                    { data: 'name', name: 'name' , sortable:false},
+                    { data: 'phone', name: 'phone' , sortable:false},
+                    { data: 'type', name: 'type' , sortable:false, searchable: false},
                     { data: 'manage', name: 'manage'  , sortable:false, searchable: false}
-                ]
+                ],
+                initComplete: function () {
+                    this.api().columns().every(function () {
+                        console.log(this);
+                        var column = this;
+                        var input = document.createElement("input");
+                        if(column.index() != 3 && column.index() != 4){
+                            $(input).appendTo($(column.footer()).empty())
+                                .on('keyup', function () {
+                                    column.search($(this).val(), false, false, true).draw();
+                                });
+                        }
+
+                    });
+                }
             });
         });
 
