@@ -12,6 +12,8 @@
 */
 
 use App\RealEstate;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\URL;
 
 Route::get( '/gui-mail', function(){
 
@@ -259,4 +261,33 @@ Route::get('/t', function (){
 
 Route::group(['prefix'=>'notify'], function(){
     Route::get('read/{id?}', 'NotificationController@read')->name('readNotification');
+});
+
+Route::get('sitemap', function() {
+
+    // create new sitemap object
+    $sitemap = App::make('sitemap');
+
+    // set cache key (string), duration in minutes (Carbon|Datetime|int), turn on/off (boolean)
+    // by default cache is disabled
+    $sitemap->setCache('laravel.sitemap', 60);
+
+    // check if there is cached sitemap and build new only if is not
+    if (!$sitemap->isCached()) {
+        $time   =   \Carbon\Carbon::now();
+        // add item to the sitemap (url, date, priority, freq)
+        $sitemap->add(URL::to('/'), $time, '1.0', 'daily');
+        $sitemap->add(URL::to('tim-kiem'), $time, '0.9', 'monthly');
+
+        // get all posts from db
+        $posts = DB::table('posts')->orderBy('created_at', 'desc')->get();
+
+        // add every post to the sitemap
+        foreach ($posts as $post) {
+            $sitemap->add($post->slug, $post->modified, $post->priority, $post->freq);
+        }
+    }
+
+    // show your sitemap (options: 'xml' (default), 'html', 'txt', 'ror-rss', 'ror-rdf')
+    return $sitemap->render('xml');
 });
