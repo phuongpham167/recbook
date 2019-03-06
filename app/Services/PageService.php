@@ -42,7 +42,7 @@ class PageService
     private function buildQuery($type, $item)
     {
         $query= RealEstate::select('id', 'title', 'short_description', 'slug', 'code',
-            'area_of_premises', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date');
+            'area_of_premises', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date', 'detail');
         $query->where('title', 'like', '%' . $item->title . '%');
         if ($item->re_category_id) {
             $query->where('re_category_id', $type , $item->re_category_id);
