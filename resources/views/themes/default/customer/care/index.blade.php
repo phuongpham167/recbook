@@ -533,6 +533,8 @@
                 ]
             });
         }
+        $(function() {
+            $('#datatable').dataTable();
 
         $(function () {
             if ($('.get-detail').first().data('detail') != null) {
