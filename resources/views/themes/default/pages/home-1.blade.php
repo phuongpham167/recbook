@@ -122,7 +122,7 @@
                                 @php
                                     $shortDes = trim_text($item->detail, 130);
                                 @endphp
-                                <div class="short-des">{{$item->short_description ? $item->short_description : ($shortDes ? $shortDes : '')}}
+                                <div class="short-des">{!! $item->short_description ? $item->short_description : ($shortDes ? $shortDes : '') !!}
 
                                 </div>
                                 <div class="row area">
@@ -247,7 +247,7 @@
                                                         @php
                                                             $shortDes = trim_text($item->detail, 130);
                                                         @endphp
-                                                        <div class="short-des">{{$item->short_description ? $item->short_description : ($shortDes ? $shortDes : '')}}
+                                                        <div class="short-des">{!! $item->short_description ? $item->short_description : ($shortDes ? $shortDes : '') !!}
                                                         </div>
                                                         <p>
                                                             <strong>DTMB:</strong> {{$item->area_of_premises ? $item->area_of_premises . 'm2' : '0m2'}} </p><p><strong>Giá:</strong>
@@ -303,7 +303,7 @@
                                                         @php
                                                             $shortDes = trim_text($item->detail, 130);
                                                         @endphp
-                                                        <div class="short-des">{{$item->short_description ? $item->short_description : ($shortDes ? $shortDes : '')}}
+                                                        <div class="short-des">{!! $item->short_description ? $item->short_description : ($shortDes ? $shortDes : '') !!}
                                                         </div>
                                                         <p>
                                                             <strong>DTMB:</strong> {{$item->area_of_premises ? $item->area_of_premises . 'm2' : '0m2'}}</p><p> <strong>Giá:</strong>
@@ -359,7 +359,7 @@
                                                         @php
                                                             $shortDes = trim_text($item->detail, 130);
                                                         @endphp
-                                                        <div class="short-des">{{$item->short_description ? $item->short_description : ($shortDes ? $shortDes : '')}}
+                                                        <div class="short-des">{!! $item->short_description ? $item->short_description : ($shortDes ? $shortDes : '') !!}
                                                         </div>
                                                         <p>
                                                             <strong>DTMB:</strong> {{$item->area_of_premises ? $item->area_of_premises . 'm2' : '0m2'}} </p><p><strong>Giá:</strong>
@@ -471,7 +471,7 @@
                                                         @php
                                                             $shortDes = trim_text($item->detail, 130);
                                                         @endphp
-                                                        <div class="short-des">{{$item->short_description ? $item->short_description : ($shortDes ? $shortDes : '')}}
+                                                        <div class="short-des">{!! $item->short_description ? $item->short_description : ($shortDes ? $shortDes : '') !!}
                                                         </div>
                                                         <p>
                                                             <strong>DTMB:</strong> {{$item->area_of_premises ? $item->area_of_premises . 'm2' : '0m2'}} </p><p> <strong>Giá:</strong>

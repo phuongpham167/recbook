@@ -72,7 +72,7 @@
                             <div class="brief_item">
                                 <h3>
                                     <a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">{{ $item->title }}</a></h3>
-                                <div><p>{{ $item->short_description }}</p></div>
+                                <div><p>{!! $item->short_description !!}</p></div>
                             </div>
 
                             <div class="row no-gutters info_item">
@@ -133,7 +133,7 @@
                                             <strong><a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">{{ $item->title }}</a></strong>
                                             <img class="vip" src="/images/new.gif" alt="{{ $item->title }}" title="{{ $item->title }}">
                                         </h3>
-                                        <div>{{ $item->short_description }}</div>
+                                        <div>{!! $item->short_description !!}</div>
                                     </div>
 
                                     <div class="col-md-3 info_th">

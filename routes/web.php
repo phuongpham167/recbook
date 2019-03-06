@@ -14,6 +14,7 @@
 use App\RealEstate;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\URL;
+use App\UserGroup;
 
 Route::get( '/gui-mail', function(){
 
@@ -86,6 +87,18 @@ Route::group(['middleware'=>'auth'], function(){
     Route::post('frontend/saveByParts', ['as'=>'saveProjectFrontend', 'uses'=>'FrontendController@saveProjectByParts']);
     Route::post('frontend/export', ['as'=>'saveProjectFrontend', 'uses'=>'FrontendController@exportProject']);
 
+    Route::get('nhom', ['as'=>'userListGroup', 'uses'=>'AuthenticateController@getListGroup']);
+    Route::get('nhom/data', ['as'=>'userDataGroup', 'uses'=>'AuthenticateController@dataListGroup']);
+    Route::get('nhom/them', ['as'=>'userCreateGroup', 'uses'=>'AuthenticateController@getCreateGroup']);
+    Route::post('nhom/them', ['as'=>'userCreateGroup', 'uses'=>'AuthenticateController@postCreateGroup']);
+    Route::get('nhom/xoa', ['as'=>'userDeleteGroup', 'uses'=>'AuthenticateController@getDeleteGroup']);
+    Route::get('nhom/sua', ['as'=>'userEditGroup', 'uses'=>'AuthenticateController@getEditGroup']);
+    Route::post('nhom/sua', ['as'=>'userEditGroup', 'uses'=>'AuthenticateController@postEditGroup']);
+
+    Route::get('nhom/thanh-vien', ['as'=>'getUser', 'uses'=>'AuthenticateController@getMember']);
+    Route::get('nhom/thanh-vien/data', ['as'=>'memberData', 'uses'=>'AuthenticateController@getDataMember']);
+    Route::get('nhom/thanh-vien/them', ['as'=>'addMember', 'uses'=>'AuthenticateController@postAddMember']);
+    Route::get('nhom/thanh-vien/xoa', ['as'=>'deleteMember', 'uses'=>'AuthenticateController@postDeleteMember']);
 
     Route::group(['prefix'=>'bat-dong-san'], function(){
         Route::get('/{filter?}', ['as' => 'realEstateList', 'uses' => 'RealEstateController@list'])->where('filter', 'tin-rao-het-han|tin-rao-cho-duyet|tin-rao-nhap|tin-rao-da-xoa');
@@ -171,14 +184,6 @@ Route::group(['middleware'=>'auth'], function(){
         Route::get('sua', ['as'=>'customerEdit', 'uses'=>'CustomerController@getEdit']);
         Route::post('sua', ['as'=>'customerEdit', 'uses'=>'CustomerController@postEdit']);
 
-        Route::get('nhom', ['as'=>'customerListGroup', 'uses'=>'CustomerController@getListGroup']);
-        Route::get('nhom/data', ['as'=>'customerDataGroup', 'uses'=>'CustomerController@dataListGroup']);
-        Route::get('nhom/them', ['as'=>'customerCreateGroup', 'uses'=>'CustomerController@getCreateGroup']);
-        Route::post('nhom/them', ['as'=>'customerCreateGroup', 'uses'=>'CustomerController@postCreateGroup']);
-        Route::get('nhom/xoa', ['as'=>'customerDeleteGroup', 'uses'=>'CustomerController@getDeleteGroup']);
-        Route::get('nhom/sua', ['as'=>'customerEditGroup', 'uses'=>'CustomerController@getEditGroup']);
-        Route::post('nhom/sua', ['as'=>'customerEditGroup', 'uses'=>'CustomerController@postEditGroup']);
-
         Route::group(['prefix'=>'cham-soc'], function(){
             Route::get('', ['as'=>'customerCare', 'uses'=>'CareController@index']);
             Route::get('/data', ['as'=>'careData', 'uses'=>'CareController@dataList']);
@@ -255,7 +260,7 @@ Route::group(['prefix'=>'ajax'], function(){
 
 Route::get('/t', function (){
 //    var_dump(session('tinhthanhquantam'));
-    print_r( 'session: '.session('tinhthanhquantam'));
+//    print_r( 'session: '.session('tinhthanhquantam'));
 //    print_r(auth()->user()->subcribes()->pluck('province_subcribes.province_id')->toArray());
 });
 

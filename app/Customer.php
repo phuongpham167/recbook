@@ -56,10 +56,6 @@ class Customer extends Model
         return $this->hasMany(Receipt::class);
     }
 
-    public function customergroups(){
-        return $this->hasMany(CustomerGroup::class);
-    }
-
     protected static function boot()
     {
         parent::boot();

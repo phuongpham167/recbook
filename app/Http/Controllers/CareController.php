@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Care;
 use App\Customer;
+use App\UserGroup;
 use App\Http\Requests\CreateCareRequest;
 use App\RealEstate;
 use App\Scopes\PrivateScope;
@@ -73,8 +74,9 @@ class CareController extends Controller
             $directions = $this->directionService->getListDropDown();
             $exhibits = $this->exhibitService->getListDropDown();
 
+            $userGroup = UserGroup::where('user_id', auth()->user()->id)->get();
             return v('customer.care.index', compact('customer','data', 'reCategories',
-                    'provinces', 'directions', 'exhibits'));
+                    'provinces', 'directions', 'exhibits','userGroup'));
         }
     }
     public function dataList() {
