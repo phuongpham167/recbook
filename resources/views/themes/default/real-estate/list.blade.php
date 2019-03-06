@@ -255,12 +255,9 @@
                         <table class="table table-bordered" id="datatable-price">
                             <thead>
                             <tr>
-                                <th>Giá tin vip</th>
-                                <th>Giá tin vip nổi bật</th>
-                                <th>Giá tin hot</th>
-                                <th>Giá tin hot nổi bật</th>
-                                <th>Giá tin hấp dẫn</th>
-                                <th>Giá tin vip bên phải</th>
+                                @foreach(vip_type() as $k=>$item)
+                                <th>{{$item}}</th>
+                                @endforeach
                             </tr>
                             </thead>
                         </table>
@@ -349,10 +346,10 @@
                 $('#id-re2').val(id);
                 $('.price').remove();
                 $('#datatable-price').append('<tr class="price">\n' +
-                    '                                <td>'+hot+'</td>\n' +
-                    '                                <td>'+hot_hl+'</td>\n' +
                     '                                <td>'+vip+'</td>\n' +
                     '                                <td>'+vip_hl+'</td>\n' +
+                    '                                <td>'+hot+'</td>\n' +
+                    '                                <td>'+hot_hl+'</td>\n' +
                     '                                <td>'+i_value+'</td>\n' +
                     '                                <td>'+vip_right+'</td>\n' +
                     '                            </tr>');

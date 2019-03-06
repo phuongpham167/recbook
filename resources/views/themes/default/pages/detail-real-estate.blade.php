@@ -102,10 +102,13 @@
                                         $linkVideo = $data->link_video ? $data->link_video : '';
                                         if ($linkVideo) {
                                             preg_match('/[\\?\\&]v=([^\\?\\&]+)/', $linkVideo, $matches);
+                                            if($matches){
                                             $id = $matches[1];
                                             $width = '100%';
                                             $height = '400';
                                             $linkVideo = 'https://www.youtube.com/embed/' . $id;
+                                            }
+
                                         }
                                     @endphp
                                     @if ($linkVideo)

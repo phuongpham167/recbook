@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Branch;
 use App\Currency;
+use App\MemberGroup;
+use App\UserGroup;
 use App\Group;
+use App\Http\Requests\UserGroupRequest;
 use App\Http\Requests\FormUserInfoRequest;
 use App\Http\Requests\FormUserRequest;
 use App\Http\Requests\LoginRequest;
@@ -414,5 +417,115 @@ class AuthenticateController extends Controller
 //        }
 
         return $result->make(true);
+    }
+
+    public function getListGroup(){
+        return v('users.groupList');
+    }
+
+    public function dataListGroup(){
+        $data   =   UserGroup::with('user');
+        $data   =   $data->where('user_id', auth()->user()->id);
+        $result = Datatables::of($data)
+            ->addColumn('name', function(UserGroup $group){
+                return "<a href='".route('getUser', ['id'=>$group->id])."'>".$group->name."</a>";
+            })
+            ->addColumn('count', function(UserGroup $group) {
+                return $group->members()->count();
+            })
+            ->addColumn('manage', function(UserGroup $group) {
+                return a('nhom/xoa', 'id='.$group->id,trans('g.delete'), ['class'=>'btn btn-xs btn-danger'],'#',"return bootbox.confirm('".trans('system.delete_confirm')."', function(result){if(result==true){window.location.replace('".asset('nhom/xoa?id='.$group->id)."')}})").'  '.a('nhom/sua', 'id='.$group->id,trans('g.edit'), ['class'=>'btn btn-xs btn-default']);
+            })->rawColumns(['manage','name']);
+
+        return $result->make(true);
+    }
+    public function getDeleteGroup(){
+        $data   =   UserGroup::find(request('id'));
+        if(!empty($data) && $data->user_id == auth()->user()->id){
+            $data->delete();
+            set_notice('Xoá nhóm khách hàng thành công!', 'success');
+        } else set_notice('Nhóm khách hàng không tồn tại hoặc bạn không có quyền xoá!', 'warning');
+        return redirect()->back();
+    }
+    public function getCreateGroup(){
+        return v('users.createGroup');
+    }
+    public function postCreateGroup(UserGroupRequest $request)
+    {
+        $data   =   new UserGroup();
+        $data->name   =   $request->name;
+        $data->user_id  =   auth()->user()->id;
+        $data->web_id   =   get_web_id();
+        $data->created_at   =   Carbon::now();
+        $data->save();
+        event_log('Tạo nhóm mới '.$data->name.' id '.$data->id);
+        set_notice(trans('customer.add_group_success'), 'success');
+        return redirect()->back();
+    }
+    public function getEditGroup()
+    {
+        $data   =   UserGroup::find(request('id'));
+        if(!empty($data) && $data->user_id == auth()->user()->id){
+            event_log('Truy cập trang [Sửa nhóm]');
+            return v('users.editGroup', compact('data'));
+        }else{
+            set_notice("Nhóm không tồn tại hoặc không thuộc quyền quản lý của bạn", 'warning');
+            return redirect()->back();
+        }
+    }
+    public function postEditGroup(UserGroupRequest $request)
+    {
+        $data   =   UserGroup::find($request->id);
+        if(!empty($data) && $data->user_id == auth()->user()->id){
+            $data->name   =   $request->name;
+            $data->save();
+            event_log('Sửa nhóm '.$data->name.' id '.$data->id);
+            set_notice(trans('system.edit_success'), 'success');
+        }else
+            set_notice(trans('system.not_exist'), 'warning');
+        return redirect()->back();
+    }
+    public function postAddMember()
+    {
+        $user_group_id = UserGroup::find(\request('user_group_id'));
+        foreach ( explode(',',\request('user_id')) as $item) {
+            $user_group_id->members()->attach($item);
+        }
+//        event_log('Thêm thành viên vào nhóm '.$data->name.' id '.$data->id);
+        set_notice(trans('system.add_success'), 'success');
+        return redirect()->back();
+    }
+
+    public function getMember(){
+        return v('users.groupMemberList');
+    }
+
+    public function getDataMember(){
+        $data = UserGroup::where('id',(\request('id')))->where('user_id',auth()->user()->id)->first();
+        $result = [];
+        if(!empty($data)){
+            $data = $data->members();
+            $result = Datatables::of($data)
+                ->addColumn('name', function($user) {
+                    return $user->name;
+                })->addColumn('phone', function($user) {
+                    return $user->phone;
+                })->addColumn('email', function($user) {
+                    return $user->email;
+                })->addColumn('manage', function($user) {
+                    return a('nhom/thanh-vien/xoa', 'id='.$user->user_id.'&user_group_id='.request('id'),trans('g.delete'), ['class'=>'btn btn-xs btn-danger'],'#',"return bootbox.confirm('".trans('system.delete_confirm')."', function(result){if(result==true){window.location.replace('".asset('nhom/thanh-vien/xoa?id='.$user->user_id.'&user_group_id='.request('id'))."')}})");
+                })->rawColumns(['manage']);
+            return $result->make(true);
+        }
+
+        return Datatables::of([])->make(true);
+    }
+    public function postDeleteMember(){
+        $user_group_id = UserGroup::find(\request('user_group_id'));
+        if($user_group_id->user_id == auth()->user()->id){
+            $user_group_id->members()->detach([\request('id')]);
+            set_notice('Xoá thành viên thành công!', 'success');
+        } else set_notice('Thành viên không tồn tại hoặc bạn không có quyền xoá!', 'warning');
+        return redirect()->back();
     }
 }

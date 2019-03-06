@@ -25,6 +25,9 @@
             padding: 10px 15px;
             text-transform: uppercase;
         }
+        tfoot {
+            display: table-header-group;
+        }
     </style>
 @endpush
 
@@ -44,12 +47,13 @@
                     <ul class="nav nav-tabs">
                         <li role="presentation" @if(url()->current() == asset('khach-hang')) class="active" @endif><a class="freelancer_tab" href="/khach-hang">Danh sách khách hàng</a></li>
                         <li role="presentation" @if(url()->current() == asset('khach-hang/lich-hen')) class="active" @endif><a class="freelancer_tab" href="/khach-hang/lich-hen">Danh sách lịch hẹn</a></li>
+                        <li role="presentation" @if(url()->current() == asset('nhom')) class="active" @endif><a class="freelancer_tab" href="nhom">Quản lý nhóm thành viên</a></li>
                     </ul>
                 </div>
                 @include('themes.default.includes.message')
                 <!--begin manage_page-->
                 <div class="listlandA_page">
-                    <p class="title_boxM"><strong><i class="fa fa-file-pdf-o"></i>Danh sách khách hàng</strong> <a href="{{route('customerCreate')}}" class="btn btn-xs btn-primary pull-right"><i class="fa fa-plus"></i> Thêm khách hàng</a></p>
+                    <p class="title_boxM"><strong><i class="fa fa-user-o"></i>Danh sách khách hàng</strong> <a href="{{route('customerCreate')}}" class="btn btn-xs btn-primary pull-right"><i class="fa fa-plus"></i> Thêm khách hàng</a></p>
                     <div>
                         <div class="box-body">
                             <div class="table-responsive">
@@ -63,10 +67,19 @@
                                             <th></th>
                                         </tr>
                                     </thead>
-
+                                    <tfoot>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                    </tfoot>
                                     <tbody>
 
                                     </tbody>
+
                                 </table>
                             </div>
                         </div>
@@ -110,12 +123,26 @@
                     },
                 },
                 columns: [
-                    { data: 'id', name: 'id' },
-                    { data: 'name', name: 'name' },
-                    { data: 'phone', name: 'phone' },
-                    { data: 'type', name: 'type' },
+                    { data: 'id', name: 'id' , sortable:false},
+                    { data: 'name', name: 'name' , sortable:false},
+                    { data: 'phone', name: 'phone' , sortable:false},
+                    { data: 'type', name: 'type' , sortable:false, searchable: false},
                     { data: 'manage', name: 'manage'  , sortable:false, searchable: false}
-                ]
+                ],
+                initComplete: function () {
+                    this.api().columns().every(function () {
+                        console.log(this);
+                        var column = this;
+                        var input = document.createElement("input");
+                        if(column.index() != 3 && column.index() != 4){
+                            $(input).appendTo($(column.footer()).empty())
+                                .on('keyup', function () {
+                                    column.search($(this).val(), false, false, true).draw();
+                                });
+                        }
+
+                    });
+                }
             });
         });
 

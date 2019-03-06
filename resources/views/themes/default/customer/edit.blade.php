@@ -33,7 +33,7 @@
                 @include('themes.default.includes.message')
                 <!--begin manage_page-->
                 <div class="listlandA_page">
-                    <p class="title_boxM"><strong><i class="fa fa-file-pdf-o"></i>Thêm mới khách hàng</strong> <a href="{{route('customerList')}}" class="btn btn-xs btn-primary pull-right"><i class="fa fa-chevron-left"></i> Quay lại</a></p>
+                    <p class="title_boxM"><strong><i class="fa fa-file-pdf-o"></i>Sửa khách hàng</strong> <a href="{{route('customerList')}}" class="btn btn-xs btn-primary pull-right"><i class="fa fa-chevron-left"></i> Quay lại</a></p>
                     <div>
                         <div class="box-body">
                             <form class="form-horizontal" method="post">

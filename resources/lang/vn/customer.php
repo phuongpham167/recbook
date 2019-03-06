@@ -5,7 +5,9 @@ return [
     'id' =>  'Id',
     'manage' =>  'Quản lý',
     'customerlist' =>  'Danh sách khách hàng',
+    'customerGroupList' =>  'Danh sách nhóm khách hàng',
     'name'  =>  'Tên Khách',
+    'nameGroup'  =>  'Tên nhóm',
     'phone'  =>  'Số điện thoại',
     'birthday'  =>  'Ngày sinh',
     'province'  =>  'Tỉnh',
@@ -26,5 +28,6 @@ return [
     'namesource' =>  'Tên Nguồn',
     'add_source_success'   =>  'Thêm Nguồn Khách mới thành công!',
     'web_id'  =>  'Website',
-    'add_success'   =>  'Thêm Khách mới thành công!'
+    'add_success'   =>  'Thêm Khách mới thành công!',
+    'add_group_success'   =>  'Thêm nhóm khách mới thành công!'
 ];

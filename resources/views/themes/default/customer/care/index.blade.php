@@ -1,7 +1,7 @@
 @extends(theme(TRUE).'.layouts.app')
 
 @section('meta-description')
-    <meta name="description" content="Customer Page" >
+    <meta name="description" content="Customer Page">
 @endsection
 
 @section('title')
@@ -9,14 +9,18 @@
 @endsection
 
 @push('style')
-    <link rel="stylesheet" href="{{ asset('css/theme.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/theme.css') }}"/>
     <style>
         .btn-is-disabled {
             pointer-events: none; /* Disables the button completely. Better than just cursor: default; */
             color: #ccc !important;
         }
+
         .listlandA_page .form-control {
             font-size: 12px;
+        }
+        tfoot {
+            display: table-header-group;
         }
     </style>
 @endpush
@@ -33,10 +37,10 @@
 
             <!--Begin left-->
             <div class="col-xs-9 right">
-                @include('themes.default.includes.message')
-                <!--begin manage_page-->
+            @include('themes.default.includes.message')
+            <!--begin manage_page-->
                 <div class="listlandA_page">
-                    <p class="title_boxM"><strong><i class="fa fa-file-pdf-o"></i>Chăm sóc khách hàng</strong> </p>
+                    <p class="title_boxM"><strong><i class="fa fa-file-pdf-o"></i>Chăm sóc khách hàng</strong></p>
                     <div>
                         <div class="box-body">
                             <div class="col-md-6">
@@ -49,23 +53,29 @@
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label>Tên khách hàng</label>
-                                            <input type="text" class="form-control" value="{{$customer->name}}" disabled>
+                                            <input type="text" class="form-control" value="{{$customer->name}}"
+                                                   disabled>
                                         </div>
                                         <div class="form-group">
                                             <label>Số điện thoại</label>
-                                            <input type="text" class="form-control" value="{{$customer->phone}}" disabled>
+                                            <input type="text" class="form-control" value="{{$customer->phone}}"
+                                                   disabled>
                                         </div>
                                         <div class="form-group">
                                             <label>Email</label>
-                                            <input type="text" class="form-control" value="{{$customer->email}}" disabled>
+                                            <input type="text" class="form-control" value="{{$customer->email}}"
+                                                   disabled>
                                         </div>
                                         <div class="form-group">
                                             <label>Địa chỉ</label>
-                                            <input type="text" class="form-control" value="{{$customer->address}}" disabled>
+                                            <input type="text" class="form-control" value="{{$customer->address}}"
+                                                   disabled>
                                         </div>
                                         <div class="table-responsive">
                                             <div class="">
-                                                <button class="btn btn-info" data-toggle="modal" data-target="#modalAddCustomerInfoList">Thêm</button>
+                                                <button class="btn btn-info" data-toggle="modal"
+                                                        data-target="#modalAddCustomerInfoList">Thêm
+                                                </button>
                                             </div>
                                             <table class="table table-bordered" id="datatable">
                                                 <thead>
@@ -80,6 +90,18 @@
                                                     <th>Ngày tạo</th>
                                                 </tr>
                                                 </thead>
+                                                <tfoot>
+                                                <tr>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                </tr>
+                                                </tfoot>
                                                 <tbody>
                                                 @foreach($data as $item)
                                                     <?php
@@ -103,7 +125,8 @@
                                                         'post_date' => $item->post_date
                                                     ];
                                                     ?>
-                                                    <tr style="cursor: pointer" class="get-detail" data-id="{{$item->id}}"
+                                                    <tr style="cursor: pointer" class="get-detail"
+                                                        data-id="{{$item->id}}"
                                                         data-detail="{{json_encode($detail)}}">
                                                         <td>{{$detail['id']}}</td>
                                                         <td>{{$detail['title']}}</td>
@@ -194,8 +217,10 @@
                         <div class="clearfix"></div>
                         <div class="col-md-6">
                             <div class="panel panel-default">
-                                <div class="panel-heading">Lịch sử chăm sóc <a class="btn btn-xs btn-info pull-right" style="display: none" data-id="" id="addcare"><i
-                                                class="fa fa-plus"></i>  Chăm sóc</a></div>
+                                <div class="panel-heading">Lịch sử chăm sóc <a class="btn btn-xs btn-info pull-right"
+                                                                               style="display: none" data-id=""
+                                                                               id="addcare"><i
+                                                class="fa fa-plus"></i> Chăm sóc</a></div>
                                 <div class="panel-body">
                                     <div class="table-responsive">
                                         <table class="table table-bordered" id="care_table">
@@ -207,6 +232,17 @@
                                                 <th>Thời gian</th>
                                             </tr>
                                             </thead>
+                                            <tfoot>
+                                            <tr>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                            </tfoot>
+                                            <tbody>
+
+                                            </tbody>
                                         </table>
                                     </div>
                                 </div>
@@ -231,6 +267,19 @@
                                                 <th>Ngày tạo</th>
                                             </tr>
                                             </thead>
+                                            <tfoot>
+                                            <tr>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                            </tfoot>
                                         </table>
                                     </div>
                                 </div>
@@ -238,8 +287,10 @@
                         </div>
                         <div class="col-md-12">
                             <div class="panel panel-default">
-                                <div class="panel-heading">Danh sách lịch hẹn <a class="btn btn-xs btn-info pull-right" data-id="{{$customer->id}}" id="addschedule"><i
-                                            class="fa fa-plus"></i>  Thêm lịch hẹn</a></div>
+                                <div class="panel-heading">Danh sách lịch hẹn <a class="btn btn-xs btn-info pull-right"
+                                                                                 data-id="{{$customer->id}}"
+                                                                                 id="addschedule"><i
+                                                class="fa fa-plus"></i> Thêm lịch hẹn</a></div>
                                 <div class="panel-body">
                                     <div class="table-responsive">
                                         <table class="table table-bordered" id="schedule_table">
@@ -249,6 +300,12 @@
                                                 <th>Thời gian</th>
                                             </tr>
                                             </thead>
+                                            <tfoot>
+                                            <tr>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                            </tfoot>
                                         </table>
                                     </div>
                                 </div>
@@ -268,7 +325,8 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Thêm chăm sóc</h4>
                 </div>
                 <div class="modal-body row form-horizontal">
@@ -276,13 +334,15 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">* Nội dung chăm sóc</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control required" id="modal-content" required placeholder="nội dung chăm sóc">
+                                <input type="text" class="form-control required" id="modal-content" required
+                                       placeholder="nội dung chăm sóc">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">* Phản hồi</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control required" id="modal-feedback" required placeholder="nội dung phản hồi">
+                                <input type="text" class="form-control required" id="modal-feedback" required
+                                       placeholder="nội dung phản hồi">
                             </div>
                         </div>
                         <div class="form-group">
@@ -298,7 +358,7 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">* Số điện thoại</label>
                             <div class="col-sm-4">
-                                <input class="form-control" id="modal-phone" />
+                                <input class="form-control" id="modal-phone"/>
                             </div>
                             <label class="col-sm-4">
                                 <a class="btn btn-default" id="modal-search"><i class="fa fa-search"></i> Tìm kiếm</a>
@@ -328,8 +388,10 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Đóng</button>
-                    <button type="button" class="btn btn-primary" id="submit_btn"><i class="fa fa-plus"></i> Cập nhật</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Đóng
+                    </button>
+                    <button type="button" class="btn btn-primary" id="submit_btn"><i class="fa fa-plus"></i> Cập nhật
+                    </button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
@@ -377,7 +439,7 @@
                         <button type="submit" name="add_new"
                                 id="add-new-re"
                                 class="_btn bg_red pull-right"><i
-                                class="fa fa-plus"></i> &nbsp;&nbsp;ĐĂNG
+                                    class="fa fa-plus"></i> &nbsp;&nbsp;ĐĂNG
                             TIN
                         </button>
                     </div>
@@ -397,7 +459,7 @@
     </style>
     @include(theme(TRUE).'.includes.create-customer-info-list-collapse')
 
-    <link rel="stylesheet" href="{{asset('plugins/jquery.datatables/css/jquery.dataTables.min.css')}}" />
+    <link rel="stylesheet" href="{{asset('plugins/jquery.datatables/css/jquery.dataTables.min.css')}}"/>
 
     @include(theme(TRUE).'.includes.footer')
 @endsection
@@ -412,8 +474,8 @@
 
         $('#customer_id').tokenInput("{{asset('ajax/customer')}}", {
             queryParam: "term",
-            zindex  :   1005,
-            preventDuplicates   :   true,
+            zindex: 1005,
+            preventDuplicates: true,
             tokenLimit: 1,
             @if(!empty($customer->id))
             prePopulate: [
@@ -422,7 +484,7 @@
             @endif
         });
 
-        function fill_detail(detail){
+        function fill_detail(detail) {
             $('#addcare').show();
             console.log(detail.title);
             $('#code').html(detail.id);
@@ -442,54 +504,97 @@
             $('#unit').html(detail.unit);
         }
 
-        function get_cares(id){
+        function get_cares(id) {
             $('#care_table').DataTable().destroy();
             $('#care_table').dataTable({
                 processing: true,
                 serverSide: true,
                 ajax: {
-                    'url': urlDatatable ='{!! route('careData') !!}',
+                    'url': urlDatatable = '{!! route('careData') !!}',
                     'type': 'GET',
                     'data': function (d) {
                         d.id = id
                     },
                 },
                 columns: [
-                    { data: 'id', name: 'id' },
-                    { data: 'content', name: 'content' },
-                    { data: 'feedback', name: 'feedback' },
-                    { data: 'created_at', name: 'created_at'}
-                ]
+                    {data: 'id', name: 'id'},
+                    {data: 'content', name: 'content'},
+                    {data: 'feedback', name: 'feedback'},
+                    {data: 'created_at', name: 'created_at'}
+                ],
+                initComplete: function () {
+                    this.api().columns().every(function () {
+                        console.log(this);
+                        var column = this;
+                        var input = document.createElement("input");
+                        if(column.index() != 0){
+                            $(input).appendTo($(column.footer()).empty())
+                                .on('keyup', function () {
+                                    column.search($(this).val(), false, false, true).draw();
+                                });
+                        }
+
+                    });
+                }
             });
         }
 
-        function get_response(id){
+        function get_response(id) {
             $('#response_table').DataTable().destroy();
             $('#response_table').dataTable({
                 processing: true,
                 serverSide: true,
                 ajax: {
-                    'url': urlDatatable ='{!! route('responseList') !!}',
+                    'url': urlDatatable = '{!! route('responseList') !!}',
                     'type': 'GET',
                     'data': function (d) {
                         d.id = id;
                     },
                 },
                 columns: [
-                    { data: 'id', name: 'id' },
-                    { data: 'title', name: 'title' },
-                    { data: 'type', name: 'type', sortable: false },
-                    { data: 'area_of_premises', name: 'area_of_premises' },
-                    { data: 'area_of_use', name: 'area_of_use' },
-                    { data: 'price', name: 'price' },
-                    { data: 'contact_person', name: 'contact_person' },
-                    { data: 'contact_phone_number', name: 'contact_phone_number' },
-                    { data: 'created_at', name: 'created_at' }
-                ]
+                    {data: 'id', name: 'id'},
+                    {data: 'title', name: 'title'},
+                    {data: 'type', name: 'type', sortable: false},
+                    {data: 'area_of_premises', name: 'area_of_premises'},
+                    {data: 'area_of_use', name: 'area_of_use'},
+                    {data: 'price', name: 'price'},
+                    {data: 'contact_person', name: 'contact_person'},
+                    {data: 'contact_phone_number', name: 'contact_phone_number'},
+                    {data: 'created_at', name: 'created_at'}
+                ],
+                initComplete: function () {
+                    this.api().columns().every(function () {
+                        var column = this;
+                        var input = document.createElement("input");
+                        if(column.index() != 0 && column.index() != 8){
+                            $(input).appendTo($(column.footer()).empty())
+                                .on('keyup', function () {
+                                    column.search($(this).val(), false, false, true).draw();
+                                });
+                        }
+
+                    });
+                }
             });
         }
         $(function() {
-            if($('.get-detail').first().data('detail') != null){
+            $('#datatable').dataTable({
+                initComplete: function () {
+                this.api().columns().every(function () {
+                    console.log(this);
+                    var column = this;
+                    var input = document.createElement("input");
+                    if(column.index() != 0 && column.index() != 7){
+                        $(input).appendTo($(column.footer()).empty())
+                            .on('keyup', function () {
+                                column.search($(this).val(), false, false, true).draw();
+                            });
+                    }
+
+                });
+            }
+            });
+            if ($('.get-detail').first().data('detail') != null) {
                 fill_detail($('.get-detail').first().data('detail'));
                 get_cares($('.get-detail').first().data('id'));
                 console.log($('.get-detail').first().data('id'));
@@ -497,47 +602,53 @@
                 $('#addcare').data('id', $('.get-detail').first().data('id'));
             }
 
-            $('.get-detail').click(function(){
+            $('.get-detail').click(function () {
                 fill_detail($(this).data('detail'));
                 get_cares($(this).data('id'));
                 get_response($(this).data('id'));
                 $('#addcare').data('id', $(this).data('id'));
             });
-            $('#addcare').click(function(){
+            $('#addcare').click(function () {
                 var id = $(this).data('id');
                 $('#modal-code').html(id);
                 $('#myModal').modal('show');
             });
-            $('#modal-search').click(function(){
+            $('#modal-search').click(function () {
                 $('#suggest_table').DataTable().destroy();
                 $('#suggest_table').dataTable({
                     processing: true,
                     serverSide: true,
                     ajax: {
-                        'url': urlDatatable ='{!! route('suggestResponse') !!}?phone='+$('#modal-phone').val(),
+                        'url': urlDatatable = '{!! route('suggestResponse') !!}?phone=' + $('#modal-phone').val(),
                         'type': 'GET'
                     },
                     columns: [
-                        { data: 'id', name: 'id' },
-                        { data: 'title', name: 'title' },
-                        { data: 'type', name: 'type', sortable: false },
-                        { data: 'area_of_premises', name: 'area_of_premises' },
-                        { data: 'area_of_use', name: 'area_of_use' },
-                        { data: 'price', name: 'price' },
-                        { data: 'contact_person', name: 'contact_person' },
-                        { data: 'contact_phone_number', name: 'contact_phone_number' },
-                        { data: 'created_at', name: 'created_at' },
+                        {data: 'id', name: 'id'},
+                        {data: 'title', name: 'title'},
+                        {data: 'type', name: 'type', sortable: false},
+                        {data: 'area_of_premises', name: 'area_of_premises'},
+                        {data: 'area_of_use', name: 'area_of_use'},
+                        {data: 'price', name: 'price'},
+                        {data: 'contact_person', name: 'contact_person'},
+                        {data: 'contact_phone_number', name: 'contact_phone_number'},
+                        {data: 'created_at', name: 'created_at'},
                     ]
                 });
             });
-            $('#submit_btn').click(function(){
-                var content =   $('#modal-content').val();
-                var feedback    =   $('#modal-feedback').val();
-                var realestate_id   =   $('#modal-code').html();
-                var response_id =   $('#modal-response-code').html();
-                if(content!='' && feedback!=''){
-                    $.post('{{route('careCreate')}}', {content, feedback,realestate_id,response_id, _token: '{{csrf_token()}}'}, function(r){
-                        if(r.status == 0){
+            $('#submit_btn').click(function () {
+                var content = $('#modal-content').val();
+                var feedback = $('#modal-feedback').val();
+                var realestate_id = $('#modal-code').html();
+                var response_id = $('#modal-response-code').html();
+                if (content != '' && feedback != '') {
+                    $.post('{{route('careCreate')}}', {
+                        content,
+                        feedback,
+                        realestate_id,
+                        response_id,
+                        _token: '{{csrf_token()}}'
+                    }, function (r) {
+                        if (r.status == 0) {
                             get_cares(r.id);
                             get_response(r.id);
                             $('#myModal').modal('hide');
@@ -546,8 +657,8 @@
                 }
 
             });
-            $('#suggest_table').on('click', '.picksuggest', function(){
-                var id   =   $(this).data('id');
+            $('#suggest_table').on('click', '.picksuggest', function () {
+                var id = $(this).data('id');
                 $('#modal-response-code').html(id);
             });
 
@@ -555,15 +666,26 @@
                 processing: true,
                 serverSide: true,
                 ajax: {
-                    'url': urlDatatable ='{!! route('scheduleData') !!}'+'?customer_id='+{{$customer->id}},
+                    'url': urlDatatable = '{!! route('scheduleData') !!}' + '?customer_id=' +{{$customer->id}},
                     'type': 'GET',
                     'data': function (d) {
                     }
                 },
                 columns: [
-                    { data: 'content', name: 'content' },
-                    { data: 'time', name: 'time' },
-                ]
+                    {data: 'content', name: 'content'},
+                    {data: 'time', name: 'time'},
+                ],
+                initComplete: function () {
+                    this.api().columns().every(function () {
+                        console.log(this);
+                        var column = this;
+                        var input = document.createElement("input");
+                        $(input).appendTo($(column.footer()).empty())
+                            .on('keyup', function () {
+                                column.search($(this).val(), false, false, true).draw();
+                            });
+                    });
+                }
             });
 
             $('.panel-heading').on('click', '#addschedule', function () {
