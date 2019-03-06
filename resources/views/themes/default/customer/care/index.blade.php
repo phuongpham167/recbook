@@ -489,6 +489,7 @@
             });
         }
         $(function() {
+            $('#datatable').dataTable();
             if($('.get-detail').first().data('detail') != null){
                 fill_detail($('.get-detail').first().data('detail'));
                 get_cares($('.get-detail').first().data('id'));
