@@ -16,8 +16,50 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\URL;
 use App\UserGroup;
 
-Route::get( '/gui-mail', function(){
+Route::get('sitemap', function() {
 
+    // create new sitemap object
+    $sitemap = App::make('sitemap');
+
+    // set cache key (string), duration in minutes (Carbon|Datetime|int), turn on/off (boolean)
+    // by default cache is disabled
+    $sitemap->setCache('laravel.sitemap', 60);
+
+    // check if there is cached sitemap and build new only if is not
+    if (!$sitemap->isCached()) {
+        $time   =   \Carbon\Carbon::now();
+        // add item to the sitemap (url, date, priority, freq)
+        $sitemap->add(URL::to('/'), $time, '1.0', 'daily');
+        $sitemap->add(URL::to('tim-kiem'), $time, '0.9', 'monthly');
+        $sitemap->add(URL::to('tim-kiem-du-an'), $time, '0.9', 'monthly');
+        $sitemap->add(URL::to('tim-kiem-thong-minh'), $time, '0.9', 'monthly');
+        $sitemap->add(URL::to('tin-vip'), $time, '0.9', 'monthly');
+        $sitemap->add(URL::to('tin-noi-bat'), $time, '0.9', 'monthly');
+        $sitemap->add(URL::to('tin-rao-cong-dong-mien-phi'), $time, '0.9', 'monthly');
+        $sitemap->add(URL::to('bai-viet/danh-sach'), $time, '0.9', 'monthly');
+        $sitemap->add(URL::to('lien-he'), $time, '0.9', 'monthly');
+
+        $sitemap->add(URL::to('dang-nhap'), $time, '0.9', 'monthly');
+        $sitemap->add(URL::to('dang-xuat'), $time, '0.9', 'monthly');
+        $sitemap->add(URL::to('dang-ky'), $time, '0.9', 'monthly');
+        $sitemap->add(URL::to('quen-mat-khau'), $time, '0.9', 'monthly');
+        $sitemap->add(URL::to('dat-lai-mat-khau'), $time, '0.9', 'monthly');
+        $sitemap->add(URL::to(''), $time, '0.9', 'monthly');
+        $sitemap->add(URL::to(''), $time, '0.9', 'monthly');
+        $cats   =   \App\ReCategory::all();
+        foreach($cats as $cat){
+            $sitemap->add(URL::to('danh-muc/'.$cat->slug), $time, '0.9', 'monthly');
+        }
+        $re =   RealEstate::all();
+        foreach($re as $r){
+            $sitemap->add(URL::to('tin/'.$r->slug.'-'.$r->id), $time, '0.9', 'monthly');
+        }
+        $posts  =   \App\Post::all();
+
+    }
+
+    // show your sitemap (options: 'xml' (default), 'html', 'txt', 'ror-rss', 'ror-rdf')
+    return $sitemap->render('xml');
 });
 Route::get('/', 'PageController@index1')->name('home');
 Route::get('/home', ['as'=>'Home1', 'uses'=>'PageController@index1']);
@@ -268,31 +310,4 @@ Route::group(['prefix'=>'notify'], function(){
     Route::get('read/{id?}', 'NotificationController@read')->name('readNotification');
 });
 
-Route::get('sitemap', function() {
 
-    // create new sitemap object
-    $sitemap = App::make('sitemap');
-
-    // set cache key (string), duration in minutes (Carbon|Datetime|int), turn on/off (boolean)
-    // by default cache is disabled
-    $sitemap->setCache('laravel.sitemap', 60);
-
-    // check if there is cached sitemap and build new only if is not
-    if (!$sitemap->isCached()) {
-        $time   =   \Carbon\Carbon::now();
-        // add item to the sitemap (url, date, priority, freq)
-        $sitemap->add(URL::to('/'), $time, '1.0', 'daily');
-        $sitemap->add(URL::to('tim-kiem'), $time, '0.9', 'monthly');
-
-        // get all posts from db
-        $posts = DB::table('posts')->orderBy('created_at', 'desc')->get();
-
-        // add every post to the sitemap
-        foreach ($posts as $post) {
-            $sitemap->add($post->slug, $post->modified, $post->priority, $post->freq);
-        }
-    }
-
-    // show your sitemap (options: 'xml' (default), 'html', 'txt', 'ror-rss', 'ror-rdf')
-    return $sitemap->render('xml');
-});
