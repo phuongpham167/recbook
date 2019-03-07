@@ -148,6 +148,36 @@
                         </div>
                         <div class="col-md-6">
                             <div class="panel panel-default">
+                                <div class="panel-heading">Khách hàng liên quan</div>
+                                <div class="panel-body">
+                                    @foreach($related_customers as $ctm)
+                                        @php
+                                                $c = \App\Customer::find($ctm->customer_id1);
+                                                if($ctm->customer_id1 == $customer->id){
+                                                    $c = \App\Customer::find($ctm->customer_id2);
+                                                }
+                                        @endphp
+                                        <p style="margin: 0 0 10px;">
+                                            <a href="{{ route('user.info', [$c->id])}} ">{{$c->name}}</a>
+                                        </p>
+                                    @endforeach
+                                </div>
+                                <div class="panel-footer">
+                                    <form method="get" action="{{asset('khach-hang/khach-hang-lien-quan')}}">
+                                        {{csrf_field()}}
+                                        <input type="text" class="form-control"
+                                               name="related_customer_id" id="related_customer_id"
+                                        />
+                                        <input type="text" class="form-control hidden"
+                                               name="customer_id" value="{{$customer->id}}"
+                                        />
+                                        <button type="submit" class="btn btn-info btn-sm" style="margin-top: 5px">Thêm</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="panel panel-default">
                                 <div class="panel-heading">Chi tiết yêu cầu</div>
                                 <div class="panel-body">
                                     <div class="form-group col-md-12">
@@ -482,6 +512,14 @@
                 {id: "{{$customer->id}}", name: "{{\App\Customer::find($customer->id)->name}}"}
             ]
             @endif
+        });
+
+        $('#related_customer_id').tokenInput("{{asset('ajax/customer')}}", {
+            queryParam: "term",
+            zindex: 1005,
+            preventDuplicates: true,
+            tokenLimit: 1,
+            hintText: 'Nhập tên khách hàng cần tìm'
         });
 
         function fill_detail(detail) {

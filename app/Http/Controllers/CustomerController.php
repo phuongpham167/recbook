@@ -101,4 +101,16 @@ class CustomerController extends Controller
             set_notice(trans('system.not_exist'), 'warning');
         return redirect()->back();
     }
+
+    public function relatedCustomer()
+    {
+        $data   =   Customer::find(\request('related_customer_id'));
+        $id = \request('customer_id');
+        if(!empty($data)){
+            $data->customers()->attach($id);
+            set_notice(trans('system.add_success'), 'success');
+        }else
+            set_notice(trans('system.not_exist'), 'warning');
+        return redirect()->back();
+    }
 }
