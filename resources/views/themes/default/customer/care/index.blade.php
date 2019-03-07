@@ -501,7 +501,7 @@
     <script src="{{asset('plugins/jquery.datatables/js/jquery.dataTables.js')}}"></script>
     <script src="{{asset('plugins/bootbox.min.js')}}"></script>
     <script>
-        $('.datepicker').datetimepicker({format: 'YYYY-MM-DD'});
+        $('.datepicker').datetimepicker({format: 'YYYY-MM-DD HH:mm'});
 
         $('#customer_id').tokenInput("{{asset('ajax/customer')}}", {
             queryParam: "term",
