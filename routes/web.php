@@ -225,6 +225,7 @@ Route::group(['middleware'=>'auth'], function(){
         Route::get('xoa', ['as'=>'customerDelete', 'uses'=>'CustomerController@getDelete']);
         Route::get('sua', ['as'=>'customerEdit', 'uses'=>'CustomerController@getEdit']);
         Route::post('sua', ['as'=>'customerEdit', 'uses'=>'CustomerController@postEdit']);
+        Route::get('khach-hang-lien-quan', ['as'=>'relatedCustomer', 'uses'=>'CustomerController@relatedCustomer']);
 
         Route::group(['prefix'=>'cham-soc'], function(){
             Route::get('', ['as'=>'customerCare', 'uses'=>'CareController@index']);
