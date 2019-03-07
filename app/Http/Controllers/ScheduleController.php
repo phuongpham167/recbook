@@ -24,7 +24,7 @@ class ScheduleController extends Controller
                 return $scheduleCustomer->customer->name;
             })
             ->addColumn('time', function(ScheduleCustomer $scheduleCustomer) {
-                return Carbon::parse($scheduleCustomer->time)->format('d/m/Y');
+                return Carbon::parse($scheduleCustomer->time)->format('d/m/Y H:i');
             })->addColumn('manage', function(ScheduleCustomer $scheduleCustomer) {
                 return a('khach-hang/lich-hen/xoa', 'id='.$scheduleCustomer->id,trans('g.delete'), ['class'=>'btn btn-xs btn-danger'],'#',"return bootbox.confirm('".trans('system.delete_confirm')."', function(result){if(result==true){window.location.replace('".asset('khach-hang/lich-hen/xoa?id='.$scheduleCustomer->id)."')}})").'  '.a('khach-hang/lich-hen/sua', 'id='.$scheduleCustomer->id,trans('g.edit'), ['class'=>'btn btn-xs btn-default']);
             })->rawColumns(['manage']);

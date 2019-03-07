@@ -60,6 +60,10 @@ class Customer extends Model
         return $this->belongsToMany(Customer::class,'customers_customers','customer_id1', 'customer_id2');
     }
 
+    public function sharedcustomer() {
+        return $this->belongsToMany(User::class,'shared_customer');
+    }
+
     protected static function boot()
     {
         parent::boot();

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Customer;
+use App\MemberGroup;
+use App\User;
 use App\UserGroup;
 use App\Http\Requests\UserGroupRequest;
 use App\Http\Requests\FormCustomerRequest;
@@ -111,6 +113,54 @@ class CustomerController extends Controller
             set_notice(trans('system.add_success'), 'success');
         }else
             set_notice(trans('system.not_exist'), 'warning');
+        return redirect()->back();
+    }
+
+    public function deleteRelatedCustomer()
+    {
+        $data1   =   Customer::find(\request('ctm1'));
+        $data2   =   Customer::find(\request('ctm2'));
+        $id1 = \request('ctm1');
+        $id2 = \request('ctm2');
+        if(!empty($data1) && !empty($data2)){
+            $data1->customers()->detach($id2);
+            $data2->customers()->detach($id1);
+            set_notice(trans('system.delete_success'), 'success');
+        }else
+            set_notice(trans('system.not_exist'), 'warning');
+//        return response('a');
+        return redirect()->back();
+    }
+
+    public function shareCustomer()
+    {
+        $share_customer = Customer::find( \request('share_customer_id'));
+        if(strpos(\request('user_group_id'), 'u') == 0){
+            $id = substr(\request('user_group_id'),1);
+            $data   =   User::find($id);
+
+            if(!empty($data)){
+                $share_customer->sharedcustomer()->attach($data->id);
+                set_notice(trans('system.add_success'), 'success');
+            }else
+                set_notice(trans('system.not_exist'), 'warning');
+        }
+        else{
+            if(!empty(request('user_group_id'))){
+                foreach ( explode(',',\request('user_group_id')) as $item) {
+                    $data   =   UserGroup::find($item);
+                    $members = MemberGroup::where('user_group_id', $data->id)->get();
+//                    print_r($data->id);
+//                    exit();
+                    foreach ($members as $user){
+                        $share_customer->sharedcustomer()->attach($user->user_id);
+                        set_notice(trans('system.add_success'), 'success');
+                    }
+                }
+            }
+            else
+                set_notice(trans('system.not_exist'), 'warning');
+        }
         return redirect()->back();
     }
 }
