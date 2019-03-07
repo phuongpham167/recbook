@@ -25,7 +25,8 @@ class FormCustomerRequest extends FormRequest
     {
         return [
             'name'  =>  'required',
-            'phone'  =>  'required'
+            'phone'  =>  'required',
+            'email' =>  'unique:customer'
         ];
     }
 
@@ -33,7 +34,8 @@ class FormCustomerRequest extends FormRequest
     {
         return [
             'name.required'  =>  'Vui lòng điền tên Khách hàng',
-            'phone.required'  =>  'Vui lòng điền số điện thoại Khách hàng'
+            'phone.required'  =>  'Vui lòng điền số điện thoại Khách hàng',
+            'email.unique' =>  'Email khách hàng đã tồn tại.'
         ];
     }
 }

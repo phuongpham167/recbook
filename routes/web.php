@@ -54,11 +54,11 @@ Route::get('sitemap', function() {
         foreach($re as $r){
             $sitemap->add(URL::to('tin/'.$r->slug.'-'.$r->id), $time, '0.9', 'monthly');
         }
-        $posts  =   \App\Post::all();
 
     }
 
     // show your sitemap (options: 'xml' (default), 'html', 'txt', 'ror-rss', 'ror-rdf')
+//    $sitemap->store('xml', 'mysitemap');
     return $sitemap->render('xml');
 });
 Route::get('/', 'PageController@index1')->name('home');
@@ -221,7 +221,7 @@ Route::group(['middleware'=>'auth'], function(){
 
         Route::get('data', ['as'=>'customerData', 'uses'=>'CustomerController@dataList']);
         Route::get('them', ['as'=>'customerCreate', 'uses'=>'CustomerController@getCreate']);
-        Route::post('them', ['as'=>'customerCreate', 'uses'=>'CustomerController@getCreate']);
+        Route::post('them', ['as'=>'customerCreate', 'uses'=>'CustomerController@postCreate']);
         Route::get('xoa', ['as'=>'customerDelete', 'uses'=>'CustomerController@getDelete']);
         Route::get('sua', ['as'=>'customerEdit', 'uses'=>'CustomerController@getEdit']);
         Route::post('sua', ['as'=>'customerEdit', 'uses'=>'CustomerController@postEdit']);
