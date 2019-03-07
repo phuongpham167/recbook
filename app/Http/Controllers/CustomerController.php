@@ -113,4 +113,20 @@ class CustomerController extends Controller
             set_notice(trans('system.not_exist'), 'warning');
         return redirect()->back();
     }
+
+    public function deleteRelatedCustomer()
+    {
+        $data1   =   Customer::find(\request('ctm1'));
+        $data2   =   Customer::find(\request('ctm2'));
+        $id1 = \request('ctm1');
+        $id2 = \request('ctm2');
+        if(!empty($data1) && !empty($data2)){
+            $data1->customers()->detach($id2);
+            $data2->customers()->detach($id1);
+            set_notice(trans('system.delete_success'), 'success');
+        }else
+            set_notice(trans('system.not_exist'), 'warning');
+//        return response('a');
+        return redirect()->back();
+    }
 }

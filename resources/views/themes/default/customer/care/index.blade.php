@@ -159,6 +159,7 @@
                                         @endphp
                                         <p style="margin: 0 0 10px;">
                                             <a href="{{ route('user.info', [$c->id])}} ">{{$c->name}}</a>
+                                            <a type="button" class="pull-right" href="{{route('deleteRelatedCustomer',['ctm1' => $c->id,'ctm2' => $customer->id])}}"><i class="fa fa-window-close" aria-hidden="true"></i></a>
                                         </p>
                                     @endforeach
                                 </div>
