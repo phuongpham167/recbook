@@ -1,11 +1,11 @@
 @extends(theme(TRUE).'.layouts.app')
 
 @section('meta-description')
-    <meta name="description" content="Customer Page">
+    <meta name="description" content="Customer Care Page" >
 @endsection
 
 @section('title')
-    Danh sách khách hàng
+    Chăm sóc khách hàng
 @endsection
 
 @push('style')
@@ -45,7 +45,10 @@
                         <div class="box-body">
                             <div class="col-md-6">
                                 <div class="panel panel-default">
-                                    <div class="panel-heading">Thông tin khách hàng</div>
+                                    <div class="panel-heading">Thông tin khách hàng
+                                        <a class="btn btn-xs btn-info pull-right" data-id="{{$customer->id}}" id="share_customer"><i
+                                                    class="fa fa-share-alt"></i> Chia sẻ khách hàng</a>
+                                    </div>
                                     <div class="panel-body">
                                         <div class="form-group col-md-6">
                                             <label>Mã khách hàng</label>
@@ -73,9 +76,7 @@
                                         </div>
                                         <div class="table-responsive">
                                             <div class="">
-                                                <button class="btn btn-info" data-toggle="modal"
-                                                        data-target="#modalAddCustomerInfoList">Thêm
-                                                </button>
+                                                <button class="btn btn-info" data-toggle="modal" style="margin-bottom: 5px" data-target="#modalAddCustomerInfoList">Thêm</button>
                                             </div>
                                             <table class="table table-bordered" id="datatable">
                                                 <thead>
@@ -470,12 +471,41 @@
                         <button type="submit" name="add_new"
                                 id="add-new-re"
                                 class="_btn bg_red pull-right"><i
-                                    class="fa fa-plus"></i> &nbsp;&nbsp;ĐĂNG
-                            TIN
+                                class="fa fa-plus"></i> &nbsp;&nbsp;ĐĂNG
                         </button>
                     </div>
                 </div>
 
+            </div>
+        </div>
+    </form>
+    <form method="post" action="{{asset('khach-hang/chia-se')}}">
+        {{csrf_field()}}
+        <div id="shareCustomerModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content modal-lg">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Chia sẻ khách hàng</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="panel-body ">
+                            <div class="form-group clearfix">
+                                <input type="text" class="col-sm-12 form-control"
+                                       name="customer_id" id="share_customer_id"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit"
+                                class="_btn bg_red pull-right"><i
+                                    class="fa fa-plus"></i> &nbsp;&nbsp;CHIA SẺ
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </form>
@@ -523,7 +553,13 @@
             hintText: 'Nhập tên khách hàng cần tìm'
         });
 
-        function fill_detail(detail) {
+        $('#share_customer_id').tokenInput("{{asset('ajax/customer')}}", {
+            queryParam: "term",
+            zindex  :   1005,
+            preventDuplicates   :   true,
+        });
+
+        function fill_detail(detail){
             $('#addcare').show();
             console.log(detail.title);
             $('#code').html(detail.id);
@@ -730,6 +766,11 @@
             $('.panel-heading').on('click', '#addschedule', function () {
                 // console.log(check);
                 $('#myModal2').modal('show');
+            });
+
+            $('.panel-heading').on('click', '#share_customer', function () {
+                // console.log(check);
+                $('#shareCustomerModal').modal('show');
             });
         });
 
