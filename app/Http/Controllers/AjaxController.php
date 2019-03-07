@@ -49,7 +49,7 @@ class AjaxController extends Controller
         $result =   [];
         foreach(\App\User::where('name','LIKE',"%{$name}%")->where('web_id',get_web_id())->get() as $item){
             $result[]   =   [
-                'id'    =>  'u'.$item->id,
+                'id'    =>  'us'.$item->id,
                 'name'  =>  'User: '.$item->name.' - '.$item->email
             ];
         }

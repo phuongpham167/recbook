@@ -562,7 +562,14 @@
             queryParam: "term",
             zindex  :   1005,
             preventDuplicates   :   true,
-            hintText: 'Nhập tên thành viên hoặc nhóm cần tìm'
+            hintText: 'Nhập tên thành viên hoặc nhóm cần tìm',
+            @if(!empty($shared_list = \App\ShareCustomer::where('customer_id', $customer->id)->get()))
+                prePopulate: [
+                    @foreach($shared_list as $user)
+                        {id: "us{{$user->user_id}}", name: "{{\App\User::find($user->user_id)->name}}"+' - '+"{{\App\User::find($user->user_id)->email}}"},
+                    @endforeach
+                ]
+            @endif
         });
 
         function fill_detail(detail){

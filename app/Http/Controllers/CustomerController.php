@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Customer;
 use App\MemberGroup;
+use App\ShareCustomer;
 use App\User;
 use App\UserGroup;
 use App\Http\Requests\UserGroupRequest;
@@ -135,32 +136,29 @@ class CustomerController extends Controller
     public function shareCustomer()
     {
         $share_customer = Customer::find( \request('share_customer_id'));
-        if(strpos(\request('user_group_id'), 'u') == 0){
-            $id = substr(\request('user_group_id'),1);
-            $data   =   User::find($id);
+//        print_r(\request('user_group_id'));
+//        exit();
+        $user_array = [];
+        foreach ( explode(',',\request('user_group_id')) as $item) {
 
-            if(!empty($data)){
-                $share_customer->sharedcustomer()->attach($data->id);
-                set_notice(trans('system.add_success'), 'success');
-            }else
-                set_notice(trans('system.not_exist'), 'warning');
-        }
-        else{
-            if(!empty(request('user_group_id'))){
-                foreach ( explode(',',\request('user_group_id')) as $item) {
-                    $data   =   UserGroup::find($item);
-                    $members = MemberGroup::where('user_group_id', $data->id)->get();
-//                    print_r($data->id);
-//                    exit();
-                    foreach ($members as $user){
-                        $share_customer->sharedcustomer()->attach($user->user_id);
-                        set_notice(trans('system.add_success'), 'success');
-                    }
+            if(strpos($item, 's')== 1){
+
+                $id = substr($item,2);
+                $user_array[] = $id;
+            }
+            else{
+                $data   =   UserGroup::find($item);
+                $members = MemberGroup::where('user_group_id', $data->id)->get();
+                foreach ($members as $user){
+                    $user_array[] = $user->user_id;
                 }
             }
-            else
-                set_notice(trans('system.not_exist'), 'warning');
         }
+
+        array_unique($user_array);
+        $share_customer->sharedcustomer()->sync($user_array);
+
+        set_notice(trans('system.add_success'), 'success');
         return redirect()->back();
     }
 }
