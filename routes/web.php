@@ -221,6 +221,7 @@ Route::group(['middleware'=>'auth'], function(){
         })->name('customerList');
 
         Route::get('data', ['as'=>'customerData', 'uses'=>'CustomerController@dataList']);
+        Route::get('data-shared', ['as'=>'customerSharedData', 'uses'=>'CustomerController@dataSharedList']);
         Route::get('them', ['as'=>'customerCreate', 'uses'=>'CustomerController@getCreate']);
         Route::post('them', ['as'=>'customerCreate', 'uses'=>'CustomerController@postCreate']);
         Route::get('xoa', ['as'=>'customerDelete', 'uses'=>'CustomerController@getDelete']);

@@ -48,8 +48,10 @@
                             <div class="col-md-6">
                                 <div class="panel panel-default">
                                     <div class="panel-heading">Thông tin khách hàng
-                                        <a class="btn btn-xs btn-info pull-right" data-id="{{$customer->id}}" id="share_customer"><i
-                                                    class="fa fa-share-alt"></i> Chia sẻ khách hàng</a>
+                                        @if($customer->user_id == auth()->user()->id)
+                                            <a class="btn btn-xs btn-info pull-right" data-id="{{$customer->id}}" id="share_customer"><i
+                                                        class="fa fa-share-alt"></i> Chia sẻ khách hàng</a>
+                                        @endif
                                     </div>
                                     <div class="panel-body">
                                         <div class="form-group col-md-6">

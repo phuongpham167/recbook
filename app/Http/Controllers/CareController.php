@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Care;
 use App\Customer;
 use App\RelatedCustomer;
+use App\ShareCustomer;
 use App\UserGroup;
 use App\Http\Requests\CreateCareRequest;
 use App\RealEstate;
@@ -61,7 +62,7 @@ class CareController extends Controller
      */
     public function index(){
         $id =   \request('id');
-        if(!empty($customer = Customer::find($id)) && $customer->user_id == auth()->user()->id){
+        if(!empty($customer = Customer::find($id)) && ($customer->user_id == auth()->user()->id || ShareCustomer::where('customer_id', $customer->id)->first()->user_id == auth()->user()->id)){
             $data   =   new RealEstate();
             $data   =   $data->where('customer_id', $id)->withoutGlobalScope(PrivateScope::class)->where(function ($q){
                 $q->where('posted_by', auth()->user()->id)->orWhere('is_private',0);
