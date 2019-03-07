@@ -74,7 +74,6 @@ class CareController extends Controller
             $directions = $this->directionService->getListDropDown();
             $exhibits = $this->exhibitService->getListDropDown();
 
-            $customerGroup = CustomerGroup::where('user_id', auth()->user()->id)->get();
             return v('customer.care.index', compact('customer','data', 'reCategories',
                     'provinces', 'directions', 'exhibits','customerGroup'));
         }
