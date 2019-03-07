@@ -20,3 +20,4 @@ storage
 /public/frontend_web
 package-lock\.json
 public/.htaccess
+public/mysitemap.xml
