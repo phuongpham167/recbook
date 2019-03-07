@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Care;
 use App\Customer;
+use App\RelatedCustomer;
 use App\UserGroup;
 use App\Http\Requests\CreateCareRequest;
 use App\RealEstate;
@@ -74,9 +75,10 @@ class CareController extends Controller
             $directions = $this->directionService->getListDropDown();
             $exhibits = $this->exhibitService->getListDropDown();
 
-            $userGroup = UserGroup::where('user_id', auth()->user()->id)->get();
+            $related_customers = RelatedCustomer::where('customer_id1', $customer->id)->orWhere('customer_id2', $customer->id)->get();
+
             return v('customer.care.index', compact('customer','data', 'reCategories',
-                    'provinces', 'directions', 'exhibits','userGroup'));
+                    'provinces', 'directions', 'exhibits','related_customers'));
         }
     }
     public function dataList() {

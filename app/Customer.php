@@ -56,6 +56,10 @@ class Customer extends Model
         return $this->hasMany(Receipt::class);
     }
 
+    public function customers() {
+        return $this->belongsToMany(Customer::class,'customers_customers','customer_id1', 'customer_id2');
+    }
+
     protected static function boot()
     {
         parent::boot();

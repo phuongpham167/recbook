@@ -17,6 +17,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
         URL::forceScheme(env('ssl', 'http'));
+        \Carbon\Carbon::setLocale('vi');
     }
 
     /**
