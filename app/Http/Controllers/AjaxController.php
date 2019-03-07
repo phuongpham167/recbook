@@ -44,6 +44,24 @@ class AjaxController extends Controller
         return response()->json($result);
     }
 
+    public function ajaxUserGroup() {
+        $name   = request()->input('term');
+        $result =   [];
+        foreach(\App\User::where('name','LIKE',"%{$name}%")->where('web_id',get_web_id())->get() as $item){
+            $result[]   =   [
+                'id'    =>  'u'.$item->id,
+                'name'  =>  'User: '.$item->name.' - '.$item->email
+            ];
+        }
+        foreach(\App\UserGroup::where('name','LIKE',"%{$name}%")->where('web_id',get_web_id())->get() as $item){
+            $result[]   =   [
+                'id'    =>  $item->id,
+                'name'  =>  'Group: '.$item->name.' - '.$item->email
+            ];
+        }
+        return response()->json($result);
+    }
+
     public function ajaxAccount() {
         $name   = request()->input('term');
         $result =   [];

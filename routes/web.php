@@ -195,6 +195,7 @@ Route::group(['middleware'=>'auth'], function(){
         Route::get('/get-detail-re/{id}', ['as' => 'ajax.getDetailRe', 'uses' => 'RealEstateController@getDetailRe']);
         Route::post('/update-detail-re/{id}', ['as' => 'ajax.updateDetailRe', 'uses' => 'RealEstateController@updateDetailRe']);
         Route::get('user', 'AjaxController@ajaxUser');
+        Route::get('user-group', 'AjaxController@ajaxUserGroup');
         Route::get('customer', 'AjaxController@ajaxCustomer');
         Route::get('street', 'AjaxController@ajaxStreet');
         Route::get('province', 'AjaxController@ajaxProvince')->name('ajaxProvince');
@@ -227,6 +228,8 @@ Route::group(['middleware'=>'auth'], function(){
         Route::post('sua', ['as'=>'customerEdit', 'uses'=>'CustomerController@postEdit']);
         Route::get('khach-hang-lien-quan', ['as'=>'relatedCustomer', 'uses'=>'CustomerController@relatedCustomer']);
         Route::get('xoa-khach-hang-lien-quan', ['as'=>'deleteRelatedCustomer', 'uses'=>'CustomerController@deleteRelatedCustomer']);
+
+        Route::get('chia-se', ['as'=>'shareCustomer', 'uses'=>'CustomerController@shareCustomer']);
 
         Route::group(['prefix'=>'cham-soc'], function(){
             Route::get('', ['as'=>'customerCare', 'uses'=>'CareController@index']);

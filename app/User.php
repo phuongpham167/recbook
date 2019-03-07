@@ -95,4 +95,8 @@ class User extends Authenticatable
     public function usergroups() {
         return $this->belongsToMany(UserGroup::class,'member_group');
     }
+
+    public function sharedcustomer() {
+        return $this->belongsToMany(User::class,'shared_customer');
+    }
 }

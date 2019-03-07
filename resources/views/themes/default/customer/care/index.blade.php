@@ -10,6 +10,8 @@
 
 @push('style')
     <link rel="stylesheet" href="{{ asset('css/theme.css') }}"/>
+    <link rel="stylesheet" href="{{asset('plugins/loopj-jquery-tokeninput/styles/token-input.css')}}" />
+    <link rel="stylesheet" href="{{asset('plugins/loopj-jquery-tokeninput/styles/token-input-bootstrap3.css')}}" />
     <style>
         .btn-is-disabled {
             pointer-events: none; /* Disables the button completely. Better than just cursor: default; */
@@ -479,7 +481,7 @@
             </div>
         </div>
     </form>
-    <form method="post" action="{{asset('khach-hang/chia-se')}}">
+    <form method="get" action="{{asset('khach-hang/chia-se')}}">
         {{csrf_field()}}
         <div id="shareCustomerModal" class="modal fade" role="dialog">
             <div class="modal-dialog">
@@ -494,7 +496,10 @@
                         <div class="panel-body ">
                             <div class="form-group clearfix">
                                 <input type="text" class="col-sm-12 form-control"
-                                       name="customer_id" id="share_customer_id"
+                                       name="user_group_id" id="share_input"
+                                />
+                                <input type="text" class="hidden"
+                                       name="share_customer_id" value="{{$customer->id}}"
                                 />
                             </div>
                         </div>
@@ -502,7 +507,7 @@
                     <div class="modal-footer">
                         <button type="submit"
                                 class="_btn bg_red pull-right"><i
-                                    class="fa fa-plus"></i> &nbsp;&nbsp;CHIA SẺ
+                                    class="fa fa-share-alt"></i> &nbsp;&nbsp;CHIA SẺ
                         </button>
                     </div>
                 </div>
@@ -545,7 +550,7 @@
             @endif
         });
 
-        $('#related_customer_id').tokenInput("{{asset('ajax/customer')}}", {
+        $('#related_customer').tokenInput("{{asset('ajax/customer')}}", {
             queryParam: "term",
             zindex: 1005,
             preventDuplicates: true,
@@ -553,10 +558,11 @@
             hintText: 'Nhập tên khách hàng cần tìm'
         });
 
-        $('#share_customer_id').tokenInput("{{asset('ajax/customer')}}", {
+        $('#share_input').tokenInput("{{asset('ajax/user-group')}}", {
             queryParam: "term",
             zindex  :   1005,
             preventDuplicates   :   true,
+            hintText: 'Nhập tên thành viên hoặc nhóm cần tìm'
         });
 
         function fill_detail(detail){
@@ -772,6 +778,8 @@
                 // console.log(check);
                 $('#shareCustomerModal').modal('show');
             });
+
+            $(".token-input-dropdown").css("z-index","9999")
         });
 
     </script>
