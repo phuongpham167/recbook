@@ -393,6 +393,9 @@
                                                                                 <i class="fa fa-commenting-o"></i> {{trans('detail-real-estate.chat')}}
                                                                             </button>
                                                                         </form>
+                                                                        <a href="{{route('friend.cancel', [$checkSendFRequest2->id])}}"
+                                                                           class="btn btn-danger pull-right btn-cancel-friend" style="margin-right: 5px"><i
+                                                                                    class="fa fa-times"></i> Hủy kết bạn</a>
                                                                     @endif
                                                                 @endif
                                                             @else
@@ -565,6 +568,12 @@
                                     @if ((\Auth::user() && \Auth::user()->id  == $data->id)|| $isFriend || $data->group->public_permission)
                                         <p class="title-short-section" style="margin-top: 16px;">Bạn bè</p>
                                         <div class="list-friend border-block">
+                                            {{--@php--}}
+                                                    {{--echo '<pre>';--}}
+                                                    {{--print_r($listFriends->toArray());--}}
+                                                    {{--echo '</pre>';--}}
+
+                                            {{--@endphp--}}
                                             @foreach($listFriends as $friend)
                                                 @php
                                                     $f = $friend->fuser1;
@@ -734,6 +743,10 @@
                 $this.removeClass('panel-collapsed');
                 $this.find('i').removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
             }
+        });
+
+        $('.btn-cancel-friend').on('click', function () {
+           confirm('Bạn có chắc chắn muốn hủy kết bạn với tài khoản này không?')
         });
         $('#add-new-re').on('click', function () {
             let title = $('#title').val();
