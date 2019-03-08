@@ -372,6 +372,9 @@
                                                                                 <i class="fa fa-commenting-o"></i> {{trans('detail-real-estate.chat')}}
                                                                             </button>
                                                                         </form>
+                                                                        <a href="{{route('friend.cancel', [$checkSendFRequest1->id])}}"
+                                                                           class="btn btn-danger pull-right btn-cancel-friend" style="margin-right: 5px"><i
+                                                                                class="fa fa-times"></i> Hủy kết bạn</a>
                                                                     @endif
                                                                 @endif
                                                             @elseif($checkSendFRequest2)
@@ -381,6 +384,7 @@
                                                                             class="fa fa-plus"></i> Chấp nhận lời
                                                                         mời</a>
                                                                 @else
+                                                                    aaaaaaaaaaaaa
                                                                     @if (\Auth::user()->group->chat_permission && $data->group->chat_permission)
                                                                         <form role="form"
                                                                               action="{{ route('conversation.store') }}"
