@@ -429,27 +429,27 @@ class RealEstateController extends Controller
             $data->vip_expire_at = Carbon::now()->addDay($request->vip_time);
             if($request->vip_type == 1){
                 $price = HotVip::where('province_id', $data->province_id)->first()->hot_value;
-                $type = 'tin hot';
+                $type = vip_type(1);
             }
             else if($request->vip_type == 2){
                 $price = HotVip::where('province_id', $data->province_id)->first()->hot_highlight_value;
-                $type = 'tin hot nổi bật';
+                $type = vip_type(2);
             }
             else if($request->vip_type == 3){
                 $price = HotVip::where('province_id', $data->province_id)->first()->vip_value;
-                $type = 'tin vip';
+                $type = vip_type(3);
             }
             else if($request->vip_type == 4){
                 $price = HotVip::where('province_id', $data->province_id)->first()->vip_highlight_value;
-                $type = 'tin vip nổi bật';
+                $type = vip_type(4);
             }
             else if($request->vip_type == 5){
                 $price = HotVip::where('province_id', $data->province_id)->first()->interesting_value;
-                $type = 'tin hấp dẫn';
+                $type = vip_type(5);
             }
             else if($request->vip_type == 6){
                 $price = HotVip::where('province_id', $data->province_id)->first()->vip_right_value;
-                $type = 'tin vip phải';
+                $type = vip_type(6);
             }
             $value = $request->vip_time*$price;
             if(RealEstate::where('vip_type', $request->vip_type)->where('province_id',$data->province_id)->count() == get_config('vip'.$request->vip_type)){

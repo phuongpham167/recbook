@@ -5453,7 +5453,7 @@ function transaction_log($reason, $value, $type) {
     $data->save();
 }
 
-function vip_type () {
+function vip_type ($id=null) {
     $vip = \App\VipHot::first();
 
     $type = [
@@ -5465,7 +5465,10 @@ function vip_type () {
         6 => $vip->vip6,
     ];
 
-    return $type;
+    if(empty($id))
+        return $type;
+    else
+        return $type[$id];
 }
 function tag_filter($content, $type){
     switch ($type){
