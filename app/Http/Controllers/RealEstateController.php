@@ -424,9 +424,13 @@ class RealEstateController extends Controller
     {
         $data   =   RealEstate::find($request->id);
         if(!empty($data)){
+            if($data->vip_type == $request->vip_type)
+                $data->vip_expire_at = Carbon::parse($data->vip_expire_at)->addDay($request->vip_time);
+            else
+                $data->vip_expire_at = Carbon::now()->addDay($request->vip_time);
 
             $data->vip_type = $request->vip_type;
-            $data->vip_expire_at = Carbon::now()->addDay($request->vip_time);
+
             if($request->vip_type == 1){
                 $price = HotVip::where('province_id', $data->province_id)->first()->hot_value;
                 $type = vip_type(1);
