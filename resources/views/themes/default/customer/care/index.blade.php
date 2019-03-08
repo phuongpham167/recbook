@@ -151,6 +151,7 @@
 
                             </div>
                         </div>
+                        @if($customer->user_id == auth()->user()->id)
                         <div class="col-md-6">
                             <div class="panel panel-default">
                                 <div class="panel-heading">Khách hàng liên quan</div>
@@ -172,7 +173,7 @@
                                     <form method="get" action="{{asset('khach-hang/khach-hang-lien-quan')}}">
                                         {{csrf_field()}}
                                         <input type="text" class="form-control"
-                                               name="related_customer_id" id="related_customer_id"
+                                               name="related_customer_id" id="related_customer"
                                         />
                                         <input type="text" class="form-control hidden"
                                                name="customer_id" value="{{$customer->id}}"
@@ -182,6 +183,7 @@
                                 </div>
                             </div>
                         </div>
+                        @endif
                         <div class="col-md-6">
                             <div class="panel panel-default">
                                 <div class="panel-heading">Chi tiết yêu cầu</div>

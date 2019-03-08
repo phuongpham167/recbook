@@ -64,8 +64,9 @@ class CareController extends Controller
         $id =   \request('id');
         if(!empty($customer = Customer::find($id)) && ($customer->user_id == auth()->user()->id || ShareCustomer::where('customer_id', $customer->id)->first()->user_id == auth()->user()->id)){
             $data   =   new RealEstate();
-            $data   =   $data->where('customer_id', $id)->withoutGlobalScope(PrivateScope::class)->where(function ($q){
-                $q->where('posted_by', auth()->user()->id)->orWhere('is_private',0);
+            $shared = ShareCustomer::where('customer_id', $id)->pluck('user_id');
+            $data   =   $data->where('customer_id', $id)->withoutGlobalScope(PrivateScope::class)->where(function ($q) use ($id){
+                $q->where('posted_by', auth()->user()->id)->orWhere('is_private',0)->orWhere('customer_id',$id);
             });
             if(!empty(request('re_id'))){
                 $data   =   $data->where('id', request('re_id'));

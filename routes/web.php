@@ -12,6 +12,7 @@
 */
 
 use App\RealEstate;
+use App\ShareCustomer;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\URL;
 use App\UserGroup;
@@ -310,6 +311,7 @@ Route::get('/t', function (){
 //    var_dump(session('tinhthanhquantam'));
 //    print_r( 'session: '.session('tinhthanhquantam'));
 //    print_r(auth()->user()->subcribes()->pluck('province_subcribes.province_id')->toArray());
+    print_r($shared = ShareCustomer::where('customer_id', 50)->pluck('user_id'));
 });
 
 Route::group(['prefix'=>'notify'], function(){

@@ -125,7 +125,7 @@ class CustomerController extends Controller
     {
         $data   =   Customer::find(\request('related_customer_id'));
         $id = \request('customer_id');
-        if(!empty($data)){
+        if(!empty($data) && $data->user_id == auth()->user()->id){
             $data->customers()->attach($id);
             set_notice(trans('system.add_success'), 'success');
         }else
