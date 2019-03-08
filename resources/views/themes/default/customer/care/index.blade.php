@@ -694,7 +694,7 @@
                 $('#addcare').data('id', $('.get-detail').first().data('id'));
             }
 
-            $('.get-detail').click(function () {
+            $(document).on('click','.get-detail',function () {
                 fill_detail($(this).data('detail'));
                 get_cares($(this).data('id'));
                 get_response($(this).data('id'));
