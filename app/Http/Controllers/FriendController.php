@@ -54,4 +54,14 @@ class FriendController extends Controller
         }
         return redirect()->back();
     }
+
+    public function cancelFriend($id)
+    {
+        $friendRequest = Friend::find($id);
+        if ($friendRequest) {
+            $friendRequest->delete();
+            set_notice(trans('system.cancel_friend_success'), 'success');
+        }
+        return redirect()->back();
+    }
 }

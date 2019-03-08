@@ -188,6 +188,7 @@ Route::group(['middleware'=>'auth'], function(){
     Route::get('danh-sach-loi-moi-ket-ban', ['as' => 'friend.request.list', 'uses' => 'FriendController@listFriendRequest']);
     Route::get('them-ban-be/{id}', ['as'=> 'friend.request', 'uses' => 'FriendController@friendRequest']);
     Route::get('xac-nhan-ban-be/{id}', ['as'=> 'friend.confirm.request', 'uses' => 'FriendController@confirmFriendRequest']);
+    Route::get('huy-ket-ban/{id}', ['as'=> 'friend.cancel', 'uses' => 'FriendController@cancelFriend']);
 
     /*
      * ajax route
