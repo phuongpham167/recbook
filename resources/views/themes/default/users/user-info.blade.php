@@ -565,6 +565,12 @@
                                     @if ((\Auth::user() && \Auth::user()->id  == $data->id)|| $isFriend || $data->group->public_permission)
                                         <p class="title-short-section" style="margin-top: 16px;">Bạn bè</p>
                                         <div class="list-friend border-block">
+                                            {{--@php--}}
+                                                    {{--echo '<pre>';--}}
+                                                    {{--print_r($listFriends->toArray());--}}
+                                                    {{--echo '</pre>';--}}
+
+                                            {{--@endphp--}}
                                             @foreach($listFriends as $friend)
                                                 @php
                                                     $f = $friend->fuser1;

@@ -931,7 +931,9 @@ class PageController extends Controller
                 /*
                  * get all friend
                  * */
-                $listFriends = Friend::where('user1', $id)->orWhere('user2', $id)->where('confirmed', 1)->get();
+                $listFriends = Friend::where(function ($q) use ($id){
+                    $q->where('user1', $id)->orWhere('user2', $id);
+                })->where('confirmed', 1)->get();
                 /*
                  * get list friend request
                  * */
