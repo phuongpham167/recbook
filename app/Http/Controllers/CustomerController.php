@@ -32,6 +32,22 @@ class CustomerController extends Controller
 
         return $result->make(true);
     }
+
+    public function dataSharedList(){
+        $data   =   ShareCustomer::where('user_id', auth()->user()->id);
+        $result = Datatables::of($data)
+            ->editColumn('name', function($customer){
+                return "<a href='".route('customerCare', ['id'=>$customer->customer_id])."'>".Customer::find($customer->customer_id)->name."</a>";
+            })
+            ->editColumn('phone', function( $customer){
+                return "<a href='".route('customerCare', ['id'=>$customer->customer_id])."'>".Customer::find($customer->customer_id)->phone."</a>";
+            })
+            ->addColumn('type', function( $customer) {
+                return Customer::find($customer->customer_id)->type?Customer::find($customer->customer_id)->type->name:'-';
+            })->rawColumns([ 'name', 'phone']);
+
+        return $result->make(true);
+    }
     public function getDelete(){
         $data   =   Customer::find(request('id'));
         if(!empty($data) && $data->user_id == auth()->user()->id){
@@ -109,7 +125,7 @@ class CustomerController extends Controller
     {
         $data   =   Customer::find(\request('related_customer_id'));
         $id = \request('customer_id');
-        if(!empty($data)){
+        if(!empty($data) && $data->user_id == auth()->user()->id){
             $data->customers()->attach($id);
             set_notice(trans('system.add_success'), 'success');
         }else

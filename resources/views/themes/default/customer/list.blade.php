@@ -86,6 +86,37 @@
 
                         <div class="clearfix"></div>
                     </div>
+                    <p class="title_boxM"><strong><i class="fa fa-user-o"></i>Danh sách khách hàng được chia sẻ</strong></p>
+                    <div>
+                        <div class="box-body">
+                            <div class="table-responsive">
+                                <table class="table" id="datatable2">
+                                    <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Tên khách hàng</th>
+                                        <th>Số điện thoại</th>
+                                        <th>Phân loại</th>
+                                    </tr>
+                                    </thead>
+                                    <tfoot>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                    </tfoot>
+                                    <tbody>
+
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="clearfix"></div>
+                    </div>
                 </div>
                 <!--end manage_page-->
 
@@ -128,6 +159,43 @@
                     { data: 'phone', name: 'phone' , sortable:false},
                     { data: 'type', name: 'type' , sortable:false, searchable: false},
                     { data: 'manage', name: 'manage'  , sortable:false, searchable: false}
+                ],
+                initComplete: function () {
+                    this.api().columns().every(function () {
+                        console.log(this);
+                        var column = this;
+                        var input = document.createElement("input");
+                        if(column.index() != 3 && column.index() != 4){
+                            $(input).appendTo($(column.footer()).empty())
+                                .on('keyup', function () {
+                                    column.search($(this).val(), false, false, true).draw();
+                                });
+                        }
+
+                    });
+                }
+            });
+
+            datatable = $('#datatable2').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    'url': urlDatatable ='{!! route('customerSharedData') !!}',
+                    'type': 'GET',
+                    'data': function (d) {
+                        d.datefrom    =   $('#datefrom').val();
+                        d.datefrom    =   $('#dateto').val();
+                        d.re_category_id = $('#re_category_id').val();
+                        d.re_type_id = $('#re_type_id').val();
+                        d.district_id = $('#district_id').val();
+                        d.post_type = $('#post_type').val();
+                    },
+                },
+                columns: [
+                    { data: 'id', name: 'id' , sortable:false},
+                    { data: 'name', name: 'name' , sortable:false},
+                    { data: 'phone', name: 'phone' , sortable:false},
+                    { data: 'type', name: 'type' , sortable:false, searchable: false}
                 ],
                 initComplete: function () {
                     this.api().columns().every(function () {

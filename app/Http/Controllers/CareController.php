@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Care;
 use App\Customer;
 use App\RelatedCustomer;
+use App\ShareCustomer;
 use App\UserGroup;
 use App\Http\Requests\CreateCareRequest;
 use App\RealEstate;
@@ -61,10 +62,19 @@ class CareController extends Controller
      */
     public function index(){
         $id =   \request('id');
-        if(!empty($customer = Customer::find($id)) && $customer->user_id == auth()->user()->id){
+        if(!empty($customer = Customer::find($id)) && ($customer->user_id == auth()->user()->id || in_array(auth()->user()->id,ShareCustomer::where('customer_id', $customer->id)->pluck('user_id')->toArray()))){
             $data   =   new RealEstate();
-            $data   =   $data->where('customer_id', $id)->withoutGlobalScope(PrivateScope::class)->where(function ($q){
-                $q->where('posted_by', auth()->user()->id)->orWhere('is_private',0);
+
+            $relate1 = RelatedCustomer::where('customer_id1',$id)->pluck('customer_id2')->toArray();
+            $relate2 = RelatedCustomer::where('customer_id2',$id)->pluck('customer_id1')->toArray();
+
+            $related = array_merge($relate1,$relate2);
+            $related = array_unique($related);
+
+            $data   =   $data->where(function ($q) use ($id,$related){
+                $q->where('customer_id',$id)->orWhereIn('customer_id',$related);
+            })->withoutGlobalScope(PrivateScope::class)->where(function ($q) use ($id){
+//                $q->where('posted_by', auth()->user()->id)->orWhere('is_private',0)->orWhere('customer_id',$id);
             });
             if(!empty(request('re_id'))){
                 $data   =   $data->where('id', request('re_id'));
@@ -80,6 +90,7 @@ class CareController extends Controller
             return v('customer.care.index', compact('customer','data', 'reCategories',
                     'provinces', 'directions', 'exhibits','related_customers'));
         }
+        echo 'customer:'.$customer->id.' - user_id'.$customer->user_id. ' - '.ShareCustomer::where('customer_id', $customer->id)->first()->user_id;
     }
     public function dataList() {
         $data   =   Care::query();

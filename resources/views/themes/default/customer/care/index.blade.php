@@ -48,8 +48,10 @@
                             <div class="col-md-6">
                                 <div class="panel panel-default">
                                     <div class="panel-heading">Thông tin khách hàng
-                                        <a class="btn btn-xs btn-info pull-right" data-id="{{$customer->id}}" id="share_customer"><i
-                                                    class="fa fa-share-alt"></i> Chia sẻ khách hàng</a>
+                                        @if($customer->user_id == auth()->user()->id)
+                                            <a class="btn btn-xs btn-info pull-right" data-id="{{$customer->id}}" id="share_customer"><i
+                                                        class="fa fa-share-alt"></i> Chia sẻ khách hàng</a>
+                                        @endif
                                     </div>
                                     <div class="panel-body">
                                         <div class="form-group col-md-6">
@@ -149,6 +151,7 @@
 
                             </div>
                         </div>
+                        @if($customer->user_id == auth()->user()->id)
                         <div class="col-md-6">
                             <div class="panel panel-default">
                                 <div class="panel-heading">Khách hàng liên quan</div>
@@ -170,7 +173,7 @@
                                     <form method="get" action="{{asset('khach-hang/khach-hang-lien-quan')}}">
                                         {{csrf_field()}}
                                         <input type="text" class="form-control"
-                                               name="related_customer_id" id="related_customer_id"
+                                               name="related_customer_id" id="related_customer"
                                         />
                                         <input type="text" class="form-control hidden"
                                                name="customer_id" value="{{$customer->id}}"
@@ -180,6 +183,7 @@
                                 </div>
                             </div>
                         </div>
+                        @endif
                         <div class="col-md-6">
                             <div class="panel panel-default">
                                 <div class="panel-heading">Chi tiết yêu cầu</div>
@@ -690,7 +694,7 @@
                 $('#addcare').data('id', $('.get-detail').first().data('id'));
             }
 
-            $('.get-detail').click(function () {
+            $(document).on('click','.get-detail',function () {
                 fill_detail($(this).data('detail'));
                 get_cares($(this).data('id'));
                 get_response($(this).data('id'));
