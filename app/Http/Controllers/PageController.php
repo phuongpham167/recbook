@@ -692,7 +692,7 @@ class PageController extends Controller
     public function search()
     {
         $query = RealEstate::filterprovince()->select('id', 'title', 'short_description', 'detail', 'slug', 'code', 'district_id', 'don_vi',
-            'area_of_premises', 'area_of_use', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date','loai_bds');
+            'area_of_premises', 'area_of_use', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date','loai_bds','contact_phone_number');
 
         if (!empty(\request('txtkeyword'))){
             $searchText = \request('txtkeyword');
@@ -700,15 +700,15 @@ class PageController extends Controller
 //            return redirect()->route('home');
 //        }
             $query  =   $query->where('loai_bds',1)->where(function($q) use ($searchText){
-                $q->where('title', 'like', '%' . $searchText . '%');
-                $q->orWhere('code', 'like', '%' . $searchText . '%');
-                $q->orWhere('contact_phone_number', 'like', '%' . $searchText . '%');
+                $q->where('title', 'LIKE', "%{$searchText}%");
+                $q->orWhere('code', 'LIKE', "%{$searchText}%");
+                $q->orWhere('contact_phone_number', 'LIKE', "%{$searchText}%");
             });
         }
 
         $query->where('web_id', $this->web_id);
         $query->where('post_date', '<=', Carbon::now());
-        $query->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')));
+//        $query->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')));
         $query->orderBy('post_date', 'desc');
         $results = $query->paginate(get_config('itemsPerPage', 30));
 

@@ -90,7 +90,7 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li >
-                    <a href="#a" data-toggle="modal" data-target="#quantamtinhthanhModal">Khu vực: {{$tentinh}} <i class="fa fa-sort"></i></a>
+                    <a href="#a" data-toggle="modal" data-target="#quantamtinhthanhModal">{{$tentinh}} <i class="fa fa-sort"></i></a>
                 </li>
                 <div class="menu-search">
                     <div class="pull-right wrap">
@@ -99,7 +99,7 @@
                         <button type="submit" class="pull-left"><i class="fa fa-search"></i></button>
                     </form>
                     <form action="{{route('search')}}" method="get" style="float: left">
-                        <input id="ip-keyword" name="txtkeyword" class="form-control pull-left" type="text" placeholder="{{trans('system.searchPlaceholder')}}">
+                        <input id="ip-keyword" name="txtkeyword" class="form-control pull-left" style="width: 170px; font-size: 13px; margin-left: 5px"  type="text" placeholder="{{trans('system.searchPlaceholder')}}">
                         <button type="submit" class="pull-left"><i class="fa fa-search"></i></button>
                     </form>
                         <div class="dropdown" style="float: left">
