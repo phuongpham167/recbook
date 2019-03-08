@@ -384,7 +384,6 @@
                                                                             class="fa fa-plus"></i> Chấp nhận lời
                                                                         mời</a>
                                                                 @else
-                                                                    aaaaaaaaaaaaa
                                                                     @if (\Auth::user()->group->chat_permission && $data->group->chat_permission)
                                                                         <form role="form"
                                                                               action="{{ route('conversation.store') }}"
