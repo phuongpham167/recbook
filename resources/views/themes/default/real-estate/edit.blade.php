@@ -57,6 +57,14 @@ if ($user->group_id != $adminGroup) {
                 <form class="form-horizontal" method="post">
                     {{csrf_field()}}
                     <div class="form-group">
+                    <a type="button" href="#a" class="_btn bg_red pull-right btn-hotvip" id="{{$realEstate->id}}" hot="{{number_format(\App\HotVip::where('province_id', $realEstate->province_id)->first()->hot_value)}}"
+                       hot_hl="{{number_format(\App\HotVip::where('province_id', $realEstate->province_id)->first()->hot_highlight_value)}}"
+                       vip="{{number_format(\App\HotVip::where('province_id', $realEstate->province_id)->first()->vip_value)}}"
+                       vip_hl="{{number_format(\App\HotVip::where('province_id', $realEstate->province_id)->first()->vip_highlight_value)}}"
+                       i_value="{{number_format(\App\HotVip::where('province_id', $realEstate->province_id)->first()->interesting_value)}}"
+                       vip_right="{{number_format(\App\HotVip::where('province_id', $realEstate->province_id)->first()->vip_right_value)}}" style="background-color: green"><i class="fa fa-arrow-up" ></i> &nbsp;&nbsp;UP VIP</a>
+                    </div>
+                    <div class="form-group">
                         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.title')}} <span class="text-red">*</span></label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" name="title" value="{{ $realEstate->title }}"/>
@@ -81,12 +89,12 @@ if ($user->group_id != $adminGroup) {
                         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.contactPerson')}} </label>
 
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" id="contact_person" name="contact_person" value="{{ $realEstate->contact_person }}" readonly />
+                            <input type="text" class="form-control" id="contact_person" name="contact_person" value="{{ $realEstate->contact_person }}" />
                         </div>
                         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.contactAddress')}} </label>
 
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" id="contact_address" name="contact_address" value="{{ $realEstate->contact_address }}" readonly />
+                            <input type="text" class="form-control" id="contact_address" name="contact_address" value="{{ $realEstate->contact_address }}" />
                         </div>
                     </div>
                     <div class="form-group">
@@ -429,6 +437,53 @@ if ($user->group_id != $adminGroup) {
             </div>
         </div>
     </div>
+    <form method="post" action="{{asset('bat-dong-san/sethotvip')}}">
+        {{csrf_field()}}
+        <div id="myModal2" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content modal-lg">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Nâng cấp hot/vip</h4>
+                    </div>
+                    <div class="modal-body">
+                        <input type='hidden' name='id' id="id-re2" value="">
+                        <label class="control-label">Chọn loại vip/hot</label>
+                        <select class="form-control" name='vip_type' id='vip_type'>
+                            @foreach(vip_type() as $k=>$item)
+                                <option value='{{$k}}'>{{$item}}</option>
+                            @endforeach
+                        </select>
+                        <label class="control-label">Chọn số ngày gia hạn</label>
+                        <select class="form-control" name='vip_time' id='vip_time'>
+                            <option value='1'>1 ngày</option>
+                            <option value='7'>7 ngày</option>
+                            <option value='30'>30 ngày</option>
+                            <option value='90'>90 ngày</option>
+                        </select>
+                        <table class="table table-bordered" id="datatable-price">
+                            <thead>
+                            <tr>
+                                @foreach(vip_type() as $k=>$item)
+                                    <th>{{$item}}</th>
+                                @endforeach
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit"
+                                class="_btn bg_red pull-right"><i
+                                    class="fa fa-plus"></i> &nbsp;&nbsp;NÂNG CẤP
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
     @include(theme(TRUE).'.includes.footer')
 @endsection
 
@@ -832,6 +887,27 @@ if ($user->group_id != $adminGroup) {
                 {id: '{{$realEstate->block_id}}', name: '{{\App\Block::find($realEstate->block_id)->name}}'}
             ]
             @endif
+        });
+        $('.btn-hotvip').on('click', function(){
+            var id      =   $(this).attr('id');
+            var hot      =   $(this).attr('hot');
+            var hot_hl      =   $(this).attr('hot_hl');
+            var vip      =   $(this).attr('vip');
+            var vip_hl      =   $(this).attr('vip_hl');
+            var i_value      =   $(this).attr('i_value');
+            var vip_right      =   $(this).attr('vip_right');
+
+            $('#id-re2').val(id);
+            $('.price').remove();
+            $('#datatable-price').append('<tr class="price">\n' +
+                '                                <td>'+vip+'</td>\n' +
+                '                                <td>'+vip_hl+'</td>\n' +
+                '                                <td>'+hot+'</td>\n' +
+                '                                <td>'+hot_hl+'</td>\n' +
+                '                                <td>'+i_value+'</td>\n' +
+                '                                <td>'+vip_right+'</td>\n' +
+                '                            </tr>');
+            $('#myModal2').modal('show');
         });
     </script>
     <script type="text/javascript" src='https://maps.googleapis.com/maps/api/js?sensor=false&key=AIzaSyAxgnRkMsWPSqlxOz_kLga0hJ4eG2l0Vmo&callback=initMap'></script>
