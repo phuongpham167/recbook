@@ -267,9 +267,14 @@
                             <div class="col-xs-12 col-sm-4 brief_detail__right">
                                 <div class="row">
                                     <div class="col-xs-12">
+                                        @if($data->price)
                                         <p class="price"><strong>{{ trans('detail-real-estate.briefDetail.price') }}
                                                 :</strong> {{ convert_number_to_words($data->price) }} {{$data->unit ? $data->unit->name : 'VND'}}</p>
                                         <p class="is_deal">{{ $data->is_deal ? '(Có thỏa thuận)' : '' }}</p>
+                                        @else
+                                            <p class="price"><strong>{{ trans('detail-real-estate.briefDetail.price') }}
+                                                    :</strong> Thỏa thuận</p>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
