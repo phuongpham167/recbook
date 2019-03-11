@@ -111,7 +111,7 @@ class PageController extends Controller
         for($i=1; $i<7; $i++){
             $query    = RealEstate::filterprovince()->where('public_site', 1)->select('id', 'title', 'slug', 'short_description', 'detail', 'code', 'don_vi',
                 'area_of_premises', 'area_of_use', 'district_id', 'price', 'unit_id', 'is_vip', 'is_hot', 'vip_type',
-                'post_date', 'images');
+                'post_date', 'images', 'direction_id');
             if($i == 6)
                 $query  =   $query->where(function($q){
                     $q->where('vip_type', 2)
@@ -926,7 +926,7 @@ class PageController extends Controller
                 $query2->where('posted_by', $id);
                 $query2->where('draft', 0);
                 $query2->where('approved', 1);
-                $listPostedRe = $query2->get();
+                $listPostedRe = $query2->take(10)->get();
 
                 /*
                  * get all friend

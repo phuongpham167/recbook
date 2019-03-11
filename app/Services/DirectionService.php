@@ -20,7 +20,7 @@ class DirectionService
 
     public function getListDropDown()
     {
-        $data = DB::table('directions')->select('id', 'name')->get();
+        $data = DB::table('directions')->select('id', 'name')->whereNull('deleted_at')->get();
         return $data;
     }
 

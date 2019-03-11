@@ -108,7 +108,7 @@ if ($user->group_id != $adminGroup) {
                             </select>
                         </div>
                         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.reType')}} </label>
-                        <div class="col-sm-2">
+                        <div class="col-sm-4">
                             <select class="form-control" id="loai-bds" name="loai_bds" value="{{ $realEstate->loai_bds }}" onChange="changeLoaiBDS(this)">
                                 <option value="">{{trans('real-estate.selectFirstOpt')}}</option>
                                 <option value="1" {{ $realEstate->loai_bds == 1 ? 'selected' : '' }}>Thổ cư</option>
@@ -118,7 +118,7 @@ if ($user->group_id != $adminGroup) {
                         <div class="row" >
                             <div class="col-xs-12 {{ (!$realEstate->loai_bds || ($realEstate->loai_bds && $realEstate->loai_bds == 2)) ? 'hidden' : ''}}" id="thocu-select-wrap" style="margin-top: 20px;">
                                 <label class="col-sm-2 control-label">Thổ cư</label>
-                                <div class="col-sm-2" id="thocu-select">
+                                <div class="col-sm-4" id="thocu-select">
                                     @if($realEstate->loai_bds && $realEstate->loai_bds == 1)
                                         <select class="form-control" name="re_type_id" value="{{$realEstate->re_type_id}}">
                                             @foreach($reTypes as $reType)
@@ -132,7 +132,7 @@ if ($user->group_id != $adminGroup) {
                         <div class="row">
                             <div class="col-xs-12 {{(!$realEstate->loai_bds || ($realEstate->loai_bds && $realEstate->loai_bds == 1)) ? 'hidden' : ''}}" id="duan-select-wrap" style="margin-top: 20px;">
                                 <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.project')}}</label>
-                                <div class="col-sm-2" id="duan-select">
+                                <div class="col-sm-4" id="duan-select">
                                     @if($realEstate->loai_bds && $realEstate->loai_bds == 2)
                                         <select class="form-control" name="project_id" value="{{$realEstate->project_id}}">
                                             @foreach($projects as $project)
@@ -244,7 +244,7 @@ if ($user->group_id != $adminGroup) {
                         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.lane_width')}}</label>
 
                         <div class="col-sm-2">
-                            <input type="number" class="form-control" name="width_lane" value="{{ $realEstate->width_lane }}"/>
+                            <input type="number" class="form-control" name="width_lane" value="{{ $realEstate->width_lane }}" step="0.01"/>
                         </div>
                     </div>
                     <div class="form-group">
@@ -492,6 +492,60 @@ if ($user->group_id != $adminGroup) {
     <script src="{{asset('plugins/bootstrap-datetimepicker-master/build/js/bootstrap-datetimepicker.min.js')}}"></script>
     <script src="{{asset('plugins/ckeditor-4/ckeditor.js')}}"></script>
     <script>
+        $(document).ready(function () {
+            let loaiBDS = $(e).val();
+
+            if (loaiBDS == 1) {
+                $.ajax({
+                    url: "/re-type/list-dropdown",
+                    method: 'GET',
+                    success: function (result) {
+                        console.log('success');
+                        console.log(result);
+                        let html = '<select class="form-control" name="re_type_id">';
+                        if (result) {
+                            html += '<option value="">--Chọn loại thổ cư--</option>';
+                            for (let r of result) {
+                                html += '<option value="' + r.id + '">' + r.name + '</option>';
+                            }
+                        }
+                        html += '</select>';
+                        if (html) {
+                            $('#thocu-select-wrap').removeClass('hidden');
+                            $('#thocu-select').html(html);
+                        }
+                    }
+                });
+            } else if (loaiBDS == 2) {
+                let provinceId = $('#province').val();
+                if (!provinceId) {
+                    provinceId = '{{auth()->user()->userinfo->province_id}}';
+                }
+                provinceId = parseInt(provinceId);
+                $.ajax({
+                    url: '/project-by-province/' + provinceId,
+                    method: 'GET',
+                    success: function (result) {
+                        console.log('success');
+                        console.log(result);
+                        let html = '' +
+                            '<select class="form-control" name="project_id">';
+                        if (result) {
+                            html += '<option value="">--Chọn dự án--</option>';
+                            for (let r of result) {
+                                html += '<option value="' + r.id + '">' + r.name + '</option>';
+                            }
+                        }
+                        html += '</select>';
+                        if (html) {
+                            $('#duan-select-wrap').removeClass('hidden');
+                            $('#duan-select').html(html);
+                        }
+                    }
+                });
+            }
+        });
+
         function initMap() {
             let uLat = '{{auth()->user()->userinfo->province->lat}}';
             let uLong = '{{auth()->user()->userinfo->province->long}}';
@@ -650,6 +704,7 @@ if ($user->group_id != $adminGroup) {
                         console.log(result);
                         let html = '<select class="form-control" name="re_type_id">';
                         if (result) {
+                            html += '<option value="">--Chọn loại thổ cư--</option>';
                             for (let r of result) {
                                 html += '<option value="' + r.id + '">' + r.name + '</option>';
                             }
@@ -676,6 +731,7 @@ if ($user->group_id != $adminGroup) {
                         let html = '' +
                             '<select class="form-control" name="project_id">';
                         if (result) {
+                            html += '<option value="">--Chọn dự án--</option>';
                             for (let r of result) {
                                 html += '<option value="' + r.id + '">' + r.name + '</option>';
                             }
