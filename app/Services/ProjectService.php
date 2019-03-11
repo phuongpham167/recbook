@@ -20,7 +20,7 @@ class ProjectService
 
     public function getListDropDown()
     {
-        $data = DB::table('projects')->select('id', 'name')->get();
+        $data = DB::table('projects')->select('id', 'name')->whereNull('deleted_at')->get();
         return $data;
     }
 

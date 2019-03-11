@@ -21,7 +21,7 @@ class RangePriceService
 
     public function getListDropDown()
     {
-        $result = RangePrice::select('id', 'name')->get();
+        $result = RangePrice::select('id', 'name')->whereNull('deleted_at')->get();
         return $result;
     }
 
