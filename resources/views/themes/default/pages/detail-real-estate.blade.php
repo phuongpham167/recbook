@@ -415,7 +415,7 @@
                                                     <div>{!! $item->short_description ? $item->short_description : ($shortDes ? $shortDes : '') !!}
                                                     </div>
                                                     <p>
-                                                        <strong>DTMB:</strong> {{$item->area_of_premises ? $item->area_of_premises . 'm2' : '0m2'}} - <strong>Giá:</strong>
+                                                        <strong>DTMB:</strong> {{$data->area_of_premises ? ( (ceil($data->area_of_premises) - $data->area_of_premises) != 0 ? $data->area_of_premises : ceil($data->area_of_premises)) . 'm2' : '0m2'}} - <strong>Giá:</strong>
                                                         <span>
                                                         {{convert_number_to_words($item->price)}} {{$item->unit ? $item->unit->name : 'VND'}}
                                                         </span>
@@ -501,7 +501,7 @@
                                                     <div>{!! $item->short_description ? $item->short_description : ($shortDes ? $shortDes : '') !!}
                                                     </div>
                                                     <p>
-                                                        <strong>DTMB:</strong> {{$item->area_of_premises ? $item->area_of_premises . 'm2' : '0m2'}} - <strong>Giá:</strong>
+                                                        <strong>DTMB:</strong> {{$data->area_of_premises ? ( (ceil($data->area_of_premises) - $data->area_of_premises) != 0 ? $data->area_of_premises : ceil($data->area_of_premises)) . 'm2' : '0m2'}} - <strong>Giá:</strong>
                                                         <span>
                                                         {{convert_number_to_words($item->price)}} {{$item->unit ? $item->unit->name : 'VND'}}
                                                         </span>
