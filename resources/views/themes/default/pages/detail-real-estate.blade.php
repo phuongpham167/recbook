@@ -284,9 +284,7 @@
                             <div class="row margin-0">
                                 <div class="col-xs-12 col-sm-4 description__item"><strong>Chiều rộng:</strong> {{ $data->width ? $data->width . 'm' : '0m' }}</div>
                                 <div class="col-xs-12 col-sm-4 description__item"><strong>Chiều dài:</strong> {{ $data->length ? $data->length . 'm' : '0m' }}</div>
-                                <div class="col-xs-12 col-sm-4 description__item"><strong>Giấy tờ:</strong> Sổ đỏ Chính
-                                    Chủ
-                                </div>
+                                <div class="col-xs-12 col-sm-4 description__item"><strong>Giấy tờ:</strong> {{$data->exhibit_id ? $data->exhibit->name : '-' }}</div>
                             </div>
                             <div class="row margin-0">
                                 <div class="col-xs-12 col-sm-4 description__item"><strong>Diện tích MB:</strong> {{ $data->area_of_premises ? ( (ceil($data->area_of_premises) - $data->area_of_premises) != 0 ? $data->area_of_premises : ceil($data->area_of_premises)) . 'm2' : '0m2' }}
