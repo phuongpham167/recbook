@@ -1100,3 +1100,8 @@ p.more a {
         padding: 2px 30px 0 15px;
     }
 }
+
+.menu-search input::placeholder{
+    font-size: 12px !important;
+    color: #aaaaaa;
+}
