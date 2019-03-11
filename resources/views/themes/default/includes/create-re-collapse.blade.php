@@ -184,7 +184,7 @@
         <div class="col-xs-12">
             <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.lane_width')}}</label>
             <div class="col-sm-4">
-                <input type="number" id="width-lane" class="form-control" name="width_lane" />
+                <input type="number" id="width-lane" class="form-control" name="width_lane" step="0.01"/>
             </div>
         </div>
     </div>
