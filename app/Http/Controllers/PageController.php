@@ -926,7 +926,7 @@ class PageController extends Controller
                 $query2->where('posted_by', $id);
                 $query2->where('draft', 0);
                 $query2->where('approved', 1);
-                $listPostedRe = $query2->get();
+                $listPostedRe = $query2->take(10)->get();
 
                 /*
                  * get all friend
