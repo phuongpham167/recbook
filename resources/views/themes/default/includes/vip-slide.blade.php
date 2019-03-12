@@ -29,7 +29,7 @@
                             <h3><a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">{{$item->title}}</a></h3>
                             <p><strong>Diện tích:</strong> {{$item->area_of_premises ? ( (ceil($item->area_of_premises) - $item->area_of_premises) != 0 ? $item->area_of_premises : ceil($item->area_of_premises)) . 'm2' : '0m2'}}</p>
                             <p><strong>Giá:</strong> <span>{{convert_number_to_words($item->price)}} {{$item->unit ? $item->unit->name : 'VND'}}</span></p>
-                            <p><strong>Hướng:</strong> {{ $item->direction_id?$item->direction->name:'' }}</p>
+                            <p><strong>Hướng:</strong> {{ $item->direction_id?$item->direction()->withTrashed()->first()->name:'' }}</p>
                         </dd>
                     </dl>
                 </li>
