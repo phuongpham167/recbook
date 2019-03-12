@@ -396,7 +396,7 @@
                     @include(theme(TRUE).'.includes.vip-slide', ['vipRealEstates'=>$vip[6]])
                         <div class="agency list-re-item" style="margin-top: 10px">
                             <p class="title_box">
-                                <a href="#">
+                                <a href="{{route('nha-moi-gioi')}}">
                                     <strong>NHÀ MÔI GIỚI</strong>
                                 </a>
                             </p>

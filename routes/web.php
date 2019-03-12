@@ -77,6 +77,7 @@ Route::get('/tin-noi-bat', ['as' => 'tin-noi-bat', 'uses' => 'PageController@fea
 Route::get('/tin-moi-nhat', ['as' => 'newest-real-estate', 'uses' => 'PageController@newestRealEstate']);
 Route::get('/tin-rao-cong-dong-mien-phi', ['as' => 'free-real-estate', 'uses' => 'PageController@freeRealEstate']);
 Route::get('/danh-muc-bds/{tag}', ['as' => 'danh-muc-bds', 'uses' => 'PageController@getRealEstateByCat']);
+Route::get('/nha-moi-gioi', ['as' => 'nha-moi-gioi', 'uses' => 'PageController@getListAgency']);
 /*
  * end hard route
  * */
