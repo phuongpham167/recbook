@@ -145,6 +145,33 @@
                                             </dd>
                                         </dl>
                                     </div>
+                                    <div class="col-xs-4">
+                                        <dl>
+                                            <dt>{{trans('real-estate.filter_id')}}</dt>
+                                            <dd>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon" id="basic-addon1">RB-</span>
+                                                    <input type="text" name="id" class="form-control" value="{{request('id')}}" />
+                                                </div>
+                                            </dd>
+                                        </dl>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <dl>
+                                            <dt>{{trans('real-estate.filter_phone')}}</dt>
+                                            <dd>
+                                                <input type="text" name="phone" class="form-control" value="{{request('phone')}}" />
+                                            </dd>
+                                        </dl>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <dl>
+                                            <dt>{{trans('real-estate.filter_address')}}</dt>
+                                            <dd>
+                                                <input type="text" name="address" class="form-control" value="{{request('address')}}" />
+                                            </dd>
+                                        </dl>
+                                    </div>
                                 </div>
 
                                 <div class="row">
@@ -310,6 +337,9 @@
                         d.district_id = $('#district_id').val();
                         d.post_type = $('#post_type').val();
                         d.province_id = $('#province_id').val();
+                        d.address   =   $('input[name=address]').val();
+                        d.id    =   $('input[name=id]').val();
+                        d.phone    =   $('input[name=phone]').val();
                     }
                 },
                 columns: [
