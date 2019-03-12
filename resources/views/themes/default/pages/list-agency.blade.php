@@ -26,11 +26,7 @@
                 <div class="col-xs-12 col-md-9 list-content-wrap">
                     <p class="title_box">
                         <strong>
-                            @if(isset($pageTitle) && $pageTitle)
-                                {{ $pageTitle }}
-                            @else
-                                {{ $category->name }} @if($type)<i class="fa fa-angle-right"></i> {{ $type->name }} @endif {{"(" . $count . ")"}}
-                            @endif
+                            Nhà môi giới
                         </strong>
                     </p>
                     {{--@if(isset($isSearch) && $isSearch)--}}
