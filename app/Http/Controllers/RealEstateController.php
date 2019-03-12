@@ -167,9 +167,14 @@ class RealEstateController extends Controller
         if(!empty(\request('re_category_id')))
             $data = $data->where('re_category_id',\request('re_category_id'));
 
+        if(!empty(\request('id')))
+            $data = $data->where('id',\request('id'));
+        if(!empty(\request('phone')))
+            $data = $data->where('contact_phone_number',\request('phone'));
+        if(!empty(\request('address')))
+            $data = $data->where('contact_address','LIKE', '%'.\request('address').'%');
         if(!empty(\request('province_id')))
             $data = $data->where('province_id',\request('province_id'));
-
         $result = Datatables::of($data)
             ->addColumn('re_category_id', function($dt) {
                 return $dt->reCategory ? $dt->reCategory->name : '';
