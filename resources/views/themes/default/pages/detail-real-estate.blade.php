@@ -267,9 +267,14 @@
                             <div class="col-xs-12 col-sm-4 brief_detail__right">
                                 <div class="row">
                                     <div class="col-xs-12">
+                                        @if($data->price)
                                         <p class="price"><strong>{{ trans('detail-real-estate.briefDetail.price') }}
                                                 :</strong> {{ convert_number_to_words($data->price) }} {{$data->unit ? $data->unit->name : 'VND'}}</p>
                                         <p class="is_deal">{{ $data->is_deal ? '(Có thỏa thuận)' : '' }}</p>
+                                        @else
+                                            <p class="price"><strong>{{ trans('detail-real-estate.briefDetail.price') }}
+                                                    :</strong> Thỏa thuận</p>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -415,7 +420,7 @@
                                                     <div>{!! $item->short_description ? $item->short_description : ($shortDes ? $shortDes : '') !!}
                                                     </div>
                                                     <p>
-                                                        <strong>DTMB:</strong> {{$item->area_of_premises ? $item->area_of_premises . 'm2' : '0m2'}} - <strong>Giá:</strong>
+                                                        <strong>DTMB:</strong> {{$data->area_of_premises ? ( (ceil($data->area_of_premises) - $data->area_of_premises) != 0 ? $data->area_of_premises : ceil($data->area_of_premises)) . 'm2' : '0m2'}} - <strong>Giá:</strong>
                                                         <span>
                                                         {{convert_number_to_words($item->price)}} {{$item->unit ? $item->unit->name : 'VND'}}
                                                         </span>
@@ -501,7 +506,7 @@
                                                     <div>{!! $item->short_description ? $item->short_description : ($shortDes ? $shortDes : '') !!}
                                                     </div>
                                                     <p>
-                                                        <strong>DTMB:</strong> {{$item->area_of_premises ? $item->area_of_premises . 'm2' : '0m2'}} - <strong>Giá:</strong>
+                                                        <strong>DTMB:</strong> {{$data->area_of_premises ? ( (ceil($data->area_of_premises) - $data->area_of_premises) != 0 ? $data->area_of_premises : ceil($data->area_of_premises)) . 'm2' : '0m2'}} - <strong>Giá:</strong>
                                                         <span>
                                                         {{convert_number_to_words($item->price)}} {{$item->unit ? $item->unit->name : 'VND'}}
                                                         </span>

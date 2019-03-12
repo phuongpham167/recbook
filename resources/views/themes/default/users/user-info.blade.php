@@ -372,6 +372,9 @@
                                                                                 <i class="fa fa-commenting-o"></i> {{trans('detail-real-estate.chat')}}
                                                                             </button>
                                                                         </form>
+                                                                        <a href="{{route('friend.cancel', [$checkSendFRequest1->id])}}"
+                                                                           class="btn btn-danger pull-right btn-cancel-friend" style="margin-right: 5px"><i
+                                                                                class="fa fa-times"></i> Hủy kết bạn</a>
                                                                     @endif
                                                                 @endif
                                                             @elseif($checkSendFRequest2)

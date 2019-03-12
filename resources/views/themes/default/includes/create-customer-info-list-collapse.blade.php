@@ -216,13 +216,13 @@
                         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.width')}} </label>
 
                         <div class="col-sm-4">
-                            <input type="number" class="form-control" id="width" name="width" value="{{ old('width') }}"/>
+                            <input type="number" class="form-control" id="width" name="width" value="{{ old('width') }}" step="0.01"/>
                             <p class="text-red error"></p>
                         </div>
                         <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.length')}}</label>
 
                         <div class="col-sm-4">
-                            <input type="number" class="form-control" id="length" name="length" value="{{ old('length') }}"/>
+                            <input type="number" class="form-control" id="length" name="length" value="{{ old('length') }}" step="0.01"/>
                         </div>
 
                     </div>
