@@ -107,5 +107,8 @@ return [
         'pageTitle' => 'Sửa tin BĐS',
         'formTitle' => 'Sửa tin BĐS',
     ],
-    'filter_tinh' => 'Tỉnh'
+    'filter_tinh' => 'Tỉnh',
+    'filter_id' =>  'Mã tin',
+    'filter_phone'  =>  'SĐT',
+    'filter_address'    =>  'Địa chỉ'
 ];
