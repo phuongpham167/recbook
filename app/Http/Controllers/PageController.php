@@ -487,6 +487,42 @@ class PageController extends Controller
         ]);
     }
 
+    public function highlightRealEstate()
+    {
+        $query = RealEstate::filterprovince()->select('id', 'title', 'short_description', 'detail', 'slug', 'code', 'district_id', 'don_vi',
+            'area_of_premises', 'area_of_use', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date')
+            ->where('vip_type', 2)
+            ->where(function($q){
+                $q->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
+                    ->orWhere('post_date', '>=', Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->subDays(Settings('system_changenametime'))->format('m/d/Y H:i A')));
+            })
+            ->where('post_date', '<=', Carbon::now())
+            ->where('web_id', $this->web_id)
+            ->orderBy('post_date', 'desc');
+
+//        $query = $this->checkRegisterDate($query);
+        $results = $query->paginate(get_config('itemsPerPage',30));
+
+        $this->vipRealEstates = $this->getVipRealEstates();
+
+        return v('pages.list-real-estate', [
+            'data' => $results,
+            'category' => null,
+            'type' => null,
+            'count' => null,
+            'pageTitle' => trans('page.highlight_re'),
+            'vipRealEstates' => $this->vipRealEstates,
+            'categories' => $this->categories,
+            'provinces' => $this->provinces,
+            'districts' => $this->districts,
+            'wards' => $this->wards,
+            'streets' => $this->streets,
+            'directions' => $this->directions,
+            'projects' => $this->projects,
+            'menuData' => $this->menuFE
+        ]);
+    }
+
     public function newestRealEstate()
     {
         $query = RealEstate::filterprovince()->select('id', 'title', 'short_description', 'detail', 'slug', 'code', 'district_id', 'don_vi',
@@ -609,6 +645,37 @@ class PageController extends Controller
                 'menuData' => $this->menuFE
             ]);
         }
+    }
+
+    public function getListAgency()
+    {
+        $query = User::whereHas('group', function($q){
+            $q->where('is_agency', 1);
+        })->whereHas('userinfo', function ($q) {
+            $q->where('province_id', session('tinhthanhquantam'));
+        });
+
+//        $query = $this->checkRegisterDate($query);
+        $results = $query->paginate(get_config('itemsPerPage',30));
+
+        $this->vipRealEstates = $this->getVipRealEstates();
+
+        return v('pages.list-agency', [
+            'data' => $results,
+            'category' => null,
+            'type' => null,
+            'count' => null,
+            'pageTitle' => trans('page.featured_real_estate'),
+            'vipRealEstates' => $this->vipRealEstates,
+            'categories' => $this->categories,
+            'provinces' => $this->provinces,
+            'districts' => $this->districts,
+            'wards' => $this->wards,
+            'streets' => $this->streets,
+            'directions' => $this->directions,
+            'projects' => $this->projects,
+            'menuData' => $this->menuFE
+        ]);
     }
 
     public function homeTinVip()

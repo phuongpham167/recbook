@@ -73,10 +73,12 @@ Route::get('/tim-kiem-thong-minh', ['as' => 'smart-search', 'uses' => 'PageContr
  * hard route
  * */
 Route::get('/tin-vip', ['as' => 'tin-vip', 'uses' => 'PageController@homeTinVip']);
-Route::get('/tin-noi-bat', ['as' => 'tin-noi-bat', 'uses' => 'PageController@featuredRealEstate']);
+Route::get('/tin-hot', ['as' => 'tin-hot', 'uses' => 'PageController@featuredRealEstate']);
+Route::get('/tin-noi-bat', ['as' => 'tin-noi-bat', 'uses' => 'PageController@highlightRealEstate']);
 Route::get('/tin-moi-nhat', ['as' => 'newest-real-estate', 'uses' => 'PageController@newestRealEstate']);
 Route::get('/tin-rao-cong-dong-mien-phi', ['as' => 'free-real-estate', 'uses' => 'PageController@freeRealEstate']);
 Route::get('/danh-muc-bds/{tag}', ['as' => 'danh-muc-bds', 'uses' => 'PageController@getRealEstateByCat']);
+Route::get('/nha-moi-gioi', ['as' => 'nha-moi-gioi', 'uses' => 'PageController@getListAgency']);
 /*
  * end hard route
  * */
@@ -312,7 +314,7 @@ Route::get('/t', function (){
 //    var_dump(session('tinhthanhquantam'));
 //    print_r( 'session: '.session('tinhthanhquantam'));
 //    print_r(auth()->user()->subcribes()->pluck('province_subcribes.province_id')->toArray());
-    print_r($shared = ShareCustomer::where('customer_id', 50)->pluck('user_id'));
+    print_r(getimagesize(auth()->user()->avatar()));
 });
 
 Route::group(['prefix'=>'notify'], function(){
