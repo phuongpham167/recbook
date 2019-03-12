@@ -92,7 +92,7 @@
             <div class="container ">
                 <div class="row title-hot-wrap">
                     <div class="col-xs-12 title-hot-real-estate">
-                        <a href="{{ route('tin-noi-bat') }}" class="active">BẤT ĐỘNG SẢN HOT <span></span></a>
+                        <a href="{{ route('tin-hot') }}" class="active">BẤT ĐỘNG SẢN HOT <span></span></a>
                         <a href="{{route('newest-real-estate')}}">TIN MỚI NHẤT <span></span></a>
                         <a href="{{route('free-real-estate')}}">TIN RAO VẶT CỘNG ĐỒNG MIỄN PHÍ <span></span></a>
                     </div>
@@ -153,7 +153,7 @@
                     <div class="col-xs-12 col-sm-12 three_i brokers">
 
                         <p class="title_col">
-                            <a href="#"><i class="fa fa-users"></i> BẤT ĐỘNG SẢN NỔI BẬT</a>
+                            <a href="{{ route('tin-noi-bat') }}"><i class="fa fa-users"></i> BẤT ĐỘNG SẢN NỔI BẬT</a>
                         </p>
                         <div class="" style="margin-top: 10px">
                             <div class="vip3 list-re-item list-hot">
@@ -214,6 +214,62 @@
 
                                 </div>
                                 <div class="row body_top_box">
+                                    @foreach($vip[4] as $item)
+                                        <div class="col-xs-12 col-sm-6 col-xs-6  good_price_item_wrap">
+                                            <div class="col-xs-12  re_item2 good_price_item">
+                                                @php
+                                                    $itemClass = '';
+                                                    if($item->is_hot) {
+                                                        $itemClass = '_vip_hot';
+                                                    }
+                                                    if($item->is_vip && !$item->is_hot) {
+                                                        $itemClass = '_vip';
+                                                    }
+
+                                                    $images = $item->images ? json_decode($item->images) : [];
+                                                    $imgThumbnail = $images ? $images[0]->link : '/images/default_real_estate_image.jpg';
+                                                    $imgAlt = $images ? $images[0]->alt : $item->title;
+                                                @endphp
+                                                <div class="row _vip_hot">
+                                                    <div class="col-xs-5 lgp_item">
+                                                        <a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">
+                                                            <img src="{{ asset($imgThumbnail) }}" alt="{{ $imgAlt }}">
+                                                        </a>
+                                                        <div class="code_row">{{$item->code}}</div>
+                                                    </div>
+
+                                                    <div class="col-xs-7 rgp_item">
+                                                        <h3>
+                                                            <a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">{{ $item->title }}
+                                                            </a>
+                                                            <span></span>
+                                                        </h3>
+                                                        @php
+                                                            $shortDes = trim_text($item->detail, 130);
+                                                        @endphp
+                                                        <div class="short-des">{!! $item->short_description ? $item->short_description : ($shortDes ? $shortDes : '') !!}
+                                                        </div>
+                                                        <p>
+                                                            <strong>DTMB:</strong> {{$item->area_of_premises ? ( (ceil($item->area_of_premises) - $item->area_of_premises) != 0 ? $item->area_of_premises : ceil($item->area_of_premises)) . 'm2' : '0m2'}}</p><p> <strong>Giá:</strong>
+                                                            <span>
+                                                                @if ($item->price)
+                                                                    {{convert_number_to_words($item->price)}} {{$item->unit ? $item->unit->name : 'VND'}}
+                                                                @else
+                                                                    {{'Thỏa thuận'}}
+                                                                @endif
+                                                            </span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                @if($item->is_vip)
+                                                    <div class="icon_viphot">
+                                                        <img src="{{ asset('images/vip2.gif') }}" alt="Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng">
+                                                    </div>
+                                                @endif
+                                            </div>
+
+                                        </div>
+                                    @endforeach
                                     @foreach($vip[3] as $item)
                                         <div class="col-xs-12 col-sm-6 col-xs-6  good_price_item_wrap">
                                             <div class="col-xs-12  re_item2 good_price_item">
@@ -264,62 +320,6 @@
                                                 @if($item->is_vip)
                                                     <div class="icon_viphot">
                                                         <img src="{{ asset('images/vip2.gif') }}" alt="">
-                                                    </div>
-                                                @endif
-                                            </div>
-
-                                        </div>
-                                    @endforeach
-                                    @foreach($vip[4] as $item)
-                                        <div class="col-xs-12 col-sm-6 col-xs-6  good_price_item_wrap">
-                                            <div class="col-xs-12  re_item2 good_price_item">
-                                                @php
-                                                    $itemClass = '';
-                                                    if($item->is_hot) {
-                                                        $itemClass = '_vip_hot';
-                                                    }
-                                                    if($item->is_vip && !$item->is_hot) {
-                                                        $itemClass = '_vip';
-                                                    }
-
-                                                    $images = $item->images ? json_decode($item->images) : [];
-                                                    $imgThumbnail = $images ? $images[0]->link : '/images/default_real_estate_image.jpg';
-                                                    $imgAlt = $images ? $images[0]->alt : $item->title;
-                                                @endphp
-                                                <div class="row _vip_hot">
-                                                    <div class="col-xs-5 lgp_item">
-                                                        <a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">
-                                                            <img src="{{ asset($imgThumbnail) }}" alt="{{ $imgAlt }}">
-                                                        </a>
-                                                        <div class="code_row">{{$item->code}}</div>
-                                                    </div>
-
-                                                    <div class="col-xs-7 rgp_item">
-                                                        <h3>
-                                                            <a href="{{ route('detail-real-estate', ['slug' => $item->slug . '-' . $item->id]) }}">{{ $item->title }}
-                                                            </a>
-                                                            <span></span>
-                                                        </h3>
-                                                        @php
-                                                            $shortDes = trim_text($item->detail, 130);
-                                                        @endphp
-                                                        <div class="short-des">{!! $item->short_description ? $item->short_description : ($shortDes ? $shortDes : '') !!}
-                                                        </div>
-                                                        <p>
-                                                            <strong>DTMB:</strong> {{$item->area_of_premises ? ( (ceil($item->area_of_premises) - $item->area_of_premises) != 0 ? $item->area_of_premises : ceil($item->area_of_premises)) . 'm2' : '0m2'}}</p><p> <strong>Giá:</strong>
-                                                            <span>
-                                                                @if ($item->price)
-                                                                {{convert_number_to_words($item->price)}} {{$item->unit ? $item->unit->name : 'VND'}}
-                                                                @else
-                                                                    {{'Thỏa thuận'}}
-                                                                @endif
-                                                            </span>
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                                @if($item->is_vip)
-                                                    <div class="icon_viphot">
-                                                        <img src="{{ asset('images/vip2.gif') }}" alt="Bán nhà số 52/105 Trung Hành 7, Hải An, Hải Phòng">
                                                     </div>
                                                 @endif
                                             </div>
@@ -396,7 +396,7 @@
                     @include(theme(TRUE).'.includes.vip-slide', ['vipRealEstates'=>$vip[6]])
                         <div class="agency list-re-item" style="margin-top: 10px">
                             <p class="title_box">
-                                <a href="#">
+                                <a href="{{route('nha-moi-gioi')}}">
                                     <strong>NHÀ MÔI GIỚI</strong>
                                 </a>
                             </p>
@@ -404,8 +404,20 @@
                                 <div class="col-xs-6 no-padding-left no-padding-right">
                                     <div class="col-xs-12 re-item hot" style="border: 1px solid #eee;
     background: #fffce6;">
-                                        <a href="{{asset('user/'.$agency->id)}}" style="height: 100px" class="text-center">
-                                            <img src="{{$agency->avatar()}}" alt="" class="img-responsive">
+                                        <a href="{{asset('user/'.$agency->id)}}" style="height: 100px; overflow: hidden;" class="text-center">
+                                            <?php
+                                                if(!empty($size = getimagesize($agency->avatar()))){
+                                                    $w = $size[0];
+                                                    $h = $size[1];
+                                                    if($w > $h)
+                                                        $css = 'height: 100%; width: auto';
+                                                    else
+                                                        $css = 'width: 100%; height: auto';
+                                                }
+                                                else
+                                                    $w = $h = 1024;
+                                            ?>
+                                            <img src="{{$agency->avatar()}}" style="{{$css}}" alt="" class="img-responsive">
                                         </a>
                                         <h3>
                                             <a style="font-size: 12px" href="{{asset('user/'.$agency->id)}}">{{$agency->userinfo?$agency->userinfo->full_name:$agency->name}}</a>

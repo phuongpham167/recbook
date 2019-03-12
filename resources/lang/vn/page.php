@@ -62,7 +62,7 @@ return [
     'expired_code'  =>  'Đường link của bạn đã hết hạn!',
     'dont_exits'  =>  'Email chưa được đăng ký. Vui lòng kiểm tra lại địa chỉ email!',
     'forgot_password'  =>  'Quên mật khẩu',
-    'featured_real_estate' => 'Tin nổi bật',
+    'featured_real_estate' => 'Tin hot',
     'newest_real_estate' => 'Tin đăng mới nhất',
     'free_real_estate' => 'Tin rao vặt cộng đồng miễn phí',
     'search_box_title' => 'Tìm kiếm theo từ khóa hoặc mã số tin',
@@ -73,4 +73,5 @@ return [
     'thongtinthanhvien' => 'Thông tin thành viên',
     'thongtinlienhe' => 'Thông tin liên hệ',
     'diendan_hoidap' => 'Diễn đàn & hỏi đáp',
+    'highlight_re' => 'Tin nổi bật',
 ];
