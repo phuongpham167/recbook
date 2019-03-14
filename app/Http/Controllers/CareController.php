@@ -119,8 +119,8 @@ class CareController extends Controller
     public function suggest(){
         $data   =   RealEstate::query();
         if(!empty($phone = request('phone')))
-            $data   =   $data->where('contact_phone_number', $phone)->orWhereHas('customer', function($q) use ($phone){
-                $q->where('phone', $phone);
+            $data   =   $data->where('contact_phone_number','like', '%'.$phone.'%')->orWhereHas('customer', function($q) use ($phone){
+                $q->where('phone','like', '%'.$phone.'%');
             });
 
 
