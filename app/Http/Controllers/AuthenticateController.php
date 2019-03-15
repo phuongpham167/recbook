@@ -312,6 +312,7 @@ class AuthenticateController extends Controller
         $user_info->website = $request->website;
 
         $user_info->save();
+        createVerifyCode($data->id);
 
 //        event_log('Tạo thành viên mới '.$data->name.' id '.$data->id);
         set_notice(trans('users.add_success'), 'success');
@@ -527,5 +528,21 @@ class AuthenticateController extends Controller
             set_notice('Xoá thành viên thành công!', 'success');
         } else set_notice('Thành viên không tồn tại hoặc bạn không có quyền xoá!', 'warning');
         return redirect()->back();
+    }
+
+    public function getVerify()
+    {
+        return v('authenticate.verify', ['menuData' => $this->menuFE]);
+    }
+
+    public function postVerify()
+    {
+        confirmVerifyCode(\request('verify_code'));
+        return redirect()->back();
+    }
+
+    public function resendVerify()
+    {
+        createVerifyCode(\request('id'));
     }
 }

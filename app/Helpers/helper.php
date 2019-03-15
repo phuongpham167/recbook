@@ -5534,3 +5534,30 @@ function notify($user, $title, $content, $url){
         sendToPusher($channels, $notify->toArray());
     }
 }
+
+function createVerifyCode($id){
+    $data = new \App\Verify();
+
+    $data->user_id = $id;
+    $data->code = str_random(6);
+    $data->expired_at = \Carbon\Carbon::now()->addMinute(5);
+    $data->sent_at = \Carbon\Carbon::now();
+    $data->save();
+}
+
+function confirmVerifyCode($code){
+    $data = \App\Verify::where('code',$code)->where('user_id',auth()->user()->id)->first();
+
+    if(!empty($data)){
+        if($data->expired_at <= \Carbon\Carbon::now()){
+            $data->confirmed = 1;
+            $data->save();
+
+            $user = \App\User::find(auth()->user()->id);
+            $user->phone_verify = 1;
+            $user->save();
+            set_notice(trans('system.verify_success'), 'success');
+        }
+    }
+    return redirect()->back();
+}
