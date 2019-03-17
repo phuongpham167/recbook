@@ -264,6 +264,17 @@ Route::group(['middleware'=>'auth'], function(){
             Route::get('/tao-moi', ['as'=>'scheduleCreate', 'uses'=>'ScheduleController@getCreate']);
             Route::post('/tao-moi', ['as'=>'scheduleCreate', 'uses'=>'ScheduleController@postCreate']);
         });
+
+        Route::group(['prefix'=>'yeu-cau'], function(){
+            Route::get('', ['as'=>'requestList', 'uses'=>'RequestByCustomerController@index']);
+            Route::get('/data', ['as'=>'scheduleData', 'uses'=>'RequestByCustomerController@dataList']);
+            Route::get('/data2', ['as'=>'scheduleData2', 'uses'=>'RequestByCustomerController@dataCustomer']);
+            Route::get('/xoa', ['as'=>'scheduleDelete', 'uses'=>'RequestByCustomerController@getDelete']);
+            Route::get('/sua', ['as'=>'scheduleEdit', 'uses'=>'RequestByCustomerController@getEdit']);
+            Route::post('/sua', ['as'=>'scheduleEdit', 'uses'=>'RequestByCustomerController@postEdit']);
+            Route::get('/tao-moi', ['as'=>'scheduleCreate', 'uses'=>'RequestByCustomerController@getCreate']);
+            Route::post('/tao-moi', ['as'=>'scheduleCreate', 'uses'=>'RequestByCustomerController@postCreate']);
+        });
     });
 });
 Route::group(['prefix' => 'ajax'], function() {
