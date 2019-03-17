@@ -149,6 +149,7 @@ return [
         Yajra\DataTables\DataTablesServiceProvider::class,
         Efriandika\LaravelSettings\SettingsServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
+        SafeStudio\Firebase\FirebaseServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -213,6 +214,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Settings'  => Efriandika\LaravelSettings\Facades\Settings::class,
         'Image' => Intervention\Image\Facades\Image::class,
+        'Firebase' => SafeStudio\Firebase\Facades\FirebaseFacades::class,
     ],
 
 ];

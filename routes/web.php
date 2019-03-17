@@ -105,6 +105,12 @@ Route::post('/quen-mat-khau', ['as' => 'post.forgot_password', 'uses' => 'Authen
 Route::get('/dat-lai-mat-khau', ['as' => 'getPassword', 'uses' => 'AuthenticateController@getPassword']);
 Route::post('/dat-lai-mat-khau', ['as' => 'postPassword', 'uses' => 'AuthenticateController@postPassword']);
 
+Route::post('/gui-xac-thuc', ['as' => 'post.verify', 'uses' => 'AuthenticateController@postVerify']);
+Route::get('/gui-lai-xac-thuc', ['as' => 'resend.verify', 'uses' => 'AuthenticateController@resendVerify']);
+
+//Route::get('/phpfirebase_sdk','FirebaseController@index');
+//Route::get('/test-api','FirebaseController@test');
+
 Route::post('/theme-category', ['as' => 'themeCategory', 'uses' => 'ThemeController@getTheme']);
 
 Route::group(['middleware'=>'auth'], function(){
@@ -314,7 +320,7 @@ Route::get('/t', function (){
 //    var_dump(session('tinhthanhquantam'));
 //    print_r( 'session: '.session('tinhthanhquantam'));
 //    print_r(auth()->user()->subcribes()->pluck('province_subcribes.province_id')->toArray());
-    print_r(getimagesize(auth()->user()->avatar()));
+    createVerifyCode(1);
 });
 
 Route::group(['prefix'=>'notify'], function(){
