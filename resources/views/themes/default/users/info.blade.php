@@ -78,7 +78,7 @@
                                         </dl>
                                     </div>
 
-                                    <div class="col-xs-12">
+                                    <div @if(empty(auth()->user()->phone_verify)) class="col-xs-6" @else class="col-xs-12" @endif>
                                         <dl>
                                             <dt class="txt_right">Điện thoại <span class="required">*</span></dt>
                                             <dd>
@@ -86,6 +86,17 @@
                                             </dd>
                                         </dl>
                                     </div>
+
+                                    @if(empty(auth()->user()->phone_verify))
+                                        <div class="col-xs-6">
+                                            <dl>
+                                                <dt class="txt_right"><span class="required"> Tài khoản chưa xác thực</span></dt>
+                                                <dd>
+                                                    <a class="btn btn-xs btn-primary verify_btn" id="{{auth()->user()->id}}">Xác thực</a>
+                                                </dd>
+                                            </dl>
+                                        </div>
+                                    @endif
 
                                     <div class="col-xs-12">
                                         <dl>
@@ -243,6 +254,35 @@
         </div>
     </div>
 
+    <form method="post" action="{{route('post.verify')}}">
+        {{csrf_field()}}
+        <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content modal-lg">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">XÁC THỰC TÀI KHOẢN</h4>
+                    </div>
+                    <input type="hidden" name="id" id="id">
+                    <div class="modal-body">
+                        <label class="control-label">Mã xác thực</label>
+                        <div>
+                            <input class="form-control" name="verify_code">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit"
+                                class="_btn bg_red pull-right"><i
+                                    class="fa fa-plus"></i> XÁC THỰC
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
     @include(theme(TRUE).'.includes.footer')
 @endsection
 
@@ -261,6 +301,13 @@
                     @endforeach
                 ]
             });
+        });
+        $('.verify_btn').on('click', function () {
+            // console.log(check);
+            // var id      =   $(this).attr('id');
+
+            // $('.modal #id').val(id);
+            $('#myModal').modal('show');
         });
     </script>
 @endpush

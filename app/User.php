@@ -99,4 +99,25 @@ class User extends Authenticatable
     public function sharedcustomer() {
         return $this->belongsToMany(User::class,'shared_customer');
     }
+
+    public function listFriend()
+    {
+        $data   =   Friend::where(function($q){
+            $q->where('user1', $this->id);
+        })->orWhere(function($q){
+            $q->where('user2', $this->id);
+        });
+        return $data;
+    }
+    public function is_friend($id)
+    {
+        $data   =   Friend::where(function($q) use ($id){
+            $q->where('user1', $this->id)
+                ->where('user2', $id);
+        })->orWhere(function($q) use ($id){
+            $q->where('user2', $this->id)
+                ->where('user1', $id);
+        })->count();
+        return $data?TRUE:FALSE;
+    }
 }
