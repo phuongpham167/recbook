@@ -105,6 +105,12 @@ Route::post('/quen-mat-khau', ['as' => 'post.forgot_password', 'uses' => 'Authen
 Route::get('/dat-lai-mat-khau', ['as' => 'getPassword', 'uses' => 'AuthenticateController@getPassword']);
 Route::post('/dat-lai-mat-khau', ['as' => 'postPassword', 'uses' => 'AuthenticateController@postPassword']);
 
+Route::post('/gui-xac-thuc', ['as' => 'post.verify', 'uses' => 'AuthenticateController@postVerify']);
+Route::get('/gui-lai-xac-thuc', ['as' => 'resend.verify', 'uses' => 'AuthenticateController@resendVerify']);
+
+//Route::get('/phpfirebase_sdk','FirebaseController@index');
+//Route::get('/test-api','FirebaseController@test');
+
 Route::post('/theme-category', ['as' => 'themeCategory', 'uses' => 'ThemeController@getTheme']);
 
 Route::group(['middleware'=>'auth'], function(){
@@ -236,6 +242,9 @@ Route::group(['middleware'=>'auth'], function(){
 
         Route::get('chia-se', ['as'=>'shareCustomer', 'uses'=>'CustomerController@shareCustomer']);
 
+        Route::get('danh-sach-yeu-cau', ['as'=>'customerRE', 'uses'=>'RequestByCustomerController@getList']);
+        Route::get('data-re', ['as'=>'customerREData', 'uses'=>'RequestByCustomerController@data']);
+
         Route::group(['prefix'=>'cham-soc'], function(){
             Route::get('', ['as'=>'customerCare', 'uses'=>'CareController@index']);
             Route::get('/data', ['as'=>'careData', 'uses'=>'CareController@dataList']);
@@ -258,6 +267,17 @@ Route::group(['middleware'=>'auth'], function(){
             Route::get('/tao-moi', ['as'=>'scheduleCreate', 'uses'=>'ScheduleController@getCreate']);
             Route::post('/tao-moi', ['as'=>'scheduleCreate', 'uses'=>'ScheduleController@postCreate']);
         });
+
+//        Route::group(['prefix'=>'yeu-cau'], function(){
+//            Route::get('', ['as'=>'requestList', 'uses'=>'RequestByCustomerController@index']);
+//            Route::get('/data', ['as'=>'scheduleData', 'uses'=>'RequestByCustomerController@dataList']);
+//            Route::get('/data2', ['as'=>'scheduleData2', 'uses'=>'RequestByCustomerController@dataCustomer']);
+//            Route::get('/xoa', ['as'=>'scheduleDelete', 'uses'=>'RequestByCustomerController@getDelete']);
+//            Route::get('/sua', ['as'=>'scheduleEdit', 'uses'=>'RequestByCustomerController@getEdit']);
+//            Route::post('/sua', ['as'=>'scheduleEdit', 'uses'=>'RequestByCustomerController@postEdit']);
+//            Route::get('/tao-moi', ['as'=>'scheduleCreate', 'uses'=>'RequestByCustomerController@getCreate']);
+//            Route::post('/tao-moi', ['as'=>'scheduleCreate', 'uses'=>'RequestByCustomerController@postCreate']);
+//        });
     });
 
     Route::group(['prefix'=>'doanh-nghiep'], function(){
@@ -343,7 +363,7 @@ Route::get('/t', function (){
 //    var_dump(session('tinhthanhquantam'));
 //    print_r( 'session: '.session('tinhthanhquantam'));
 //    print_r(auth()->user()->subcribes()->pluck('province_subcribes.province_id')->toArray());
-    print_r(getimagesize(auth()->user()->avatar()));
+    print_r(\App\Customer::where('user_id', auth()->user()->id)->pluck('id'));
 });
 
 Route::group(['prefix'=>'notify'], function(){

@@ -35,4 +35,8 @@ return [
         'secret' => env('STRIPE_SECRET'),
     ],
 
+    'firebase' => [
+        'database_url' => env('FB_DATABASE', 'https://verify-mobile-number-recbook.firebaseio.com/'),
+        'secret' => env('FB_DATABASE_KEY', 'phv7RU8al2dZPpSX1Z2TxwlGSWh2naMwJGsl0q2p'),
+    ],
 ];

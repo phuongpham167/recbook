@@ -1,11 +1,11 @@
 @extends(theme(TRUE).'.layouts.app')
 
 @section('meta-description')
-    <meta name="description" content="Customer Page" >
+    <meta name="description" content="Customer's RealEstate Page" >
 @endsection
 
 @section('title')
-    Danh sách khách hàng
+    Danh sách yêu cầu
 @endsection
 
 @push('style')
@@ -43,59 +43,35 @@
 
             <!--Begin left-->
             <div class="col-xs-9 right">
-                @include(theme(TRUE).'.includes.customer_manager_tabs')
-
-                @include('themes.default.includes.message')
-                <!--begin manage_page-->
+            @include(theme(TRUE).'.includes.customer_manager_tabs')
+            @include('themes.default.includes.message')
+            <!--begin manage_page-->
                 <div class="listlandA_page">
-                    <p class="title_boxM"><strong><i class="fa fa-user-o"></i>Danh sách khách hàng</strong> <a href="{{route('customerCreate')}}" class="btn btn-xs btn-primary pull-right"><i class="fa fa-plus"></i> Thêm khách hàng</a></p>
+                    <p class="title_boxM"><strong><i class="fa fa-user-o"></i>Danh sách yêu cầu</strong> <a href="#" class="btn btn-xs btn-primary pull-right"><i class="fa fa-plus"></i> Thêm yêu cầu</a></p>
                     <div>
                         <div class="box-body">
                             <div class="table-responsive">
                                 <table class="table" id="datatable">
                                     <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Tên khách hàng</th>
-                                            <th>Số điện thoại</th>
-                                            <th>Phân loại</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
                                     <tr>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                    </tr>
-                                    </tfoot>
-                                    <tbody>
-
-                                    </tbody>
-
-                                </table>
-                            </div>
-                        </div>
-
-                        <div class="clearfix"></div>
-                    </div>
-                    <p class="title_boxM"><strong><i class="fa fa-user-o"></i>Danh sách khách hàng được chia sẻ</strong></p>
-                    <div>
-                        <div class="box-body">
-                            <div class="table-responsive">
-                                <table class="table" id="datatable2">
-                                    <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Tên khách hàng</th>
-                                        <th>Số điện thoại</th>
-                                        <th>Phân loại</th>
+                                        <th>#</th>
+                                        <th style="min-width: 200px">Tiêu đề</th>
+                                        <th>Nhóm</th>
+                                        <th>DTMB</th>
+                                        <th>DTSD</th>
+                                        <th>Giá</th>
+                                        <th>Liên hệ</th>
+                                        <th>SĐT</th>
+                                        <th>Ngày tạo</th>
                                     </tr>
                                     </thead>
                                     <tfoot>
                                     <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
                                         <th></th>
                                         <th></th>
                                         <th></th>
@@ -137,7 +113,7 @@
                 processing: true,
                 serverSide: true,
                 ajax: {
-                    'url': urlDatatable ='{!! route('customerData') !!}',
+                    'url': urlDatatable ='{!! route('customerREData') !!}',
                     'type': 'GET',
                     'data': function (d) {
                         d.datefrom    =   $('#datefrom').val();
@@ -150,60 +126,26 @@
                 },
                 columns: [
                     { data: 'id', name: 'id' , sortable:false},
-                    { data: 'name', name: 'name' , sortable:false},
-                    { data: 'phone', name: 'phone' , sortable:false},
-                    { data: 'type', name: 'type' , sortable:false, searchable: false},
-                    { data: 'manage', name: 'manage'  , sortable:false, searchable: false}
+                    {data: 'title', name: 'title'},
+                    {data: 'type', name: 'type', sortable: false},
+                    {data: 'area_of_premises', name: 'area_of_premises'},
+                    {data: 'area_of_use', name: 'area_of_use'},
+                    {data: 'price', name: 'price'},
+                    {data: 'contact_person', name: 'contact_person'},
+                    {data: 'contact_phone_number', name: 'contact_phone_number'},
+                    {data: 'created_at', name: 'created_at'}
                 ],
                 initComplete: function () {
                     this.api().columns().every(function () {
                         console.log(this);
                         var column = this;
                         var input = document.createElement("input");
-                        if(column.index() != 3 && column.index() != 4){
+                        if(column.index() != 2){
                             $(input).appendTo($(column.footer()).empty())
                                 .on('keyup', function () {
                                     column.search($(this).val(), false, false, true).draw();
                                 });
                         }
-
-                    });
-                }
-            });
-
-            datatable = $('#datatable2').DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: {
-                    'url': urlDatatable ='{!! route('customerSharedData') !!}',
-                    'type': 'GET',
-                    'data': function (d) {
-                        d.datefrom    =   $('#datefrom').val();
-                        d.datefrom    =   $('#dateto').val();
-                        d.re_category_id = $('#re_category_id').val();
-                        d.re_type_id = $('#re_type_id').val();
-                        d.district_id = $('#district_id').val();
-                        d.post_type = $('#post_type').val();
-                    },
-                },
-                columns: [
-                    { data: 'id', name: 'id' , sortable:false},
-                    { data: 'name', name: 'name' , sortable:false},
-                    { data: 'phone', name: 'phone' , sortable:false},
-                    { data: 'type', name: 'type' , sortable:false, searchable: false}
-                ],
-                initComplete: function () {
-                    this.api().columns().every(function () {
-                        console.log(this);
-                        var column = this;
-                        var input = document.createElement("input");
-                        if(column.index() != 3 && column.index() != 4){
-                            $(input).appendTo($(column.footer()).empty())
-                                .on('keyup', function () {
-                                    column.search($(this).val(), false, false, true).draw();
-                                });
-                        }
-
                     });
                 }
             });
