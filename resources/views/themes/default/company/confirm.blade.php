@@ -32,9 +32,6 @@
 
                         </div>
                     </div>
-
-
-
                     <div>
                         <div class="box-body">
                             <h3 class="text-center">Bạn nhận được lời mời tham gia doanh nghiệp {{$data->name}}!</h3>

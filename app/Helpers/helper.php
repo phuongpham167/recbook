@@ -5543,7 +5543,7 @@ function createVerifyCode(){
     $data->expired_at = \Carbon\Carbon::now()->addMinute(5);
     $data->sent_at = \Carbon\Carbon::now();
     $data->save();
-    echo 'a';
+
     $DEFAULT_URL = env('FIREBASE_DATABASE_URL');
     $DEFAULT_TOKEN = env('FIREBASE_SECRET');
     $DEFAULT_PATH = env('FIREBASE_PATH');
@@ -5552,31 +5552,27 @@ function createVerifyCode(){
 
     $test = [
         'content' => 'Ma xac thuc tai khoan Recbook.vn cua ban la '. $data->code,
-            'phoneNumber' => auth()->user()->phone,
-            'send' => 'false'
+        'phoneNumber' => auth()->user()->phone,
+        'send' => false
         ];
-    echo 'b';
-    $dateTime = new DateTime();
     $firebase->set($DEFAULT_PATH . '/' . time(), $test);
 
-    $name = $firebase->get($DEFAULT_PATH . '/sms');
-    var_dump($name);
-    echo $name;
+    return true;
 }
 
 function confirmVerifyCode($code){
     $data = \App\Verify::where('code',$code)->where('user_id',auth()->user()->id)->first();
-
     if(!empty($data)){
-        if($data->expired_at <= \Carbon\Carbon::now()){
+//        echo $data->expired_at.'<br/>'.\Carbon\Carbon::now();
+        if(\Carbon\Carbon::parse($data->expired_at)->gt(\Carbon\Carbon::now())){
             $data->confirmed = 1;
             $data->save();
 
             $user = \App\User::find(auth()->user()->id);
             $user->phone_verify = 1;
             $user->save();
-            set_notice(trans('system.verify_success'), 'success');
+            return TRUE;
         }
     }
-    return redirect()->back();
+    return FALSE;
 }

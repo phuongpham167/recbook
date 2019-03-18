@@ -94,5 +94,6 @@ return [
     'hotvip'   =>  'Nâng cấp tin hot/vip',
     'purchase_fail'   =>  'Tài khoản của bạn không đủ để thực hiện giao dịch này!',
     'cancel_friend_success'   =>  'Hủy kết bạn thành công!',
-    'verify_success'   =>  'Xác thực thành công thành công!',
+    'verify_success'   =>  'Xác thực số điện thoại thành công!',
+    'verify_failed'   =>  'Xác thực số điện thoại thất bại!',
 ];
