@@ -29,6 +29,7 @@ return [
     'history-status'       =>  'Lịch sử trạng thái',
     'edit-status'       =>  'Thay đổi trạng thái',
     'add_success'       =>  'Thêm mới thành công!',
+    'share_success'       =>  'Chia sẻ thành công!',
     'publish_success'       =>  'Đăng bài thành công!',
     'add_fail'       =>  'Thêm mới không thành công!',
     'back'      =>  'Quay lại',

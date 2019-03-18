@@ -176,7 +176,7 @@ class CustomerController extends Controller
 
         $share_customer->sharedcustomer()->sync($user_array);
         notify($user_array, 'Khách mới được chia sẻ', auth()->user()->email.' vừa mới chia sẻ cho bạn 1 khách hàng!', route('customerCare', ['id'=>request('share_customer_id')]));
-        set_notice(trans('system.add_success'), 'success');
+        set_notice(trans('system.share_success'), 'success');
         return redirect()->back();
     }
 }
