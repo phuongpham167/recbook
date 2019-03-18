@@ -47,7 +47,7 @@
                 @include('themes.default.includes.message')
                 <!--begin manage_page-->
                 <div class="listlandA_page">
-                    <p class="title_boxM"><strong><i class="fa fa-user-o"></i>Danh sách yêu cầu</strong> <a href="#" class="btn btn-xs btn-primary pull-right"><i class="fa fa-plus"></i> Thêm yêu cầu</a></p>
+                    <p class="title_boxM"><strong><i class="fa fa-user-o"></i>Danh sách yêu cầu</strong></p>
                     <div>
                         <div class="box-body">
                             <div class="table-responsive">
