@@ -29,6 +29,7 @@ return [
     'history-status'       =>  'Lịch sử trạng thái',
     'edit-status'       =>  'Thay đổi trạng thái',
     'add_success'       =>  'Thêm mới thành công!',
+    'share_success'       =>  'Chia sẻ thành công!',
     'publish_success'       =>  'Đăng bài thành công!',
     'add_fail'       =>  'Thêm mới không thành công!',
     'back'      =>  'Quay lại',
@@ -93,4 +94,5 @@ return [
     'hotvip'   =>  'Nâng cấp tin hot/vip',
     'purchase_fail'   =>  'Tài khoản của bạn không đủ để thực hiện giao dịch này!',
     'cancel_friend_success'   =>  'Hủy kết bạn thành công!',
+    'verify_success'   =>  'Xác thực thành công thành công!',
 ];
