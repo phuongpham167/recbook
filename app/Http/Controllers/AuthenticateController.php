@@ -530,11 +530,6 @@ class AuthenticateController extends Controller
         return redirect()->back();
     }
 
-    public function getVerify()
-    {
-        return v('authenticate.verify', ['menuData' => $this->menuFE]);
-    }
-
     public function postVerify()
     {
         confirmVerifyCode(\request('verify_code'));
@@ -543,6 +538,6 @@ class AuthenticateController extends Controller
 
     public function resendVerify()
     {
-        createVerifyCode(\request('id'));
+        createVerifyCode();
     }
 }

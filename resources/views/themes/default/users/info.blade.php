@@ -265,7 +265,6 @@
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h4 class="modal-title">XÁC THỰC TÀI KHOẢN</h4>
                     </div>
-                    <input type="hidden" name="id" id="id">
                     <div class="modal-body">
                         <label class="control-label">Mã xác thực</label>
                         <div>
@@ -273,6 +272,10 @@
                         </div>
                     </div>
                     <div class="modal-footer">
+                        <a href="{{route('resend.verify')}}"
+                           class="_btn bg_red pull-right"><i
+                                    class="fa fa-plus"></i> GỬI LẠI MÃ
+                        </a>
                         <button type="submit"
                                 class="_btn bg_red pull-right"><i
                                     class="fa fa-plus"></i> XÁC THỰC

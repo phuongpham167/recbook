@@ -35,7 +35,16 @@ class AjaxController extends Controller
     public function ajaxUser() {
         $name   = request()->input('term');
         $result =   [];
-        foreach(\App\User::where('name','LIKE',"%{$name}%")->where('web_id',get_web_id())->get() as $item){
+        $data   =   \App\User::where('name','LIKE',"%{$name}%")->where('web_id',get_web_id());
+        if(!empty(request('except'))){
+            $except =   explode(',', request('except'));
+            $data   =   $data->whereNotIn('id', $except);
+        }
+        if(!empty($role = request('role')) && $role == 'friend'){
+            $data   =   $data->whereIn('id', array_merge(auth()->user()->listFriend()->pluck('user1')->toArray(), auth()->user()->listFriend()->pluck('user2')->toArray()));
+        }
+        $data   =   $data->get();
+        foreach($data as $item){
             $result[]   =   [
                 'id'    =>  $item->id,
                 'name'  =>  $item->name.' - '.$item->email

@@ -5535,14 +5535,33 @@ function notify($user, $title, $content, $url){
     }
 }
 
-function createVerifyCode($id){
+function createVerifyCode(){
     $data = new \App\Verify();
 
-    $data->user_id = $id;
+    $data->user_id = auth()->user()->id;
     $data->code = str_random(6);
     $data->expired_at = \Carbon\Carbon::now()->addMinute(5);
     $data->sent_at = \Carbon\Carbon::now();
     $data->save();
+    echo 'a';
+    $DEFAULT_URL = env('FIREBASE_DATABASE_URL');
+    $DEFAULT_TOKEN = env('FIREBASE_SECRET');
+    $DEFAULT_PATH = env('FIREBASE_PATH');
+
+    $firebase = new \Firebase\FirebaseLib($DEFAULT_URL, $DEFAULT_TOKEN);
+
+    $test = [
+        'content' => 'Ma xac thuc tai khoan Recbook.vn cua ban la '. $data->code,
+            'phoneNumber' => auth()->user()->phone,
+            'send' => 'false'
+        ];
+    echo 'b';
+    $dateTime = new DateTime();
+    $firebase->set($DEFAULT_PATH . '/' . time(), $test);
+
+    $name = $firebase->get($DEFAULT_PATH . '/sms');
+    var_dump($name);
+    echo $name;
 }
 
 function confirmVerifyCode($code){
