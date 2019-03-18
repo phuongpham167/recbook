@@ -242,6 +242,9 @@ Route::group(['middleware'=>'auth'], function(){
 
         Route::get('chia-se', ['as'=>'shareCustomer', 'uses'=>'CustomerController@shareCustomer']);
 
+        Route::get('yeu-cau', ['as'=>'customerRE', 'uses'=>'CustomerController@getListCustomerRE']);
+        Route::get('data-re', ['as'=>'customerREData', 'uses'=>'CustomerController@dataCustomerRE']);
+
         Route::group(['prefix'=>'cham-soc'], function(){
             Route::get('', ['as'=>'customerCare', 'uses'=>'CareController@index']);
             Route::get('/data', ['as'=>'careData', 'uses'=>'CareController@dataList']);

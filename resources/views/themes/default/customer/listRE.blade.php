@@ -5,7 +5,7 @@
 @endsection
 
 @section('title')
-    Danh sách khách hàng
+    Danh sách yêu cầu
 @endsection
 
 @push('style')
