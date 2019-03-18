@@ -179,7 +179,5 @@ class CustomerController extends Controller
         set_notice(trans('system.share_success'), 'success');
         return redirect()->back();
     }
-    public function getListCustomerRE() {
-        return v('customer.create');
-    }
+
 }

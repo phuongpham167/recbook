@@ -1,11 +1,11 @@
 @extends(theme(TRUE).'.layouts.app')
 
 @section('meta-description')
-    <meta name="description" content="Schedule Page" >
+    <meta name="description" content="Customer's RealEstate Page" >
 @endsection
 
 @section('title')
-    Danh sách lịch hẹn
+    Danh sách yêu cầu
 @endsection
 
 @push('style')
@@ -25,6 +25,9 @@
             padding: 10px 15px;
             text-transform: uppercase;
         }
+        tfoot {
+            display: table-header-group;
+        }
     </style>
 @endpush
 
@@ -40,32 +43,45 @@
 
             <!--Begin left-->
             <div class="col-xs-9 right">
-                <ul class="nav nav-tabs">
-                    <li role="presentation" @if(url()->current() == asset('khach-hang')) class="active" @endif><a class="freelancer_tab" href="/khach-hang">Danh sách khách hàng</a></li>
-                    <li role="presentation" @if(url()->current() == asset('khach-hang/lich-hen')) class="active" @endif><a class="freelancer_tab" href="/khach-hang/lich-hen">Danh sách lịch hẹn</a></li>
-                    <li role="presentation" @if(url()->current() == asset('nhom')) class="active" @endif><a class="freelancer_tab" href="{{route('userListGroup')}}">Quản lý nhóm thành viên</a></li>
-                    <li role="presentation" @if(url()->current() == asset('khach-hang/yeu-cau')) class="active" @endif><a class="freelancer_tab" href="/khach-hang/yeu-cau">Danh sách yêu cầu</a></li>
-                </ul>
-                @include('themes.default.includes.message')
-                <!--begin manage_page-->
+            @include(theme(TRUE).'.includes.customer_manager_tabs')
+            @include('themes.default.includes.message')
+            <!--begin manage_page-->
                 <div class="listlandA_page">
-                    <p class="title_boxM"><strong><i class="fa fa-calendar-o"></i>Danh sách lịch hẹn</strong> <a href="{{route('scheduleCreate')}}" class="btn btn-xs btn-primary pull-right"><i class="fa fa-plus"></i> Thêm lịch hẹn</a></p>
+                    <p class="title_boxM"><strong><i class="fa fa-user-o"></i>Danh sách yêu cầu</strong> <a href="#" class="btn btn-xs btn-primary pull-right"><i class="fa fa-plus"></i> Thêm yêu cầu</a></p>
                     <div>
                         <div class="box-body">
                             <div class="table-responsive">
                                 <table class="table" id="datatable">
                                     <thead>
-                                        <tr>
-                                            <th>Nội dung</th>
-                                            <th>Tên khách</th>
-                                            <th>Thời gian</th>
-                                            <th>Quản lý</th>
-                                        </tr>
+                                    <tr>
+                                        <th>#</th>
+                                        <th style="min-width: 200px">Tiêu đề</th>
+                                        <th>Nhóm</th>
+                                        <th>DTMB</th>
+                                        <th>DTSD</th>
+                                        <th>Giá</th>
+                                        <th>Liên hệ</th>
+                                        <th>SĐT</th>
+                                        <th>Ngày tạo</th>
+                                    </tr>
                                     </thead>
-
+                                    <tfoot>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                    </tfoot>
                                     <tbody>
 
                                     </tbody>
+
                                 </table>
                             </div>
                         </div>
@@ -80,7 +96,6 @@
 
         </div>
     </div>
-
 
     <link rel="stylesheet" href="{{asset('plugins/jquery.datatables/css/jquery.dataTables.min.css')}}" />
 
@@ -98,19 +113,41 @@
                 processing: true,
                 serverSide: true,
                 ajax: {
-                    'url': urlDatatable ='{!! route('scheduleData') !!}',
+                    'url': urlDatatable ='{!! route('customerREData') !!}',
                     'type': 'GET',
                     'data': function (d) {
                         d.datefrom    =   $('#datefrom').val();
                         d.datefrom    =   $('#dateto').val();
-                    }
+                        d.re_category_id = $('#re_category_id').val();
+                        d.re_type_id = $('#re_type_id').val();
+                        d.district_id = $('#district_id').val();
+                        d.post_type = $('#post_type').val();
+                    },
                 },
                 columns: [
-                    { data: 'content', name: 'content' },
-                    { data: 'customer_id', name: 'customer_id' },
-                    { data: 'time', name: 'time' },
-                    { data: 'manage', name: 'manage'  , sortable:false, searchable: false}
-                ]
+                    { data: 'id', name: 'id' , sortable:false},
+                    {data: 'title', name: 'title'},
+                    {data: 'type', name: 'type', sortable: false},
+                    {data: 'area_of_premises', name: 'area_of_premises'},
+                    {data: 'area_of_use', name: 'area_of_use'},
+                    {data: 'price', name: 'price'},
+                    {data: 'contact_person', name: 'contact_person'},
+                    {data: 'contact_phone_number', name: 'contact_phone_number'},
+                    {data: 'created_at', name: 'created_at'}
+                ],
+                initComplete: function () {
+                    this.api().columns().every(function () {
+                        console.log(this);
+                        var column = this;
+                        var input = document.createElement("input");
+                        if(column.index() != 2){
+                            $(input).appendTo($(column.footer()).empty())
+                                .on('keyup', function () {
+                                    column.search($(this).val(), false, false, true).draw();
+                                });
+                        }
+                    });
+                }
             });
         });
 

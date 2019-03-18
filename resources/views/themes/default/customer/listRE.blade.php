@@ -1,7 +1,7 @@
 @extends(theme(TRUE).'.layouts.app')
 
 @section('meta-description')
-    <meta name="description" content="Customer Page" >
+    <meta name="description" content="Customer's RealEstate Page" >
 @endsection
 
 @section('title')
@@ -47,7 +47,7 @@
                 @include('themes.default.includes.message')
                 <!--begin manage_page-->
                 <div class="listlandA_page">
-                    <p class="title_boxM"><strong><i class="fa fa-user-o"></i>Danh sách khách hàng</strong> <a href="{{route('customerCreate')}}" class="btn btn-xs btn-primary pull-right"><i class="fa fa-plus"></i> Thêm khách hàng</a></p>
+                    <p class="title_boxM"><strong><i class="fa fa-user-o"></i>Danh sách yêu cầu</strong> <a href="#" class="btn btn-xs btn-primary pull-right"><i class="fa fa-plus"></i> Thêm yêu cầu</a></p>
                     <div>
                         <div class="box-body">
                             <div class="table-responsive">
