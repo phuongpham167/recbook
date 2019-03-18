@@ -36,7 +36,12 @@ return [
     ],
 
     'firebase' => [
-        'database_url' => env('FB_DATABASE', 'https://verify-mobile-number-recbook.firebaseio.com/'),
-        'secret' => env('FB_DATABASE_KEY', 'phv7RU8al2dZPpSX1Z2TxwlGSWh2naMwJGsl0q2p'),
+        'api_key' => env('FIREBASE_API_KEY'),
+        'auth_domain' => env('FIREBASE_AUTH_DOMAIN'),
+        'database_url' => env('FIREBASE_DATABASE_URL'),
+        'project_id' => env('FIREBASE_PROJECT_ID'),
+        'storage_bucket' => env('FIREBASE_STORAGE_BUCKET'),
+        'secret' => env('FIREBASE_SECRET'),
+        'messaging_sender_id' => env('FIREBASE_MESSAGING_SENDER'),
     ],
 ];

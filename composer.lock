@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "99732e99db862d31ad7ccddd59c92378",
+    "content-hash": "69aa6d487c0a78e3ffd2b0a864361a73",
     "packages": [
         {
             "name": "defuse/php-encryption",
@@ -2458,6 +2458,55 @@
                 "psr-3"
             ],
             "time": "2018-11-05T09:00:11+00:00"
+        },
+        {
+            "name": "mpociot/laravel-firebase-sync",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mpociot/laravel-firebase-sync.git",
+                "reference": "c7b172b1827bdeb4bb3c22f64d19ef12519b5a32"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mpociot/laravel-firebase-sync/zipball/c7b172b1827bdeb4bb3c22f64d19ef12519b5a32",
+                "reference": "c7b172b1827bdeb4bb3c22f64d19ef12519b5a32",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "~5.0",
+                "ktamas77/firebase-php": "^2.2",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "~0.9",
+                "orchestra/testbench": "~3.0",
+                "phpunit/phpunit": "~4.7 || ~5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Mpociot\\Firebase": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Marcel Pociot",
+                    "email": "m.pociot@gmail.com"
+                }
+            ],
+            "description": "Synchronize your Eloquent models with a Firebase realtime database.",
+            "homepage": "http://github.com/mpociot/laravel-firebase-sync",
+            "keywords": [
+                "eloquent",
+                "firebase",
+                "laravel"
+            ],
+            "time": "2016-06-20T21:04:04+00:00"
         },
         {
             "name": "mtdowling/jmespath.php",
