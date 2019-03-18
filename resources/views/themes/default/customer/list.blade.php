@@ -44,6 +44,7 @@
             <!--Begin left-->
             <div class="col-xs-9 right">
                 @include(theme(TRUE).'.includes.customer_manager_tabs')
+
                 @include('themes.default.includes.message')
                 <!--begin manage_page-->
                 <div class="listlandA_page">
