@@ -40,16 +40,7 @@
 
             <!--Begin left-->
             <div class="col-xs-9 right">
-<<<<<<< HEAD
                 @include(theme(TRUE).'.includes.customer_manager_tabs')
-=======
-                <ul class="nav nav-tabs">
-                    <li role="presentation" @if(url()->current() == asset('khach-hang')) class="active" @endif><a class="freelancer_tab" href="/khach-hang">Danh sách khách hàng</a></li>
-                    <li role="presentation" @if(url()->current() == asset('khach-hang/lich-hen')) class="active" @endif><a class="freelancer_tab" href="/khach-hang/lich-hen">Danh sách lịch hẹn</a></li>
-                    <li role="presentation" @if(url()->current() == asset('nhom')) class="active" @endif><a class="freelancer_tab" href="{{route('userListGroup')}}">Quản lý nhóm thành viên</a></li>
-                    <li role="presentation" @if(url()->current() == asset('khach-hang/yeu-cau')) class="active" @endif><a class="freelancer_tab" href="/khach-hang/yeu-cau">Danh sách yêu cầu</a></li>
-                </ul>
->>>>>>> origin/update-0903
                 @include('themes.default.includes.message')
                 <!--begin manage_page-->
                 <div class="listlandA_page">
