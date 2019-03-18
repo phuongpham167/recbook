@@ -268,16 +268,16 @@ Route::group(['middleware'=>'auth'], function(){
             Route::post('/tao-moi', ['as'=>'scheduleCreate', 'uses'=>'ScheduleController@postCreate']);
         });
 
-        Route::group(['prefix'=>'yeu-cau'], function(){
-            Route::get('', ['as'=>'requestList', 'uses'=>'RequestByCustomerController@index']);
-            Route::get('/data', ['as'=>'scheduleData', 'uses'=>'RequestByCustomerController@dataList']);
-            Route::get('/data2', ['as'=>'scheduleData2', 'uses'=>'RequestByCustomerController@dataCustomer']);
-            Route::get('/xoa', ['as'=>'scheduleDelete', 'uses'=>'RequestByCustomerController@getDelete']);
-            Route::get('/sua', ['as'=>'scheduleEdit', 'uses'=>'RequestByCustomerController@getEdit']);
-            Route::post('/sua', ['as'=>'scheduleEdit', 'uses'=>'RequestByCustomerController@postEdit']);
-            Route::get('/tao-moi', ['as'=>'scheduleCreate', 'uses'=>'RequestByCustomerController@getCreate']);
-            Route::post('/tao-moi', ['as'=>'scheduleCreate', 'uses'=>'RequestByCustomerController@postCreate']);
-        });
+//        Route::group(['prefix'=>'yeu-cau'], function(){
+//            Route::get('', ['as'=>'requestList', 'uses'=>'RequestByCustomerController@index']);
+//            Route::get('/data', ['as'=>'scheduleData', 'uses'=>'RequestByCustomerController@dataList']);
+//            Route::get('/data2', ['as'=>'scheduleData2', 'uses'=>'RequestByCustomerController@dataCustomer']);
+//            Route::get('/xoa', ['as'=>'scheduleDelete', 'uses'=>'RequestByCustomerController@getDelete']);
+//            Route::get('/sua', ['as'=>'scheduleEdit', 'uses'=>'RequestByCustomerController@getEdit']);
+//            Route::post('/sua', ['as'=>'scheduleEdit', 'uses'=>'RequestByCustomerController@postEdit']);
+//            Route::get('/tao-moi', ['as'=>'scheduleCreate', 'uses'=>'RequestByCustomerController@getCreate']);
+//            Route::post('/tao-moi', ['as'=>'scheduleCreate', 'uses'=>'RequestByCustomerController@postCreate']);
+//        });
     });
 });
 Route::group(['prefix' => 'ajax'], function() {
@@ -334,7 +334,7 @@ Route::get('/t', function (){
 //    var_dump(session('tinhthanhquantam'));
 //    print_r( 'session: '.session('tinhthanhquantam'));
 //    print_r(auth()->user()->subcribes()->pluck('province_subcribes.province_id')->toArray());
-    createVerifyCode(1);
+    print_r(\App\Customer::where('user_id', auth()->user()->id)->pluck('id'));
 });
 
 Route::group(['prefix'=>'notify'], function(){
