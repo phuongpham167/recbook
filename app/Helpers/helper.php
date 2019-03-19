@@ -5562,10 +5562,8 @@ function createVerifyCode(){
 
 function confirmVerifyCode($code){
     $data = \App\Verify::where('code',$code)->where('user_id',auth()->user()->id)->first();
-    $error = 1;
     if(!empty($data)){
 //        echo $data->expired_at.'<br/>'.\Carbon\Carbon::now();
-        $error = 2;
         if(\Carbon\Carbon::parse($data->expired_at)->gt(\Carbon\Carbon::now())){
             $error = 3;
             $data->confirmed = 1;
@@ -5576,6 +5574,10 @@ function confirmVerifyCode($code){
             $user->save();
             return 0;
         }
-    }
+        else {
+            $error = 'Mã xác thực đã hết hạn!';
+        }
+    } else
+        $error = 'Sai mã xác thực!';
     return $error;
 }

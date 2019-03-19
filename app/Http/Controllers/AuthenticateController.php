@@ -539,7 +539,7 @@ class AuthenticateController extends Controller
         if($verify==0)
             set_notice(trans('system.verify_success'), 'success');
         else
-            set_notice(trans('system.verify_failed')."Mã lỗi: $verify.", 'danger');
+            set_notice(trans('system.verify_failed')." Lý do: $verify", 'danger');
 //        return response('a');
         return redirect()->back();
     }
