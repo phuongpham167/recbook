@@ -22,7 +22,11 @@
 @section('content')
     @php
         $guigannhat =   \App\Verify::where('user_id', auth()->user()->id)->orderBy('created_at', 'DESC')->first();
-        $thoigiangui = \Carbon\Carbon::now()->diffInSeconds(\Carbon\Carbon::parse($guigannhat->created_at), true);
+        if(!$guigannhat)
+            $timegannhat = '2018-01-01 12:00:00';
+        else
+            $timegannhat = $guigannhat->created_at;
+        $thoigiangui = \Carbon\Carbon::now()->diffInSeconds(\Carbon\Carbon::parse($timegannhat), true);
     @endphp
 
     @include(theme(TRUE).'.includes.user-info-header-1')
