@@ -289,6 +289,7 @@ Route::group(['middleware'=>'auth'], function(){
         Route::post('sua', ['as'=>'companyEdit', 'uses'=>'CompanyController@update']);
         Route::get('xoa', ['as'=>'companyRemove', 'uses'=>'CompanyController@delete']);
         Route::get('thanh-vien', ['as'=>'companyMember', 'uses'=>'CompanyController@listMember']);
+        Route::get('thanh-vien/xoa', ['as'=>'delete.companyMember', 'uses'=>'CompanyController@deleteMember']);
         Route::get('thanh-vien-data', ['as'=>'companyMemberData', 'uses'=>'CompanyController@data']);
 
         Route::get('xac-nhan-tham-gia', ['as'=>'confirmCompany', 'uses'=>'CompanyController@confirm']);
