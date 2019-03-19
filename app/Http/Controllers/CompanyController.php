@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\CGroup;
 use App\Company;
+use App\Customer;
 use App\Http\Requests\CreateCompanyRequest;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use \DataTables;
+use Illuminate\Support\Facades\DB;
 
 class CompanyController extends Controller
 {
@@ -141,5 +143,43 @@ class CompanyController extends Controller
         }else
             set_notice(trans('system.not_exist'), 'warning');
         return redirect()->back();
+    }
+
+    public function listCustomer() {
+        return v('company.list');
+    }
+
+    public function dataListCustomer(){
+        $data   =   Customer::with('type');
+        $group = DB::table('company_groups')->where('company_id', \request('id'))->pluck('id');
+        $group_id = DB::table('group_user')->whereIn('group_id', $group)->where('user_id',auth()->user()->id)->first();
+        $groupMember = DB::table('group_user')->whereIn('group_id',$group_id)->pluck('user_id');
+
+        $group_user = [];
+        $group_agency = [];
+        foreach ($groupMember as $user){
+            if(is_agency($group_id, User::find($user))){
+                $group_agency[] = $user;
+            }else
+                $group_user[] = $user;
+        }
+
+        $data   =   $data->where(function ($q) use ($group_user){
+            $q->whereIn('user_id', $group_user)->orWhere('user_id', auth()->user()->id);
+        });
+        $result = Datatables::of($data)
+            ->editColumn('name', function(Customer $customer){
+                return "<a href='".route('customerCare', ['id'=>$customer->id])."'>".$customer->name."</a>";
+            })
+            ->editColumn('phone', function(Customer $customer){
+                return "<a href='".route('customerCare', ['id'=>$customer->id])."'>".$customer->phone."</a>";
+            })
+            ->addColumn('type', function(Customer $customer) {
+                return $customer->type?$customer->type->name:'-';
+            })->addColumn('manage', function(Customer $customer) {
+                return a('khach-hang/xoa', 'id='.$customer->id,trans('g.delete'), ['class'=>'btn btn-xs btn-danger'],'#',"return bootbox.confirm('".trans('system.delete_confirm')."', function(result){if(result==true){window.location.replace('".asset('khach-hang/xoa?id='.$customer->id)."')}})").'  '.a('khach-hang/sua', 'id='.$customer->id,trans('g.edit'), ['class'=>'btn btn-xs btn-default']);
+            })->rawColumns(['manage', 'name', 'phone']);
+
+        return $result->make(true);
     }
 }

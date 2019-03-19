@@ -293,6 +293,9 @@ Route::group(['middleware'=>'auth'], function(){
         Route::get('thanh-vien/xoa', ['as'=>'delete.companyMember', 'uses'=>'CompanyController@deleteMember']);
         Route::get('thanh-vien-data', ['as'=>'companyMemberData', 'uses'=>'CompanyController@data']);
 
+        Route::get('khach-hang', ['as'=>'companyCustomer', 'uses'=>'CompanyController@listCustomer']);
+        Route::get('khach-hang/data', ['as'=>'companyCustomerData', 'uses'=>'CompanyController@dataListCustomer']);
+
         Route::get('xac-nhan-tham-gia', ['as'=>'confirmCompany', 'uses'=>'CompanyController@confirm']);
 
         Route::group(['prefix'=>'nhom'], function(){
