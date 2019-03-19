@@ -288,6 +288,8 @@ Route::group(['middleware'=>'auth'], function(){
         Route::get('sua', ['as'=>'companyEdit', 'uses'=>'CompanyController@edit']);
         Route::post('sua', ['as'=>'companyEdit', 'uses'=>'CompanyController@update']);
         Route::get('xoa', ['as'=>'companyRemove', 'uses'=>'CompanyController@delete']);
+        Route::get('thanh-vien', ['as'=>'companyMember', 'uses'=>'CompanyController@listMember']);
+        Route::get('thanh-vien-data', ['as'=>'companyMemberData', 'uses'=>'CompanyController@data']);
 
         Route::get('xac-nhan-tham-gia', ['as'=>'confirmCompany', 'uses'=>'CompanyController@confirm']);
 
@@ -360,11 +362,7 @@ Route::group(['prefix'=>'ajax'], function(){
 
 
 Route::get('/t', function (){
-    \App\OTP::create([
-        'content' => 'ma otp cua ban la',
-        'phoneNumber' => '0906213162',
-        'send' => 'false',
-    ]);
+    
 });
 
 Route::group(['prefix'=>'notify'], function(){

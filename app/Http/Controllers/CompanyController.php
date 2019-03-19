@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\CGroup;
 use App\Company;
 use App\Http\Requests\CreateCompanyRequest;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use \DataTables;
 
 class CompanyController extends Controller
 {
@@ -65,5 +67,36 @@ class CompanyController extends Controller
             return redirect()->route('companyDetail', ['id'=>$data->id]);
         }else
             return v('company.confirm', compact('data', 'confirmed'));
+    }
+
+    public function listMember()
+    {
+        return v('company.list-member');
+    }
+
+    public function data() {
+        $data   =   Company::find(\request('id'))->users()->get();
+
+        $result = Datatables::of($data)
+            ->editColumn('name', function($user){
+                return $user->name;
+            })
+            ->editColumn('group', function( $user){
+                return CGroup::find($user->companygroup()->first()->pivot->group_id)->name;
+            })
+            ->addColumn('permission', function( $user) {
+                return $user->rolegroup()->first()->pivot->role;
+            })
+            ->addColumn('manage', function( $user) {
+                return a('nhom/thanh-vien/xoa', 'id='.$user->user_id.'&user_group_id='.request('id'),trans('g.delete'), ['class'=>'btn btn-xs btn-danger'],'#',"return bootbox.confirm('".trans('system.delete_confirm')."', function(result){if(result==true){window.location.replace('".asset('nhom/thanh-vien/xoa?id='.$user->user_id.'&user_group_id='.request('id'))."')}})");
+            })->rawColumns([ 'manage']);
+
+//        if(get_web_id() == 1) {
+//            $result = $result->addColumn('web_id', function(Currency $currency) {
+//                return Web::find($currency->web_id)->name;
+//            });
+//        }
+
+        return $result->make(true);
     }
 }

@@ -538,6 +538,9 @@ class AuthenticateController extends Controller
 
     public function resendVerify()
     {
-        createVerifyCode();
+        if(createVerifyCode()) {
+            set_notice('Gửi mã xác thực thành công!', 'success');
+            return redirect()->back();
+        }
     }
 }

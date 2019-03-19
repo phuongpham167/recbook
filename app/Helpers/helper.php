@@ -5543,7 +5543,7 @@ function createVerifyCode(){
     $data->expired_at = \Carbon\Carbon::now()->addMinute(5);
     $data->sent_at = \Carbon\Carbon::now();
     $data->save();
-    echo 'a';
+
     $DEFAULT_URL = env('FIREBASE_DATABASE_URL');
     $DEFAULT_TOKEN = env('FIREBASE_SECRET');
     $DEFAULT_PATH = env('FIREBASE_PATH');
@@ -5555,13 +5555,15 @@ function createVerifyCode(){
             'phoneNumber' => auth()->user()->phone,
             'send' => 'false'
         ];
-    echo 'b';
+    echo $DEFAULT_PATH;
     $dateTime = new DateTime();
     $firebase->set($DEFAULT_PATH . '/' . time(), $test);
 
     $name = $firebase->get($DEFAULT_PATH . '/sms');
     var_dump($name);
     echo $name;
+
+    return true;
 }
 
 function confirmVerifyCode($code){
