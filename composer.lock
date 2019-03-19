@@ -3639,22 +3639,22 @@
         },
         {
             "name": "pusher/pusher-php-server",
-            "version": "v3.4.0",
+            "version": "v3.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pusher/pusher-http-php.git",
-                "reference": "9093be6934e2e5129bd66322fc28d8b65794e58c"
+                "reference": "2279bcd21a608a76f9be1fe0675aa2dd1efb2fa0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pusher/pusher-http-php/zipball/9093be6934e2e5129bd66322fc28d8b65794e58c",
-                "reference": "9093be6934e2e5129bd66322fc28d8b65794e58c",
+                "url": "https://api.github.com/repos/pusher/pusher-http-php/zipball/2279bcd21a608a76f9be1fe0675aa2dd1efb2fa0",
+                "reference": "2279bcd21a608a76f9be1fe0675aa2dd1efb2fa0",
                 "shasum": ""
             },
             "require": {
                 "ext-curl": "*",
                 "paragonie/sodium_compat": "^1.6",
-                "php": ">=5.4 <7.3",
+                "php": "^5.4 || ^7.0",
                 "psr/log": "^1.0"
             },
             "require-dev": {
@@ -3689,7 +3689,7 @@
                 "rest",
                 "trigger"
             ],
-            "time": "2019-03-13T17:36:04+00:00"
+            "time": "2019-01-18T12:10:21+00:00"
         },
         {
             "name": "ralouphie/getallheaders",
