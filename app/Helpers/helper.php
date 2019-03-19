@@ -5554,7 +5554,7 @@ function createVerifyCode(){
         'content' => 'Ma xac thuc tai khoan Recbook.vn cua ban la '. $data->code,
         'phoneNumber' => auth()->user()->phone,
         'send' => false,
-        'createdAt' =>  \Carbon\Carbon::now()
+        'createdAt' =>  \Carbon\Carbon::now()->format('h:i:s d/m/Y')
         ];
     $firebase->set($DEFAULT_PATH . '/' . time(), $test);
 
