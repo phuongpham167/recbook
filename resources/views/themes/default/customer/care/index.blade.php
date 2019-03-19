@@ -790,7 +790,7 @@
                 $('#shareCustomerModal').modal('show');
             });
 
-            $(".token-input-dropdown").css("z-index","9999")
+            $(".token-input-dropdown").css("z-index","9999");
         });
 
     </script>

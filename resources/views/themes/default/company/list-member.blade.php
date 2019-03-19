@@ -29,6 +29,15 @@
             display: table-header-group;
         }
     </style>
+    <style type="text/css">
+        li.token-input-token {
+            max-width: 100% !important;
+        }
+
+        ul.token-input-list {
+            width: 100% !important;
+        }
+    </style>
 @endpush
 
 @section('content')
@@ -48,7 +57,7 @@
                 @include('themes.default.includes.message')
                 <!--begin manage_page-->
                 <div class="listlandA_page">
-                    <p class="title_boxM"><strong><i class="fa fa-user-o"></i>Danh sách thành viên công ty</strong> <a href="#" class="btn btn-xs btn-primary pull-right"><i class="fa fa-plus"></i> Thêm thành viên</a></p>
+                    <p class="title_boxM"><strong><i class="fa fa-user-o"></i>Danh sách thành viên công ty</strong> <a href="#" class="btn btn-xs btn-primary pull-right" id="add-member"><i class="fa fa-plus"></i> Thêm thành viên</a></p>
                     <div>
                         <div class="box-body">
                             <div class="table-responsive">
@@ -89,7 +98,39 @@
 
         </div>
     </div>
+    <form method="get" action="{{asset('doanh-nghiep/thanh-vien/them')}}">
+        {{csrf_field()}}
+        <div id="addMemberModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
 
+                <!-- Modal content-->
+                <div class="modal-content modal-lg">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Thêm thành viên công ty</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="panel-body ">
+                            <div class="form-group clearfix">
+                                <input type="text" class="col-sm-12 form-control"
+                                       name="user_id" id="add_input"
+                                />
+                                <input type="text" class="hidden"
+                                       name="company_id" value="{{request('id')}}"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit"
+                                class="_btn bg_red pull-right"><i
+                                    class="fa fa-plus"></i> &nbsp;&nbsp;THÊM
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
     <link rel="stylesheet" href="{{asset('plugins/jquery.datatables/css/jquery.dataTables.min.css')}}" />
 
     @include(theme(TRUE).'.includes.footer')
@@ -131,6 +172,20 @@
                     });
                 }
             });
+
+            $('#add_input').tokenInput("{{asset('ajax/user')}}", {
+                queryParam: "term",
+                zindex  :   1005,
+                preventDuplicates   :   true,
+                hintText: 'Nhập tên thành viên cần tìm',
+            });
+
+            $('#add-member').on('click', function () {
+                // console.log(check);
+                $('#addMemberModal').modal('show');
+            });
+
+            $(".token-input-dropdown").css("z-index","9999");
         });
 
     </script>
