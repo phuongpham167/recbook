@@ -20,6 +20,11 @@
 @endpush
 
 @section('content')
+    @php
+        $guigannhat =   \App\Verify::where('user_id', auth()->user()->id)->orderBy('created_at', 'DESC')->first();
+        $thoigiangui = \Carbon\Carbon::now()->diffInSeconds(\Carbon\Carbon::parse($guigannhat->created_at), true);
+    @endphp
+
     @include(theme(TRUE).'.includes.user-info-header-1')
 
     <div class="container-vina">
@@ -78,7 +83,7 @@
                                         </dl>
                                     </div>
 
-                                    <div @if(empty(auth()->user()->phone_verify)) class="col-xs-6" @else class="col-xs-12" @endif>
+                                    <div class="col-xs-6">
                                         <dl>
                                             <dt class="txt_right">Điện thoại <span class="required">*</span></dt>
                                             <dd>
@@ -90,10 +95,16 @@
                                     @if(empty(auth()->user()->phone_verify))
                                         <div class="col-xs-6">
                                             <dl>
-                                                <dt class="txt_right"><span class="required"> Tài khoản chưa xác thực</span></dt>
+                                                <dt class="txt_right" style="width: 100%"><span class="required"><i class="fa fa-times-circle-o" style="color: red"></i> <a href="#" class="verify_btn" id="{{auth()->user()->id}}">Click để xác minh</a></span></dt>
                                                 <dd>
-                                                    <a class="btn btn-xs btn-primary verify_btn" id="{{auth()->user()->id}}">Xác thực</a>
+
                                                 </dd>
+                                            </dl>
+                                        </div>
+                                    @else
+                                        <div class="col-xs-6">
+                                            <dl>
+                                                <dt class="txt_right"><span class="required"><i class="fa fa-check"></i> Đã xác thực</span></span></dt>
                                             </dl>
                                         </div>
                                     @endif
@@ -253,7 +264,7 @@
 
         </div>
     </div>
-
+    @if(empty(auth()->user()->phone_verify))
     <form method="post" action="{{route('post.verify')}}">
         {{csrf_field()}}
         <div id="myModal" class="modal fade" role="dialog">
@@ -263,18 +274,22 @@
                 <div class="modal-content modal-lg">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">XÁC THỰC TÀI KHOẢN</h4>
+                        <h4 class="modal-title">Xác thực số điện thoại</h4>
                     </div>
                     <div class="modal-body">
+                        @if(!empty(session('codeSend')) && session('codeSend') == 'send')
+                            Mã xác thực vừa được gửi về số điện thoại của bạn. Vui lòng nhập mã vào ô bên dưới để xác thực.
+                            <br/>
+                        @endif
                         <label class="control-label">Mã xác thực</label>
                         <div>
                             <input class="form-control" name="verify_code">
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <a href="{{route('resend.verify')}}"
-                           class="_btn bg_red pull-right"><i
-                                    class="fa fa-plus"></i> GỬI LẠI MÃ
+                        <a id="countdown" href="{{route('resend.verify')}}"
+                           class="btn pull-right @if($thoigiangui<60) disabled @endif"><i
+                                    class="fa fa-refresh"></i> Gửi lại mã
                         </a>
                         <button type="submit"
                                 class="_btn bg_red pull-right"><i
@@ -285,7 +300,7 @@
             </div>
         </div>
     </form>
-
+    @endif
     @include(theme(TRUE).'.includes.footer')
 @endsection
 
@@ -305,6 +320,7 @@
                 ]
             });
         });
+        @if(empty(auth()->user()->phone_verify))
         $('.verify_btn').on('click', function () {
             // console.log(check);
             // var id      =   $(this).attr('id');
@@ -312,5 +328,44 @@
             // $('.modal #id').val(id);
             $('#myModal').modal('show');
         });
+        @if(!empty(session('codeSend')) && session('codeSend') == 'send')
+        $('#myModal').modal('show');
+        @php
+        session()->forget('codeSend');
+        @endphp
+        @endif
+        @endif
+    </script>
+    <script>
+        // Set the date we're counting down to
+        @if($thoigiangui<60)
+        var countDownDate = new Date("{{\Carbon\Carbon::now()->addSecond(60-$thoigiangui)->format("M d, Y H:i:s")}}").getTime();
+
+        // Update the count down every 1 second
+        var x = setInterval(function() {
+
+            // Get todays date and time
+            var now = new Date().getTime();
+
+            // Find the distance between now and the count down date
+            var distance = countDownDate - now;
+
+            // Time calculations for days, hours, minutes and seconds
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Output the result in an element with id="demo"
+            document.getElementById("countdown").innerHTML = '<i class="fa fa-refresh"></i> Gửi lại sau '+seconds + " giây ";
+
+            // If the count down is over, write some text
+            if (distance < 0) {
+                clearInterval(x);
+                $('#countdown').removeClass('disabled');
+                $('#countdown').html('<i class="fa fa-refresh"></i> Gửi lại mã');
+            }
+        }, 1000);
+        @endif
     </script>
 @endpush

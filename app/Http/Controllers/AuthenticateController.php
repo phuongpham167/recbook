@@ -255,6 +255,9 @@ class AuthenticateController extends Controller
         $userInfo->seo_description = isset($request->seo_description) ? $request->seo_description : '';
         $userInfo->save();
         $user   =   auth()->user();
+        if($user->phone != $request->phone){
+            $user->phone_verify = null;
+        }
         $user->phone    =   $request->phone;
         $user->address  =   $request->address;
         $user->save();
@@ -532,15 +535,20 @@ class AuthenticateController extends Controller
 
     public function postVerify()
     {
-        confirmVerifyCode(\request('verify_code'));
+        $verify =   confirmVerifyCode(\request('verify_code'));
+        if($verify==0)
+            set_notice(trans('system.verify_success'), 'success');
+        else
+            set_notice(trans('system.verify_failed')." Lý do: $verify", 'danger');
+//        return response('a');
         return redirect()->back();
     }
 
     public function resendVerify()
     {
-        if(createVerifyCode()) {
-            set_notice('Gửi mã xác thực thành công!', 'success');
-            return redirect()->back();
+        if(createVerifyCode()){
+            session(['codeSend'=>'send']);
         }
+        return redirect()->back();
     }
 }

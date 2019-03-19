@@ -5552,33 +5552,33 @@ function createVerifyCode(){
 
     $test = [
         'content' => 'Ma xac thuc tai khoan Recbook.vn cua ban la '. $data->code,
-            'phoneNumber' => auth()->user()->phone,
-            'send' => 'false'
+        'phoneNumber' => auth()->user()->phone,
+        'send' => false,
+        'createdAt' =>  \Carbon\Carbon::now()->format('h:i:s d/m/Y')
         ];
-    echo $DEFAULT_PATH;
-    $dateTime = new DateTime();
     $firebase->set($DEFAULT_PATH . '/' . time(), $test);
-
-    $name = $firebase->get($DEFAULT_PATH . '/sms');
-    var_dump($name);
-    echo $name;
 
     return true;
 }
 
 function confirmVerifyCode($code){
     $data = \App\Verify::where('code',$code)->where('user_id',auth()->user()->id)->first();
-
     if(!empty($data)){
-        if($data->expired_at <= \Carbon\Carbon::now()){
+//        echo $data->expired_at.'<br/>'.\Carbon\Carbon::now();
+        if(\Carbon\Carbon::parse($data->expired_at)->gt(\Carbon\Carbon::now())){
+            $error = 3;
             $data->confirmed = 1;
             $data->save();
 
             $user = \App\User::find(auth()->user()->id);
             $user->phone_verify = 1;
             $user->save();
-            set_notice(trans('system.verify_success'), 'success');
+            return 0;
         }
-    }
-    return redirect()->back();
+        else {
+            $error = 'Mã xác thực đã hết hạn!';
+        }
+    } else
+        $error = 'Sai mã xác thực!';
+    return $error;
 }

@@ -370,21 +370,3 @@ Route::group(['prefix'=>'notify'], function(){
 });
 
 
-Route::get('test', function(){
-    $DEFAULT_URL = 'https://otp-recbook.firebaseio.com/';
-    $DEFAULT_TOKEN = 'oCmveW6mtUSgnHACqt4WiTZJ84HgA3g18GiY7n03';
-    $DEFAULT_PATH = '/sms/';
-
-    $firebase = new \Firebase\FirebaseLib($DEFAULT_URL, $DEFAULT_TOKEN);
-
-    $test = [
-        'content' => 'Test OTP 123',
-        'phoneNumber' => '0904455882',
-        'send' => 'false'
-    ];
-    $dateTime = new DateTime();
-    $firebase->set($DEFAULT_PATH . '/' . time(), $test);
-
-    $name = $firebase->get($DEFAULT_PATH . '/sms');
-    echo $name;
-});
