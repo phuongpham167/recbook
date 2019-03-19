@@ -5550,9 +5550,12 @@ function createVerifyCode(){
     $DEFAULT_PATH = env('FIREBASE_PATH');
 
     $firebase = new \Firebase\FirebaseLib($DEFAULT_URL, $DEFAULT_TOKEN);
+    $template   =   explode('|',get_config('otp_template', 'Ma xac thuc tai khoan Recbook.vn cua ban la {code}'));
 
+    $content    =   $template[array_rand($template)];
+    $content    =   str_replace('{code}', $data->code, $content);
     $test = [
-        'content' => 'Ma xac thuc tai khoan Recbook.vn cua ban la '. $data->code,
+        'content' => $content,
         'phoneNumber' => auth()->user()->phone,
         'send' => false,
         'createdAt' =>  \Carbon\Carbon::now()->format('h:i:s d/m/Y')
