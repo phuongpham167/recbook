@@ -364,7 +364,7 @@ Route::group(['prefix'=>'ajax'], function(){
 
 
 Route::get('/t', function (){
-    
+    print_r(is_admin(1, \App\User::find(8)));
 });
 
 Route::group(['prefix'=>'notify'], function(){

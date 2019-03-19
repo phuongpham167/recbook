@@ -137,6 +137,7 @@ function isFriend($id1, $id2)
     return false;
 }
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 function frontendweb_create($web_id, $template, $name, $user_id=null){
@@ -5585,20 +5586,36 @@ function confirmVerifyCode($code){
 
 function is_admin($group_id, $user=null)
 {
-
+    if(!empty($data = DB::table('group_user')->where('group_id',$group_id)->where('user_id',$user->id)->first())){
+        if($data->role == 'admin')
+            return true;
+    }
+    return false;
 }
 
 function is_manager($group_id, $user=null)
 {
-
+    if(!empty($data = DB::table('group_user')->where('group_id',$group_id)->where('user_id',$user->id)->first())){
+        if($data->role == 'manager')
+            return true;
+    }
+    return false;
 }
 
 function is_agency($group_id, $user=null)
 {
-
+    if(!empty($data = DB::table('group_user')->where('group_id',$group_id)->where('user_id',$user->id)->first())){
+        if($data->role == 'agency')
+            return true;
+    }
+    return false;
 }
 
 function is_user($group_id, $user=null)
 {
-
+    if(!empty($data = DB::table('group_user')->where('group_id',$group_id)->where('user_id',$user->id)->first())){
+        if($data->role == 'user')
+            return true;
+    }
+    return false;
 }
