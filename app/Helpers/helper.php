@@ -5582,3 +5582,23 @@ function confirmVerifyCode($code){
         $error = 'Sai mã xác thực!';
     return $error;
 }
+
+function is_admin($group_id, $user=null)
+{
+
+}
+
+function is_manager($group_id, $user=null)
+{
+
+}
+
+function is_agency($group_id, $user=null)
+{
+
+}
+
+function is_user($group_id, $user=null)
+{
+
+}
