@@ -255,6 +255,9 @@ class AuthenticateController extends Controller
         $userInfo->seo_description = isset($request->seo_description) ? $request->seo_description : '';
         $userInfo->save();
         $user   =   auth()->user();
+        if($user->phone != $request->phone){
+            $user->phone_verify = null;
+        }
         $user->phone    =   $request->phone;
         $user->address  =   $request->address;
         $user->save();
@@ -530,19 +533,21 @@ class AuthenticateController extends Controller
         return redirect()->back();
     }
 
-    public function getVerify()
-    {
-        return v('authenticate.verify', ['menuData' => $this->menuFE]);
-    }
-
     public function postVerify()
     {
-        confirmVerifyCode(\request('verify_code'));
+        if(confirmVerifyCode(\request('verify_code')))
+            set_notice(trans('system.verify_success'), 'success');
+        else
+            set_notice(trans('system.verify_failed'), 'danger');
+//        return response('a');
         return redirect()->back();
     }
 
     public function resendVerify()
     {
-        createVerifyCode(\request('id'));
+        if(createVerifyCode()){
+            session(['codeSend'=>'send']);
+            return redirect()->back();
+        }
     }
 }

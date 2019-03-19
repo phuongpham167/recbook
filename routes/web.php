@@ -360,10 +360,11 @@ Route::group(['prefix'=>'ajax'], function(){
 
 
 Route::get('/t', function (){
-//    var_dump(session('tinhthanhquantam'));
-//    print_r( 'session: '.session('tinhthanhquantam'));
-//    print_r(auth()->user()->subcribes()->pluck('province_subcribes.province_id')->toArray());
-    print_r(\App\Customer::where('user_id', auth()->user()->id)->pluck('id'));
+    \App\OTP::create([
+        'content' => 'ma otp cua ban la',
+        'phoneNumber' => '0906213162',
+        'send' => 'false',
+    ]);
 });
 
 Route::group(['prefix'=>'notify'], function(){

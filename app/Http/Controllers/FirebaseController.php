@@ -4,7 +4,6 @@ use Illuminate\Http\Request;
 use Kreait\Firebase\Factory;
 use Kreait\Firebase\ServiceAccount;
 use Kreait\Firebase\Database;
-use SafeStudio\Firebase\Firebase;
 
 class FirebaseController extends Controller
 {

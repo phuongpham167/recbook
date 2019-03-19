@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "99732e99db862d31ad7ccddd59c92378",
+    "content-hash": "eb6a46695e33b5466d57956cdb15751d",
     "packages": [
         {
             "name": "defuse/php-encryption",
@@ -1864,7 +1864,7 @@
                 {
                     "name": "Luís Otávio Cobucci Oblonczyk",
                     "email": "lcobucci@gmail.com",
-                    "role": "Developer"
+                    "role": "developer"
                 }
             ],
             "description": "A simple library to work with JSON Web Token and JSON Web Signature",
@@ -3812,57 +3812,6 @@
                 "uuid"
             ],
             "time": "2018-07-19T23:38:55+00:00"
-        },
-        {
-            "name": "safestudio/firebase-laravel",
-            "version": "1.0.8",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/SafeStudio/firebase-laravel.git",
-                "reference": "6210c3d9bdf732068a4341486f0577396afd4421"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/SafeStudio/firebase-laravel/zipball/6210c3d9bdf732068a4341486f0577396afd4421",
-                "reference": "6210c3d9bdf732068a4341486f0577396afd4421",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/support": "^5.4",
-                "ktamas77/firebase-php": "^2.2",
-                "php": ">=7.1"
-            },
-            "require-dev": {
-                "orchestra/testbench": "~3.4",
-                "phpunit/phpunit": "^6.3",
-                "vlucas/phpdotenv": "2.4"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "SafeStudio\\Firebase\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Le Minh Tri",
-                    "email": "ansidev@gmail.com"
-                }
-            ],
-            "description": "Firebase REST API easy wrapper for Laravel",
-            "keywords": [
-                "api",
-                "firebase",
-                "framework",
-                "laravel",
-                "rest",
-                "wrapper"
-            ],
-            "time": "2017-08-22T22:00:48+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
