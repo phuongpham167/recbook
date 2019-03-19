@@ -548,7 +548,7 @@ class AuthenticateController extends Controller
     {
         if(createVerifyCode()){
             session(['codeSend'=>'send']);
-            return redirect()->back();
         }
+        return redirect()->back();
     }
 }

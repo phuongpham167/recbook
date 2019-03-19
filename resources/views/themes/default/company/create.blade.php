@@ -35,7 +35,7 @@
                             <dl>
                                 <dt>{{trans('company.title')}} <span class="required">*</span></dt>
                                 <dd>
-                                    <input type="text" name="name" id="name" required placeholder="{{trans('frontend.title')}}" />
+                                    <input type="text" name="name" id="name" required />
                                     <span class="help-block">Vui lòng điền thông tin</span>
                                 </dd>
                             </dl>
@@ -81,7 +81,8 @@
             $('input[name=members]').tokenInput("{{asset('ajax/user')}}?except={{auth()->user()->id}}&role=friend", {
                 queryParam: "term",
                 zindex  :   1005,
-                preventDuplicates   :   true
+                preventDuplicates   :   true,
+                hintText: 'Nhập tên thành viên cần tìm kiếm'
             });
         });
 

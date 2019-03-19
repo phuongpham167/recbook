@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\CGroup;
 use App\Company;
 use App\Http\Requests\CreateCompanyRequest;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use \DataTables;
 
 class CompanyController extends Controller
 {
@@ -81,5 +84,48 @@ class CompanyController extends Controller
             })->rawColumns(['title']);
 
         return $result->make(true);
+    }
+    public function listMember()
+    {
+        return v('company.list-member');
+    }
+
+    public function data() {
+        $data   =   Company::find(\request('id'))->users()->get();
+
+        $result = Datatables::of($data)
+            ->editColumn('name', function($user){
+                return $user->name;
+            })
+            ->editColumn('group', function( $user){
+                return CGroup::find($user->companygroup()->first()->pivot->group_id)->name;
+            })
+            ->addColumn('permission', function( $user) {
+                return $user->rolegroup()->first()->pivot->role;
+            })
+            ->addColumn('manage', function( $user) {
+                return a('doanh-nghiep/thanh-vien/xoa', 'id='.$user->id,trans('g.delete'), ['class'=>'btn btn-xs btn-danger'],'#',
+                    "return bootbox.confirm('".trans('system.delete_confirm')."', function(result){if(result==true){window.location.replace('".asset('doanh-nghiep/thanh-vien/xoa?id='.$user->id)."')}})");
+            })->rawColumns([ 'manage']);
+
+//        if(get_web_id() == 1) {
+//            $result = $result->addColumn('web_id', function(Currency $currency) {
+//                return Web::find($currency->web_id)->name;
+//            });
+//        }
+
+        return $result->make(true);
+    }
+
+    public function deleteMember() {
+        $user = User::find(\request('id'));
+
+        if(!empty($user) && CGroup::find($user->companygroup()->first()->pivot->group_id)->user_id == auth()->user()->id ) {
+            $user->companygroup()->detach($user->companygroup()->first()->pivot->group_id);
+            $user->company()->detach($user->company()->first()->pivot->company_id);
+            set_notice(trans('system.delete_success'), 'success');
+        }else
+            set_notice(trans('system.not_exist'), 'warning');
+        return redirect()->back();
     }
 }
