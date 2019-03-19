@@ -96,6 +96,16 @@ class User extends Authenticatable
         return $this->belongsToMany(UserGroup::class,'member_group');
     }
 
+    public function companygroup()
+    {
+        return $this->belongsToMany(CGroup::class, 'group_user','user_id','group_id')->withPivot('group_id');
+    }
+
+    public function rolegroup()
+    {
+        return $this->belongsToMany(CGroup::class, 'group_user','user_id','group_id')->withPivot('role');
+    }
+
     public function sharedcustomer() {
         return $this->belongsToMany(User::class,'shared_customer');
     }
