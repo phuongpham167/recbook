@@ -5555,7 +5555,7 @@ function createVerifyCode(){
     $content    =   $template[array_rand($template)];
     $content    =   str_replace('{code}', $data->code, $content);
     $test = [
-        'content' => $content,
+        'content' => trim($content),
         'phoneNumber' => auth()->user()->phone,
         'send' => false,
         'createdAt' =>  \Carbon\Carbon::now()->format('h:i:s d/m/Y')
