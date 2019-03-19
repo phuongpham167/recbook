@@ -113,7 +113,7 @@ Route::get('/gui-lai-xac-thuc', ['as' => 'resend.verify', 'uses' => 'Authenticat
 
 Route::post('/theme-category', ['as' => 'themeCategory', 'uses' => 'ThemeController@getTheme']);
 
-Route::group(['middleware'=>'auth'], function(){
+Route::group(['middleware'=>['auth','phoneVerify']], function(){
     Route::get('/quan-ly-tin-rao', ['as' => 'manage', 'uses' => 'AuthenticateController@getManage']);
     Route::get('/doi-mat-khau', ['as' => 'change_password', 'uses' => 'AuthenticateController@getChangepassword']);
     Route::post('/doi-mat-khau', ['as' => 'post.change_password', 'uses' => 'AuthenticateController@postChangepassword']);
@@ -371,4 +371,7 @@ Route::group(['prefix'=>'notify'], function(){
     Route::get('read/{id?}', 'NotificationController@read')->name('readNotification');
 });
 
-
+Route::group(['prefix'=>'phone-verify'], function(){
+    Route::get('', ['as'=>'phoneVerify', 'uses'=>'AuthenticateController@getVerify']);
+    Route::post('', ['as'=>'phoneVerify', 'uses'=>'AuthenticateController@postVerify']);
+});

@@ -5573,7 +5573,7 @@ function confirmVerifyCode($code){
             $user = \App\User::find(auth()->user()->id);
             $user->phone_verify = 1;
             $user->save();
-            return 0;
+            return 1;
         }
         else {
             $error = 'Mã xác thực đã hết hạn!';
