@@ -45,7 +45,8 @@ class CompanyController extends Controller
         $group = $data->group()->create([
             'name'  =>  'Nhóm chính',
             'user_id'   =>  auth()->user()->id,
-            'description'   =>  'Nhóm mặc định của '.$data->name
+            'description'   =>  'Nhóm mặc định của '.$data->name,
+            'is_default'  =>  1,
         ]);
         $group->users()->attach(auth()->user()->id, ['confirmed'=>1, 'role'=>'admin']);
         $group->users()->attach($members);
@@ -115,6 +116,19 @@ class CompanyController extends Controller
 //        }
 
         return $result->make(true);
+    }
+
+    public function addMember() {
+        $user = User::find(\request('user_id'));
+
+        if(!empty($user) && Company::find(\request('company_id'))->user_id == auth()->user()->id) {
+            $user->company()->attach(\request('company_id'));
+            $group = CGroup::where('company_id',\request('company_id'))->where('is_default',1)->first();
+            $user->companygroup()->attach($group);
+            set_notice(trans('system.add_success'), 'success');
+        }else
+            set_notice(trans('system.not_exist'), 'warning');
+        return redirect()->back();
     }
 
     public function deleteMember() {
