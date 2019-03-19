@@ -535,10 +535,11 @@ class AuthenticateController extends Controller
 
     public function postVerify()
     {
-        if(confirmVerifyCode(\request('verify_code')))
+        $verify =   confirmVerifyCode(\request('verify_code'));
+        if($verify==0)
             set_notice(trans('system.verify_success'), 'success');
         else
-            set_notice(trans('system.verify_failed'), 'danger');
+            set_notice(trans('system.verify_failed')."Mã lỗi: $verify.", 'danger');
 //        return response('a');
         return redirect()->back();
     }

@@ -5562,17 +5562,20 @@ function createVerifyCode(){
 
 function confirmVerifyCode($code){
     $data = \App\Verify::where('code',$code)->where('user_id',auth()->user()->id)->first();
+    $error = 1;
     if(!empty($data)){
 //        echo $data->expired_at.'<br/>'.\Carbon\Carbon::now();
+        $error = 2;
         if(\Carbon\Carbon::parse($data->expired_at)->gt(\Carbon\Carbon::now())){
+            $error = 3;
             $data->confirmed = 1;
             $data->save();
 
             $user = \App\User::find(auth()->user()->id);
             $user->phone_verify = 1;
             $user->save();
-            return TRUE;
+            return 0;
         }
     }
-    return FALSE;
+    return $error;
 }
