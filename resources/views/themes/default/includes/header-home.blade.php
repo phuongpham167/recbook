@@ -13,7 +13,7 @@
             <ul class="nav navbar-nav" id="mainmenu">
                 <li class="active"><a href="{{ route('home') }}">{{ trans('header.navbar-item.home') }}</a></li>
                 @php
-                    $menuData = json_decode($menuData->data);
+                    $menuData = json_decode(menu()->data);
                 @endphp
                 @foreach($menuData as $md)
                     @if (isset($md->children) && $children = $md->children)

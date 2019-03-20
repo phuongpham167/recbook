@@ -37,9 +37,30 @@ class GroupController extends Controller
 
     public function detail($id)
     {
-        $group  =   Group::find($id);
-        if($group && in_array(get_role($group->company_id), ['admin', 'manager'])){
-            return v('company.group.detail');
+        $group  =   CGroup::find($id);
+        if($group && in_array(get_role($group->company_id, auth()->user()->id), ['admin', 'manager'])){
+            return v('company.group.detail', ['data'=>$group]);
+        }
+    }
+
+    public function addUser()
+    {
+        $group  =   CGroup::find(request('group_id'));
+        if(!empty($group)){
+            $role   =   get_role($group->company_id);
+            if($role == 'admin' || $role == 'manager'){
+                $member =   explode(',', request('members'));
+                $confirmed  =   $role=='admin'?1:0;
+                foreach($member as $u){
+                    $current_group  =   find_group($id, $u);
+                    if($current_group)
+                        $current_group->users()->detach($u);
+                    $group->users()->attach($u, ['confirmed'=>$confirmed]);
+                }
+                if($confirmed==0){
+                    notify($members, 'Lời mời vào nhóm', (auth()->user()->userinfo?auth()->user()->userinfo->fullname:auth()->user()->name).' mời bạn vào nhóm '.$group->name, route('confirmGroup', ['id'=>$group->id]));
+                }
+            }
         }
     }
 }
