@@ -74,8 +74,25 @@ class CareController extends Controller
             $related = array_merge($relate1,$relate2);
             $related = array_unique($related);
 
+            $data   =   $data->where(function($q){
+                $q->where
+            });
+
             $data   =   $data->where(function ($q) use ($id,$related){
-                $q->where('customer_id',$id)->orWhereIn('customer_id',$related);
+                $q->where('customer_id',$id)
+                    ->orWhereIn('customer_id',$related);
+                if(!empty($company_id = request('company_id'))){
+                    $group  =   find_group(request('id'));
+                    $role   =   get_role(request('id'));
+                    $q->orWhereHas('user', function($u) use ($group, $role){
+                        $u->where('id', auth()->user()->id)->orWhereHas('rolegroup', function ($g) use ($group, $role) {
+                            $g->where('group_id', $group->id);
+                            if($role!='manager'){
+                                $g->having('role', '=', 'user');
+                            }
+                        });
+                    });
+                }
             })->withoutGlobalScope(PrivateScope::class)->where(function ($q) use ($id){
 //                $q->where('posted_by', auth()->user()->id)->orWhere('is_private',0)->orWhere('customer_id',$id);
             });

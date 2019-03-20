@@ -314,6 +314,7 @@ Route::group(['middleware'=>['auth','phoneVerify']], function(){
         Route::post('them-thanh-vien', ['as'=>'setUserToGroup', 'uses'=>'GroupController@addUser']);
         Route::post('xoa-thanh-vien', ['as'=>'removeUserFromGroup', 'uses'=>'GroupController@removeUser']);
 
+
     });
 
 });

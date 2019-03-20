@@ -178,22 +178,29 @@ class CompanyController extends Controller
     }
 
     public function data($id) {
-        $data = get_user_same_group($id, auth()->user()->id);
+        $role   =   get_role($id);
 
-        $result = Datatables::of($data)
-            ->editColumn('name', function($user){
-                return $user->name;
-            })
-            ->editColumn('group', function( $user){
-                return CGroup::find($user->companygroup()->first()->pivot->group_id)->name;
-            })
-            ->addColumn('permission', function( $user) {
-                return $user->rolegroup()->first()->pivot->role;
-            })
-            ->addColumn('manage', function( $user) use ($id) {
+        if($role == 'admin'){
+            $data   =   Company::find($id)->users()->having('confirmed', 1)->get();
+        } else {
+            $data   =   get_user_same_group($id);
+        }
+
+        if(!empty($data)){
+            $result = Datatables::of($data)
+                ->editColumn('name', function($user){
+                    return $user->name;
+                })
+                ->editColumn('group', function( $user){
+                    return CGroup::find($user->companygroup()->first()->pivot->group_id)->name;
+                })
+                ->addColumn('permission', function( $user) {
+                    return $user->rolegroup()->first()->pivot->role;
+                })
+                ->addColumn('manage', function( $user) use ($id) {
                     return a('doanh-nghiep/xoa-thanh-vien', 'id='.$user->id.'&company_id='.$id,trans('g.delete'), ['class'=>'btn btn-xs btn-danger'],'#',
                         "return bootbox.confirm('".trans('system.delete_confirm')."', function(result){if(result==true){window.location.replace('".asset('doanh-nghiep/xoa-thanh-vien?id='.$user->id.'&company_id='.$id)."')}})");
-            })->rawColumns([ 'manage']);
+                })->rawColumns([ 'manage']);
 
 //        if(get_web_id() == 1) {
 //            $result = $result->addColumn('web_id', function(Currency $currency) {
@@ -201,7 +208,10 @@ class CompanyController extends Controller
 //            });
 //        }
 
-        return $result->make(true);
+            return $result->make(true);
+        }
+
+
     }
 
     public function addUser() {
@@ -256,10 +266,10 @@ class CompanyController extends Controller
 
         $result = Datatables::of($data)
             ->editColumn('name', function(Customer $customer){
-                return "<a href='".route('customerCare', ['id'=>$customer->id])."'>".$customer->name."</a>";
+                return "<a href='".route('customerCare', ['company_id'=>request('id'),'id'=>$customer->id])."'>".$customer->name."</a>";
             })
             ->editColumn('phone', function(Customer $customer){
-                return "<a href='".route('customerCare', ['id'=>$customer->id])."'>".$customer->phone."</a>";
+                return "<a href='".route('customerCare', ['company_id'=>request('id'),'id'=>$customer->id])."'>".$customer->phone."</a>";
             })
             ->addColumn('type', function(Customer $customer) {
                 return $customer->type?$customer->type->name:'-';
@@ -301,7 +311,7 @@ class CompanyController extends Controller
                 $u->where('id', auth()->user()->id)->orWhereHas('rolegroup', function ($g) use ($group, $role) {
                     $g->where('group_id', $group->id);
                     if($role!='manager'){
-                        $q->having('role', '=', 'user');
+                        $g->having('role', '=', 'user');
                     }
                 });
             });
