@@ -237,21 +237,23 @@ class CompanyController extends Controller
 
     public function dataListCustomer(){
         $data   =   Customer::with('type');
-        $group_id = find_group(\request('id'),auth()->user()->id);
-        $groupMember = DB::table('group_user')->where('group_id',$group_id->id)->where('confirmed',1)->pluck('user_id');
+        $group  =   find_group(request('id'));
+        $role   =   get_role(request('id'));
+        $data = $data->whereHas('realestate', function ($re) use ($group, $role) {
+            $re->where('company_id', request('id'));
 
-        $group_user = [];
-        $group_agency = [];
-        foreach ($groupMember as $user){
-            if(is_agency($group_id->id, User::find($user))){
-                $group_agency[] = $user;
-            }else
-                $group_user[] = $user;
-        }
-
-        $data   =   $data->where(function ($q) use ($group_user){
-            $q->whereIn('user_id', $group_user)->orWhere('user_id', auth()->user()->id);
+            if($role !='admin'){
+                $re->whereHas('user', function ($u) use ($group, $role) {
+                    $u->where('id', auth()->user()->id)->orWhereHas('rolegroup', function ($g) use ($group, $role) {
+                        $g->where('group_id', $group->id);
+                        if($role != 'manager')
+                            $g->having('role', '=', 'user');
+                    });
+                });
+            }
         });
+
+
         $result = Datatables::of($data)
             ->editColumn('name', function(Customer $customer){
                 return "<a href='".route('customerCare', ['id'=>$customer->id])."'>".$customer->name."</a>";
@@ -290,7 +292,22 @@ class CompanyController extends Controller
 
     public function dataListRE(){
         $data   =   RealEstate::query();
-        $data   =   $data->withoutGlobalScope(PrivateScope::class)->where('company_id',\request('id'));
+        $data   =   $data->withoutGlobalScope(PrivateScope::class);
+        $group  =   find_group(request('id'));
+        $role   =   get_role(request('id'));
+        $data = $data->where('company_id', request('id'));
+        if($role != 'admin') {
+            $data = $data->whereHas('user', function ($u) use ($group, $role) {
+                $u->where('id', auth()->user()->id)->orWhereHas('rolegroup', function ($g) use ($group, $role) {
+                    $g->where('group_id', $group->id);
+                    if($role!='manager'){
+                        $q->having('role', '=', 'user');
+                    }
+                });
+            });
+        }
+
+
         $result = Datatables::of($data)->addColumn('type', function(RealEstate $item){
             return $item->reType?$item->reType->name:'';
         });

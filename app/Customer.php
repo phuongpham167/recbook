@@ -64,6 +64,10 @@ class Customer extends Model
         return $this->belongsToMany(User::class,'shared_customer');
     }
 
+    public function realestate()
+    {
+        return $this->hasMany(RealEstate::class);
+    }
     protected static function boot()
     {
         parent::boot();
