@@ -101,6 +101,46 @@ class CompanyController extends Controller
         return redirect()->route('companyIndex');
     }
 
+    public function edit()
+    {
+        $data   =   Company::find(\request('id'));
+        return v('company.edit',compact('data'));
+    }
+
+    public function update(CreateCompanyRequest $request)
+    {
+        $data   =   Company::find($request->id);
+
+        if(!empty($data) && get_role($request->id, auth()->user()->id) == 'admin'){
+            $data->name     =   $request->name;
+            $data->address  =   $request->address;
+            $data->description  =   $request->description;
+            $data->save();
+            set_notice('Sửa doanh nghiệp thành công!', 'success');
+        }else
+            set_notice('Doanh nghiệp không tồn tại hoặc bạn không có quyền sửa doanh nghiệp này!', 'warning');
+
+        return redirect()->route('companyIndex');
+    }
+
+    public function delete(){
+        $data   =   Company::find(request('id'));
+        $groups = $data->group()->get();
+
+        foreach ($groups as $group){
+            $group->users()->sync([]);
+        }
+
+        if(!empty($data)){
+            $data->users()->sync([]);
+            $data->group()->delete();
+            set_notice('Xóa doanh nghiệp thành công!', 'success');
+        }else
+            set_notice(trans('system.not_exist'), 'warning');
+
+        return redirect()->back();
+    }
+
     public function confirm()
     {
         $data   =   Company::where('id', request('id'))->whereHas('users', function($q){
@@ -119,7 +159,6 @@ class CompanyController extends Controller
 
     public function realEstateData()
     {
-
         $customer = Customer::where('user_id', auth()->user()->id)->pluck('id')->toArray();
         $data   =   RealEstate::whereIn('customer_id', $customer)->withoutGlobalScope(PrivateScope::class);
         $result = Datatables::of($data)
