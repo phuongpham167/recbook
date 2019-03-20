@@ -64,13 +64,13 @@ class GroupController extends Controller
                 $member =   explode(',', request('members'));
                 $confirmed  =   $role=='admin'?1:0;
                 foreach($member as $u){
-                    $current_group  =   find_group($id, $u);
+                    $current_group  =   find_group($group->company_id, $u);
                     if($current_group)
                         $current_group->users()->detach($u);
                     $group->users()->attach($u, ['confirmed'=>$confirmed]);
                 }
                 if($confirmed==0){
-                    notify($members, 'Lời mời vào nhóm', (auth()->user()->userinfo?auth()->user()->userinfo->fullname:auth()->user()->name).' mời bạn vào nhóm '.$group->name, route('confirmGroup', ['id'=>$group->id]));
+                    notify($member, 'Lời mời vào nhóm', (auth()->user()->userinfo?auth()->user()->userinfo->fullname:auth()->user()->name).' mời bạn vào nhóm '.$group->name, route('confirmGroup', ['id'=>$group->id]));
                 }
             }
         }
