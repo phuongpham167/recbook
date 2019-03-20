@@ -5588,8 +5588,8 @@ function confirmVerifyCode($code){
 }
 
 function find_group($company_id, $user_id=null){
-    if($user==null && auth()->check()) $user=auth()->user()->id;
-    if($user==null) return false;
+    if($user_id==null && auth()->check()) $user_id=auth()->user()->id;
+    if($user_id==null) return false;
     $company    =   \App\Company::findOrFail($company_id);
     if(!$company) return false;
     $groups =   $company->group()->whereHas('users', function($q) use ($user_id){
