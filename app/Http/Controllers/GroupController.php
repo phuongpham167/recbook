@@ -43,6 +43,18 @@ class GroupController extends Controller
         }
     }
 
+    public function delete(){
+        $data   =   CGroup::find(request('id'));
+
+        if(!empty($data)){
+            $data->users()->sync([]);
+            set_notice('Xóa thành viên nhóm thành công!', 'success');
+        }else
+            set_notice(trans('system.not_exist'), 'warning');
+
+        return redirect()->back();
+    }
+
     public function addUser()
     {
         $group  =   CGroup::find(request('group_id'));
