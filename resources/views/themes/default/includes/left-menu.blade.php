@@ -7,6 +7,7 @@
             <li><a href="/frontend"><i class="fa fa-angle-double-right"></i> Danh sách website</a></li>
             <li><a href="/du-an/quan-ly-du-an/da-dang"><i class="fa fa-angle-double-right"></i> Quản lý dự án</a></li>
             <li><a href="{{route('customerList')}}"><i class="fa fa-angle-double-right"></i> Quản lý khách hàng</a></li>
+            <li><a href="{{route('companyIndex')}}"><i class="fa fa-angle-double-right"></i> Quản lý doanh nghiệp</a></li>
         </ul>
     </div>
 </div>

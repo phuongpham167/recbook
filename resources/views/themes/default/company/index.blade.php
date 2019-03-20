@@ -57,7 +57,7 @@
                                         <td>
                                             <a class="btn btn-xs btn-default" href="{{route('companyEdit', ['id'=>$item->id])}}">Sửa</a>
                                             <a class="btn btn-xs btn-danger" href="{{route('companyRemove', ['id'=>$item->id])}}">Xóa</a>
-                                            <a class="btn btn-xs btn-info" href="{{route('companyMember', ['id'=>$item->id])}}">Quản lý</a>
+                                            <a class="btn btn-xs btn-info" href="{{route('companyDetail', ['id'=>$item->id])}}">Quản lý</a>
                                         </td>
                                     </tr>
                                     @endforeach

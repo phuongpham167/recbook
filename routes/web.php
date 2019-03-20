@@ -288,10 +288,6 @@ Route::group(['middleware'=>'auth'], function(){
         Route::get('sua', ['as'=>'companyEdit', 'uses'=>'CompanyController@edit']);
         Route::post('sua', ['as'=>'companyEdit', 'uses'=>'CompanyController@update']);
         Route::get('xoa', ['as'=>'companyRemove', 'uses'=>'CompanyController@delete']);
-        Route::get('thanh-vien', ['as'=>'companyMember', 'uses'=>'CompanyController@listMember']);
-        Route::get('thanh-vien/them', ['as'=>'add.companyMember', 'uses'=>'CompanyController@addMember']);
-        Route::get('thanh-vien/xoa', ['as'=>'delete.companyMember', 'uses'=>'CompanyController@deleteMember']);
-        Route::get('thanh-vien-data', ['as'=>'companyMemberData', 'uses'=>'CompanyController@data']);
 
         Route::get('khach-hang', ['as'=>'companyCustomer', 'uses'=>'CompanyController@listCustomer']);
         Route::get('khach-hang/data', ['as'=>'companyCustomerData', 'uses'=>'CompanyController@dataListCustomer']);
@@ -308,6 +304,7 @@ Route::group(['middleware'=>'auth'], function(){
 
 
         Route::get('/{id}', ['as'=>'companyDetail', 'uses'=>'CompanyController@show']);
+        Route::get('/{id}/data', ['as'=>'companyDetailData', 'uses'=>'CompanyController@data']);
         Route::get('/{id}/nhom', ['as'=>'companyGroupList', 'uses'=>'CompanyController@getGroup']);
         Route::get('/{id}/nhom/{group_id}', ['as'=>'companyGroupDetail', 'uses'=>'CompanyController@groupDetail']);
         Route::post('them-thanh-vien', ['as'=>'setUserToGroup', 'uses'=>'CompanyController@addUser']);

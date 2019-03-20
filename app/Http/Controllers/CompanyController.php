@@ -88,7 +88,7 @@ class CompanyController extends Controller
 
         return $result->make(true);
     }
-    public function listMember()
+    public function show()
     {
         return v('company.list-member');
     }
@@ -107,8 +107,8 @@ class CompanyController extends Controller
                 return $user->rolegroup()->first()->pivot->role;
             })
             ->addColumn('manage', function( $user) {
-                return a('doanh-nghiep/thanh-vien/xoa', 'id='.$user->id,trans('g.delete'), ['class'=>'btn btn-xs btn-danger'],'#',
-                    "return bootbox.confirm('".trans('system.delete_confirm')."', function(result){if(result==true){window.location.replace('".asset('doanh-nghiep/thanh-vien/xoa?id='.$user->id)."')}})");
+                return a('xoa-thanh-vien', 'id='.$user->id,trans('g.delete'), ['class'=>'btn btn-xs btn-danger'],'#',
+                    "return bootbox.confirm('".trans('system.delete_confirm')."', function(result){if(result==true){window.location.replace('".asset('doanh-nghiep/xoa-thanh-vien?id='.$user->id)."')}})");
             })->rawColumns([ 'manage']);
 
 //        if(get_web_id() == 1) {
@@ -120,7 +120,7 @@ class CompanyController extends Controller
         return $result->make(true);
     }
 
-    public function addMember() {
+    public function addUser() {
         $user = User::find(\request('user_id'));
 
         if(!empty($user) && Company::find(\request('company_id'))->user_id == auth()->user()->id) {
@@ -133,7 +133,7 @@ class CompanyController extends Controller
         return redirect()->back();
     }
 
-    public function deleteMember() {
+    public function removeUser() {
         $user = User::find(\request('id'));
 
         if(!empty($user) && CGroup::find($user->companygroup()->first()->pivot->group_id)->user_id == auth()->user()->id ) {
@@ -152,8 +152,8 @@ class CompanyController extends Controller
     public function dataListCustomer(){
         $data   =   Customer::with('type');
         $group = DB::table('company_groups')->where('company_id', \request('id'))->pluck('id');
-        $group_id = DB::table('group_user')->whereIn('group_id', $group)->where('user_id',auth()->user()->id)->first();
-        $groupMember = DB::table('group_user')->whereIn('group_id',$group_id)->pluck('user_id');
+        $group_id = DB::table('group_user')->whereIn('group_id', $group)->where('user_id',auth()->user()->id)->first()->group_id;
+        $groupMember = DB::table('group_user')->where('group_id',$group_id)->where('confirmed',1)->pluck('user_id');
 
         $group_user = [];
         $group_agency = [];
