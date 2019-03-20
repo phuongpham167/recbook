@@ -24,6 +24,7 @@
             <!--End left-->
 
             <div class="col-xs-9 right">
+                @include(theme(TRUE).'.includes.company_customer_manager_tabs', ['company_id'=>$company_id])
                 @include('themes.default.includes.message')
                 <div class="listlandA_page">
                     <div class="title_boxM">
