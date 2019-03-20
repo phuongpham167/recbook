@@ -96,6 +96,8 @@ class CompanyController extends Controller
     public function data() {
         $data   =   Company::find(\request('id'))->users()->get();
 
+
+
         $result = Datatables::of($data)
             ->editColumn('name', function($user){
                 return $user->name;
