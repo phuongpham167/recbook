@@ -6,6 +6,7 @@ use App\Care;
 use App\Customer;
 use App\RelatedCustomer;
 use App\ShareCustomer;
+use App\User;
 use App\UserGroup;
 use App\Http\Requests\CreateCareRequest;
 use App\RealEstate;
@@ -62,7 +63,9 @@ class CareController extends Controller
      */
     public function index(){
         $id =   \request('id');
-        if(!empty($customer = Customer::find($id)) && ($customer->user_id == auth()->user()->id || in_array(auth()->user()->id,ShareCustomer::where('customer_id', $customer->id)->pluck('user_id')->toArray()))){
+        $customer = Customer::find($id);
+
+        if(!empty($customer) && ($customer->user_id == auth()->user()->id || in_array(auth()->user()->id,ShareCustomer::where('customer_id', $customer->id)->pluck('user_id')->toArray()))){
             $data   =   new RealEstate();
 
             $relate1 = RelatedCustomer::where('customer_id1',$id)->pluck('customer_id2')->toArray();

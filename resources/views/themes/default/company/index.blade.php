@@ -55,8 +55,10 @@
                                         <td>{{$item->address}}</td>
                                         <td>{{$item->status}}</td>
                                         <td>
-                                            <a class="btn btn-xs btn-default" href="{{route('companyEdit', ['id'=>$item->id])}}">Sửa</a>
-                                            <a class="btn btn-xs btn-danger" href="{{route('companyRemove', ['id'=>$item->id])}}">Xóa</a>
+                                            @if(get_role($item->id, auth()->user()->id) == 'admin')
+                                                <a class="btn btn-xs btn-default" href="{{route('companyEdit', ['id'=>$item->id])}}">Sửa</a>
+                                                <a class="btn btn-xs btn-danger" href="{{route('companyRemove', ['id'=>$item->id])}}">Xóa</a>
+                                            @endif
                                             <a class="btn btn-xs btn-info" href="{{route('companyDetail', ['id'=>$item->id])}}">Quản lý</a>
                                         </td>
                                     </tr>

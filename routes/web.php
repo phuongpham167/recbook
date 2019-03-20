@@ -292,6 +292,9 @@ Route::group(['middleware'=>['auth','phoneVerify']], function(){
         Route::get('khach-hang', ['as'=>'companyCustomer', 'uses'=>'CompanyController@listCustomer']);
         Route::get('khach-hang/data', ['as'=>'companyCustomerData', 'uses'=>'CompanyController@dataListCustomer']);
 
+        Route::get('yeu-cau', ['as'=>'companyRE', 'uses'=>'CompanyController@listRE']);
+        Route::get('yeu-cau/data', ['as'=>'companyREData', 'uses'=>'CompanyController@dataListRE']);
+
         Route::get('xac-nhan-tham-gia', ['as'=>'confirmCompany', 'uses'=>'CompanyController@confirm']);
 
         Route::group(['prefix'=>'nhom'], function(){
@@ -303,13 +306,12 @@ Route::group(['middleware'=>['auth','phoneVerify']], function(){
         });
 
 
-        Route::get('/{id}', ['as'=>'companyDetail', 'uses'=>'CompanyController@show']);
+        Route::get('/{id}', ['as'=>'companyDetail', 'uses'=>'CompanyController@show'])->where('id', '[0-9]+');
         Route::get('/{id}/data', ['as'=>'companyDetailData', 'uses'=>'CompanyController@data']);
         Route::get('/{id}/nhom', ['as'=>'companyGroupList', 'uses'=>'CompanyController@getGroup']);
         Route::get('/{id}/nhom/{group_id}', ['as'=>'companyGroupDetail', 'uses'=>'CompanyController@groupDetail']);
         Route::post('them-thanh-vien', ['as'=>'setUserToGroup', 'uses'=>'CompanyController@addUser']);
-        Route::post('xoa-thanh-vien', ['as'=>'removeUserFromGroup', 'uses'=>'CompanyController@removeUser']);
-
+        Route::get('xoa-thanh-vien', ['as'=>'removeUserFromGroup', 'uses'=>'CompanyController@removeUser']);
     });
 
 });
@@ -364,7 +366,7 @@ Route::group(['prefix'=>'ajax'], function(){
 
 
 Route::get('/t', function (){
-    print_r(is_admin(1, \App\User::find(8)));
+
 });
 
 Route::group(['prefix'=>'notify'], function(){

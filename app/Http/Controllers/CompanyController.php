@@ -6,6 +6,18 @@ use App\CGroup;
 use App\Company;
 use App\Customer;
 use App\Http\Requests\CreateCompanyRequest;
+use App\RealEstate;
+use App\RelatedCustomer;
+use App\Scopes\PrivateScope;
+use App\Services\BlockService;
+use App\Services\DirectionService;
+use App\Services\DistrictService;
+use App\Services\ExhibitService;
+use App\Services\ProjectService;
+use App\Services\ProvinceService;
+use App\Services\ReCategoryService;
+use App\Services\StreetService;
+use App\Services\WardService;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -14,6 +26,38 @@ use Illuminate\Support\Facades\DB;
 
 class CompanyController extends Controller
 {
+    protected $reCategoryService;
+    protected $provinceService;
+    protected $districtService;
+    protected $wardService;
+    protected $streetService;
+    protected $directionService;
+    protected $exhibitService;
+    protected $projectService;
+
+    public function __construct(
+        ReCategoryService $reCategoryService,
+        ProvinceService $provinceService,
+        DistrictService $districtService,
+        WardService $wardService,
+        StreetService $streetService,
+        DirectionService $directionService,
+        ExhibitService $exhibitService,
+        ProjectService $projectService,
+        BlockService $blockService
+    )
+    {
+        $this->reCategoryService = $reCategoryService;
+        $this->provinceService = $provinceService;
+        $this->districtService = $districtService;
+        $this->wardService = $wardService;
+        $this->streetService = $streetService;
+        $this->directionService = $directionService;
+        $this->exhibitService = $exhibitService;
+        $this->projectService = $projectService;
+        $this->blockService = $blockService;
+    }
+
     public function index()
     {
         $data   =   new Company();
@@ -90,13 +134,12 @@ class CompanyController extends Controller
     }
     public function show()
     {
-        return v('company.list-member');
+        $company_id = auth()->user()->company()->first()->pivot->company_id;
+        return v('company.list-member',compact('company_id'));
     }
 
-    public function data() {
-        $data   =   Company::find(\request('id'))->users()->get();
-
-
+    public function data($id) {
+        $data = get_user_same_group($id, auth()->user()->id);
 
         $result = Datatables::of($data)
             ->editColumn('name', function($user){
@@ -108,9 +151,9 @@ class CompanyController extends Controller
             ->addColumn('permission', function( $user) {
                 return $user->rolegroup()->first()->pivot->role;
             })
-            ->addColumn('manage', function( $user) {
-                return a('xoa-thanh-vien', 'id='.$user->id,trans('g.delete'), ['class'=>'btn btn-xs btn-danger'],'#',
-                    "return bootbox.confirm('".trans('system.delete_confirm')."', function(result){if(result==true){window.location.replace('".asset('doanh-nghiep/xoa-thanh-vien?id='.$user->id)."')}})");
+            ->addColumn('manage', function( $user) use ($id) {
+                    return a('doanh-nghiep/xoa-thanh-vien', 'id='.$user->id.'&company_id='.$id,trans('g.delete'), ['class'=>'btn btn-xs btn-danger'],'#',
+                        "return bootbox.confirm('".trans('system.delete_confirm')."', function(result){if(result==true){window.location.replace('".asset('doanh-nghiep/xoa-thanh-vien?id='.$user->id.'&company_id='.$id)."')}})");
             })->rawColumns([ 'manage']);
 
 //        if(get_web_id() == 1) {
@@ -123,22 +166,23 @@ class CompanyController extends Controller
     }
 
     public function addUser() {
-        $user = User::find(\request('user_id'));
-
-        if(!empty($user) && Company::find(\request('company_id'))->user_id == auth()->user()->id) {
-            $user->company()->attach(\request('company_id'));
+        $members    =   explode(',',\request('user_id'));
+        $company = Company::find(\request('company_id'));
+        if(!empty($members) && get_role(\request('company_id'), auth()->user()->id) == 'admin') {
+            $company->users()->attach($members);
             $group = CGroup::where('company_id',\request('company_id'))->where('is_default',1)->first();
-            $user->companygroup()->attach($group);
-            set_notice(trans('system.add_success'), 'success');
+            $group->users()->attach($members);
+            notify($members, 'Lời mời vào doanh nghiệp', (auth()->user()->userinfo?auth()->user()->userinfo->fullname:auth()->user()->name).' mời bạn vào '.$company->name, route('confirmCompany', ['id'=>$company->id]));
+            set_notice(trans('system.add_user_company_success'), 'success');
         }else
-            set_notice(trans('system.not_exist'), 'warning');
+            set_notice(trans('system.add_user_failed'), 'warning');
         return redirect()->back();
     }
 
     public function removeUser() {
         $user = User::find(\request('id'));
 
-        if(!empty($user) && CGroup::find($user->companygroup()->first()->pivot->group_id)->user_id == auth()->user()->id ) {
+        if(!empty($user) && get_role(\request('company_id'), auth()->user()->id) == 'admin' ) {
             $user->companygroup()->detach($user->companygroup()->first()->pivot->group_id);
             $user->company()->detach($user->company()->first()->pivot->company_id);
             set_notice(trans('system.delete_success'), 'success');
@@ -148,19 +192,19 @@ class CompanyController extends Controller
     }
 
     public function listCustomer() {
-        return v('company.list');
+        $company_id = auth()->user()->company()->first()->pivot->company_id;
+        return v('company.list',compact('company_id'));
     }
 
     public function dataListCustomer(){
         $data   =   Customer::with('type');
-        $group = DB::table('company_groups')->where('company_id', \request('id'))->pluck('id');
-        $group_id = DB::table('group_user')->whereIn('group_id', $group)->where('user_id',auth()->user()->id)->first()->group_id;
-        $groupMember = DB::table('group_user')->where('group_id',$group_id)->where('confirmed',1)->pluck('user_id');
+        $group_id = find_group(\request('id'),auth()->user()->id);
+        $groupMember = DB::table('group_user')->where('group_id',$group_id->id)->where('confirmed',1)->pluck('user_id');
 
         $group_user = [];
         $group_agency = [];
         foreach ($groupMember as $user){
-            if(is_agency($group_id, User::find($user))){
+            if(is_agency($group_id->id, User::find($user))){
                 $group_agency[] = $user;
             }else
                 $group_user[] = $user;
@@ -178,15 +222,27 @@ class CompanyController extends Controller
             })
             ->addColumn('type', function(Customer $customer) {
                 return $customer->type?$customer->type->name:'-';
-            })->addColumn('manage', function(Customer $customer) {
-                return a('khach-hang/xoa', 'id='.$customer->id,trans('g.delete'), ['class'=>'btn btn-xs btn-danger'],'#',"return bootbox.confirm('".trans('system.delete_confirm')."', function(result){if(result==true){window.location.replace('".asset('khach-hang/xoa?id='.$customer->id)."')}})").'  '.a('khach-hang/sua', 'id='.$customer->id,trans('g.edit'), ['class'=>'btn btn-xs btn-default']);
-            })->rawColumns(['manage', 'name', 'phone']);
+            })->rawColumns(['name', 'phone']);
 
         return $result->make(true);
     }
 
-    public function getGroup($id)
-    {
+    public function listRE() {
+        $company_id = auth()->user()->company()->first()->pivot->company_id;
+        $reCategories = $this->reCategoryService->getListDropDown();
+        $provinces = $this->provinceService->getListDropDown();
+        $directions = $this->directionService->getListDropDown();
+        $exhibits = $this->exhibitService->getListDropDown();
+        return v('company.listRE',compact('company_id','reCategories',
+                    'provinces', 'directions', 'exhibits'));
+    }
 
+    public function dataListRE(){
+        $data   =   RealEstate::query();
+        $data   =   $data->withoutGlobalScope(PrivateScope::class)->where('company_id',\request('id'));
+        $result = Datatables::of($data)->addColumn('type', function(RealEstate $item){
+            return $item->reType?$item->reType->name:'';
+        });
+        return $result->make(true);
     }
 }

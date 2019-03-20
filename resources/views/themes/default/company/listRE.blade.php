@@ -1,15 +1,22 @@
 @extends(theme(TRUE).'.layouts.app')
 
 @section('meta-description')
-    <meta name="description" content="Customer's RealEstate Page" >
+    <meta name="description" content="Company's RealEstate Page" >
 @endsection
 
 @section('title')
-    Danh sách yêu cầu
+    Danh sách yêu cầu công ty
 @endsection
 
 @push('style')
     <link rel="stylesheet" href="{{ asset('css/theme.css') }}" />
+    <link rel="stylesheet" href="{{asset('plugins/loopj-jquery-tokeninput/styles/token-input.css')}}" />
+    <link rel="stylesheet" href="{{asset('plugins/loopj-jquery-tokeninput/styles/token-input-bootstrap3.css')}}" />
+    <style type="text/css">
+        #token-input-subcribes {
+            border: none;
+        }
+    </style>
     <style>
         .btn-is-disabled {
             pointer-events: none; /* Disables the button completely. Better than just cursor: default; */
@@ -28,6 +35,13 @@
         tfoot {
             display: table-header-group;
         }
+          li.token-input-token {
+              max-width: 100% !important;
+          }
+
+        ul.token-input-list {
+            width: 100% !important;
+        }
     </style>
 @endpush
 
@@ -43,58 +57,35 @@
 
             <!--Begin left-->
             <div class="col-xs-9 right">
-                @include(theme(TRUE).'.includes.customer_manager_tabs')
+                @include(theme(TRUE).'.includes.company_customer_manager_tabs')
                 @include('themes.default.includes.message')
                 <!--begin manage_page-->
                 <div class="listlandA_page">
-                    <p class="title_boxM"><strong><i class="fa fa-user-o"></i>Danh sách yêu cầu</strong></p>
+                    <p class="title_boxM"><strong><i class="fa fa-user-o"></i>Danh sách yêu cầu công ty</strong><button class="btn btn-xs btn-primary pull-right" data-toggle="modal" style="margin-bottom: 5px" data-target="#modalAddCustomerInfoList">Thêm yêu cầu mới</button></p>
                     <div>
                         <div class="box-body">
                             <div class="table-responsive">
                                 <table class="table" id="datatable">
                                     <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Tên khách hàng</th>
-                                            <th>Số điện thoại</th>
-                                            <th>Phân loại</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
                                     <tr>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                    </tr>
-                                    </tfoot>
-                                    <tbody>
-
-                                    </tbody>
-
-                                </table>
-                            </div>
-                        </div>
-
-                        <div class="clearfix"></div>
-                    </div>
-                    <p class="title_boxM"><strong><i class="fa fa-user-o"></i>Danh sách khách hàng được chia sẻ</strong></p>
-                    <div>
-                        <div class="box-body">
-                            <div class="table-responsive">
-                                <table class="table" id="datatable2">
-                                    <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Tên khách hàng</th>
+                                        <th>#</th>
+                                        <th>Tiêu đề</th>
+                                        <th>Nhóm</th>
+                                        <th>DTMB</th>
+                                        <th>DTSD</th>
+                                        <th>Giá</th>
+                                        <th>Liên hệ</th>
                                         <th>Số điện thoại</th>
-                                        <th>Phân loại</th>
+                                        <th>Ngày tạo</th>
                                     </tr>
                                     </thead>
                                     <tfoot>
                                     <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
                                         <th></th>
                                         <th></th>
                                         <th></th>
@@ -111,7 +102,6 @@
 
                         <div class="clearfix"></div>
                     </div>
-                </div>
                 <!--end manage_page-->
 
             </div>
@@ -120,6 +110,7 @@
         </div>
     </div>
 
+    @include(theme(TRUE).'.includes.create-customer-info-list-collapse')
     <link rel="stylesheet" href="{{asset('plugins/jquery.datatables/css/jquery.dataTables.min.css')}}" />
 
     @include(theme(TRUE).'.includes.footer')
@@ -132,77 +123,37 @@
     <script src="{{asset('plugins/bootbox.min.js')}}"></script>
     <script>
         $(function() {
-            datatable = $('#datatable').DataTable({
+            $('#datatable').dataTable({
                 processing: true,
                 serverSide: true,
                 ajax: {
-                    'url': urlDatatable ='{!! route('customerData') !!}',
+                    'url': urlDatatable = '{!! route('companyREData') !!}',
                     'type': 'GET',
                     'data': function (d) {
-                        d.datefrom    =   $('#datefrom').val();
-                        d.datefrom    =   $('#dateto').val();
-                        d.re_category_id = $('#re_category_id').val();
-                        d.re_type_id = $('#re_type_id').val();
-                        d.district_id = $('#district_id').val();
-                        d.post_type = $('#post_type').val();
+                        d.id = {{$company_id}};
                     },
                 },
                 columns: [
-                    { data: 'id', name: 'id' , sortable:false},
-                    { data: 'name', name: 'name' , sortable:false},
-                    { data: 'phone', name: 'phone' , sortable:false},
-                    { data: 'type', name: 'type' , sortable:false, searchable: false},
-                    { data: 'manage', name: 'manage'  , sortable:false, searchable: false}
+                    {data: 'id', name: 'id'},
+                    {data: 'title', name: 'title'},
+                    {data: 'type', name: 'type', sortable: false},
+                    {data: 'area_of_premises', name: 'area_of_premises'},
+                    {data: 'area_of_use', name: 'area_of_use'},
+                    {data: 'price', name: 'price'},
+                    {data: 'contact_person', name: 'contact_person'},
+                    {data: 'contact_phone_number', name: 'contact_phone_number'},
+                    {data: 'created_at', name: 'created_at'}
                 ],
                 initComplete: function () {
                     this.api().columns().every(function () {
-                        console.log(this);
                         var column = this;
                         var input = document.createElement("input");
-                        if(column.index() != 3 && column.index() != 4){
+                        if(column.index() != 0 && column.index() != 8 && column.index() != 2){
                             $(input).appendTo($(column.footer()).empty())
                                 .on('keyup', function () {
                                     column.search($(this).val(), false, false, true).draw();
                                 });
                         }
-
-                    });
-                }
-            });
-
-            datatable = $('#datatable2').DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: {
-                    'url': urlDatatable ='{!! route('customerSharedData') !!}',
-                    'type': 'GET',
-                    'data': function (d) {
-                        d.datefrom    =   $('#datefrom').val();
-                        d.datefrom    =   $('#dateto').val();
-                        d.re_category_id = $('#re_category_id').val();
-                        d.re_type_id = $('#re_type_id').val();
-                        d.district_id = $('#district_id').val();
-                        d.post_type = $('#post_type').val();
-                    },
-                },
-                columns: [
-                    { data: 'id', name: 'id' , sortable:false},
-                    { data: 'name', name: 'name' , sortable:false},
-                    { data: 'phone', name: 'phone' , sortable:false},
-                    { data: 'type', name: 'type' , sortable:false, searchable: false}
-                ],
-                initComplete: function () {
-                    this.api().columns().every(function () {
-                        console.log(this);
-                        var column = this;
-                        var input = document.createElement("input");
-                        if(column.index() != 3 && column.index() != 4){
-                            $(input).appendTo($(column.footer()).empty())
-                                .on('keyup', function () {
-                                    column.search($(this).val(), false, false, true).draw();
-                                });
-                        }
-
                     });
                 }
             });
