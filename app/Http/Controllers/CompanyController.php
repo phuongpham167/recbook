@@ -184,4 +184,9 @@ class CompanyController extends Controller
 
         return $result->make(true);
     }
+
+    public function getGroup($id)
+    {
+
+    }
 }

@@ -5587,6 +5587,27 @@ function confirmVerifyCode($code){
     return $error;
 }
 
+function find_group($company_id, $user_id=null){
+    if($user==null && auth()->check()) $user=auth()->user()->id;
+    if($user==null) return false;
+    $company    =   \App\Company::findOrFail($company_id);
+    if(!$company) return false;
+    $groups =   $company->group()->whereHas('users', function($q) use ($user_id){
+        $q->where('user_id', $user_id);
+    })->first();
+    if($groups)
+        return $groups;
+    else
+        return false;
+}
+
+function get_user_same_group($company_id, $user_id=null){
+    if($group = find_group($company_id, $user_id)){
+        return $group->users()->get();
+    }
+    return false;
+}
+
 function is_admin($group_id, $user=null)
 {
     if(!empty($data = DB::table('group_user')->where('group_id',$group_id)->where('user_id',$user->id)->first())){
