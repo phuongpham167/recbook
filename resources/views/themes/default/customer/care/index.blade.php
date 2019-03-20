@@ -658,13 +658,12 @@
                     this.api().columns().every(function () {
                         var column = this;
                         var input = document.createElement("input");
-                        if(column.index() != 0 && column.index() != 8){
+                        if(column.index() != 0 && column.index() != 8 && column.index() != 2){
                             $(input).appendTo($(column.footer()).empty())
                                 .on('keyup', function () {
                                     column.search($(this).val(), false, false, true).draw();
                                 });
                         }
-
                     });
                 }
             });
@@ -747,7 +746,6 @@
                         }
                     });
                 }
-
             });
             $('#suggest_table').on('click', '.picksuggest', function () {
                 var id = $(this).data('id');

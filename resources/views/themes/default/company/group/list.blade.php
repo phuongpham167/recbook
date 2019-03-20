@@ -5,7 +5,7 @@
 @endsection
 
 @section('title')
-    {{trans('company.index')}}
+    {{trans('company.group.index')}}
 @endsection
 
 @push('style')
@@ -24,12 +24,13 @@
             <!--End left-->
 
             <div class="col-xs-9 right">
+                @include(theme(TRUE).'.includes.company_customer_manager_tabs', ['company_id'=>$company_id])
                 @include('themes.default.includes.message')
                 <div class="listlandA_page">
                     <div class="title_boxM">
-                        <strong><i class="fa fa-list-alt"></i>{{trans('company.index')}}</strong>
+                        <strong><i class="fa fa-list-alt"></i>{{trans('company.group.index')}}</strong>
                         <div class="box-tools pull-right">
-                            <a href="{{route('companyCreate')}}" class="btn btn-sm btn-primary">Tạo doanh nghiệp</a>
+                            <a href="{{route('groupCreate', ['id'=>$company_id])}}" class="btn btn-sm btn-primary">{{trans('company.group.create')}}</a>
                         </div>
                     </div>
 
@@ -42,30 +43,24 @@
                                 <tr>
                                     <th>{{trans('company.title')}}</th>
                                     <th>{{trans('company.description')}}</th>
-                                    <th>{{trans('company.address')}}</th>
-                                    <th>{{trans('company.status')}}</th>
+                                    <th>{{trans('company.total_user')}}</th>
                                     <th>{{trans('g.manage')}}</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($data as $item)
+                                    @foreach($groups as $item)
                                     <tr>
-                                        <td>{{$item->name}}</td>
-                                        <td>{{$item->description}}</td>
-                                        <td>{{$item->address}}</td>
-                                        <td>{{$item->status}}</td>
+                                        <td><a href="{{route('companyGroupDetail', ['id'=>$item->id])}}">{{$item->name}}</a></td>
+                                        <td><a href="{{route('companyGroupDetail', ['id'=>$item->id])}}">{{$item->description}}</a></td>
+                                        <td><a href="{{route('companyGroupDetail', ['id'=>$item->id])}}">{{$item->users()->count()}}</a></td>
                                         <td>
-                                            @if(get_role($item->id, auth()->user()->id) == 'admin')
-                                                <a class="btn btn-xs btn-default" href="{{route('companyEdit', ['id'=>$item->id])}}">Sửa</a>
-                                                <a class="btn btn-xs btn-danger" href="{{route('companyRemove', ['id'=>$item->id])}}">Xóa</a>
-                                            @endif
-                                            <a class="btn btn-xs btn-info" href="{{route('companyDetail', ['id'=>$item->id])}}">Quản lý</a>
+                                            <a class="btn btn-xs btn-default" href="{{route('groupEdit', ['id'=>$item->id])}}">Sửa</a>
+                                            <a class="btn btn-xs btn-danger" href="{{route('groupRemove', ['id'=>$item->id])}}">Xóa</a>
                                         </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
                             </table>
-                            {{$data->appends($_GET)->render()}}
                         </div>
 
                         <div class="clearfix"></div>
@@ -83,7 +78,7 @@
     <script src="{{asset('plugins/jquery.datatables/js/jquery.dataTables.js')}}"></script>
     <script>
         $(function () {
-
+            $('#datatable').dataTable();
         });
     </script>
 @endpush

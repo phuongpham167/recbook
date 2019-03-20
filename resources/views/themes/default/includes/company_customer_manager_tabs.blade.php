@@ -1,13 +1,13 @@
 
 <ul class="nav nav-tabs">
-    <li role="presentation" @if(url()->current() == asset('doanh-nghiep/khach-hang')) class="active" @endif><a class="freelancer_tab" href="{{asset('doanh-nghiep/khach-hang?id='.request('id'))}}">Danh sách khách hàng</a></li>
-    <?php
-        use Illuminate\Support\Facades\DB;
-        $group = \App\CGroup::where('company_id',request('id'))->pluck('id');
-        $group_id = DB::table('group_user')->whereIn('group_id',$group)->where('user_id',auth()->user()->id)->first()->group_id;
-    ?>
-    @if(!empty($group_id))
-        <li role="presentation" @if(url()->current() == route('companyDetail',['id'=>$group_id])) class="active" @endif><a class="freelancer_tab" href="{{route('companyDetail',['id'=>$group_id])}}">Quản lý thành viên nhóm</a></li>
+    @if(is_admin($company_id))
+        <li role="presentation" @if(request()->route()->getName() == 'companyDetail') class="active" @endif><a class="freelancer_tab" href="{{route('companyDetail',['id'=>$company_id])}}">Quản lý thành viên</a></li>
+        <li role="presentation" @if(request()->route()->getName() == 'companyGroupList') class="active" @endif><a class="freelancer_tab" href="{{route('companyGroupList', ['id'=>$company_id])}}">Quản lý nhóm</a></li>
     @endif
+    @if(get_role($company_id) == 'manager')
+        <li role="presentation" @if(request()->route()->getName() == 'companyGroupDetail') class="active" @endif><a class="freelancer_tab" href="{{route('companyGroupDetail', ['id'=>find_group($company_id)->id])}}">Quản lý nhóm</a></li>
+    @endif
+    <li role="presentation" @if(url()->current() == asset('doanh-nghiep/khach-hang')) class="active" @endif><a class="freelancer_tab" href="{{asset('doanh-nghiep/khach-hang?id='.request('id'))}}">Danh sách khách hàng</a></li>
+
     <li role="presentation" @if(url()->current() == asset('doanh-nghiep/yeu-cau')) class="active" @endif><a class="freelancer_tab" href="{{asset('doanh-nghiep/yeu-cau')}}">Quản lý yêu cầu</a></li>
 </ul>

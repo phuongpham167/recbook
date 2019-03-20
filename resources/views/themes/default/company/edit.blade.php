@@ -1,7 +1,7 @@
 @extends(theme(TRUE).'.layouts.app')
 
 @section('title')
-    {{trans('company.create')}}
+    {{trans('company.edit')}}
 @endsection
 
 @push('style')
@@ -30,31 +30,25 @@
                     {{csrf_field()}}
                     <div class="_form dangnhap_page bg_fdfdfd">
                         <div class="form-horizontal">
-                            <h3 class="title_form">{{trans('company.create')}}</h3>
+                            <h3 class="title_form">{{trans('company.edit')}}</h3>
 
                             <dl>
                                 <dt>{{trans('company.title')}} <span class="required">*</span></dt>
                                 <dd>
-                                    <input type="text" name="name" id="name" required />
+                                    <input type="text" name="name" id="name" value="{{$data->name}}" required />
                                     <span class="help-block">Vui lòng điền thông tin</span>
                                 </dd>
                             </dl>
                             <dl>
                                 <dt>{{trans('company.description')}}</dt>
                                 <dd>
-                                    <textarea class="form-control" name="description" ></textarea>
+                                    <textarea class="form-control" name="description" >{{$data->description}}</textarea>
                                 </dd>
                             </dl>
                             <dl>
                                 <dt>{{trans('company.address')}}</dt>
                                 <dd>
-                                    <textarea class="form-control" name="address" ></textarea>
-                                </dd>
-                            </dl>
-                            <dl>
-                                <dd>
-                                    <p>{{trans('company.addMembersToCompany')}}</p>
-                                    <input class="form-control" name="members"/>
+                                    <textarea class="form-control" name="address" >{{$data->address}}</textarea>
                                 </dd>
                             </dl>
                             <dl>

@@ -43,7 +43,7 @@
 
             <!--Begin left-->
             <div class="col-xs-9 right">
-                @include(theme(TRUE).'.includes.company_customer_manager_tabs')
+                @include(theme(TRUE).'.includes.company_customer_manager_tabs', ['company_id'=>''])
 
                 @include('themes.default.includes.message')
                 <!--begin manage_page-->
@@ -59,12 +59,10 @@
                                             <th>Tên khách hàng</th>
                                             <th>Số điện thoại</th>
                                             <th>Phân loại</th>
-                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                     <tr>
-                                        <th></th>
                                         <th></th>
                                         <th></th>
                                         <th></th>
@@ -122,14 +120,13 @@
                     { data: 'name', name: 'name' , sortable:false},
                     { data: 'phone', name: 'phone' , sortable:false},
                     { data: 'type', name: 'type' , sortable:false, searchable: false},
-                    { data: 'manage', name: 'manage'  , sortable:false, searchable: false}
                 ],
                 initComplete: function () {
                     this.api().columns().every(function () {
                         console.log(this);
                         var column = this;
                         var input = document.createElement("input");
-                        if(column.index() != 3 && column.index() != 4){
+                        if(column.index() != 3){
                             $(input).appendTo($(column.footer()).empty())
                                 .on('keyup', function () {
                                     column.search($(this).val(), false, false, true).draw();

@@ -1,7 +1,7 @@
 @extends(theme(TRUE).'.layouts.app')
 
 @section('title')
-    {{trans('company.create')}}
+    {{trans('company.group.create')}}
 @endsection
 
 @push('style')
@@ -30,7 +30,7 @@
                     {{csrf_field()}}
                     <div class="_form dangnhap_page bg_fdfdfd">
                         <div class="form-horizontal">
-                            <h3 class="title_form">{{trans('company.create')}}</h3>
+                            <h3 class="title_form">{{trans('company.group.create')}}</h3>
 
                             <dl>
                                 <dt>{{trans('company.title')}} <span class="required">*</span></dt>
@@ -45,15 +45,10 @@
                                     <textarea class="form-control" name="description" ></textarea>
                                 </dd>
                             </dl>
-                            <dl>
-                                <dt>{{trans('company.address')}}</dt>
-                                <dd>
-                                    <textarea class="form-control" name="address" ></textarea>
-                                </dd>
-                            </dl>
+
                             <dl>
                                 <dd>
-                                    <p>{{trans('company.addMembersToCompany')}}</p>
+                                    <p>{{trans('company.group.addMembersToGroup')}}</p>
                                     <input class="form-control" name="members"/>
                                 </dd>
                             </dl>
@@ -78,7 +73,7 @@
     <script src="{{asset('plugins/bootbox.min.js')}}"></script>
     <script>
         $(document).ready(function () {
-            $('input[name=members]').tokenInput("{{asset('ajax/user')}}?except={{auth()->user()->id}}&role=friend", {
+            $('input[name=members]').tokenInput("{{asset('ajax/user')}}?except={{auth()->user()->id}}&company={{$company_id}}", {
                 queryParam: "term",
                 zindex  :   1005,
                 preventDuplicates   :   true,

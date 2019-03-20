@@ -5620,7 +5620,7 @@ function get_role($company_id, $user_id=null){
 
 function is_admin($company_id, $user_id=null)
 {
-    if(get_role($company_id, $user_id=null) == 'admin')
+    if(get_role($company_id, $user_id) == 'admin')
         return true;
     else
         return false;
@@ -5651,4 +5651,13 @@ function is_user($group_id, $user=null)
             return true;
     }
     return false;
+}
+function rolename($id=null){
+    $arr = [
+        'user'  =>  'NV tư vấn',
+        'agency'    =>  'Nhà môi giới',
+        'manager'   =>  'Quản lý nhóm',
+        'admin' =>  'Quản trị doanh nghiệp'
+    ];
+    return ($id!=null && $arr[$id])?$arr[$id]:$arr;
 }

@@ -43,6 +43,11 @@ class AjaxController extends Controller
         if(!empty($role = request('role')) && $role == 'friend'){
             $data   =   $data->whereIn('id', array_merge(auth()->user()->listFriend()->pluck('user1')->toArray(), auth()->user()->listFriend()->pluck('user2')->toArray()));
         }
+        if(!empty($company = request('company'))){
+            $data   =   $data->whereHas('company', function($q) use ($company) {
+                $q->where('company_id', $company);
+            });
+        }
         $data   =   $data->get();
         foreach($data as $item){
             $result[]   =   [
@@ -151,7 +156,9 @@ class AjaxController extends Controller
         foreach(\App\Customer::where('name','LIKE',"%{$name}%")->where('web_id',get_web_id())->where('user_id',auth()->user()->id)->get() as $item){
             $result[]   =   [
                 'id'    =>  $item->id,
-                'name'  =>  $item->name.' - '.$item->email
+                'name'  =>  $item->name.' - '.$item->email,
+                'phone'  =>  $item->phone,
+                'address'  =>  $item->address,
             ];
         }
         return response()->json($result);
