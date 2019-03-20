@@ -187,6 +187,14 @@ class CompanyController extends Controller
 
     public function getGroup($id)
     {
-
+        if(!is_admin($id, auth()->user()->id))
+            return redirect()->route('companyDetail', ['id'=>$id]);
+        $company =   Company::findOrFail($id);
+        if($company){
+            $groups =   $company->group()->get();
+            $company_id =   $id;
+            return v('company.group.list', compact('groups', 'company_id'));
+        }
+        return redirect()->route('companyDetail', ['id'=>$id]);
     }
 }
