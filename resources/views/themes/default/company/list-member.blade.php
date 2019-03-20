@@ -181,11 +181,11 @@
                 }
             });
 
-            $('#add_input').tokenInput("{{asset('ajax/user')}}", {
+            $('input[name=user_id]').tokenInput("{{asset('ajax/user')}}?except={{auth()->user()->id}}&role=friend", {
                 queryParam: "term",
                 zindex  :   1005,
                 preventDuplicates   :   true,
-                hintText: 'Nhập tên thành viên cần tìm',
+                hintText: 'Nhập tên thành viên cần tìm kiếm'
             });
 
             $('#add-member').on('click', function () {

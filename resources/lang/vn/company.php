@@ -15,6 +15,7 @@ return [
     'active'    =>  'Hoạt động',
     'inactive'  =>  'Đã khóa',
     'create'    =>  'Tạo doanh nghiệp mới',
+    'edit'    =>  'Sửa doanh nghiệp',
     'members'   =>  'Thành viên',
     'addMembersToCompany'   =>  'Thêm thành viên vào doanh nghiệp',
     'confirm'   =>  'Xác nhận tham gia doanh nghiệp',
