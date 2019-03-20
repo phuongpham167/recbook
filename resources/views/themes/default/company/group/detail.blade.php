@@ -58,8 +58,8 @@
                                         <td>{{$item->name}}</td>
                                         <td>{{rolename($item->pivot->role)}}</td>
                                         <td>
-                                            <a class="btn btn-xs btn-default" href="{{route('groupEdit', ['id'=>$item->id])}}">Sửa</a>
-                                            <a class="btn btn-xs btn-danger" href="{{route('groupRemove', ['id'=>$item->id])}}">Xóa</a>
+                                            <a class="btn btn-xs btn-default editUser" data-userid="{{$item->id}}" role="{{$item->pivot->role}}">Sửa</a>
+                                            <a class="btn btn-xs btn-danger" href="{{route('groupRemove', ['id'=>$item->id,'group_id'=>$data->id])}}">Xóa</a>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -86,6 +86,45 @@
             </div>
         </div>
     </div>
+    <form method="post" action="{{route('groupEdit')}}">
+        {{csrf_field()}}
+        <div id="editUserModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content modal-lg">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Sửa cấp độ thành viên</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="panel-body ">
+                            <div class="form-group clearfix">
+                                <select class="form-control" id="role" name="role">
+                                    <option value="user">{{rolename('user')}}</option>
+                                    <option value="agency">{{rolename('agency')}}</option>
+                                    <option value="manager">{{rolename('manager')}}</option>
+                                    <option value="admin">{{rolename('admin')}}</option>
+                                </select>
+                                <input type="text" class="hidden"
+                                       name="group_id" value="{{$data->id}}"
+                                />
+                                <input type="text" class="hidden"
+                                       name="id" id="useid"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit"
+                                class="_btn bg_red pull-right"><i
+                                class="fa fa-floppy-o"></i> &nbsp;&nbsp;LƯU
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
     @include(theme(TRUE).'.includes.footer')
 
 @endsection
@@ -104,6 +143,16 @@
             preventDuplicates   :   true,
             theme : 'facebook',
             hintText: 'Nhập tên thành viên cần tìm kiếm'
+        });
+
+        $('.editUser').on('click', function () {
+            // console.log(check);
+            var user_id    =   $(this).data('userid');
+            var role    =   $(this).attr('role');
+            $('#useid').val(user_id);
+            $('#role').val(role);
+
+            $('#editUserModal').modal('show');
         });
     </script>
 @endpush
