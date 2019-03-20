@@ -45,7 +45,7 @@
                     <p class="title_boxM"><strong><i class="fa fa-file-pdf-o"></i>Chăm sóc khách hàng</strong></p>
                     <div>
                         <div class="box-body">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="panel panel-default">
                                     <div class="panel-heading">Thông tin khách hàng
                                         @if($customer->user_id == auth()->user()->id)
@@ -253,7 +253,7 @@
                         </div>
 
                         <div class="clearfix"></div>
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">Lịch sử chăm sóc <a class="btn btn-xs btn-info pull-right"
                                                                                style="display: none" data-id=""
@@ -286,7 +286,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">Danh sách đáp ứng</div>
                                 <div class="panel-body">
