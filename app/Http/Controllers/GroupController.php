@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Company;
 use App\CGroup;
+use App\Group;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -32,5 +33,13 @@ class GroupController extends Controller
         }
         set_notice('Tạo nhóm mới thành công', 'success');
         return redirect()->back();
+    }
+
+    public function detail($id)
+    {
+        $group  =   Group::find($id);
+        if($group && in_array(get_role($group->company_id), ['admin', 'manager'])){
+            return v('company.group.detail');
+        }
     }
 }
