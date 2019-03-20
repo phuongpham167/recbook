@@ -10,6 +10,7 @@
 
 @push('style')
     <link rel="stylesheet" href="{{ asset('css/theme.css') }}" />
+    <link rel="stylesheet" href="{{asset('plugins/loopj-jquery-tokeninput/styles/token-input-facebook.css')}}" />
     <style>
         .btn-is-disabled {
             pointer-events: none; /* Disables the button completely. Better than just cursor: default; */

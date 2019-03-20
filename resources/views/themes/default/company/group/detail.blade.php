@@ -64,14 +64,17 @@
                                     </tr>
                                     @endforeach
                                 <tr>
-                                    <td colspan="3">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" id="members" name="members" placeholder="">
-                                            <span class="input-group-btn">
-                                            <button class="btn btn-primary" type="button">Mời vào nhóm</button>
+                                    <form method="post" action="{{route('setUserToGroup',['group_id'=>$data->id])}}">
+                                        {{csrf_field()}}
+                                        <td colspan="3">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" id="members" name="members" placeholder="">
+                                                <span class="input-group-btn">
+                                            <button class="btn btn-primary" type="submit">Mời vào nhóm</button>
                                           </span>
-                                        </div>
-                                    </td>
+                                            </div>
+                                        </td>
+                                    </form>
                                 </tr>
                                 </tbody>
                             </table>

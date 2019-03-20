@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Company;
 use App\CGroup;
 use App\Group;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -44,10 +45,10 @@ class GroupController extends Controller
     }
 
     public function delete(){
-        $data   =   CGroup::find(request('id'));
+        $data   =   User::find(request('id'));
 
         if(!empty($data)){
-            $data->users()->sync([]);
+            $data->companygroup()->sync([]);
             set_notice('Xóa thành viên nhóm thành công!', 'success');
         }else
             set_notice(trans('system.not_exist'), 'warning');
@@ -72,7 +73,9 @@ class GroupController extends Controller
                 if($confirmed==0){
                     notify($member, 'Lời mời vào nhóm', (auth()->user()->userinfo?auth()->user()->userinfo->fullname:auth()->user()->name).' mời bạn vào nhóm '.$group->name, route('confirmGroup', ['id'=>$group->id]));
                 }
+                set_notice('Đã thêm thành viên vào nhóm. Vui lòng đợi thành viên xác nhận!!', 'success');
             }
         }
+        return redirect()->back();
     }
 }
