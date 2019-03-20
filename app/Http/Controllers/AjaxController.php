@@ -156,7 +156,9 @@ class AjaxController extends Controller
         foreach(\App\Customer::where('name','LIKE',"%{$name}%")->where('web_id',get_web_id())->where('user_id',auth()->user()->id)->get() as $item){
             $result[]   =   [
                 'id'    =>  $item->id,
-                'name'  =>  $item->name.' - '.$item->email
+                'name'  =>  $item->name.' - '.$item->email,
+                'phone'  =>  $item->phone,
+                'address'  =>  $item->address,
             ];
         }
         return response()->json($result);

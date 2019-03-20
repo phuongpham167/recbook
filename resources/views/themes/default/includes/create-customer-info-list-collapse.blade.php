@@ -121,13 +121,18 @@
                     <div class="form-group collapse collapse1 clearfix" id="contactInfo">
                         <div class="row form-group">
                             <div class="col-xs-12">
-                                <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.contactPhone')}}</label>
-                                <div class="col-sm-4">
-                                    <input type="tel" class="form-control" id="contact_phone_number" name="contact_phone_number" value="{{$customer->phone}}">
-                                </div>
                                 <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.contactPerson')}}</label>
-                                <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="contact_person" name="contact_person" value="{{$customer->name}}">
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="contact_person" name="contact_person" @if(!empty($customer)) value="{{$customer->name?$customer->name:''}}" @endif>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.contactPhone')}}</label>
+                                <div class="col-sm-10">
+                                    <input type="tel" class="form-control" id="contact_phone_number" name="contact_phone_number" @if(!empty($customer)) value="{{$customer->phone?$customer->phone:''}}" @endif>
                                 </div>
                             </div>
                         </div>
@@ -135,7 +140,7 @@
                             <div class="col-xs-12">
                                 <label class="col-sm-2 control-label">{{trans('real-estate.formCreateLabel.contactAddress')}}</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="contact_address" name="contact_address" value="{{$customer->address}}">
+                                    <input type="text" class="form-control" id="contact_address" name="contact_address" @if(!empty($customer)) value="{{$customer->address?$customer->address:''}}" @endif>
                                 </div>
                             </div>
                         </div>
@@ -286,7 +291,7 @@
                             <button type="button" class="btn btn-default btn-collapse" data-target="#priceSelect">
                                 Giá
                             </button>
-                            <button type="button" class="btn btn-default btn-collapse hidden" data-target="#contactInfo">Liên hệ
+                            <button type="button" @if(url()->current() == asset('doanh-nghiep/yeu-cau')) class="btn btn-default btn-collapse" @else class="btn btn-default btn-collapse hidden" @endif data-target="#contactInfo">Liên hệ
                             </button>
                         </div>
                     </div>
@@ -332,7 +337,10 @@
                     </div>
                 </div>
             </div>
-            <input type="text" class="form-control hidden" id="force-customer-id" name="force_customer_id" value="{{$customer->id}}"/>
+            @if(url()->current() == asset('doanh-nghiep/yeu-cau'))
+                <input type="text" class="form-control hidden" id="company-id" name="company_id" value="{{$company_id}}"/>
+            @endif
+            <input type="text" class="form-control hidden" id="force-customer-id" name="force_customer_id" @if(!empty($customer)) value="{{$customer->id}}" @endif/>
             <div class="modal-footer clearfix">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
                 <button type="button" name="add_cil" id="add-cil" onclick="addCustomerInfoList(this)" class="_btn bg_red"><i
@@ -737,6 +745,8 @@
 
             let forceCustomerId = $('#force-customer-id').val();
 
+            let companyId = $('#company-id').val();
+
             $("input[name='images[]']")
                 .each(function(){
                     formDataAdd.append('images[]', $(this).val());
@@ -779,6 +789,7 @@
             formDataAdd.append('map', map);
             formDataAdd.append('is_private', 2);
             formDataAdd.append('force_customer_id', forceCustomerId);
+            formDataAdd.append('company_id', companyId);
 
             console.log(formDataAdd);
             // return;
@@ -875,6 +886,22 @@
             $('.form-add-cil #map').val('');
         }
 
+        $('#contact_person').tokenInput("{{asset('ajax/customer')}}", {
+            queryParam: "term",
+            zindex: 1005,
+            preventDuplicates: true,
+            tokenLimit: 1,
+            hintText: 'Nhập tên khách hàng cần tìm',
+            onAdd: function (item) {
+                console.log('a');
+                $('#contact_phone_number').val(item.phone);
+                $('#contact_address').val(item.address);
+            },
+        });
+
+        $(".token-input-dropdown").css("z-index","9999");
+
     </script>
     <script type="text/javascript" src='https://maps.googleapis.com/maps/api/js?sensor=false&key=AIzaSyAxgnRkMsWPSqlxOz_kLga0hJ4eG2l0Vmo&callback=initMap'></script>
+    <link rel="stylesheet" href="{{asset('plugins/loopj-jquery-tokeninput/styles/token-input-bootstrap3.css')}}" />
 @endpush

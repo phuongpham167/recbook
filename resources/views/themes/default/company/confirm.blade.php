@@ -36,7 +36,7 @@
                         <div class="box-body">
                             <h3 class="text-center">Bạn nhận được lời mời tham gia doanh nghiệp {{$data->name}}!</h3>
                             <p class="text-center">
-                                <a class="btn btn-xs btn-primary" href="{{route('confirmCompany', ['id'=>request('id'), 'confirm'=>1])}}">Xác nhận tham gia</a>
+                                <a class="btn btn-xs btn-primary" href="{{route('confirmCompany', ['id'=>request('id'), 'confirmed'=>1])}}">Xác nhận tham gia</a>
                                 <a class="btn btn-xs btn-default">Không tham gia</a>
                             </p>
                         </div>
