@@ -33,7 +33,6 @@ Route::get('sitemap', function() {
         $sitemap->add(URL::to('/'), $time, '1.0', 'daily');
         $sitemap->add(URL::to('tim-kiem'), $time, '0.9', 'monthly');
         $sitemap->add(URL::to('tim-kiem-du-an'), $time, '0.9', 'monthly');
-        $sitemap->add(URL::to('tim-kiem-thong-minh'), $time, '0.9', 'monthly');
         $sitemap->add(URL::to('tin-vip'), $time, '0.9', 'monthly');
         $sitemap->add(URL::to('tin-noi-bat'), $time, '0.9', 'monthly');
         $sitemap->add(URL::to('tin-rao-cong-dong-mien-phi'), $time, '0.9', 'monthly');
@@ -44,7 +43,6 @@ Route::get('sitemap', function() {
         $sitemap->add(URL::to('dang-xuat'), $time, '0.9', 'monthly');
         $sitemap->add(URL::to('dang-ky'), $time, '0.9', 'monthly');
         $sitemap->add(URL::to('quen-mat-khau'), $time, '0.9', 'monthly');
-        $sitemap->add(URL::to('dat-lai-mat-khau'), $time, '0.9', 'monthly');
         $sitemap->add(URL::to(''), $time, '0.9', 'monthly');
         $sitemap->add(URL::to(''), $time, '0.9', 'monthly');
         $cats   =   \App\ReCategory::all();
@@ -306,7 +304,7 @@ Route::group(['middleware'=>['auth','phoneVerify']], function(){
         Route::get('/{id}', ['as'=>'companyDetail', 'uses'=>'CompanyController@show']);
         Route::get('/{id}/data', ['as'=>'companyDetailData', 'uses'=>'CompanyController@data']);
         Route::get('/{id}/nhom', ['as'=>'companyGroupList', 'uses'=>'CompanyController@getGroup']);
-        Route::get('/nhom/{group_id}', ['as'=>'companyGroupDetail', 'uses'=>'CompanyController@groupDetail']);
+        Route::get('/nhom/{group_id}', ['as'=>'companyGroupDetail', 'uses'=>'GroupController@detail'])->where('id', '[0-9]+');
         Route::post('them-thanh-vien', ['as'=>'setUserToGroup', 'uses'=>'CompanyController@addUser']);
         Route::post('xoa-thanh-vien', ['as'=>'removeUserFromGroup', 'uses'=>'CompanyController@removeUser']);
 
