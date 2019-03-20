@@ -6,5 +6,5 @@
  * Time: 10:33 PM
  */
 return [
-    'system_sitename' => 'Mua bán nhà đất'
+    'system_sitename' => 'Cộng đồng nhà đất'
 ];
