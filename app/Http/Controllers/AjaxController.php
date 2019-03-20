@@ -43,6 +43,11 @@ class AjaxController extends Controller
         if(!empty($role = request('role')) && $role == 'friend'){
             $data   =   $data->whereIn('id', array_merge(auth()->user()->listFriend()->pluck('user1')->toArray(), auth()->user()->listFriend()->pluck('user2')->toArray()));
         }
+        if(!empty($company = request('company'))){
+            $data   =   $data->whereHas('company', function($q) use ($company) {
+                $q->where('company_id', $company);
+            });
+        }
         $data   =   $data->get();
         foreach($data as $item){
             $result[]   =   [

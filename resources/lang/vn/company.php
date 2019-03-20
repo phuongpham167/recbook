@@ -17,5 +17,11 @@ return [
     'create'    =>  'Tạo doanh nghiệp mới',
     'members'   =>  'Thành viên',
     'addMembersToCompany'   =>  'Thêm thành viên vào doanh nghiệp',
-    'confirm'   =>  'Xác nhận tham gia doanh nghiệp'
+    'confirm'   =>  'Xác nhận tham gia doanh nghiệp',
+    'total_user'    =>  'Số thành viên',
+    'group' =>  [
+        'index' =>  'Danh sách nhóm trong doanh nghiệp',
+        'create'    =>  'Tạo nhóm mới',
+        'addMembersToGroup'   =>  'Thêm thành viên từ doanh nghiệp vào nhóm'
+    ]
 ];

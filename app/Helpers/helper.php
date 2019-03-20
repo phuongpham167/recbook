@@ -5620,7 +5620,7 @@ function get_role($company_id, $user_id=null){
 
 function is_admin($company_id, $user_id=null)
 {
-    if(get_role($company_id, $user_id=null) == 'admin')
+    if(get_role($company_id, $user_id) == 'admin')
         return true;
     else
         return false;

@@ -295,8 +295,8 @@ Route::group(['middleware'=>['auth','phoneVerify']], function(){
         Route::get('xac-nhan-tham-gia', ['as'=>'confirmCompany', 'uses'=>'CompanyController@confirm']);
 
         Route::group(['prefix'=>'nhom'], function(){
-            Route::get('tao-moi', ['as'=>'groupCreate', 'uses'=>'GroupController@create']);
-            Route::post('tao-moi', ['as'=>'groupCreate', 'uses'=>'GroupController@save']);
+            Route::get('{id}/tao-moi', ['as'=>'groupCreate', 'uses'=>'GroupController@create']);
+            Route::post('{id}/tao-moi', ['as'=>'groupCreate', 'uses'=>'GroupController@save']);
             Route::get('sua', ['as'=>'groupEdit', 'uses'=>'GroupController@edit']);
             Route::post('sua', ['as'=>'groupEdit', 'uses'=>'GroupController@update']);
             Route::get('xoa', ['as'=>'groupRemove', 'uses'=>'GroupController@delete']);
@@ -306,7 +306,7 @@ Route::group(['middleware'=>['auth','phoneVerify']], function(){
         Route::get('/{id}', ['as'=>'companyDetail', 'uses'=>'CompanyController@show']);
         Route::get('/{id}/data', ['as'=>'companyDetailData', 'uses'=>'CompanyController@data']);
         Route::get('/{id}/nhom', ['as'=>'companyGroupList', 'uses'=>'CompanyController@getGroup']);
-        Route::get('/{id}/nhom/{group_id}', ['as'=>'companyGroupDetail', 'uses'=>'CompanyController@groupDetail']);
+        Route::get('/nhom/{group_id}', ['as'=>'companyGroupDetail', 'uses'=>'CompanyController@groupDetail']);
         Route::post('them-thanh-vien', ['as'=>'setUserToGroup', 'uses'=>'CompanyController@addUser']);
         Route::post('xoa-thanh-vien', ['as'=>'removeUserFromGroup', 'uses'=>'CompanyController@removeUser']);
 
