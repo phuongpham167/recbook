@@ -93,7 +93,7 @@ button {
   margin-right: 5px;
 }
 
-.notify_dropdown li a:hover{
+.dropdown-menu li a:hover{
     background-color: #038fe3;
 }
 /*-------------- banner header --------------*/
