@@ -310,7 +310,7 @@ Route::group(['middleware'=>['auth','phoneVerify']], function(){
         Route::get('/{id}', ['as'=>'companyDetail', 'uses'=>'CompanyController@show'])->where('id', '[0-9]+');
         Route::get('/{id}/data', ['as'=>'companyDetailData', 'uses'=>'CompanyController@data']);
         Route::get('/{id}/nhom', ['as'=>'companyGroupList', 'uses'=>'CompanyController@getGroup']);
-        Route::get('/nhom/{group_id}', ['as'=>'companyGroupDetail', 'uses'=>'GroupController@detail'])->where('id', '[0-9]+');
+        Route::get('/nhom/{id}', ['as'=>'companyGroupDetail', 'uses'=>'GroupController@detail'])->where('id', '[0-9]+');
         Route::post('them-thanh-vien', ['as'=>'setUserToGroup', 'uses'=>'GroupController@addUser']);
         Route::post('xoa-thanh-vien', ['as'=>'removeUserFromGroup', 'uses'=>'GroupController@removeUser']);
 

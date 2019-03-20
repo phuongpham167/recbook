@@ -46,13 +46,27 @@ class GroupController extends Controller
 
     public function delete(){
         $data   =   User::find(request('id'));
-
-        if(!empty($data)){
-            $data->companygroup()->sync([]);
+        $group  =   CGroup::find(\request('group_id'));
+        if(!empty($data) && in_array(get_role($group->company_id, auth()->user()->id), ['admin', 'manager'])){
+            $data->companygroup()->where('group_id',\request('group_id'))->sync([]);
             set_notice('Xóa thành viên nhóm thành công!', 'success');
         }else
             set_notice(trans('system.not_exist'), 'warning');
 
+        return redirect()->back();
+    }
+
+    public function update(){
+        $data   =   User::find(request('id'));
+        $group  =   CGroup::find(\request('group_id'));
+        if(!empty($data) && in_array(get_role($group->company_id, auth()->user()->id), ['admin', 'manager'])){
+            $data->rolegroup()->updateExistingPivot(request('group_id'), ['role'=>\request('role')]);
+
+            set_notice('Sửa cấp độ thành viên thành công!', 'success');
+        }else
+            set_notice(trans('system.not_exist'), 'warning');
+
+//        return response('a');
         return redirect()->back();
     }
 
@@ -64,6 +78,7 @@ class GroupController extends Controller
             if($role == 'admin' || $role == 'manager'){
                 $member =   explode(',', request('members'));
                 $confirmed  =   $role=='admin'?1:0;
+//                $confirmed  =   0;
                 foreach($member as $u){
                     $current_group  =   find_group($group->company_id, $u);
                     if($current_group)
@@ -77,5 +92,20 @@ class GroupController extends Controller
             }
         }
         return redirect()->back();
+    }
+
+    public function confirm()
+    {
+        $data   =    CGroup::find(request('id'));
+
+        $confirmed  =   $data->users()->where('user_id', auth()->user()->id)->first()->pivot->confirmed;
+        if($confirmed == 1)
+            return redirect()->route('companyGroupDetail', ['id'=>$data->id]);
+        if(request('confirmed')==1){
+            $pivot  =   $data->users()->updateExistingPivot(auth()->user()->id, ['confirmed'=>1]);
+            set_notice('Tham gia nhóm thành công!', 'success');
+            return redirect()->route('companyDetail', ['id'=>$data->company_id]);
+        }else
+            return v('company.group.confirm', compact('data', 'confirmed'));
     }
 }

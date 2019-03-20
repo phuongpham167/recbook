@@ -25,6 +25,7 @@ return [
         'create'    =>  'Tạo nhóm mới',
         'addMembersToGroup'   =>  'Thêm thành viên từ doanh nghiệp vào nhóm',
         'role'  =>  'Cấp độ',
-        'detail'    =>  'Chi tiết nhóm '
+        'detail'    =>  'Chi tiết nhóm ',
+        'confirm'   =>  'Xác nhận tham gia nhóm doanh nghiệp',
     ]
 ];
