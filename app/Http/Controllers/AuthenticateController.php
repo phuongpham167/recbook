@@ -322,8 +322,15 @@ class AuthenticateController extends Controller
 
         auth()->login($data);
 //        auth()->attempt(['id'=>$data->id, 'password'=>$request->password]);
-        createVerifyCode($data->id);
-        return redirect()->route('phoneVerify');
+        if(get_config('need_verify', 0) == 1){
+            createVerifyCode($data->id);
+            return redirect()->route('phoneVerify');
+        } else {
+            $data->phone_verify = 1;
+            $data->save();
+            return redirect()->route('login');
+        }
+
     }
 
     public function getForgotPassword()
