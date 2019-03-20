@@ -5608,13 +5608,22 @@ function get_user_same_group($company_id, $user_id=null){
     return false;
 }
 
-function is_admin($group_id, $user=null)
-{
-    if(!empty($data = DB::table('group_user')->where('group_id',$group_id)->where('user_id',$user->id)->first())){
-        if($data->role == 'admin')
-            return true;
+function get_role($company_id, $user_id=null){
+    if($user_id==null && auth()->check()) $user_id=auth()->user()->id;
+    if($user_id==null) return false;
+    if($group  =   find_group($company_id, $user_id)){
+        $user   =   $group->users()->where('user_id', $user_id)->first();
+        if($user) return $user->pivot->role;
     }
     return false;
+}
+
+function is_admin($company_id, $user_id=null)
+{
+    if(get_role($company_id, $user_id=null) == 'admin')
+        return true;
+    else
+        return false;
 }
 
 function is_manager($group_id, $user=null)
