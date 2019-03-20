@@ -40,6 +40,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use \DataTables;
 use Illuminate\Support\Facades\Storage;
+use Kreait\Firebase\Auth;
 use Sabberworm\CSS\Settings;
 
 
@@ -315,11 +316,14 @@ class AuthenticateController extends Controller
         $user_info->website = $request->website;
 
         $user_info->save();
-        createVerifyCode($data->id);
 
 //        event_log('Tạo thành viên mới '.$data->name.' id '.$data->id);
         set_notice(trans('users.add_success'), 'success');
-        return redirect()->route('login');
+
+        auth()->login($data);
+//        auth()->attempt(['id'=>$data->id, 'password'=>$request->password]);
+        createVerifyCode($data->id);
+        return redirect()->route('phoneVerify');
     }
 
     public function getForgotPassword()
@@ -536,8 +540,11 @@ class AuthenticateController extends Controller
     public function postVerify()
     {
         $verify =   confirmVerifyCode(\request('verify_code'));
-        if($verify==0)
-            set_notice(trans('system.verify_success'), 'success');
+//        echo $verify;
+//        exit();
+        if($verify==1){
+            set_notice(trans('system.verify_success').'1', 'success');
+        }
         else
             set_notice(trans('system.verify_failed')." Lý do: $verify", 'danger');
 //        return response('a');
@@ -551,4 +558,20 @@ class AuthenticateController extends Controller
         }
         return redirect()->back();
     }
+
+    public function getVerify()
+    {
+        $user   =   auth()->user();
+        if($user->phone_verify == 1){
+            set_notice('Tài khoản này đã xác thực số điện thoại thành công!', 'success');
+            return redirect()->route('user.info', [auth()->user()->id]);
+        }
+
+        return v('authenticate.phoneVerify');
+    }
+
+//    public function postVerify()
+//    {
+//
+//    }
 }
