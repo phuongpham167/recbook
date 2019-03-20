@@ -11,6 +11,18 @@
 @push('style')
     <link rel="stylesheet" href="{{ asset('css/theme.css') }}"/>
     <link rel="stylesheet" href="{{asset('plugins/jquery.datatables/css/jquery.dataTables.min.css')}}"/>
+    <style>
+        .freelancer_tab {
+            margin-bottom: 0px;
+            margin-top: 0;
+            background: #0c4da2;
+            color: #fff;
+            font-weight: 500;
+            font-size: 13px;
+            padding: 10px 15px;
+            text-transform: uppercase;
+        }
+    </style>
 @endpush
 
 @section('content')
@@ -24,6 +36,7 @@
             <!--End left-->
 
             <div class="col-xs-9 right">
+                @include(theme(TRUE).'.includes.company_customer_manager_tabs', ['company_id'=>$company_id])
                 @include('themes.default.includes.message')
                 <div class="listlandA_page">
                     <div class="title_boxM">

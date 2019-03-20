@@ -5652,3 +5652,12 @@ function is_user($group_id, $user=null)
     }
     return false;
 }
+function rolename($id=null){
+    $arr = [
+        'user'  =>  'NV tư vấn',
+        'agency'    =>  'Nhà môi giới',
+        'manager'   =>  'Quản lý nhóm',
+        'admin' =>  'Quản trị doanh nghiệp'
+    ];
+    return ($id!=null && $arr[$id])?$arr[$id]:$arr;
+}

@@ -29,6 +29,8 @@ return [
     'history-status'       =>  'Lịch sử trạng thái',
     'edit-status'       =>  'Thay đổi trạng thái',
     'add_success'       =>  'Thêm mới thành công!',
+    'add_user_company_success'       =>  'Thêm thành viên mới, cần thành viên xác nhận để tham gia vào công ty!',
+    'add_user_failed'       =>  'Thành viên không tồn tại hoặc bạn không có quyền thêm thành viên vào công ty này!',
     'share_success'       =>  'Chia sẻ thành công!',
     'publish_success'       =>  'Đăng bài thành công!',
     'add_fail'       =>  'Thêm mới không thành công!',

@@ -6,6 +6,7 @@ use App\Care;
 use App\Customer;
 use App\RelatedCustomer;
 use App\ShareCustomer;
+use App\User;
 use App\UserGroup;
 use App\Http\Requests\CreateCareRequest;
 use App\RealEstate;
@@ -62,7 +63,9 @@ class CareController extends Controller
      */
     public function index(){
         $id =   \request('id');
-        if(!empty($customer = Customer::find($id)) && ($customer->user_id == auth()->user()->id || in_array(auth()->user()->id,ShareCustomer::where('customer_id', $customer->id)->pluck('user_id')->toArray()))){
+        $customer = Customer::find($id);
+
+        if(!empty($customer) && ($customer->user_id == auth()->user()->id || in_array(auth()->user()->id,ShareCustomer::where('customer_id', $customer->id)->pluck('user_id')->toArray()))){
             $data   =   new RealEstate();
 
             $relate1 = RelatedCustomer::where('customer_id1',$id)->pluck('customer_id2')->toArray();
@@ -71,8 +74,25 @@ class CareController extends Controller
             $related = array_merge($relate1,$relate2);
             $related = array_unique($related);
 
+            $data   =   $data->where(function($q){
+                $q->where
+            });
+
             $data   =   $data->where(function ($q) use ($id,$related){
-                $q->where('customer_id',$id)->orWhereIn('customer_id',$related);
+                $q->where('customer_id',$id)
+                    ->orWhereIn('customer_id',$related);
+                if(!empty($company_id = request('company_id'))){
+                    $group  =   find_group(request('id'));
+                    $role   =   get_role(request('id'));
+                    $q->orWhereHas('user', function($u) use ($group, $role){
+                        $u->where('id', auth()->user()->id)->orWhereHas('rolegroup', function ($g) use ($group, $role) {
+                            $g->where('group_id', $group->id);
+                            if($role!='manager'){
+                                $g->having('role', '=', 'user');
+                            }
+                        });
+                    });
+                }
             })->withoutGlobalScope(PrivateScope::class)->where(function ($q) use ($id){
 //                $q->where('posted_by', auth()->user()->id)->orWhere('is_private',0)->orWhere('customer_id',$id);
             });

@@ -72,6 +72,7 @@ class RealEstate extends Model
         'hot_expire_at',
         'link_video',
         'customer_id',
+        'company_id',
         'slug',
         'web_id',
         'is_public',

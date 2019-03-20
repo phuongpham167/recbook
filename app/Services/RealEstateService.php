@@ -141,6 +141,9 @@ class RealEstateService
             }
         }
 
+        if(!empty($input['company_id']))
+            $company_id = $input['company_id'];
+
         $post_date  =   isset($input['post_date']) ? $input['post_date'] : Carbon::now();
 
         $public_input   =   !empty($input['public_site'])?$input['public_site']:0;
@@ -193,6 +196,7 @@ class RealEstateService
             'approved' => 1,
             'draft' => isset($input['add_draft']) ? 1 : 0,
             'is_public' =>  1,
+            'company_id' =>  $company_id,
             'public_site' =>  post_left(auth()->user())==0?0:$public_input,
             'link_video' => isset($input['link_video']) ? $input['link_video'] : null,
         ]);

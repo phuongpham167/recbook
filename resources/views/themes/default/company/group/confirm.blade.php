@@ -1,7 +1,7 @@
 @extends(theme(TRUE).'.layouts.app')
 
 @section('meta-description')
-    <meta name="description" content="Company List">
+    <meta name="description" content="Confirm Page">
 @endsection
 
 @section('title')
@@ -27,16 +27,16 @@
                 @include('themes.default.includes.message')
                 <div class="listlandA_page">
                     <div class="title_boxM">
-                        <strong><i class="fa fa-list-alt"></i>{{trans('company.confirm')}}</strong>
+                        <strong><i class="fa fa-list-alt"></i>{{trans('company.group.confirm')}}</strong>
                         <div class="box-tools pull-right">
 
                         </div>
                     </div>
                     <div>
                         <div class="box-body">
-                            <h3 class="text-center">Bạn nhận được lời mời tham gia doanh nghiệp {{$data->name}}!</h3>
+                            <h3 class="text-center">Bạn nhận được lời mời tham gia nhóm doanh nghiệp {{$data->name}}!</h3>
                             <p class="text-center">
-                                <a class="btn btn-xs btn-primary" href="{{route('confirmCompany', ['id'=>request('id'), 'confirmed'=>1])}}">Xác nhận tham gia</a>
+                                <a class="btn btn-xs btn-primary" href="{{route('confirmGroup', ['id'=>request('id'), 'confirmed'=>1])}}">Xác nhận tham gia</a>
                                 <a class="btn btn-xs btn-default">Không tham gia</a>
                             </p>
                         </div>

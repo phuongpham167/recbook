@@ -62,7 +62,7 @@
         <div class="collapse navbar-collapse main-menu-list" id="myNavbar">
             <ul class="nav navbar-nav">
                 @php
-                    $menuData = json_decode($menuData->data);
+                    $menuData = json_decode(menu()->data);
                     $quantam    =   session('tinhthanhquantam',0);
                     if($quantam!=0)
                         $tentinh = \App\Province::findOrFail(session('tinhthanhquantam', 0))?str_replace('Tỉnh ', '', str_replace('Thành phố', '', \App\Province::find(session('tinhthanhquantam'))->name)):'Tất cả';
