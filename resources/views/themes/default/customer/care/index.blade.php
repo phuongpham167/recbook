@@ -150,19 +150,19 @@
                                         <label>Địa chỉ</label>
                                         <span class="form-control" id="address"></span>
                                     </div>
-                                    <div class="form-group col-md-6">
+                                    <div class="form-group col-md-3">
                                         <label>Phường</label>
                                         <span class="form-control" id="ward"></span>
                                     </div>
-                                    <div class="form-group col-md-6">
+                                    <div class="form-group col-md-3">
                                         <label>Quận huyện</label>
                                         <span class="form-control" id="district"></span>
                                     </div>
-                                    <div class="form-group col-md-6">
+                                    <div class="form-group col-md-3">
                                         <label>Tỉnh thành</label>
                                         <span class="form-control" id="province"></span>
                                     </div>
-                                    <div class="form-group col-md-6">
+                                    <div class="form-group col-md-3">
                                         <label>Hướng</label>
                                         <span class="form-control" id="direction"></span>
                                     </div>
