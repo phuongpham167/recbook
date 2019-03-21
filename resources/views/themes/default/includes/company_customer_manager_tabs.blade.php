@@ -1,4 +1,15 @@
-
+<style>
+    .freelancer_tab {
+        margin-bottom: 0px;
+        margin-top: 0;
+        background: #0c4da2;
+        color: #fff;
+        font-weight: 500;
+        font-size: 13px;
+        padding: 10px 15px;
+        text-transform: uppercase;
+    }
+</style>
 <ul class="nav nav-tabs">
     @if(is_admin($company_id))
         <li role="presentation" @if(request()->route()->getName() == 'companyDetail') class="active" @endif><a class="freelancer_tab" href="{{route('companyDetail',['id'=>$company_id])}}">Quản lý thành viên</a></li>
