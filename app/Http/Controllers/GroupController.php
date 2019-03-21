@@ -64,7 +64,7 @@ class GroupController extends Controller
         }
     }
 
-    public function delete(){
+    public function deleteUser(){
         $data   =   User::find(request('id'));
         $group  =   CGroup::find(\request('group_id'));
         if(!empty($data) && in_array(get_role($group->company_id, auth()->user()->id), ['admin', 'manager'])){
