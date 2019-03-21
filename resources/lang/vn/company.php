@@ -23,6 +23,7 @@ return [
     'group' =>  [
         'index' =>  'Danh sách nhóm trong doanh nghiệp',
         'create'    =>  'Tạo nhóm mới',
+        'edit'    =>  'Sửa nhóm',
         'addMembersToGroup'   =>  'Thêm thành viên từ doanh nghiệp vào nhóm',
         'role'  =>  'Cấp độ',
         'detail'    =>  'Chi tiết nhóm ',
