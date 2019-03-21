@@ -38,6 +38,10 @@
         ul.token-input-list {
             width: 100% !important;
         }
+        .dataTable th>input { width: 50px}
+        .dataTable th.title-th>input {
+            width: 100% !important;
+        }
     </style>
 @endpush
 
@@ -78,7 +82,7 @@
                                     <tfoot>
                                     <tr>
                                         <th></th>
-                                        <th></th>
+                                        <th class="title-th"></th>
                                         <th></th>
                                         <th></th>
                                         <th></th>
