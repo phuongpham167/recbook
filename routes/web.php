@@ -306,17 +306,13 @@ Route::group(['middleware'=>['auth','phoneVerify']], function(){
             Route::get('xac-nhan-tham-gia', ['as'=>'confirmGroup', 'uses'=>'GroupController@confirm']);
             Route::post('thanh-vien/sua', ['as'=>'groupUserEdit', 'uses'=>'GroupController@updateUser']);
             Route::get('thanh-vien/xoa', ['as'=>'groupUserRemove', 'uses'=>'GroupController@deleteUser']);
+            Route::post('thanh-vien/them', ['as'=>'setUserToGroup', 'uses'=>'GroupController@addUser']);
         });
-
 
         Route::get('/{id}', ['as'=>'companyDetail', 'uses'=>'CompanyController@show'])->where('id', '[0-9]+');
         Route::get('/{id}/data', ['as'=>'companyDetailData', 'uses'=>'CompanyController@data']);
         Route::get('/{id}/nhom', ['as'=>'companyGroupList', 'uses'=>'CompanyController@getGroup']);
         Route::get('/nhom/{id}', ['as'=>'companyGroupDetail', 'uses'=>'GroupController@detail'])->where('id', '[0-9]+');
-        Route::post('them-thanh-vien', ['as'=>'setUserToGroup', 'uses'=>'GroupController@addUser']);
-        Route::post('xoa-thanh-vien', ['as'=>'removeUserFromGroup', 'uses'=>'GroupController@removeUser']);
-
-
     });
 
 });

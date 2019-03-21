@@ -241,7 +241,7 @@ class CompanyController extends Controller
     }
 
     public function listCustomer() {
-        $company_id = auth()->user()->company()->first()->pivot->company_id;
+        $company_id = \request('id');
         return v('company.list',compact('company_id'));
     }
 
