@@ -984,6 +984,7 @@ class PageController extends Controller
                     $query1->where('approved', 1);
                 }
                 $query1->orderBy('created_at', 'desc');
+                $query1->limit(20);
                 $listRe = $query1->get();
 
                 /*
