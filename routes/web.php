@@ -352,6 +352,7 @@ Route::post('/tinh-thanh-quan-tam',['as' => 'interested-provinces', function (){
     if(auth()->check()){
         auth()->user()->subcribes()->sync([request('provinces')]);
     }
+    \Illuminate\Support\Facades\Cookie::queue('tinhthanhquantam', request('provinces'), 20160);
     return redirect()->back();
 }]);
 

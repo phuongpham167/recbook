@@ -17,6 +17,8 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
         URL::forceScheme(env('ssl', 'http'));
+        if(request()->cookie('tinhthanhquantam') && !session('tinhthanhquantam'))
+            session(['tinhthanhquantam'=>request()->cookie('tinhthanhquantam')]);
         \Carbon\Carbon::setLocale('vi');
     }
 
