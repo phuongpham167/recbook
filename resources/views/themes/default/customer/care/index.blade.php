@@ -117,8 +117,82 @@
                                 </div>
                             @endif
                         </div>
-
                         <div class="col-md-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">Danh sách yêu cầu</div>
+                                <div class="panel-body">
+                                    <div class="table-responsive">
+                                        <div class="">
+                                            <button class="btn btn-info" data-toggle="modal" style="margin-bottom: 5px"
+                                                    data-target="#modalAddCustomerInfoList">Thêm
+                                            </button>
+                                        </div>
+                                        <table class="table table-bordered" id="datatable">
+                                            <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th style="min-width: 200px">Tiêu đề</th>
+                                                <th>Nhóm</th>
+                                                <th>DTMB</th>
+                                                <th>DTSD</th>
+                                                <th>Giá</th>
+                                                <th>Liên hệ</th>
+                                                <th>Ngày tạo</th>
+                                            </tr>
+                                            </thead>
+                                            <tfoot>
+                                            <tr>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                            </tfoot>
+                                            <tbody>
+                                            @foreach($data as $item)
+                                                <?php
+                                                $detail = [
+                                                    'id' => $item->id,
+                                                    'title' => $item->title,
+                                                    'type' => $item->reType ? $item->reType->name : '',
+                                                    'category' => $item->reCategory ? $item->reCategory->name : '',
+                                                    'address' => $item->address,
+                                                    'ward' => $item->ward ? $item->ward->name : '',
+                                                    'district' => $item->district ? $item->district->name : '',
+                                                    'province' => $item->province ? $item->province->name : '',
+                                                    'direction' => $item->direction ? $item->direction->name : '',
+                                                    'width' => $item->width,
+                                                    'length' => $item->length,
+                                                    'premises' => $item->area_of_premises,
+                                                    'use' => $item->area_of_use,
+                                                    'price' => $item->price,
+                                                    'unit' => $item->unit ? $item->unit->name : '',
+                                                    'contact_person' => $item->contact_person,
+                                                    'post_date' => $item->post_date
+                                                ];
+                                                ?>
+                                                <tr style="cursor: pointer" class="get-detail"
+                                                    data-id="{{$item->id}}"
+                                                    data-detail="{{json_encode($detail)}}">
+                                                    <td>{{$detail['id']}}</td>
+                                                    <td>{{$detail['title']}}</td>
+                                                    <td>{{$detail['category']}}</td>
+                                                    <td>{{$detail['premises']}}</td>
+                                                    <td>{{$detail['use']}}</td>
+                                                    <td>{{$detail['price']}}</td>
+                                                    <td>{{$detail['contact_person']}}</td>
+                                                    <td>{{$detail['post_date']}}</td>
+                                                </tr>
+                                            @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="panel panel-default">
                                 <div class="panel-heading">Chi tiết yêu cầu</div>
                                 <div class="panel-body">
@@ -185,78 +259,10 @@
 
                                 </div>
                             </div>
-                        </div>
 
                         <div class="clearfix"></div>
-                        <div class="col-md-12">
-                            <div class="table-responsive">
-                                <div class="">
-                                    <button class="btn btn-info" data-toggle="modal" style="margin-bottom: 5px" data-target="#modalAddCustomerInfoList">Thêm</button>
-                                </div>
-                                <table class="table table-bordered" id="datatable">
-                                    <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th style="min-width: 200px">Tiêu đề</th>
-                                        <th>Nhóm</th>
-                                        <th>DTMB</th>
-                                        <th>DTSD</th>
-                                        <th>Giá</th>
-                                        <th>Liên hệ</th>
-                                        <th>Ngày tạo</th>
-                                    </tr>
-                                    </thead>
-                                    <tfoot>
-                                    <tr>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                    </tr>
-                                    </tfoot>
-                                    <tbody>
-                                    @foreach($data as $item)
-                                        <?php
-                                        $detail = [
-                                            'id' => $item->id,
-                                            'title' => $item->title,
-                                            'type' => $item->reType ? $item->reType->name : '',
-                                            'category' => $item->reCategory ? $item->reCategory->name : '',
-                                            'address' => $item->address,
-                                            'ward' => $item->ward ? $item->ward->name : '',
-                                            'district' => $item->district ? $item->district->name : '',
-                                            'province' => $item->province ? $item->province->name : '',
-                                            'direction' => $item->direction ? $item->direction->name : '',
-                                            'width' => $item->width,
-                                            'length' => $item->length,
-                                            'premises' => $item->area_of_premises,
-                                            'use' => $item->area_of_use,
-                                            'price' => $item->price,
-                                            'unit' => $item->unit ? $item->unit->name : '',
-                                            'contact_person' => $item->contact_person,
-                                            'post_date' => $item->post_date
-                                        ];
-                                        ?>
-                                        <tr style="cursor: pointer" class="get-detail"
-                                            data-id="{{$item->id}}"
-                                            data-detail="{{json_encode($detail)}}">
-                                            <td>{{$detail['id']}}</td>
-                                            <td>{{$detail['title']}}</td>
-                                            <td>{{$detail['category']}}</td>
-                                            <td>{{$detail['premises']}}</td>
-                                            <td>{{$detail['use']}}</td>
-                                            <td>{{$detail['price']}}</td>
-                                            <td>{{$detail['contact_person']}}</td>
-                                            <td>{{$detail['post_date']}}</td>
-                                        </tr>
-                                    @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
+
+
                             <div class="panel panel-default">
                                 <div class="panel-heading">Lịch sử chăm sóc <a class="btn btn-xs btn-info pull-right"
                                                                                style="display: none" data-id=""
@@ -673,6 +679,7 @@
         }
         $(function() {
             $('#datatable').dataTable({
+                pageLength: 5,
                 initComplete: function () {
                 this.api().columns().every(function () {
                     console.log(this);
