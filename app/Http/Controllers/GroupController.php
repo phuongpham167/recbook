@@ -56,6 +56,19 @@ class GroupController extends Controller
         return redirect()->back();
     }
 
+    public function delete()
+    {
+        $group  =   CGroup::find(\request('id'));
+        if(!empty($group) && is_admin($group->company_id)) {
+            $group->users()->sync([]);
+            $group->delete();
+            set_notice('Xóa nhóm thành công', 'success');
+        }else
+            set_notice(trans('system.not_exist'), 'warning');
+
+        return redirect()->back();
+    }
+
     public function detail($id)
     {
         $group  =   CGroup::find($id);
