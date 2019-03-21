@@ -28,5 +28,6 @@ return [
         'role'  =>  'Cấp độ',
         'detail'    =>  'Chi tiết nhóm ',
         'confirm'   =>  'Xác nhận tham gia nhóm doanh nghiệp',
+        'removed'   =>  'Thông báo',
     ]
 ];

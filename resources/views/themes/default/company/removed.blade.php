@@ -34,9 +34,9 @@
                     </div>
                     <div>
                         <div class="box-body">
-                            <h3 class="text-center">Ai đó đã xóa lời mời bạn tham gia nhóm của doanh nghiệp này!</h3>
+                            <h3 class="text-center">Ai đó đã xóa lời mời bạn tham gia doanh nghiệp này!</h3>
                             <p class="text-center">
-                                <a class="btn btn-xs btn-primary" href="{{route('companyDetail',['id'=>$company_id])}}">Trở về trang danh sách thành viên doanh nghiệp</a>
+                                <a class="btn btn-xs btn-primary" href="{{asset('')}}">Trở về trang chủ</a>
                             </p>
                         </div>
 

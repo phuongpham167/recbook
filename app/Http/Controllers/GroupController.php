@@ -120,8 +120,8 @@ class GroupController extends Controller
             $role   =   get_role($group->company_id);
             if($role == 'admin' || $role == 'manager'){
                 $member =   explode(',', request('members'));
-                $confirmed  =   $role=='admin'?1:0;
-//                $confirmed  =   0;
+//                $confirmed  =   $role=='admin'?1:0;
+                $confirmed  =   0;
                 foreach($member as $u){
                     $current_group  =   find_group($group->company_id, $u);
                     if($current_group)
@@ -145,13 +145,14 @@ class GroupController extends Controller
             $confirmed  =  $user->pivot->confirmed;
             if($confirmed == 1)
                 return redirect()->route('companyGroupDetail', ['id'=>$data->id]);
-        }
 
-        if(request('confirmed')==1){
-            $pivot  =   $data->users()->updateExistingPivot(auth()->user()->id, ['confirmed'=>1]);
-            set_notice('Tham gia nhóm thành công!', 'success');
-            return redirect()->route('companyDetail', ['id'=>$data->company_id]);
-        }else
-            return v('company.group.confirm', compact('data', 'confirmed'));
+            if(request('confirmed')==1){
+                $pivot  =   $data->users()->updateExistingPivot(auth()->user()->id, ['confirmed'=>1]);
+                set_notice('Tham gia nhóm thành công!', 'success');
+                return redirect()->route('companyDetail', ['id'=>$data->company_id]);
+            }else
+                return v('company.group.confirm', compact('data', 'confirmed'));
+        }
+        return v('company.group.removed',['company_id' => $data->company_id]);
     }
 }

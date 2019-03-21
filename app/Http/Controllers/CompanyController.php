@@ -147,15 +147,21 @@ class CompanyController extends Controller
         $data   =   Company::where('id', request('id'))->whereHas('users', function($q){
             $q->where('users.id', auth()->user()->id);
         })->first();
-        $confirmed  =   $data->users()->where('user_id', auth()->user()->id)->first()->pivot->confirmed;
-        if($confirmed == 1)
-            return redirect()->route('companyDetail', ['id'=>$data->id]);
-        if(request('confirmed')==1){
-            $pivot  =   $data->users()->updateExistingPivot(auth()->user()->id, ['confirmed'=>1]);
-            set_notice('Tham gia doanh nghiệp thành công!', 'success');
-            return redirect()->route('companyDetail', ['id'=>$data->id]);
+
+        if(!empty($data)){
+            $user = $data->users()->where('user_id', auth()->user()->id)->first();
+            $confirmed  =   $user->pivot->confirmed;
+            if($confirmed == 1)
+                return redirect()->route('companyDetail', ['id'=>$data->id]);
+            if(request('confirmed')==1){
+                $pivot  =   $data->users()->updateExistingPivot(auth()->user()->id, ['confirmed'=>1]);
+                set_notice('Tham gia doanh nghiệp thành công!', 'success');
+                return redirect()->route('companyDetail', ['id'=>$data->id]);
+            }else
+                return v('company.confirm', compact('data', 'confirmed'));
         }else
-            return v('company.confirm', compact('data', 'confirmed'));
+            return v('company.removed');
+
     }
 
     public function realEstateData()
