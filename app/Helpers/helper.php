@@ -5652,6 +5652,18 @@ function is_user($group_id, $user=null)
     }
     return false;
 }
+
+function is_company_member($company_id, $user_id=null)
+{
+    if($user_id == null)
+        $user_id = auth()->user()->id;
+    $user = \App\User::find($user_id);
+    if(!empty($user->company()->where('company_id',$company_id)->first())){
+        return true;
+    }
+    return false;
+}
+
 function rolename($id=null){
     $arr = [
         'user'  =>  'NV tư vấn',

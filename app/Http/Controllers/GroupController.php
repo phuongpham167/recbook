@@ -140,10 +140,13 @@ class GroupController extends Controller
     public function confirm()
     {
         $data   =    CGroup::find(request('id'));
+        $user = $data->users()->where('user_id', auth()->user()->id)->first();
+        if(!empty($user)){
+            $confirmed  =  $user->pivot->confirmed;
+            if($confirmed == 1)
+                return redirect()->route('companyGroupDetail', ['id'=>$data->id]);
+        }
 
-        $confirmed  =   $data->users()->where('user_id', auth()->user()->id)->first()->pivot->confirmed;
-        if($confirmed == 1)
-            return redirect()->route('companyGroupDetail', ['id'=>$data->id]);
         if(request('confirmed')==1){
             $pivot  =   $data->users()->updateExistingPivot(auth()->user()->id, ['confirmed'=>1]);
             set_notice('Tham gia nhóm thành công!', 'success');
