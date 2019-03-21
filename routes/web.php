@@ -287,7 +287,7 @@ Route::group(['middleware'=>['auth','phoneVerify']], function(){
         Route::post('sua', ['as'=>'companyEdit', 'uses'=>'CompanyController@update']);
         Route::get('xoa', ['as'=>'companyRemove', 'uses'=>'CompanyController@delete']);
         Route::post('them-thanh-vien', ['as'=>'setUserToCompany', 'uses'=>'CompanyController@addUser']);
-        Route::post('xoa-thanh-vien', ['as'=>'removeUserFromCompany', 'uses'=>'CompanyController@removeUser']);
+        Route::get('xoa-thanh-vien', ['as'=>'removeUserFromCompany', 'uses'=>'CompanyController@removeUser']);
 
         Route::get('khach-hang', ['as'=>'companyCustomer', 'uses'=>'CompanyController@listCustomer']);
         Route::get('khach-hang/data', ['as'=>'companyCustomerData', 'uses'=>'CompanyController@dataListCustomer']);
