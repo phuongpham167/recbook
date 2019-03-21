@@ -260,7 +260,7 @@ class CompanyController extends Controller
                     $u->where('id', auth()->user()->id)->orWhereHas('rolegroup', function ($g) use ($group, $role) {
                         $g->where('group_id', $group->id);
                         if($role != 'manager')
-                            $g->whereHas(function($pivot){
+                            $g->whereHas('users',function($pivot){
                                 $pivot->where('group_user.role', 'user');
                             });
                     })->orWhereHas('rolegroup', function($g){
@@ -318,7 +318,7 @@ class CompanyController extends Controller
                 $u->where('id', auth()->user()->id)->orWhereHas('rolegroup', function ($g) use ($group, $role) {
                     $g->where('group_id', $group->id);
                     if($role!='manager'){
-                        $g->whereHas(function($pivot){
+                        $g->whereHas('users',function($pivot){
                             $pivot->where('group_user.role', 'user');
                         });
                     }
