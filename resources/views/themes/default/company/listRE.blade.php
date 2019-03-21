@@ -110,7 +110,7 @@
         </div>
     </div>
 
-    @include(theme(TRUE).'.includes.create-customer-info-list-collapse')
+    @include(theme(TRUE).'.includes.create-customer-info-list-collapse', ['company_id'=>request('id')])
     <link rel="stylesheet" href="{{asset('plugins/jquery.datatables/css/jquery.dataTables.min.css')}}" />
 
     @include(theme(TRUE).'.includes.footer')

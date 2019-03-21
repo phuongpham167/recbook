@@ -337,7 +337,7 @@
                     </div>
                 </div>
             </div>
-            @if(url()->current() == asset('doanh-nghiep/yeu-cau'))
+            @if(!empty($company_id))
                 <input type="text" class="form-control hidden" id="company-id" name="company_id" value="{{$company_id}}"/>
             @endif
             <input type="text" class="form-control hidden" id="force-customer-id" name="force_customer_id" @if(!empty($customer)) value="{{$customer->id}}" @endif/>
@@ -789,8 +789,9 @@
             formDataAdd.append('map', map);
             formDataAdd.append('is_private', 2);
             formDataAdd.append('force_customer_id', forceCustomerId);
+            @if(!empty($company_id))
             formDataAdd.append('company_id', companyId);
-
+            @endif
             console.log(formDataAdd);
             // return;
 
