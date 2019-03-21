@@ -180,4 +180,8 @@ class CustomerController extends Controller
         return redirect()->back();
     }
 
+    public function careable($user_id=null)
+    {
+
+    }
 }

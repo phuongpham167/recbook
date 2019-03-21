@@ -65,7 +65,14 @@ class CareController extends Controller
         $id =   \request('id');
         $customer = Customer::find($id);
 
-        if(!empty($customer) && ($customer->user_id == auth()->user()->id || in_array(auth()->user()->id,ShareCustomer::where('customer_id', $customer->id)->pluck('user_id')->toArray()))){
+        $care_company   =   0;
+        if(!empty(request('company_id'))){
+            $company =  auth()->user()->company()->where('company_id', request('company_id'))->count();
+            if($company > 0){
+                $care_company = 1;
+            }
+        }
+        if(!empty($customer) && ($customer->user_id == auth()->user()->id || in_array(auth()->user()->id,ShareCustomer::where('customer_id', $customer->id)->pluck('user_id')->toArray()) || $care_company  == 1)){
             $data   =   new RealEstate();
 
             $relate1 = RelatedCustomer::where('customer_id1',$id)->pluck('customer_id2')->toArray();
@@ -79,14 +86,18 @@ class CareController extends Controller
                 $q->where('customer_id',$id)
                     ->orWhereIn('customer_id',$related);
                 if(!empty($company_id = request('company_id'))){
-                    $group  =   find_group(request('id'));
-                    $role   =   get_role(request('id'));
-                    $q->orWhereHas('user', function($u) use ($group, $role){
+                    $group  =   find_group(request('company_id'));
+                    $role   =   get_role(request('company_id'));
+                    $q->orWhereHas('user', function ($u) use ($group, $role) {
                         $u->where('id', auth()->user()->id)->orWhereHas('rolegroup', function ($g) use ($group, $role) {
                             $g->where('group_id', $group->id);
                             if($role!='manager'){
-                                $g->having('role', '=', 'user');
+                                $g->whereHas('users',function($pivot){
+                                    $pivot->where('group_user.role', 'user');
+                                });
                             }
+                        })->orWhereHas('rolegroup', function($g){
+                            $g->where('company_groups.is_default', 1);
                         });
                     });
                 }
