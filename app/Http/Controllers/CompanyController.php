@@ -291,7 +291,7 @@ class CompanyController extends Controller
         return redirect()->route('companyDetail', ['id' => $id]);
     }
     public function listRE() {
-        $company_id = auth()->user()->company()->first()->pivot->company_id;
+        $company_id = request('company_id');
         $reCategories = $this->reCategoryService->getListDropDown();
         $provinces = $this->provinceService->getListDropDown();
         $directions = $this->directionService->getListDropDown();
