@@ -263,11 +263,11 @@ class CompanyController extends Controller
         $group  =   find_group(request('id'));
         $role   =   get_role(request('id'));
         $data = $data->whereHas('realestate', function ($re) use ($group, $role) {
-            $re->where('company_id', request('id'));
+            $re->withoutGlobalScope(PrivateScope::class)->where('company_id', request('id'));
 
             if($role !='admin'){
                 $re->whereHas('user', function ($u) use ($group, $role) {
-                    $u->where('id', auth()->user()->id)->orWhereHas('rolegroup', function ($g) use ($group, $role) {
+                    $u->where('user_id', auth()->user()->id)->orWhereHas('rolegroup', function ($g) use ($group, $role) {
                         $g->where('group_id', $group->id);
                         if($role != 'manager')
                             $g->whereHas('users',function($pivot){
@@ -339,9 +339,14 @@ class CompanyController extends Controller
         }
 
 
-        $result = Datatables::of($data)->addColumn('type', function(RealEstate $item){
+        $result = Datatables::of($data)
+            ->editColumn('title', function(RealEstate $realEstate){
+                return "<a href='".route('customerCare', ['id'=>$realEstate->customer_id,'re_id'=>$realEstate->id ,'company_id'=>request('id')])."'>".$realEstate->title."</a>";
+            })
+            ->addColumn('type', function(RealEstate $item){
             return $item->reType?$item->reType->name:'';
-        });
+        })
+        ->rawColumns(['title']);
         return $result->make(true);
     }
 }

@@ -291,7 +291,7 @@
                             <button type="button" class="btn btn-default btn-collapse" data-target="#priceSelect">
                                 Giá
                             </button>
-                            <button type="button" @if(url()->current() == asset('doanh-nghiep/yeu-cau')) class="btn btn-default btn-collapse" @else class="btn btn-default btn-collapse hidden" @endif data-target="#contactInfo">Liên hệ
+                            <button type="button" @if(!empty($company_id)) class="btn btn-default btn-collapse" @else class="btn btn-default btn-collapse hidden" @endif data-target="#contactInfo">Liên hệ
                             </button>
                         </div>
                     </div>
@@ -766,7 +766,11 @@
             formDataAdd.append('district_id', districtId);
             formDataAdd.append('ward_id', wardId);
             formDataAdd.append('street_id', streetId);
+            @if(!empty($company_id))
+            formDataAdd.append('force_customer_id', contactPerson);
+            @else
             formDataAdd.append('contact_person', contactPerson);
+            @endif
             formDataAdd.append('contact_phone_number', contactPhone);
             formDataAdd.append('contact_address', contactAddress);
             formDataAdd.append('position', position);
@@ -788,7 +792,9 @@
             formDataAdd.append('is_deal', isDeal);
             formDataAdd.append('map', map);
             formDataAdd.append('is_private', 2);
+            @if(empty($company_id))
             formDataAdd.append('force_customer_id', forceCustomerId);
+            @endif
             @if(!empty($company_id))
             formDataAdd.append('company_id', companyId);
             @endif
@@ -815,7 +821,7 @@
                         $('#modalAddCustomerInfoList').modal('hide');
                         resetValueModal();
                         setTimeout(function(){
-                            window.location.reload();
+                            // window.location.reload();
                         }, 300);
                     } else {
                         toastr.error(res.message);

@@ -42,6 +42,10 @@
         ul.token-input-list {
             width: 100% !important;
         }
+        #datatable th>input { width: 50px}
+        #dataTable th.title-th>input {
+            width: 100% !important;
+        }
     </style>
 @endpush
 

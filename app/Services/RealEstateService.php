@@ -54,9 +54,9 @@ class RealEstateService
         if (!empty($input['force_customer_id'])) {
             $customer = Customer::find($input['force_customer_id']);
             if ($customer) {
-                $phone = $customer->phone;
+                $phone = !empty($company_id)?$phone:$customer->phone;
                 $contactPerson = $customer->name;
-                $contactAddress = $customer->address;
+                $contactAddress = !empty($company_id)?$contactAddress:$customer->address;
                 $customerId = $customer->id;
             }
         }
