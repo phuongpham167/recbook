@@ -60,6 +60,7 @@ class CompanyController extends Controller
 
     public function index()
     {
+
         $data   =   new Company();
         $data   =   $data->whereHas('users', function($q){
             $q->where('users.id', auth()->user()->id);
@@ -174,6 +175,7 @@ class CompanyController extends Controller
     public function show()
     {
         $company_id = auth()->user()->company()->first()->pivot->company_id;
+//        if(is_company_member($company_id))
         return v('company.list-member',compact('company_id'));
     }
 
@@ -213,8 +215,6 @@ class CompanyController extends Controller
 
             return $result->make(true);
         }
-
-
     }
 
     public function addUser() {

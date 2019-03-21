@@ -70,7 +70,7 @@
                                     <thead>
                                         <tr>
                                             <th>ID</th>
-                                            <th>Tên khách hàng</th>
+                                            <th>Tên thành viên</th>
                                             <th>Nhóm</th>
                                             <th>Trạng thái</th>
                                             <th>Quyền</th>
