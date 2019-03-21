@@ -74,9 +74,6 @@ class CareController extends Controller
             $related = array_merge($relate1,$relate2);
             $related = array_unique($related);
 
-            $data   =   $data->where(function($q){
-                $q->where
-            });
 
             $data   =   $data->where(function ($q) use ($id,$related){
                 $q->where('customer_id',$id)
