@@ -81,7 +81,17 @@ class GroupController extends Controller
         $data   =   User::find(request('id'));
         $group  =   CGroup::find(\request('group_id'));
         if(!empty($data) && in_array(get_role($group->company_id, auth()->user()->id), ['admin', 'manager'])){
-            $data->companygroup()->where('group_id',\request('group_id'))->sync([]);
+            if($group->is_default == 1){
+                $data->companygroup()->detach($group->id);
+                $data->company()->detach($group->company_id);
+            }else {
+                $current_group  =   find_group($group->company_id, $data->id);
+                if($current_group)
+                    $current_group->users()->detach($data->id);
+                $group_default = CGroup::where('company_id',$group->company_id)->where('is_default',1)->first();
+                $group_default->users()->attach($data->id, ['confirmed'=>1]);
+            }
+
             set_notice('Xóa thành viên nhóm thành công!', 'success');
         }else
             set_notice(trans('system.not_exist'), 'warning');
