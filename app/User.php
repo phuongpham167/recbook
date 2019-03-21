@@ -106,6 +106,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Company::class, 'company_user','user_id','company_id')->withPivot('company_id');
     }
 
+    public function companyconfirmed()
+    {
+        return $this->belongsToMany(Company::class, 'company_user','user_id','company_id')->withPivot('confirmed');
+    }
+
     public function rolegroup()
     {
         return $this->belongsToMany(CGroup::class, 'group_user','user_id','group_id')->withPivot('role');

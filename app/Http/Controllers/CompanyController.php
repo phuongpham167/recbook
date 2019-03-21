@@ -181,7 +181,7 @@ class CompanyController extends Controller
         $role   =   get_role($id);
 
         if($role == 'admin'){
-            $data   =   Company::find($id)->users()->having('confirmed', 1)->get();
+            $data   =   Company::find($id)->users()->get();
         } else {
             $data   =   get_user_same_group($id);
         }
@@ -193,6 +193,9 @@ class CompanyController extends Controller
                 })
                 ->editColumn('group', function( $user){
                     return CGroup::find($user->companygroup()->first()->pivot->group_id)->name;
+                })
+                ->editColumn('status', function( $user){
+                    return $user->companyconfirmed()->first()->pivot->confirmed?'Đã tham gia':'Chờ xác nhận';
                 })
                 ->addColumn('permission', function( $user) {
                     return $user->rolegroup()->first()->pivot->role;

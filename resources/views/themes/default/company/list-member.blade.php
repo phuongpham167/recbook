@@ -68,6 +68,7 @@
                                             <th>ID</th>
                                             <th>Tên khách hàng</th>
                                             <th>Nhóm</th>
+                                            <th>Trạng thái</th>
                                             <th>Quyền</th>
                                             @if(get_role($company_id, auth()->user()->id) == 'admin')
                                                 <th></th>
@@ -76,6 +77,7 @@
                                     </thead>
                                     <tfoot>
                                     <tr>
+                                        <th></th>
                                         <th></th>
                                         <th></th>
                                         <th></th>
@@ -162,6 +164,7 @@
                     { data: 'id', name: 'id' , sortable:false},
                     { data: 'name', name: 'name' , sortable:false},
                     { data: 'group', name: 'group' , sortable:false},
+                    { data: 'status', name: 'status' , sortable:false},
                     { data: 'permission', name: 'permission' , sortable:false},
                     @if(get_role($company_id, auth()->user()->id) == 'admin')
                         { data: 'manage', name: 'manage'  , sortable:false, searchable: false}
@@ -172,7 +175,7 @@
                         console.log(this);
                         var column = this;
                         var input = document.createElement("input");
-                        if(column.index() != 4) {
+                        if(column.index() != 4 && column.index() != 3) {
                             $(input).appendTo($(column.footer()).empty())
                                 .on('keyup', function () {
                                     column.search($(this).val(), false, false, true).draw();
