@@ -187,7 +187,7 @@ class RealEstateService
             'images' => json_encode($imagesVal),
             'lat' => trim($lat),
             'long' => trim($long),
-            'detail' => isset($input['detail']) ? $input['detail'] : null,
+            'detail' => isset($input['detail'])? $input['detail'] : null,
             'is_private' => $input['is_private'],
             'customer_id' => $customerId,
             'posted_by' => \Auth::user()->id,
@@ -196,7 +196,7 @@ class RealEstateService
             'approved' => 1,
             'draft' => isset($input['add_draft']) ? 1 : 0,
             'is_public' =>  1,
-            'company_id' =>  $company_id,
+            'company_id' =>  isset($company_id) && is_numeric($company_id) ?$company_id:0,
             'public_site' =>  post_left(auth()->user())==0?0:$public_input,
             'link_video' => isset($input['link_video']) ? $input['link_video'] : null,
         ]);

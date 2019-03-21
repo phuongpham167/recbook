@@ -24,6 +24,10 @@
         tfoot {
             display: table-header-group;
         }
+        #response_table th>input, #datatable th>input { width: 50px}
+        .dataTable th.title-th>input {
+            width: 100% !important;
+        }
     </style>
 @endpush
 
@@ -45,7 +49,7 @@
                     <p class="title_boxM"><strong><i class="fa fa-file-pdf-o"></i>Chăm sóc khách hàng</strong></p>
                     <div>
                         <div class="box-body">
-                            <div class="col-md-12">
+                            <div class="col-md-9">
                                 <div class="panel panel-default">
                                     <div class="panel-heading">Thông tin khách hàng
                                         @if($customer->user_id == auth()->user()->id)
@@ -54,7 +58,7 @@
                                         @endif
                                     </div>
                                     <div class="panel-body">
-                                        <div class="form-group col-md-6">
+                                        <div class="form-group col-md-3">
                                             <label>Mã khách hàng</label>
                                             <input type="text" class="form-control" value="{{$customer->id}}" disabled>
                                         </div>
@@ -63,197 +67,203 @@
                                             <input type="text" class="form-control" value="{{$customer->name}}"
                                                    disabled>
                                         </div>
-                                        <div class="form-group">
+                                        <div class="form-group col-md-3">
                                             <label>Số điện thoại</label>
                                             <input type="text" class="form-control" value="{{$customer->phone}}"
                                                    disabled>
                                         </div>
-                                        <div class="form-group">
+                                        <div class="form-group col-md-6">
                                             <label>Email</label>
                                             <input type="text" class="form-control" value="{{$customer->email}}"
                                                    disabled>
                                         </div>
-                                        <div class="form-group">
+                                        <div class="form-group col-md-6">
                                             <label>Địa chỉ</label>
                                             <input type="text" class="form-control" value="{{$customer->address}}"
                                                    disabled>
                                         </div>
-                                        <div class="table-responsive">
-                                            <div class="">
-                                                <button class="btn btn-info" data-toggle="modal" style="margin-bottom: 5px" data-target="#modalAddCustomerInfoList">Thêm</button>
-                                            </div>
-                                            <table class="table table-bordered" id="datatable">
-                                                <thead>
-                                                <tr>
-                                                    <th>#</th>
-                                                    <th style="min-width: 200px">Tiêu đề</th>
-                                                    <th>Nhóm</th>
-                                                    <th>DTMB</th>
-                                                    <th>DTSD</th>
-                                                    <th>Giá</th>
-                                                    <th>Liên hệ</th>
-                                                    <th>Ngày tạo</th>
-                                                </tr>
-                                                </thead>
-                                                <tfoot>
-                                                <tr>
-                                                    <th></th>
-                                                    <th></th>
-                                                    <th></th>
-                                                    <th></th>
-                                                    <th></th>
-                                                    <th></th>
-                                                    <th></th>
-                                                    <th></th>
-                                                </tr>
-                                                </tfoot>
-                                                <tbody>
-                                                @foreach($data as $item)
-                                                    <?php
-                                                    $detail = [
-                                                        'id' => $item->id,
-                                                        'title' => $item->title,
-                                                        'type' => $item->reType ? $item->reType->name : '',
-                                                        'category' => $item->reCategory ? $item->reCategory->name : '',
-                                                        'address' => $item->address,
-                                                        'ward' => $item->ward ? $item->ward->name : '',
-                                                        'district' => $item->district ? $item->district->name : '',
-                                                        'province' => $item->province ? $item->province->name : '',
-                                                        'direction' => $item->direction ? $item->direction->name : '',
-                                                        'width' => $item->width,
-                                                        'length' => $item->length,
-                                                        'premises' => $item->area_of_premises,
-                                                        'use' => $item->area_of_use,
-                                                        'price' => $item->price,
-                                                        'unit' => $item->unit ? $item->unit->name : '',
-                                                        'contact_person' => $item->contact_person,
-                                                        'post_date' => $item->post_date
-                                                    ];
-                                                    ?>
-                                                    <tr style="cursor: pointer" class="get-detail"
-                                                        data-id="{{$item->id}}"
-                                                        data-detail="{{json_encode($detail)}}">
-                                                        <td>{{$detail['id']}}</td>
-                                                        <td>{{$detail['title']}}</td>
-                                                        <td>{{$detail['category']}}</td>
-                                                        <td>{{$detail['premises']}}</td>
-                                                        <td>{{$detail['use']}}</td>
-                                                        <td>{{$detail['price']}}</td>
-                                                        <td>{{$detail['contact_person']}}</td>
-                                                        <td>{{$detail['post_date']}}</td>
-                                                    </tr>
-                                                @endforeach
-                                                </tbody>
-                                            </table>
-                                        </div>
+
                                     </div>
                                 </div>
 
                             </div>
-                        </div>
-                        @if($customer->user_id == auth()->user()->id)
-                        <div class="col-md-6">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">Khách hàng liên quan</div>
-                                <div class="panel-body">
-                                    @foreach($related_customers as $ctm)
-                                        @php
-                                                $c = \App\Customer::find($ctm->customer_id1);
-                                                if($ctm->customer_id1 == $customer->id){
-                                                    $c = \App\Customer::find($ctm->customer_id2);
-                                                }
-                                        @endphp
-                                        <p style="margin: 0 0 10px;">
-                                            <a href="{{ route('user.info', [$c->id])}} ">{{$c->name}}</a>
-                                            <a type="button" class="pull-right" href="{{route('deleteRelatedCustomer',['ctm1' => $c->id,'ctm2' => $customer->id])}}"><i class="fa fa-window-close" aria-hidden="true"></i></a>
-                                        </p>
-                                    @endforeach
+                            @if($customer->user_id == auth()->user()->id)
+                                <div class="col-md-3">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">Khách hàng liên quan</div>
+                                        <div class="panel-body">
+                                            @foreach($related_customers as $ctm)
+                                                @php
+                                                    $c = \App\Customer::find($ctm->customer_id1);
+                                                    if($ctm->customer_id1 == $customer->id){
+                                                        $c = \App\Customer::find($ctm->customer_id2);
+                                                    }
+                                                @endphp
+                                                <p style="margin: 0 0 10px;">
+                                                    <a href="{{ route('user.info', [$c->id])}} ">{{$c->name}}</a>
+                                                    <a type="button" class="pull-right" href="{{route('deleteRelatedCustomer',['ctm1' => $c->id,'ctm2' => $customer->id])}}"><i class="fa fa-window-close" aria-hidden="true"></i></a>
+                                                </p>
+                                            @endforeach
+                                        </div>
+                                        <div class="panel-footer">
+                                            <form method="get" action="{{asset('khach-hang/khach-hang-lien-quan')}}">
+                                                {{csrf_field()}}
+                                                <input type="text" class="form-control"
+                                                       name="related_customer_id" id="related_customer"
+                                                />
+                                                <input type="text" class="form-control hidden"
+                                                       name="customer_id" value="{{$customer->id}}"
+                                                />
+                                                <button type="submit" class="btn btn-info btn-sm" style="margin-top: 5px">Thêm</button>
+                                            </form>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="panel-footer">
-                                    <form method="get" action="{{asset('khach-hang/khach-hang-lien-quan')}}">
-                                        {{csrf_field()}}
-                                        <input type="text" class="form-control"
-                                               name="related_customer_id" id="related_customer"
-                                        />
-                                        <input type="text" class="form-control hidden"
-                                               name="customer_id" value="{{$customer->id}}"
-                                        />
-                                        <button type="submit" class="btn btn-info btn-sm" style="margin-top: 5px">Thêm</button>
-                                    </form>
+                            @endif
+                        </div>
+                        <div class="col-md-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">Danh sách yêu cầu</div>
+                                <div class="panel-body">
+                                    <div class="table-responsive">
+                                        <div class="">
+                                            <button class="btn btn-info" data-toggle="modal" style="margin-bottom: 5px"
+                                                    data-target="#modalAddCustomerInfoList">Thêm
+                                            </button>
+                                        </div>
+                                        <table class="table table-bordered" id="datatable">
+                                            <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th style="min-width: 200px">Tiêu đề</th>
+                                                <th>Nhóm</th>
+                                                <th>DTMB</th>
+                                                <th>DTSD</th>
+                                                <th>Giá</th>
+                                                <th>Liên hệ</th>
+                                            </tr>
+                                            </thead>
+                                            <tfoot>
+                                            <tr>
+                                                <th></th>
+                                                <th class="title-th"></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                            </tfoot>
+                                            <tbody>
+                                            @foreach($data as $item)
+                                                <?php
+                                                $detail = [
+                                                    'id' => $item->id,
+                                                    'title' => $item->title,
+                                                    'type' => $item->reType ? $item->reType->name : '',
+                                                    'category' => $item->reCategory ? $item->reCategory->name : '',
+                                                    'address' => $item->address,
+                                                    'ward' => $item->ward ? $item->ward->name : '',
+                                                    'district' => $item->district ? $item->district->name : '',
+                                                    'province' => $item->province ? $item->province->name : '',
+                                                    'direction' => $item->direction ? $item->direction->name : '',
+                                                    'width' => $item->width,
+                                                    'length' => $item->length,
+                                                    'premises' => $item->area_of_premises,
+                                                    'use' => $item->area_of_use,
+                                                    'price' => $item->price,
+                                                    'unit' => $item->unit ? $item->unit->name : '',
+                                                    'contact_person' => $item->contact_person,
+                                                    'post_date' => $item->post_date
+                                                ];
+                                                ?>
+                                                <tr style="cursor: pointer" class="get-detail"
+                                                    data-id="{{$item->id}}"
+                                                    data-detail="{{json_encode($detail)}}">
+                                                    <td>{{$detail['id']}}</td>
+                                                    <td>{{$detail['title']}}<p>{{$detail['post_date']}}</p></td>
+                                                    <td>{{$detail['category']}}</td>
+                                                    <td>{{$detail['premises']}}</td>
+                                                    <td>{{$detail['use']}}</td>
+                                                    <td>{{$detail['price']}}</td>
+                                                    <td>{{$detail['contact_person']}}</td>
+                                                </tr>
+                                            @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        @endif
-                        <div class="col-md-6">
                             <div class="panel panel-default">
                                 <div class="panel-heading">Chi tiết yêu cầu</div>
                                 <div class="panel-body">
-                                    <div class="form-group col-md-12">
+                                    <div class="form-group col-md-3">
                                         <label>Mã yêu cầu</label>
                                         <span class="form-control" id="code"></span>
                                     </div>
-                                    <div class="form-group col-md-12">
+                                    <div class="form-group col-md-9">
                                         <label>Tiêu đề</label>
                                         <span class="form-control" id="title"></span>
                                     </div>
-                                    <div class="form-group col-md-6">
+                                    <div class="form-group col-md-3">
                                         <label>Loại</label>
                                         <span class="form-control" id="type"></span>
                                     </div>
-                                    <div class="form-group col-md-6">
+                                    <div class="form-group col-md-3">
                                         <label>Nhóm</label>
                                         <span class="form-control" id="category"></span>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label>Giá</label>
+                                        <span class="form-control" id="price"></span>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label>Đơn vị</label>
+                                        <span class="form-control" id="unit"></span>
                                     </div>
                                     <div class="form-group col-md-12">
                                         <label>Địa chỉ</label>
                                         <span class="form-control" id="address"></span>
                                     </div>
-                                    <div class="form-group col-md-6">
+                                    <div class="form-group col-md-3">
                                         <label>Phường</label>
                                         <span class="form-control" id="ward"></span>
                                     </div>
-                                    <div class="form-group col-md-6">
+                                    <div class="form-group col-md-3">
                                         <label>Quận huyện</label>
                                         <span class="form-control" id="district"></span>
                                     </div>
-                                    <div class="form-group col-md-6">
+                                    <div class="form-group col-md-3">
                                         <label>Tỉnh thành</label>
                                         <span class="form-control" id="province"></span>
                                     </div>
-                                    <div class="form-group col-md-6">
+                                    <div class="form-group col-md-3">
                                         <label>Hướng</label>
                                         <span class="form-control" id="direction"></span>
                                     </div>
-                                    <div class="form-group col-md-6">
+                                    <div class="form-group col-md-3">
                                         <label>Chiều rộng</label>
                                         <span class="form-control" id="width"></span>
                                     </div>
-                                    <div class="form-group col-md-6">
+                                    <div class="form-group col-md-3">
                                         <label>Chiều dài</label>
                                         <span class="form-control" id="length"></span>
                                     </div>
-                                    <div class="form-group col-md-6">
+                                    <div class="form-group col-md-3">
                                         <label>DTMB</label>
                                         <span class="form-control" id="premises"></span>
                                     </div>
-                                    <div class="form-group col-md-6">
+                                    <div class="form-group col-md-3">
                                         <label>DTSD</label>
                                         <span class="form-control" id="use"></span>
                                     </div>
-                                    <div class="form-group col-md-6">
-                                        <label>Giá</label>
-                                        <span class="form-control" id="price"></span>
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label>Đơn vị</label>
-                                        <span class="form-control" id="unit"></span>
-                                    </div>
+
                                 </div>
                             </div>
-                        </div>
 
                         <div class="clearfix"></div>
-                        <div class="col-md-12">
+
+
                             <div class="panel panel-default">
                                 <div class="panel-heading">Lịch sử chăm sóc <a class="btn btn-xs btn-info pull-right"
                                                                                style="display: none" data-id=""
@@ -302,14 +312,12 @@
                                                 <th>Giá</th>
                                                 <th>Liên hệ</th>
                                                 <th>SĐT</th>
-                                                <th>Ngày tạo</th>
                                             </tr>
                                             </thead>
                                             <tfoot>
                                             <tr>
                                                 <th></th>
-                                                <th></th>
-                                                <th></th>
+                                                <th class="title-th"></th>
                                                 <th></th>
                                                 <th></th>
                                                 <th></th>
@@ -651,8 +659,7 @@
                     {data: 'area_of_use', name: 'area_of_use'},
                     {data: 'price', name: 'price'},
                     {data: 'contact_person', name: 'contact_person'},
-                    {data: 'contact_phone_number', name: 'contact_phone_number'},
-                    {data: 'created_at', name: 'created_at'}
+                    {data: 'contact_phone_number', name: 'contact_phone_number'}
                 ],
                 initComplete: function () {
                     this.api().columns().every(function () {
@@ -670,6 +677,7 @@
         }
         $(function() {
             $('#datatable').dataTable({
+                pageLength: 5,
                 initComplete: function () {
                 this.api().columns().every(function () {
                     console.log(this);
