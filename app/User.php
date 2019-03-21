@@ -122,10 +122,9 @@ class User extends Authenticatable
 
     public function listFriend()
     {
-        $data   =   Friend::where(function($q){
-            $q->where('user1', $this->id);
-        })->orWhere(function($q){
-            $q->where('user2', $this->id);
+        $data   =   Friend::where('confirmed',1)->where(function($q){
+            $q->where('user1', $this->id)
+            ->orWhere('user2', $this->id);
         });
         return $data;
     }
