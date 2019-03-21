@@ -59,7 +59,7 @@
                                         <td>{{rolename($item->pivot->role)}}</td>
                                         <td>
                                             <a class="btn btn-xs btn-default editUser" data-userid="{{$item->id}}" role="{{$item->pivot->role}}">Sửa</a>
-                                            <a class="btn btn-xs btn-danger" href="{{route('groupRemove', ['id'=>$item->id,'group_id'=>$data->id])}}">Xóa</a>
+                                            <a class="btn btn-xs btn-danger" href="{{route('groupUserRemove', ['id'=>$item->id,'group_id'=>$data->id])}}">Xóa</a>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -86,7 +86,7 @@
             </div>
         </div>
     </div>
-    <form method="post" action="{{route('groupEdit')}}">
+    <form method="post" action="{{route('groupUserEdit')}}">
         {{csrf_field()}}
         <div id="editUserModal" class="modal fade" role="dialog">
             <div class="modal-dialog">

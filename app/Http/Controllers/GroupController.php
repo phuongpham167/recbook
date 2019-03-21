@@ -36,6 +36,26 @@ class GroupController extends Controller
         return redirect()->back();
     }
 
+    public function edit()
+    {
+        $group = CGroup::find(request('id'));
+        return v('company.group.edit', compact('group'));
+    }
+
+    public function update()
+    {
+        $group  =   CGroup::find(\request('id'));
+        if(!empty($group) && is_admin($group->company_id)) {
+            $group->name    =   request('name');
+            $group->description =   \request('description');
+            $group->save();
+            set_notice('Sửa nhóm thành công', 'success');
+        }else
+            set_notice(trans('system.not_exist'), 'warning');
+
+        return redirect()->back();
+    }
+
     public function detail($id)
     {
         $group  =   CGroup::find($id);
@@ -44,7 +64,7 @@ class GroupController extends Controller
         }
     }
 
-    public function delete(){
+    public function deleteUser(){
         $data   =   User::find(request('id'));
         $group  =   CGroup::find(\request('group_id'));
         if(!empty($data) && in_array(get_role($group->company_id, auth()->user()->id), ['admin', 'manager'])){
@@ -56,7 +76,7 @@ class GroupController extends Controller
         return redirect()->back();
     }
 
-    public function update(){
+    public function updateUser(){
         $data   =   User::find(request('id'));
         $group  =   CGroup::find(\request('group_id'));
         if(!empty($data) && in_array(get_role($group->company_id, auth()->user()->id), ['admin', 'manager'])){

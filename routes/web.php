@@ -304,6 +304,8 @@ Route::group(['middleware'=>['auth','phoneVerify']], function(){
             Route::post('sua', ['as'=>'groupEdit', 'uses'=>'GroupController@update']);
             Route::get('xoa', ['as'=>'groupRemove', 'uses'=>'GroupController@delete']);
             Route::get('xac-nhan-tham-gia', ['as'=>'confirmGroup', 'uses'=>'GroupController@confirm']);
+            Route::post('thanh-vien/sua', ['as'=>'groupUserEdit', 'uses'=>'GroupController@updateUser']);
+            Route::get('thanh-vien/xoa', ['as'=>'groupUserRemove', 'uses'=>'GroupController@deleteUser']);
         });
 
 
