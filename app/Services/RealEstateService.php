@@ -196,7 +196,7 @@ class RealEstateService
             'approved' => 1,
             'draft' => isset($input['add_draft']) ? 1 : 0,
             'is_public' =>  1,
-            'company_id' =>  $company_id,
+            'company_id' =>  isset($company_id)?$company_id:0,
             'public_site' =>  post_left(auth()->user())==0?0:$public_input,
             'link_video' => isset($input['link_video']) ? $input['link_video'] : null,
         ]);
