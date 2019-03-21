@@ -176,7 +176,9 @@ class CareController extends Controller
         $data   =   $data->withoutGlobalScope(PrivateScope::class)->whereIn('id',$ids);
         $result = Datatables::of($data)->addColumn('type', function(RealEstate $item){
             return $item->reType?$item->reType->name:'';
-        });
+        })->editColumn('title', function(RealEstate $item){
+            return $item->title.'<p>'.$item->created_at.'</p>';
+        })->rawColumns(['title']);
         return $result->make(true);
     }
 }

@@ -24,6 +24,10 @@
         tfoot {
             display: table-header-group;
         }
+        #response_table th>input, #datatable th>input { width: 50px}
+        .dataTable th.title-th>input {
+            width: 100% !important;
+        }
     </style>
 @endpush
 
@@ -137,14 +141,12 @@
                                                 <th>DTSD</th>
                                                 <th>Giá</th>
                                                 <th>Liên hệ</th>
-                                                <th>Ngày tạo</th>
                                             </tr>
                                             </thead>
                                             <tfoot>
                                             <tr>
                                                 <th></th>
-                                                <th></th>
-                                                <th></th>
+                                                <th class="title-th"></th>
                                                 <th></th>
                                                 <th></th>
                                                 <th></th>
@@ -179,13 +181,12 @@
                                                     data-id="{{$item->id}}"
                                                     data-detail="{{json_encode($detail)}}">
                                                     <td>{{$detail['id']}}</td>
-                                                    <td>{{$detail['title']}}</td>
+                                                    <td>{{$detail['title']}}<p>{{$detail['post_date']}}</p></td>
                                                     <td>{{$detail['category']}}</td>
                                                     <td>{{$detail['premises']}}</td>
                                                     <td>{{$detail['use']}}</td>
                                                     <td>{{$detail['price']}}</td>
                                                     <td>{{$detail['contact_person']}}</td>
-                                                    <td>{{$detail['post_date']}}</td>
                                                 </tr>
                                             @endforeach
                                             </tbody>
@@ -311,14 +312,12 @@
                                                 <th>Giá</th>
                                                 <th>Liên hệ</th>
                                                 <th>SĐT</th>
-                                                <th>Ngày tạo</th>
                                             </tr>
                                             </thead>
                                             <tfoot>
                                             <tr>
                                                 <th></th>
-                                                <th></th>
-                                                <th></th>
+                                                <th class="title-th"></th>
                                                 <th></th>
                                                 <th></th>
                                                 <th></th>
@@ -660,8 +659,7 @@
                     {data: 'area_of_use', name: 'area_of_use'},
                     {data: 'price', name: 'price'},
                     {data: 'contact_person', name: 'contact_person'},
-                    {data: 'contact_phone_number', name: 'contact_phone_number'},
-                    {data: 'created_at', name: 'created_at'}
+                    {data: 'contact_phone_number', name: 'contact_phone_number'}
                 ],
                 initComplete: function () {
                     this.api().columns().every(function () {
