@@ -258,6 +258,8 @@ class CompanyController extends Controller
                         $g->where('group_id', $group->id);
                         if($role != 'manager')
                             $g->having('role', '=', 'user');
+                    })->orWhereHas('rolegroup', function($g){
+                        $g->where('company_groups.is_default', 1);
                     });
                 });
             }
