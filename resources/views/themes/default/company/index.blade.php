@@ -29,7 +29,9 @@
                     <div class="title_boxM">
                         <strong><i class="fa fa-list-alt"></i>{{trans('company.index')}}</strong>
                         <div class="box-tools pull-right">
+                            @if(auth()->user()->group()->first()->company_create)
                             <a href="{{route('companyCreate')}}" class="btn btn-sm btn-primary">Tạo doanh nghiệp</a>
+                            @endif
                         </div>
                     </div>
 
@@ -43,6 +45,8 @@
                                     <th>{{trans('company.title')}}</th>
                                     <th>{{trans('company.description')}}</th>
                                     <th>{{trans('company.address')}}</th>
+                                    <th>{{trans('company.email')}}</th>
+                                    <th>{{trans('company.phone')}}</th>
                                     <th>{{trans('company.status')}}</th>
                                     <th>{{trans('g.manage')}}</th>
                                 </tr>
@@ -53,6 +57,8 @@
                                         <td><a href="{{route('companyDetail', ['id'=>$item->id])}}">{{$item->name}}</a></td>
                                         <td><a href="{{route('companyDetail', ['id'=>$item->id])}}">{{$item->description}}</a></td>
                                         <td><a href="{{route('companyDetail', ['id'=>$item->id])}}">{{$item->address}}</a></td>
+                                        <td><a href="{{route('companyDetail', ['id'=>$item->id])}}">{{$item->email}}</a></td>
+                                        <td><a href="{{route('companyDetail', ['id'=>$item->id])}}">{{$item->phone}}</a></td>
                                         <td><a href="{{route('companyDetail', ['id'=>$item->id])}}">{{$item->status}}</a></td>
                                         <td>
                                             @if(get_role($item->id, auth()->user()->id) == 'admin')

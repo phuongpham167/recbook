@@ -24,14 +24,16 @@ class CreateCompanyRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'  =>  'required'
+            'name'  =>  'required',
+            'logo' => 'mimes:jpeg,bmp,png,jpg,ico'
         ];
     }
 
     public function messages()
     {
         return  [
-            'name.required' =>  'Vui lòng điền tên doanh nghiệp'
+            'name.required' =>  'Vui lòng điền tên doanh nghiệp',
+            'logo.mimes' =>  'Vui lòng chỉ chọn các file định dạng jpeg, bmp, png, jpg, ico'
         ];
     }
 }

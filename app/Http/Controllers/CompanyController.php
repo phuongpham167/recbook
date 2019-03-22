@@ -23,6 +23,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use \DataTables;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class CompanyController extends Controller
 {
@@ -72,7 +73,9 @@ class CompanyController extends Controller
 
     public function create()
     {
-        return v('company.create');
+        if(auth()->user()->group()->first()->company_create)
+            return v('company.create');
+        return redirect()->back();
     }
 
     public function save(CreateCompanyRequest $request)
@@ -81,11 +84,19 @@ class CompanyController extends Controller
             $data   =   new Company();
             $data->name     =   $request->name;
             $data->address  =   $request->address;
+            $data->phone  =   $request->phone;
+            $data->email  =   $request->email;
             $data->user_id  =   auth()->user()->id;
             $data->description  =   $request->description;
             $data->status   =   'active';
             $data->created_at   =   Carbon::now();
             $data->save();
+            if(!empty($request->logo))    {
+                if(!empty($data->logo))
+                    Storage::disk('public_path')->delete($data->logo);
+                $request->logo->move(public_path('uploads/company/logo/'.$data->id), $request->logo->getClientOriginalName());
+                $data->logo    =   'uploads/company/logo/'.$data->id.'/'.$request->logo->getClientOriginalName();
+            }
             $data->users()->attach(auth()->user()->id, ['confirmed'=>1]);
             $members    =   explode(',',$request->members);
             $data->users()->attach($members);
@@ -119,6 +130,14 @@ class CompanyController extends Controller
         if(!empty($data) && get_role($request->id, auth()->user()->id) == 'admin'){
             $data->name     =   $request->name;
             $data->address  =   $request->address;
+            $data->phone  =   $request->phone;
+            $data->email  =   $request->email;
+            if(!empty($request->logo))    {
+                if(!empty($data->logo))
+                    Storage::disk('public_path')->delete($data->logo);
+                $request->logo->move(public_path('uploads/company/logo/'.$data->id), $request->logo->getClientOriginalName());
+                $data->logo    =   'uploads/company/logo/'.$data->id.'/'.$request->logo->getClientOriginalName();
+            }
             $data->description  =   $request->description;
             $data->save();
             set_notice('Sửa doanh nghiệp thành công!', 'success');

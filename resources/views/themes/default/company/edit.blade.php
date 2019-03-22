@@ -26,7 +26,7 @@
             </div>
             <div class="col-md-9 right">
                 @include('themes.default.includes.message')
-                <form method="post" >
+                <form method="post" enctype="multipart/form-data">
                     {{csrf_field()}}
                     <div class="_form dangnhap_page bg_fdfdfd">
                         <div class="form-horizontal">
@@ -40,6 +40,18 @@
                                 </dd>
                             </dl>
                             <dl>
+                                <dt>{{trans('company.email')}}</dt>
+                                <dd>
+                                    <input type="text" name="email" value="{{$data->email}}"/>
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt>{{trans('company.phone')}}</dt>
+                                <dd>
+                                    <input type="text" name="phone" value="{{$data->phone}}"/>
+                                </dd>
+                            </dl>
+                            <dl>
                                 <dt>{{trans('company.description')}}</dt>
                                 <dd>
                                     <textarea class="form-control" name="description" >{{$data->description}}</textarea>
@@ -50,6 +62,16 @@
                                 <dd>
                                     <textarea class="form-control" name="address" >{{$data->address}}</textarea>
                                 </dd>
+                            </dl>
+                            <dl>
+                                <dt>{{trans('company.logo')}}</dt>
+                                <dd>
+                                    <a href="#" onclick="document.getElementById('fileID').click(); return false;" class="btn btn-xs btn-default"/>Chọn logo</a>
+                                    <p style="font-style: italic">* Chỉ chọn các file có định dạng ảnh: jpg, jpeg, png, bmp, ico</p>
+                                    <input type="file" id="fileID" name="logo" style="visibility: hidden;" />
+                                    <a href='{{asset($data->logo)}}' target='_blank' class='btn btn-info btn-xs'><i class='fa fa-eye'></i> Xem logo</a>
+                                </dd>
+
                             </dl>
                             <dl>
                                 <dd class="text-center" style="margin-left: 0 !important;">

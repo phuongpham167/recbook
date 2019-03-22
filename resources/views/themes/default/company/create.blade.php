@@ -26,7 +26,7 @@
             </div>
             <div class="col-md-9 right">
                 @include('themes.default.includes.message')
-                <form method="post" >
+                <form method="post" enctype="multipart/form-data" >
                     {{csrf_field()}}
                     <div class="_form dangnhap_page bg_fdfdfd">
                         <div class="form-horizontal">
@@ -37,6 +37,18 @@
                                 <dd>
                                     <input type="text" name="name" id="name" required />
                                     <span class="help-block">Vui lòng điền thông tin</span>
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt>{{trans('company.email')}}</dt>
+                                <dd>
+                                    <input type="text" name="email"/>
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt>{{trans('company.phone')}}</dt>
+                                <dd>
+                                    <input type="text" name="phone"/>
                                 </dd>
                             </dl>
                             <dl>
@@ -55,6 +67,14 @@
                                 <dd>
                                     <p>{{trans('company.addMembersToCompany')}}</p>
                                     <input class="form-control" name="members"/>
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt>{{trans('company.logo')}}</dt>
+                                <dd>
+                                    <a href="#" onclick="document.getElementById('fileID').click(); return false;" class="btn btn-xs btn-default"/>Chọn logo</a>
+                                    <p style="font-style: italic">* Chỉ chọn các file có định dạng ảnh: jpg, jpeg, png, bmp, ico</p>
+                                    <input type="file" id="fileID" name="logo" style="visibility: hidden;" />
                                 </dd>
                             </dl>
                             <dl>

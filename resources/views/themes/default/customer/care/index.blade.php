@@ -82,10 +82,8 @@
                                             <input type="text" class="form-control" value="{{$customer->address}}"
                                                    disabled>
                                         </div>
-
                                     </div>
                                 </div>
-
                             </div>
                             @if($customer->user_id == auth()->user()->id)
                                 <div class="col-md-3">
