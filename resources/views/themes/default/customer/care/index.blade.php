@@ -49,7 +49,7 @@
                     <p class="title_boxM"><strong><i class="fa fa-file-pdf-o"></i>Chăm sóc khách hàng</strong></p>
                     <div>
                         <div class="box-body">
-                            <div class="col-md-9">
+                            <div @if($customer->user_id == auth()->user()->id) class="col-md-9" @else class="col-md-12" @endif >
                                 <div class="panel panel-default">
                                     <div class="panel-heading">Thông tin khách hàng
                                         @if($customer->user_id == auth()->user()->id)
