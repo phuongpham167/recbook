@@ -29,7 +29,9 @@
                     <div class="title_boxM">
                         <strong><i class="fa fa-list-alt"></i>{{trans('company.index')}}</strong>
                         <div class="box-tools pull-right">
+                            @if(auth()->user()->group()->first()->company_create)
                             <a href="{{route('companyCreate')}}" class="btn btn-sm btn-primary">Tạo doanh nghiệp</a>
+                            @endif
                         </div>
                     </div>
 
