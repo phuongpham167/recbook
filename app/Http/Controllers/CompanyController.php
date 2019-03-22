@@ -73,9 +73,12 @@ class CompanyController extends Controller
 
     public function create()
     {
-        if(auth()->user()->group()->first()->company_create)
+        if(auth()->user()->group()->first()->company_create) {
             return v('company.create');
-        return redirect()->back();
+        }else
+            set_notice('Bạn không có quyền tạo doanh nghiệp, hãy nâng cấp nhóm để tạo doanh nghiệp!', 'warning');
+
+        return redirect()->route('companyIndex');
     }
 
     public function save(CreateCompanyRequest $request)
