@@ -21,4 +21,5 @@
     <li role="presentation" @if(url()->current() == asset('doanh-nghiep/khach-hang')) class="active" @endif><a class="freelancer_tab" href="{{asset('doanh-nghiep/khach-hang?id='.$company_id)}}">Danh sách khách hàng</a></li>
 
     <li role="presentation" @if(url()->current() == asset('doanh-nghiep/yeu-cau')) class="active" @endif><a class="freelancer_tab" href="{{asset('doanh-nghiep/yeu-cau?id='.$company_id)}}">Quản lý yêu cầu</a></li>
+        <li role="presentation" class="pull-right" ><a class="" href="{{route('companyDetail', ['id'=>$company_id])}}"><i class="fa fa-backward"></i> Về trang doanh nghiệp</a></li>
 </ul>
