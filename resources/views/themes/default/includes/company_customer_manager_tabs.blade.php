@@ -10,6 +10,9 @@
         text-transform: uppercase;
     }
 </style>
+<div>
+    <img src="{{asset(\App\Company::find($company_id)->logo?\App\Company::find($company_id)->logo:'images/logo.png')}}" style="max-height: 120px; margin-bottom: 4px">
+</div>
 <ul class="nav nav-tabs">
     @if(is_admin($company_id))
         <li role="presentation" @if(request()->route()->getName() == 'companyDetail') class="active" @endif><a class="freelancer_tab" href="{{route('companyDetail',['id'=>$company_id])}}">Quản lý thành viên</a></li>
