@@ -3,6 +3,12 @@
     <link rel="stylesheet" href="{{ asset('css/user-info.css') }}"/>
     <link rel="stylesheet" href="{{asset('plugins/loopj-jquery-tokeninput/styles/token-input.css')}}" />
     <link rel="stylesheet" href="{{asset('plugins/loopj-jquery-tokeninput/styles/token-input-bootstrap3.css')}}" />
+    <link rel="stylesheet" href="{{asset('plugins/loopj-jquery-tokeninput/styles/token-input-facebook.css')}}" />
+    <style type="text/css">
+        ul.token-input-list-facebook {
+            height: 34px !important;
+        }
+    </style>
     <style type="text/css">
         .token-input-dropdown-bootstrap3 {
             z-index: 11001 !important;
@@ -407,7 +413,6 @@
                 this.rows = minRows + rows;
             });
         $(function () {
-
             $('#contact_phone_number').keyup(function() {
                 emptyContactInfo();
 
@@ -430,8 +435,10 @@
                 }
             });
             function emptyContactInfo() {
-                $('#contact_person').val('');
-                $('#contact_address').val('');
+                if($('#company-id').val() == null) {
+                    $('#contact_person').val('');
+                    $('#contact_address').val('');
+                }
             }
             //------------------------------------------------------------
             // COLLAPSE CONTENT
@@ -706,8 +713,11 @@
             let streetId = $('.form-add-cil #street').val();
 
             let contactPhone = $('.form-add-cil #contact_phone_number').val();
+            // console.log('sdt '+contactPhone);
             let contactPerson = $('.form-add-cil #contact_person').val();
+            // console.log('ten '+contactPerson);
             let contactAddress = $('.form-add-cil #contact_address').val();
+            // console.log('dia chi '+contactAddress);
 
             let position = $('.form-add-cil #position').val();
 
@@ -755,6 +765,7 @@
                 .each(function(){
                     formDataAdd.append('alt[]', $(this).val());
                 });
+            console.log('here 2');
             formDataAdd.append('title', title);
             formDataAdd.append('detail', detail);
             formDataAdd.append('re_category_id', reCatId);
@@ -893,14 +904,13 @@
             $('.form-add-cil #map').val('');
         }
 
-        $('#contact_person').tokenInput("{{asset('ajax/customer')}}", {
+        $('#contact_person').tokenInput("{{asset('ajax/customercompany')}}", {
             queryParam: "term",
             zindex: 1005,
             preventDuplicates: true,
             tokenLimit: 1,
             hintText: 'Nhập tên khách hàng cần tìm',
             onAdd: function (item) {
-                console.log('a');
                 $('#contact_phone_number').val(item.phone);
                 $('#contact_address').val(item.address);
             },
