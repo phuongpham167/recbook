@@ -161,7 +161,7 @@
                     'url': urlDatatable ='{!! route('companyDetailData',['id'=>$company_id]) !!}',
                     'type': 'GET',
                     'data': function (d) {
-                        d.id    =   {{request('id')}};
+                        d.id    =   {{$company_id}};
                     },
                 },
                 columns: [
