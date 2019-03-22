@@ -38,7 +38,7 @@
         ul.token-input-list {
             width: 100% !important;
         }
-        .dataTable th>input { width: 50px}
+        .dataTable th>input { width: 100px}
         .dataTable th.title-th>input {
             width: 100% !important;
         }
@@ -72,7 +72,7 @@
                                             <th>ID</th>
                                             <th>Tên thành viên</th>
                                             <th>Nhóm</th>
-                                            <th>Trạng thái</th>
+                                            <th style="width: 70px">Trạng thái</th>
                                             <th>Quyền</th>
                                             @if(get_role($company_id, auth()->user()->id) == 'admin')
                                                 <th></th>
