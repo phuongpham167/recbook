@@ -205,6 +205,7 @@ Route::group(['middleware'=>['auth','phoneVerify']], function(){
         Route::get('user', 'AjaxController@ajaxUser');
         Route::get('user-group', 'AjaxController@ajaxUserGroup');
         Route::get('customer', 'AjaxController@ajaxCustomer');
+        Route::get('customercompany', 'AjaxController@ajaxCustomerCompany');
         Route::get('street', 'AjaxController@ajaxStreet');
         Route::get('province', 'AjaxController@ajaxProvince')->name('ajaxProvince');
         Route::get('/get-unread-message', ['as' => 'ajax.getUnreadMessage', 'uses' => 'ConversationController@getUnreadMessage']);

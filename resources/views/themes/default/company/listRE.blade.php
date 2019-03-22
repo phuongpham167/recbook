@@ -12,6 +12,12 @@
     <link rel="stylesheet" href="{{ asset('css/theme.css') }}" />
     <link rel="stylesheet" href="{{asset('plugins/loopj-jquery-tokeninput/styles/token-input.css')}}" />
     <link rel="stylesheet" href="{{asset('plugins/loopj-jquery-tokeninput/styles/token-input-bootstrap3.css')}}" />
+    <link rel="stylesheet" href="{{asset('plugins/loopj-jquery-tokeninput/styles/token-input-facebook.css')}}" />
+    <style type="text/css">
+        ul.token-input-list-facebook {
+            height: 34px !important;
+        }
+    </style>
     <style type="text/css">
         #token-input-subcribes {
             border: none;

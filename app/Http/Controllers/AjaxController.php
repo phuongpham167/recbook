@@ -152,7 +152,23 @@ class AjaxController extends Controller
 
     public function ajaxCustomer() {
         $name   = request()->input('term');
-        $result =   [];
+        $result   =   [];
+        foreach(\App\Customer::where('name','LIKE',"%{$name}%")->where('web_id',get_web_id())->where('user_id',auth()->user()->id)->get() as $item){
+            $result[]   =   [
+                'id'    =>  $item->id,
+                'name'  =>  $item->name.' - '.$item->email,
+                'phone'  =>  $item->phone,
+                'address'  =>  $item->address,
+            ];
+        }
+        return response()->json($result);
+    }
+    public function ajaxCustomerCompany() {
+        $name   = request()->input('term');
+        $result[]   =   [
+            'id'    =>  ucwords($name),
+            'name'  =>  'Tạo khách mới'.': '.ucwords($name)
+        ];
         foreach(\App\Customer::where('name','LIKE',"%{$name}%")->where('web_id',get_web_id())->where('user_id',auth()->user()->id)->get() as $item){
             $result[]   =   [
                 'id'    =>  $item->id,

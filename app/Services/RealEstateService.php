@@ -58,6 +58,14 @@ class RealEstateService
                 $contactPerson = $customer->name;
                 $contactAddress = !empty($company_id)?$contactAddress:$customer->address;
                 $customerId = $customer->id;
+            }else{
+                $newCustomer = new Customer();
+                $newCustomer->name = $contactPerson;
+                $newCustomer->phone = $phone;
+                $newCustomer->name = $contactAddress;
+                $newCustomer->user_id = auth()->user()->id;
+                $newCustomer->save();
+                $customerId = $newCustomer->id;
             }
         }
 
