@@ -343,8 +343,8 @@
                     </div>
                 </div>
             </div>
-            @if(!empty($company_id))
-                <input type="text" class="form-control hidden" id="company-id" name="company_id" value="{{$company_id}}"/>
+            @if(!empty($company_id) || request('company_id'))
+                <input type="text" class="form-control hidden" id="company-id" name="company_id" value="{{!empty($company_id)?$company_id:request('company_id')}}"/>
             @endif
             <input type="text" class="form-control hidden" id="force-customer-id" name="force_customer_id" @if(!empty($customer)) value="{{$customer->id}}" @endif/>
             <div class="modal-footer clearfix">
@@ -832,7 +832,7 @@
                         $('#modalAddCustomerInfoList').modal('hide');
                         resetValueModal();
                         setTimeout(function(){
-                            // window.location.reload();
+                            window.location.reload();
                         }, 300);
                     } else {
                         toastr.error(res.message);
