@@ -182,16 +182,17 @@ class CompanyController extends Controller
 
         return $result->make(true);
     }
-    public function show()
+    public function show($id)
     {
-        $company_id = auth()->user()->company()->first()->pivot->company_id;
+        $company = auth()->user()->company()->where('company_id', $id)->where('confirmed', '=', 1)->first();
+        if(!empty($company)){
+            return v('company.list-member',['company_id'=>$company->id, 'company'=>$company]);
+        }
 //        if(is_company_member($company_id))
-        return v('company.list-member',compact('company_id'));
     }
 
     public function data($id) {
         $role   =   get_role($id);
-
         if($role == 'admin'){
             $data   =   Company::find($id)->users()->get();
         } else {
@@ -206,8 +207,8 @@ class CompanyController extends Controller
                 ->editColumn('group', function( $user){
                     return CGroup::find($user->companygroup()->first()->pivot->group_id)->name;
                 })
-                ->editColumn('status', function( $user){
-                    return $user->companyconfirmed()->first()->pivot->confirmed?'Đã tham gia':'Chờ xác nhận';
+                ->editColumn('status', function( $user) use ($id){
+                    return $user->companyconfirmed()->where('company_id', $id)->first()->pivot->confirmed == 1?'Đã tham gia':'Chờ xác nhận';
                 })
                 ->addColumn('permission', function( $user) {
                     return $user->rolegroup()->first()->pivot->role;
@@ -246,7 +247,7 @@ class CompanyController extends Controller
 
         if(!empty($user) && get_role(\request('company_id'), auth()->user()->id) == 'admin' ) {
             $user->companygroup()->detach($user->companygroup()->first()->pivot->group_id);
-            $user->company()->detach($user->company()->first()->pivot->company_id);
+            $user->company()->detach($user->company()->where('company_id', request('company_id'))->first()->pivot->company_id);
             set_notice(trans('system.delete_success'), 'success');
         }else
             set_notice(trans('system.not_exist'), 'warning');
