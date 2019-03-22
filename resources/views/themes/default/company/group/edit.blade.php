@@ -25,6 +25,7 @@
                 @include(theme(TRUE).'.includes.left-menu')
             </div>
             <div class="col-md-9 right">
+                @include(theme(TRUE).'.includes.company_customer_manager_tabs', ['company_id'=>$group->company_id])
                 @include('themes.default.includes.message')
                 <form method="post" >
                     {{csrf_field()}}
