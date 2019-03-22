@@ -179,7 +179,7 @@
                         console.log(this);
                         var column = this;
                         var input = document.createElement("input");
-                        if(column.index() != 4 && column.index() != 3) {
+                        if(column.index() != 4 && column.index() != 3 && column.index() != 5) {
                             $(input).appendTo($(column.footer()).empty())
                                 .on('keyup', function () {
                                     column.search($(this).val(), false, false, true).draw();
