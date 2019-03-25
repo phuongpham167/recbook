@@ -109,9 +109,10 @@ class PageController extends Controller
 //        exit();
         $vip    =   [];
         for($i=1; $i<7; $i++){
-            $query    = RealEstate::filterprovince()->where('public_site', 1)->select('id', 'title', 'slug', 'short_description', 'detail', 'code', 'don_vi',
-                'area_of_premises', 'area_of_use', 'district_id', 'price', 'unit_id', 'is_vip', 'is_hot', 'vip_type',
-                'post_date', 'images', 'direction_id');
+            $query    = RealEstate::filterprovince()->where('public_site', 1)->select('id', 'title', 'slug', 're_category_id', 're_type_id', 'short_description', 'detail', 'code', 'don_vi',
+                'area_of_premises', 'area_of_use', 'district_id', 'province_id', 'price', 'unit_id', 'is_vip', 'is_hot', 'vip_type',
+                'post_date', 'images', 'direction_id',
+                'living_room', 'wc', 'area_of_premises', 'customer_id');
             if($i == 6)
                 $query  =   $query->where(function($q){
                     $q->where('vip_type', 2)
@@ -153,7 +154,9 @@ class PageController extends Controller
 
         //Tin VIP
         $goodPriceRealEstateVip = RealEstate::filterprovince()->where('public_site',1)->select('id', 'title', 'short_description', 'detail', 'slug', 'code', 'don_vi',
-            'area_of_premises', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date')
+            'area_of_premises', 'price', 'unit_id', 'is_vip', 'is_hot', 'images',
+            'direction_id', 'customer_id', 'living_room', 'wc', 're_type_id', 'area_of_premises',
+            'post_date', 'district_id', 'province_id')
             ->where(function($q){
                 $q->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
                     ->orWhere('post_date', '>=', Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->subDays(Settings('system_changenametime'))->format('m/d/Y H:i A')));
@@ -162,12 +165,14 @@ class PageController extends Controller
             ->where('web_id', $this->web_id)
             ->orderBy('post_date', 'desc')
             ->where('vip_type', 3);
-        $goodPriceRealEstateVip = $goodPriceRealEstateVip->take(get_config('homeNewestVip'))->get();
+        $goodPriceRealEstateVip = $goodPriceRealEstateVip->take(get_config('homeSidebarVip'))->get();
 
 
         //Tin VIP nổi bật
         $goodPriceRealEstateVipHot = RealEstate::filterprovince()->where('public_site',1)->select('id', 'title', 'short_description', 'detail', 'slug', 'code', 'don_vi',
-            'area_of_premises', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date')
+            'area_of_premises', 'price', 'unit_id', 'is_vip', 'is_hot', 'images', 'post_date',
+            'direction_id', 'customer_id', 'living_room', 'wc', 're_type_id', 'area_of_premises',
+            'district_id', 'province_id')
             ->where(function($q){
                 $q->where('expire_date','>=',Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->format('m/d/Y H:i A')))
                     ->orWhere('post_date', '>=', Carbon::createFromFormat('m/d/Y H:i A', Carbon::now()->subDays(Settings('system_changenametime'))->format('m/d/Y H:i A')));

@@ -1,28 +1,43 @@
 {{-- top page --}}
-<div class="top_page">
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-6 welcome-text hidden-xs">
-                <p>{{get_config('homeHeader', 'CHÀO MỪNG QUÝ KHÁCH ĐẾN VỚI RECBOOK.VN - HOTLINE: 0989.186.179')}}</p>
+<section class="section-header">
+    <header class="site-header">
+        <div class="site-header__left">
+            <div class="site-header__phone site-header__left__item">
+                <img src="source/images/header-phone-icon.png" alt="phone">
+                <a href="callto:0989186179">
+                    0989.186.179
+                </a>
             </div>
-
-            <div class="col-xs-12 col-sm-6 user-action">
-                @if (!auth()->check())
-                    <p class="pull-right">
-                        <a href="{{ route('login') }}"><i class="fa fa-sign-in"></i> ĐĂNG NHẬP</a>
-                        <a href="{{ route('register') }}"><i class="fa fa-user-plus"></i> ĐĂNG KÝ</a>
-                    </p>
-                @else
-                    <p class="pull-right">
-                        <a href="{{ route('recharge') }}"><i class="fa fa-credit-card"></i> <strong>Số dư: {{number_format(auth()->user()->credits).' '.\App\Currency::where('default',1)->first()->icon}}</strong></a>
-                        <a href="{{route('user.info', [auth()->user()->id])}}"><i class="fa fa-user"></i> <strong>{{auth()->user()->userinfo->full_name}}</strong></a>
-                        <a href="{{ route('logout') }}"><i class="fa fa-sign-out"></i> ĐĂNG XUẤT</a>
-                    </p>
-                @endif
+            <div class="site-header__mail site-header__left__item">
+                <img src="source/images/header-mail-icon.png" alt="mail">
+                <a href="mailto:recbook.vn@gmail.com">
+                    recbook.vn@gmail.com
+                </a>
             </div>
         </div>
-    </div>
-</div>
+        <div class="site-header__logo">
+            <a href="">
+                <img src="sourceimages/logo.png" alt="logo">
+            </a>
+        </div>
+        <div class="site-header__right">
+            <a href="" class="batdongsan">
+                BẤT ĐỘNG SẢN
+            </a>
+            <a href="" class="service">
+                YÊU CẦU DỊCH VỤ
+            </a>
+            <a href="" class="user">
+                <img src="source/images/header-user-icon.png" alt="user-icon">
+            </a>
+            <a href="" class="upload">
+                <img src="source/images/header-upload-icon.png" alt="upload-icon">
+                ĐĂNG TIN RAO
+            </a>
+
+        </div>
+    </header>
+</section>
 {{-- end to page --}}
 {{-- banner header --}}
 <div class="banner-header">

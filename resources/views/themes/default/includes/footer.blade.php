@@ -1,5 +1,3 @@
-
-
 <div class="menu-footer">
     <div class="container">
         <ul>
@@ -36,6 +34,50 @@
         </div>
     </div>
 </footer>
+<div class="bottom__label">
+    <a href="">
+        <img src="source/images/footer-label-1.png" alt="">
+    </a>
+    <a href="">
+        <img src="source/images/footer-label-2.png" alt="">
+    </a>
+    <a href="">
+        <img src="source/images/footer-label-3.png" alt="">
+    </a>
+    <a href="">
+        <img src="source/images/footer-label-4.png" alt="">
+    </a>
+</div>
+<div class="left__label">
+    <div>
+        <a href="">
+            <img src="source/images/label-left-1.png" alt="">
+        </a>
+    </div>
+    <div>
+        <a href="">
+            <img src="source/images/label-left-2.png" alt="">
+        </a>
+    </div>
+    <div>
+        <a href="">
+            <img src="source/images/label-left-3.png" alt="">
+        </a>
+    </div>
+    <div>
+        <a href="">
+            <img src="source/images/label-left-4.png" alt="">
+        </a>
+    </div>
+    <div>
+        <a href="">
+            <img src="source/images/label-left-5.png" alt="">
+        </a>
+    </div>
+    <div id="goTop">
+        <img src="source/images/label-left-6.png" alt="">
+    </div>
+</div>
 
 @push('js')
     <script>
